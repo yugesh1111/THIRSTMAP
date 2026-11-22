@@ -1,0 +1,356 @@
+{
+  "scene_id": "level1_seed11589",
+  "seed": 11589,
+  "level": 1,
+  "params": {
+    "level": 1,
+    "beta": 3.8,
+    "relief_m": 22,
+    "contour_m": 10,
+    "stream_cells": 260,
+    "main_cells": 2500,
+    "n_villages": 4,
+    "n_farms": 3
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "skill": "trace_downstream",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+      "answer": [
+        "V14",
+        "V45"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8",
+        "V9",
+        "V10",
+        "V11",
+        "V12",
+        "V13",
+        "V14",
+        "V15",
+        "V16",
+        "V17",
+        "V18",
+        "V19",
+        "V20",
+        "V21",
+        "V22",
+        "V23",
+        "V24",
+        "V25",
+        "V26",
+        "V27",
+        "V28",
+        "V29",
+        "V30",
+        "V31",
+        "V32",
+        "V33",
+        "V34",
+        "V35",
+        "V36",
+        "V37",
+        "V38",
+        "V39",
+        "V40",
+        "V41",
+        "V42",
+        "V43",
+        "V44",
+        "V45",
+        "V46",
+        "V47",
+        "V48",
+        "V49",
+        "V50",
+        "V51",
+        "V52",
+        "V53",
+        "V54",
+        "V55"
+      ],
+      "traps": {
+        "upstream_same_stream": [
+          "V12"
+        ],
+        "near_but_other_stream": [
+          "V41"
+        ]
+      }
+    },
+    {
+      "id": "Q2",
+      "skill": "order_along_flow",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Which village would receive the wastewater first?",
+      "answer": "V14",
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8",
+        "V9",
+        "V10",
+        "V11",
+        "V12",
+        "V13",
+        "V14",
+        "V15",
+        "V16",
+        "V17",
+        "V18",
+        "V19",
+        "V20",
+        "V21",
+        "V22",
+        "V23",
+        "V24",
+        "V25",
+        "V26",
+        "V27",
+        "V28",
+        "V29",
+        "V30",
+        "V31",
+        "V32",
+        "V33",
+        "V34",
+        "V35",
+        "V36",
+        "V37",
+        "V38",
+        "V39",
+        "V40",
+        "V41",
+        "V42",
+        "V43",
+        "V44",
+        "V45",
+        "V46",
+        "V47",
+        "V48",
+        "V49",
+        "V50",
+        "V51",
+        "V52",
+        "V53",
+        "V54",
+        "V55"
+      ],
+      "traps": {
+        "upstream_same_stream": [
+          "V12"
+        ],
+        "near_but_other_stream": [
+          "V41"
+        ],
+        "later_village": [
+          "V45"
+        ]
+      }
+    },
+    {
+      "id": "Q3",
+      "skill": "nature_based_filtering",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "A constructed wetland must clean ALL of the wastewater from O before it reaches ANY village. Which candidate site (A-D) works?",
+      "answer": "D",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "traps": {
+        "too_late_after_village": [
+          "C"
+        ],
+        "upstream_of_outfall": [
+          "A"
+        ]
+      }
+    },
+    {
+      "id": "Q4",
+      "skill": "read_elevation",
+      "styles": [
+        "map"
+      ],
+      "question": "Treated water is stored in pond P (spot height 108 m). Which farms can be supplied by a gravity pipe, i.e. lie LOWER than the pond? List all.",
+      "answer": [],
+      "margin_m": 3,
+      "options": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "Q5",
+      "skill": "read_flow_direction",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "In which compass direction does the stream flow just below outfall O?",
+      "answer": "SE",
+      "options": [
+        "N",
+        "NE",
+        "E",
+        "SE",
+        "S",
+        "SW",
+        "W",
+        "NW"
+      ]
+    },
+    {
+      "id": "Q7",
+      "skill": "trace_upstream_catchment",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+      "answer": [
+        "V32",
+        "V40",
+        "V52"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8",
+        "V9",
+        "V10",
+        "V11",
+        "V12",
+        "V13",
+        "V14",
+        "V15",
+        "V16",
+        "V17",
+        "V18",
+        "V19",
+        "V20",
+        "V21",
+        "V22",
+        "V23",
+        "V24",
+        "V25",
+        "V26",
+        "V27",
+        "V28",
+        "V29",
+        "V30",
+        "V31",
+        "V32",
+        "V33",
+        "V34",
+        "V35",
+        "V36",
+        "V37",
+        "V38",
+        "V39",
+        "V40",
+        "V41",
+        "V42",
+        "V43",
+        "V44",
+        "V45",
+        "V46",
+        "V47",
+        "V48",
+        "V49",
+        "V50",
+        "V51",
+        "V52",
+        "V53",
+        "V54",
+        "V55"
+      ],
+      "traps": {
+        "downstream_not_upstream": [
+          "V14",
+          "V45"
+        ]
+      }
+    },
+    {
+      "id": "Q8",
+      "skill": "read_colour_scale_threshold",
+      "styles": [
+        "thermal"
+      ],
+      "question": "The thermal image shows how much warmer than normal the water is. At which monitoring points (M1-M4) is the water MORE than 3 °C warmer than normal? List all.",
+      "answer": [
+        "M1"
+      ],
+      "margin_c": 0.8,
+      "options": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "traps": {
+        "cooled_downstream": [
+          "M3"
+        ],
+        "upstream_of_O": [
+          "M2"
+        ],
+        "other_stream": [
+          "M4"
+        ]
+      }
+    },
+    {
+      "id": "Q9",
+      "skill": "read_colour_scale_value",
+      "styles": [
+        "thermal"
+      ],
+      "question": "About how many °C warmer than normal is the water at monitoring point M1?",
+      "answer": 3.9,
+      "tolerance": 1.5,
+      "point": 11766,
+      "options": [
+        0,
+        15
+      ]
+    }
+  ],
+  "terrain": "synthetic",
+  "drain_note": "Streams drain off the southern edge.",
+  "credit": null
+}

@@ -1,0 +1,117 @@
+{
+  "n_scenes": 107,
+  "n_tasks": 1521,
+  "failed_jobs": [
+    {
+      "level": 3,
+      "real": "navi_mumbai",
+      "error": "no scene passed validation"
+    }
+  ],
+  "build_seconds": 206.6,
+  "tasks_by_level": {
+    "1": 266,
+    "2": 264,
+    "3": 501,
+    "4": 250,
+    "5": 240
+  },
+  "tasks_by_terrain": {
+    "synthetic": 1276,
+    "navi_mumbai": 114,
+    "hyderabad": 131
+  },
+  "tasks_by_style": {
+    "map": 737,
+    "satellite": 630,
+    "thermal": 154
+  },
+  "tasks_by_skill": {
+    "trace_downstream": 212,
+    "order_along_flow": 214,
+    "nature_based_filtering": 214,
+    "read_elevation": 107,
+    "read_flow_direction": 202,
+    "siting_downstream_impact": 208,
+    "trace_upstream_catchment": 210,
+    "read_colour_scale_threshold": 77,
+    "read_colour_scale_value": 77
+  },
+  "validation_pass_rate": {
+    "V10_labels_map": "107/107",
+    "V10_labels_satellite": "107/107",
+    "V10_labels_thermal": "82/82",
+    "V11_style_applicability": "107/107",
+    "V1_independent_pysheds": "101/107",
+    "V5_elevation_margin": "107/107",
+    "V7_spatial_margin": "107/107",
+    "V8_single_wetland": "107/107",
+    "V9_path_visible_map": "107/107",
+    "V9_path_visible_satellite": "107/107",
+    "V9_path_visible_thermal": "78/82",
+    "V_temp_margin": "82/82"
+  },
+  "dropped_questions": {
+    "Q8: V9 evidence not visible in any style": 4,
+    "Q9: V9 evidence not visible in any style": 4,
+    "Q1: V1 mismatch with independent implementation": 1,
+    "Q7: V1 mismatch with independent implementation": 2,
+    "Q6: V1 mismatch with independent implementation": 1,
+    "Q5: V1 mismatch with independent implementation": 2,
+    "Q8: V1 mismatch with independent implementation": 1,
+    "Q9: V1 mismatch with independent implementation": 1
+  },
+  "answer_balance": {
+    "Q1": {
+      "size=2": 176,
+      "size=3": 36
+    },
+    "Q2": {
+      "V3": 52,
+      "V1": 36,
+      "V2": 20,
+      "V14": 2,
+      "V4": 36,
+      "V5": 24,
+      "V6": 28,
+      "V7": 12,
+      "V8": 4
+    },
+    "Q3": {
+      "C": 54,
+      "D": 66,
+      "B": 46,
+      "A": 48
+    },
+    "Q4": {
+      "size=1": 28,
+      "size=0": 6,
+      "size=2": 22,
+      "size=4": 13,
+      "size=3": 26,
+      "size=5": 9,
+      "size=6": 3
+    },
+    "Q5": {
+      "S": 80,
+      "SW": 62,
+      "SE": 46,
+      "W": 8,
+      "E": 6
+    },
+    "Q6": {
+      "S1": 70,
+      "S2": 70,
+      "S3": 68
+    },
+    "Q7": {
+      "size=1": 144,
+      "size=3": 14,
+      "size=2": 52
+    },
+    "Q8": {
+      "size=1": 44,
+      "size=2": 33
+    }
+  }
+}
