@@ -36,6 +36,16 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 **Traps are built in:** a village on the *same* stream but *upstream*, a village *close* to the data centre but on *another* stream, a wetland placed *after* a village (too late), and monitoring points upstream or on other streams. When a model answers wrong, the scorer names the trap it fell for.
 
+**Counterfactual twins:** for almost every scene (106 of 107), the dataset also contains a **twin with one minimal, visible change that must flip the answer**. The twin is otherwise identical: same terrain, villages and labels (≈0.5% of pixels change). The change rotates between three kinds:
+
+| Twin kind | What changes in the image | Answers that flip |
+|---|---|---|
+| Outfall moved | The pipe is rerouted and O sits on a different stream | Q1, Q2 |
+| Intake moved | Intake I moves to a nearby point, often across a confluence | Q7 |
+| Thermal | The cooling water is hotter or cooler (colours only) | Q8, Q9 |
+
+**Pair accuracy** counts a pair only if both versions are answered correctly. It exposes models that answer from habit instead of looking. For example, the offline `mock:stubborn` baseline (it never notices a change) scores **85% on single tasks but 0% pair accuracy**.
+
 **Eye-exam difficulty dial (levels 1–5):** rougher terrain, more ridges, more distractor streams, more villages and a finer contour interval. The report shows each model's **breaking level** per skill.
 
 **Real-terrain mode:** the same pipeline runs on real **Copernicus 30 m elevation + ESA WorldCover land cover** for Navi Mumbai and Hyderabad, both Indian data-centre hubs. Facility placements there are hypothetical.
@@ -51,7 +61,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 |---|---|
 | **V1** independent recomputation | A third-party library (**pysheds**) re-derives flow directions and every answer. Disagreement means the question is dropped (≈99.9% cell agreement in practice). |
 | **V2** known-answer tests | Tilted plane, V-valley, ridge split, bowl-to-lake (`tests/test_hydrology.py`) |
-| **V3** counterfactual | Removing a ridge must change the answer |
+| **V3** counterfactual | Unit test: removing a ridge must change the answer. In the dataset: 263 linked twin pairs whose answers provably differ, each twin independently re-validated (V1–V11) |
 | **V4** determinism | Same seed gives byte-identical images and answers |
 | **V5/V7/V8** margins | No farm within 3 m of the pond's height, unaffected villages ≥ 5 cells from the path, exactly one correct wetland, no temperature within 0.8 °C of the threshold |
 | **V9** pixel evidence | The answer path is checked **in the rendered pixels** of each style |
@@ -68,11 +78,11 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 22 tests
-python3 generate.py --level 3 --seed 11                 # one scene -> out/ (+ validation printout)
+python3 -m pytest -q                                    # 35 tests
+python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
-python3 evaluate.py --dataset dataset --models mock:oracle mock:random --blind --run offline_baselines
+python3 evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
 python3 build_demo.py --dataset dataset --run results/offline_baselines --out demo   # open demo/index.html
 ```
 
@@ -87,7 +97,7 @@ python3 evaluate.py --dataset dataset --per-cell 3 --blind --run frontier \
 `--per-cell N` samples N tasks per (question × style × level) cell, so a run covers everything at a predictable cost. Runs resume after interruption. Token usage and cost are recorded per call.
 
 ## Outputs of an evaluation run (`results/<run>/`)
-- `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, trap fall rate and error diagnosis, cost
+- `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost
 - `chart_accuracy_by_skill.png`, `chart_eye_exam.png`, `chart_by_style.png`
 - `summary.json`, `responses.jsonl` (raw answers, parsed answers, scores, error tags, tokens)
 
@@ -102,8 +112,9 @@ thirstmap/render_sat.py   satellite-style renderer
 thirstmap/render_map.py   topographic map renderer
 thirstmap/render_thermal.py thermal false-colour renderer
 thirstmap/validate.py     V1–V11 validators (pysheds cross-check, margins, pixel evidence, labels)
+thirstmap/counterfactual.py twins: one minimal change (outfall / intake / temperature) that must flip the answer
 thirstmap/dataset.py      tasks (question x style) with prompts and scoring rules
-thirstmap/models.py       Claude / OpenAI-compatible / Gemini adapters + offline oracle & random baselines
+thirstmap/models.py       Claude / OpenAI-compatible / Gemini adapters + offline oracle, random & stubborn baselines
 thirstmap/scoring.py      robust answer parsing, scoring (exact / set-F1 / tolerance), error diagnosis
 generate.py               scene -> render -> validate -> keep / drop / regenerate
 build_dataset.py          parallel batch build + manifest (counts, validation pass rates, answer balance)

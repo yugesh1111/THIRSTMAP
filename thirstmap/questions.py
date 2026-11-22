@@ -54,12 +54,13 @@ def answer_key(s, p):
         dict(id="Q3", skill="nature_based_filtering", styles=both,
              question="A constructed wetland must clean ALL of the wastewater from O before it "
                       "reaches ANY village. Which candidate site (A-D) works?",
-             answer=nm["wetland"][p["good"]]),
+             answer=nm["wetland"][p["good"]] if p["good"] is not None else None),
         dict(id="Q4", skill="read_elevation", styles=["map"],
              question=f"Treated water is stored in pond P (spot height {pe:.0f} m). Which farms can be "
                       "supplied by a gravity pipe, i.e. lie LOWER than the pond? List all.",
              answer=lower, margin_m=3),
     ]
+    qs = [q for q in qs if q["answer"] is not None]       # e.g. no wetland question in an outfall twin
     fdir = flow_direction(s)
     if fdir:
         qs.append(dict(id="Q5", skill="read_flow_direction", styles=both,
@@ -87,11 +88,14 @@ def answer_key(s, p):
                                 "At which monitoring points (M1-M4) is the water MORE than 3 °C warmer "
                                 "than normal? List all.",
                        answer=sorted(nm["monitor"][i] for i in warm_pts), margin_c=0.8))
-        probe = sorted(warm_pts)[bisect_index(s["seed"], len(warm_pts))]
-        qs.append(dict(id="Q9", skill="read_colour_scale_value", styles=["thermal"],
-                       question=f"About how many °C warmer than normal is the water at monitoring point "
-                                f"{nm['monitor'][probe]}?",
-                       answer=round(pl["point_dT"][probe], 1), tolerance=1.5, point=probe))
+        probe = p.get("q9_probe")                          # a counterfactual twin asks about the same point
+        if probe is None and warm_pts:
+            probe = sorted(warm_pts)[bisect_index(s["seed"], len(warm_pts))]
+        if probe is not None:
+            qs.append(dict(id="Q9", skill="read_colour_scale_value", styles=["thermal"],
+                           question=f"About how many °C warmer than normal is the water at monitoring point "
+                                    f"{nm['monitor'][probe]}?",
+                           answer=round(pl["point_dT"][probe], 1), tolerance=1.5, point=probe))
     # answer options (for prompts and the random baseline) and trap labels (for error diagnosis)
     V = sorted(nm["village"].values(), key=lambda x: int(x[1:]))
     opts = {"Q1": V, "Q2": V, "Q7": V, "Q3": sorted(nm["wetland"].values()),

@@ -112,6 +112,27 @@ def build_report(run_dir, dataset):
         fell = [r for r in exposed if any(t.startswith("trap:") for t in r.get("tags", []))]
         trap_rate[m] = dict(exposed=len(exposed), fell=len(fell), rate=len(fell) / len(exposed) if exposed else None)
     S["trap_fall_rate"] = trap_rate
+    # counterfactual pairs: same scene, one minimal change, the answer must flip
+    S["counterfactual_pairs"] = {}
+    for m in models:
+        pairs = defaultdict(dict)
+        for r in img:
+            t = tasks[r["task_id"]]
+            if r["model"] == m and t.get("pair_id"):
+                pairs[t["pair_id"]][t["variant"]] = (r, t)
+        full = [v for v in pairs.values() if len(v) == 2]
+        if not full:
+            continue
+        by_kind = defaultdict(list)
+        for v in full:
+            by_kind[v["counterfactual"][1]["cf_kind"]].append(v)
+        stat = lambda vs: dict(
+            pairs=len(vs),
+            single_task_accuracy=sum(x[0]["correct"] for v in vs for x in v.values()) / (2 * len(vs)),
+            pair_accuracy=sum(v["base"][0]["correct"] and v["counterfactual"][0]["correct"] for v in vs) / len(vs),
+            unchanged_answer_rate=sum(json.dumps(v["base"][0]["parsed"], sort_keys=True)
+                                      == json.dumps(v["counterfactual"][0]["parsed"], sort_keys=True) for v in vs) / len(vs))
+        S["counterfactual_pairs"][m] = dict(stat(full), by_kind={k: stat(v) for k, v in by_kind.items()})
     S["cost"] = {m: dict(input_tokens=sum(r.get("input_tokens") or 0 for r in rows if r["model"] == m),
                          output_tokens=sum(r.get("output_tokens") or 0 for r in rows if r["model"] == m),
                          usd=round(sum(r.get("cost_usd") or 0 for r in rows if r["model"] == m), 4),
@@ -216,6 +237,13 @@ def markdown(S, out):
           "| Model | Pairs | Both right | Only map right | Only satellite right | Both wrong |", "|---|---|---|---|---|---|"]
     for m, v in S["map_vs_satellite"].items():
         L.append(f"| {m} | {v['n']} | {v['both_right']} | {v['only_map']} | {v['only_satellite']} | {v['both_wrong']} |")
+    L += ["", "## Counterfactual pairs (one minimal change that must flip the answer)", "",
+          "Pair accuracy counts a pair only if BOTH the original and its twin are answered correctly. "
+          "'Unchanged answer' = the model gave the same answer to both, although the correct answer changed.", "",
+          "| Model | Pairs | Single-task accuracy | Pair accuracy | Unchanged answer |", "|---|---|---|---|---|"]
+    for m, v in S["counterfactual_pairs"].items():
+        L.append(f"| {m} | {v['pairs']} | {_pct(v['single_task_accuracy'])} | {_pct(v['pair_accuracy'])} | "
+                 f"{_pct(v['unchanged_answer_rate'])} |")
     L += ["", "## Traps and error diagnosis", "", "| Model | Trap tasks | Fell for a trap | Most common errors |", "|---|---|---|---|"]
     for m in S["models"]:
         t = S["trap_fall_rate"][m]

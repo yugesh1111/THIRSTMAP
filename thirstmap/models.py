@@ -117,17 +117,21 @@ class GeminiAdapter:
 class MockAdapter:
     """Offline baselines.
 
-    oracle : always returns the reference answer (proves scoring accepts correct answers)
-    random : a uniformly random valid answer (chance level for every question type)
+    oracle   : always returns the reference answer (proves scoring accepts correct answers)
+    random   : a uniformly random valid answer (chance level for every question type)
+    stubborn : answers every counterfactual twin with its BASE scene's answer, i.e. a model that
+               ignores the change. Perfect on single tasks, so only the pair metric exposes it.
     """
 
     def __init__(self, kind):
-        assert kind in ("oracle", "random")
+        assert kind in ("oracle", "random", "stubborn")
         self.kind, self.name = kind, f"mock:{kind}"
 
     def ask(self, task, with_image=True):
         if self.kind == "oracle":
             ans = task["answer"]
+        elif self.kind == "stubborn":
+            ans = task.get("pair_answer", task["answer"])
         else:
             rng = random.Random(task["task_id"] + str(with_image))
             opts, sc = task["options"], task["scoring"]

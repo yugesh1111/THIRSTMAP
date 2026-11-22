@@ -21,6 +21,7 @@ def main():
     ap.add_argument("--dataset", default="dataset")
     ap.add_argument("--run", required=True)
     ap.add_argument("--per-skill", type=int, default=6)
+    ap.add_argument("--pairs", type=int, default=8, help="counterfactual pairs to include")
     ap.add_argument("--out", default="demo")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
@@ -43,7 +44,21 @@ def main():
     for sk in SKILL_ORDER:
         pool = sorted(by_skill.get(sk, []))
         rng.shuffle(pool)
-        chosen += sorted(pool[: a.per_skill], key=lambda t: tasks[t]["level"])
+        chosen += sorted([t for t in pool if not tasks[t].get("pair_id")][: a.per_skill],
+                         key=lambda t: tasks[t]["level"])
+    pair_ids = sorted({tasks[t]["pair_id"] for t in answers if tasks[t].get("pair_id")})
+    rng.shuffle(pair_ids)
+    by_pair = defaultdict(dict)
+    for tid in answers:
+        if tasks[tid].get("pair_id"):
+            by_pair[tasks[tid]["pair_id"]][tasks[tid]["variant"]] = tid
+    kinds_seen = defaultdict(int)
+    for pid in pair_ids:
+        v = by_pair[pid]
+        kind = tasks[v.get("counterfactual", "")]["cf_kind"] if "counterfactual" in v else None
+        if len(v) == 2 and kinds_seen[kind] < max(1, a.pairs // 3):
+            kinds_seen[kind] += 1
+            chosen += [v["base"], v["counterfactual"]]
 
     if out.exists():
         shutil.rmtree(out)
@@ -59,6 +74,7 @@ def main():
                 Image.open(src).convert("RGB").save(out / "img" / name, quality=85)
             names[key] = "img/" + name
         items.append(dict(id=tid, skill=SKILL_LABEL[t["skill"]], style=t["style"], level=t["level"],
+                          pair=t.get("pair_id"), variant=t.get("variant"), change=t.get("cf_change"),
                           question=t["question"], answer=t["answer"], image=names["image"],
                           reveal=names["reveal"], models=answers[tid]))
     (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False)))
@@ -95,7 +111,7 @@ main{max-width:1200px;margin:auto;padding:0 16px 40px;display:grid;gap:16px}
 <div class="bar">
 <select id="fs"><option value="">All skills</option></select>
 <select id="fy"><option value="">All image styles</option><option>satellite</option><option>map</option><option>thermal</option></select>
-<select id="fr"><option value="">All results</option><option value="bad">Only tasks a model got wrong</option></select>
+<select id="fr"><option value="">All results</option><option value="bad">Only tasks a model got wrong</option><option value="pairs">Counterfactual pairs</option></select>
 <span class="stats" id="stats"></span></div>
 <main id="list"></main>
 <script>
@@ -114,7 +130,8 @@ function render(){
   const L = document.getElementById('list'); L.innerHTML = '';
   let n = 0, right = 0, total = 0;
   DATA.filter(d => (!fs.value || d.skill === fs.value) && (!fy.value || d.style === fy.value)
-     && (!fr.value || Object.values(d.models).some(m => !m.correct))).forEach(d => {
+     && (fr.value !== 'bad' || Object.values(d.models).some(m => !m.correct))
+     && (fr.value !== 'pairs' || d.pair)).forEach(d => {
     n++;
     const c = document.createElement('article'); c.className = 'card';
     const rows = Object.entries(d.models).map(([name, m]) => { total++; if (m.correct) right++;
@@ -124,7 +141,8 @@ function render(){
     c.innerHTML = `<div class="pic"><img src="${d.image}" alt="${d.style} image for task" loading="lazy">
       <button>Show answer key</button></div>
       <div class="body"><div class="meta"><span class="chip">${d.skill}</span><span class="chip">${d.style}</span>
-      <span class="chip">difficulty ${d.level}/5</span></div>
+      <span class="chip">difficulty ${d.level}/5</span>${d.pair ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
+      ${d.variant === 'counterfactual' ? `<div class="gold">What changed from the original: <b>${d.change}</b>. Everything else is identical, so the correct answer must change.</div>` : ''}
       <div class="q">${d.question}</div><div class="gold">Reference answer (from simulation): <b>${fmt(d.answer)}</b></div>
       <div class="ans">${rows}</div></div>`;
     const img = c.querySelector('img'), b = c.querySelector('button');

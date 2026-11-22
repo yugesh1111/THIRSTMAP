@@ -4,50 +4,63 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| mock:oracle | 100% | 100% | 1521 |
-| mock:random | 15% | 13% | 1521 |
+| mock:oracle | 100% | 100% | 1784 |
+| mock:random | 14% | 12% | 1784 |
+| mock:stubborn | 85% | 85% | 1784 |
 
 ## Accuracy by visual skill
 
-| Skill | mock:oracle | mock:random |
-|---|---|---|
-| Trace downstream | 100% | 3% |
-| Order along flow | 100% | 20% |
-| Place wetland | 100% | 23% |
-| Site selection | 100% | 33% |
-| Trace upstream | 100% | 5% |
-| Flow direction | 100% | 11% |
-| Read elevation | 100% | 4% |
-| Thermal threshold | 100% | 12% |
-| Thermal value | 100% | 25% |
+| Skill | mock:oracle | mock:random | mock:stubborn |
+|---|---|---|---|
+| Trace downstream | 100% | 3% | 78% |
+| Order along flow | 100% | 19% | 78% |
+| Place wetland | 100% | 23% | 100% |
+| Site selection | 100% | 33% | 100% |
+| Trace upstream | 100% | 5% | 68% |
+| Flow direction | 100% | 11% | 100% |
+| Read elevation | 100% | 4% | 100% |
+| Thermal threshold | 100% | 12% | 75% |
+| Thermal value | 100% | 24% | 80% |
 
 ## Eye exam: breaking level (first difficulty where accuracy < 50%)
 
-| Skill | mock:oracle | mock:random |
-|---|---|---|
-| Trace downstream | >5 | 1 |
-| Order along flow | >5 | 1 |
-| Place wetland | >5 | 1 |
-| Site selection | >5 | 2 |
-| Trace upstream | >5 | 1 |
-| Flow direction | >5 | 1 |
-| Read elevation | >5 | 1 |
-| Thermal threshold | >5 | 1 |
-| Thermal value | >5 | 1 |
+| Skill | mock:oracle | mock:random | mock:stubborn |
+|---|---|---|---|
+| Trace downstream | >5 | 1 | >5 |
+| Order along flow | >5 | 1 | >5 |
+| Place wetland | >5 | 1 | >5 |
+| Site selection | >5 | 2 | >5 |
+| Trace upstream | >5 | 1 | >5 |
+| Flow direction | >5 | 1 | >5 |
+| Read elevation | >5 | 1 | >5 |
+| Thermal threshold | >5 | 1 | >5 |
+| Thermal value | >5 | 1 | >5 |
 
 ## Map vs satellite (same scene, same question)
 
 | Model | Pairs | Both right | Only map right | Only satellite right | Both wrong |
 |---|---|---|---|---|---|
-| mock:oracle | 630 | 630 | 0 | 0 | 0 |
-| mock:random | 630 | 25 | 66 | 84 | 455 |
+| mock:oracle | 738 | 738 | 0 | 0 | 0 |
+| mock:random | 738 | 26 | 74 | 88 | 550 |
+| mock:stubborn | 738 | 630 | 0 | 0 | 108 |
+
+## Counterfactual pairs (one minimal change that must flip the answer)
+
+Pair accuracy counts a pair only if BOTH the original and its twin are answered correctly. 'Unchanged answer' = the model gave the same answer to both, although the correct answer changed.
+
+| Model | Pairs | Single-task accuracy | Pair accuracy | Unchanged answer |
+|---|---|---|---|---|
+| mock:oracle | 263 | 100% | 100% | 0% |
+| mock:random | 263 | 10% | 2% | 7% |
+| mock:stubborn | 263 | 50% | 0% | 100% |
 
 ## Traps and error diagnosis
 
 | Model | Trap tasks | Fell for a trap | Most common errors |
 |---|---|---|---|
-| mock:oracle | 927 | 0% | – |
-| mock:random | 927 | 42% | missed_some (473), wrong_choice (329), extra_unrelated (204), trap:downstream_not_upstream (120) |
+| mock:oracle | 1171 | 0% | – |
+| mock:random | 1171 | 44% | missed_some (595), wrong_choice (361), extra_unrelated (272), trap:downstream_not_upstream (178) |
+| mock:stubborn | 1171 | 1% | extra_unrelated (169), missed_some (123), wrong_choice (47), overestimate (19) |
 
 Tasks a majority of real models answered correctly WITHOUT the image: 0
 
@@ -57,6 +70,7 @@ Tasks a majority of real models answered correctly WITHOUT the image: 0
 |---|---|---|---|---|
 | mock:oracle | 0 | 0 | 0 | 0.0 |
 | mock:random | 0 | 0 | 0 | 0.0 |
+| mock:stubborn | 0 | 0 | 0 | 0.0 |
 
 ![skills](chart_accuracy_by_skill.png)
 

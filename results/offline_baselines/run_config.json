@@ -2,7 +2,8 @@
   "dataset": "dataset",
   "models": [
     "mock:oracle",
-    "mock:random"
+    "mock:random",
+    "mock:stubborn"
   ],
   "run": "offline_baselines",
   "per_cell": null,

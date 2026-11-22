@@ -20,3 +20,19 @@ def test_task_records_are_complete_and_images_exist():
             assert t["answer"] in t["options"]
         if t["scoring"] == "set":
             assert set(t["answer"]) <= set(map(str, t["options"]))
+
+
+@pytest.mark.skipif(not (DS / "tasks.jsonl").exists(), reason="dataset not built")
+def test_counterfactual_pairs_are_linked_and_flip():
+    tasks = [json.loads(l) for l in open(DS / "tasks.jsonl")]
+    pairs = {}
+    for t in tasks:
+        if t.get("pair_id"):
+            pairs.setdefault(t["pair_id"], {})[t["variant"]] = t
+    assert pairs, "no counterfactual pairs in the dataset"
+    for pid, v in pairs.items():
+        assert set(v) == {"base", "counterfactual"}, pid
+        b, c = v["base"], v["counterfactual"]
+        assert b["qid"] == c["qid"] and b["style"] == c["style"] and b["level"] == c["level"]
+        assert b["answer"] != c["answer"] and c["pair_answer"] == b["answer"]
+        assert b["image"] != c["image"]

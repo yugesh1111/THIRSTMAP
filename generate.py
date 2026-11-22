@@ -13,6 +13,7 @@ from thirstmap import render_map, render_sat, render_thermal
 from thirstmap.questions import answer_key
 from thirstmap.render_sat import _px
 from thirstmap import realterrain
+from thirstmap.counterfactual import KINDS, make_twin
 from thirstmap.scene import make
 from thirstmap.terrain import L_KM, params
 from thirstmap.validate import validate
@@ -51,7 +52,7 @@ def save(img, path):
         img.save(path)
 
 
-def generate(level, seed, out_root, max_tries=20, bi=None, real=None):
+def generate(level, seed, out_root, max_tries=20, bi=None, real=None, twin=False):
     P = params(level)
     R = realterrain.load(real) if real else None
     for k in range(max_tries):
@@ -82,7 +83,52 @@ def generate(level, seed, out_root, max_tries=20, bi=None, real=None):
          "credit": R["credit"] if R else None},
         indent=2, ensure_ascii=False))
     (out / "validation.json").write_text(json.dumps(report, indent=2, default=str))
-    return out, kept, report
+    if not twin:
+        return out, kept, report
+    return out, kept, report, build_twin(s, p, P, kept, out, tag, level, real, R, bi if bi is not None else seed)
+
+
+def build_twin(s, p, P, base_kept, base_out, tag, level, real, R, bi):
+    """Counterfactual twin: same scene, one minimal change, answers must flip. None if impossible."""
+    base = {q["id"]: q for q in base_kept}
+    for kind in KINDS[bi % 3:] + KINDS[:bi % 3]:              # rotate kinds across the dataset
+        made = make_twin(s, p, P, kind, base_kept)
+        if not made:
+            continue
+        s2, p2, qids, change = made
+        qs2, nm2, truth2 = answer_key(s2, p2)
+        rendered, images = render_all(s2, p2, nm2, P, truth2, tag + " | counterfactual twin")
+        report = validate(s2, p2, qs2, nm2, images)
+        pairs = []
+        for q in qs2:
+            b = base.get(q["id"])
+            if q["id"] in qids and q["id"] in report["keep"] and b and q["answer"] != b["answer"]:
+                styles = [st for st in report["styles"][q["id"]] if st in b["styles"]]
+                if styles:
+                    pairs.append(dict(q, styles=styles))
+        if not report["scene_ok"] or not pairs:
+            for a, b in rendered.values():
+                for im in (a, b):
+                    if hasattr(im, "savefig"):
+                        plt.close(im)
+            continue
+        out = base_out.parent / (base_out.name + "_cf")
+        out.mkdir(parents=True, exist_ok=True)
+        used = {st for q in pairs for st in q["styles"]}
+        for style, (img, rev) in rendered.items():
+            if style in used:
+                save(img, out / f"{style}.png")
+                save(rev, out / f"{style}_reveal.png")
+            elif hasattr(img, "savefig"):
+                plt.close(img); plt.close(rev)
+        (out / "answer_key.json").write_text(json.dumps(
+            {"scene_id": out.name, "pair_of": base_out.name, "cf_kind": kind, "cf_change": change,
+             "seed": s["seed"], "level": level, "params": P, "questions": pairs,
+             "terrain": real or "synthetic", "drain_note": s["drain_note"],
+             "credit": R["credit"] if R else None}, indent=2, ensure_ascii=False))
+        (out / "validation.json").write_text(json.dumps(report, indent=2, default=str))
+        return dict(folder=out, kept=pairs, kind=kind, change=change)
+    return None
 
 
 def main():
@@ -91,8 +137,14 @@ def main():
     ap.add_argument("--seed", type=int, default=11)
     ap.add_argument("--out", default="out")
     ap.add_argument("--real", choices=sorted(realterrain.LOCATIONS), help="use real terrain for this location")
+    ap.add_argument("--twin", action="store_true", help="also build the counterfactual twin")
     a = ap.parse_args()
-    out, kept, report = generate(a.level, a.seed, a.out, real=a.real)
+    res = generate(a.level, a.seed, a.out, real=a.real, twin=a.twin)
+    out, kept, report = res[:3]
+    if a.twin:
+        tw = res[3]
+        print("twin:", f"{tw['folder']} ({tw['kind']}: {tw['change']}) questions {[q['id'] for q in tw['kept']]}"
+              if tw else "none possible for this scene")
     print(out)
     for name, c in report["checks"].items():
         print(f"  {'PASS' if c['passed'] else 'FAIL'}  {name}  "

@@ -204,7 +204,7 @@ This is the core of the project (25% of the score is validity, and it is why we 
 |---|---|---|
 | **V1 Two independent implementations** | Compute flow paths/catchments with our code **and** with an independent library (pysheds) on the same elevation grid | Answers must agree, else discard |
 | **V2 Known-answer unit tests** | Hand-built terrains with obvious answers: tilted plane, V-shaped valley, two valleys split by a ridge, a closed bowl | Pipeline must return the known answer (pytest) |
-| **V3 Counterfactual pairs** | Same scene with one change (e.g. outfall moved across a ridge, ridge removed) | The answer must change exactly as expected |
+| **V3 Counterfactual pairs** ✅ built | Every scene gets a twin with one minimal change (outfall moved / intake moved / water temperature changed); 263 linked pairs in the dataset; twins are re-validated independently | The answer must change; models are scored on **pair accuracy** (both versions right) |
 | **V4 Determinism** | Same seed + level → byte-identical scene and answers | Re-run check in CI |
 
 ### 7.2 Is the answer unambiguous? (no borderline cases)

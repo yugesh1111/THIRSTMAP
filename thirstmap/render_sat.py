@@ -316,8 +316,9 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None):
             cx, cy = _px(p["village_pos"][v])
             col = (255, 40, 40, 255) if v in truth["hit"] else (190, 190, 190, 255)
             a.ellipse([cx - 22, cy - 22, cx + 22, cy + 22], outline=col, width=4)
-        gx, gy = _px(p["good"])
-        a.ellipse([gx - 18, gy - 18, gx + 18, gy + 18], outline=(40, 230, 60, 255), width=4)
+        if p.get("good") is not None:
+            gx, gy = _px(p["good"])
+            a.ellipse([gx - 18, gy - 18, gx + 18, gy + 18], outline=(40, 230, 60, 255), width=4)
 
     # scale bar (1 km) + north arrow
     km_px = W / L_KM
