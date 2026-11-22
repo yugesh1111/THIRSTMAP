@@ -19,6 +19,8 @@ LOCATIONS = {
     # name: (lat, lon of the window centre, description)
     "navi_mumbai": (19.12, 73.04, "Navi Mumbai (Mahape / Parsik hills), Maharashtra"),
     "hyderabad": (17.44, 78.36, "Hyderabad (Gachibowli / Nanakramguda), Telangana"),
+    "pune": (18.59, 73.71, "Pune (Hinjewadi / Maan), Maharashtra"),
+    "chennai": (13.10, 80.15, "Chennai (Ambattur / Avadi), Tamil Nadu"),
 }
 CREDIT = "Real terrain: Copernicus DEM GLO-30 (modified) · ESA WorldCover 2021 (CC BY 4.0)"
 CACHE = Path(__file__).resolve().parent.parent / "data" / "real"

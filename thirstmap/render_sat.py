@@ -145,12 +145,22 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None):
     img = np.where(A[..., None], pcol, img)
     canopy = np.where((hf > 0.5)[..., None], np.array((44, 62, 36)), np.array((70, 92, 52)))
     img = np.where(F[..., None], canopy * (0.9 + 0.2 * hf2[..., None]), img)
-    if BUILT.any():                          # urban fabric: grey blocks with street grid
+    if BUILT.any():                          # urban fabric: irregular blocks, mixed roofs, streets, trees
         yy, xx = np.mgrid[0:W, 0:W]
-        blocks = ((yy // 7 + xx // 9) % 3).astype(float)
-        street = ((yy % 7) == 0) | ((xx % 9) == 0)
-        urban = np.array((150, 146, 140)) * (0.82 + 0.1 * blocks[..., None] + 0.15 * hf[..., None])
-        urban[street] = (118, 116, 112)
+        wu = xx + 9 * (hf2 - 0.5)            # warp the grid so blocks are not perfectly regular
+        wv = yy + 9 * (fractal(rng, 2.4, n=W) - 0.5)
+        bw, bh = 13.0, 10.0
+        bid = (np.floor(wu / bw) * 7919 + np.floor(wv / bh) * 104729).astype(np.int64)
+        roofs = np.array([(168, 164, 156), (206, 204, 198), (150, 96, 74), (128, 126, 120),
+                          (186, 178, 160), (92, 120, 160)], float)
+        pick = np.abs(bid) % 100
+        roof = roofs[np.select([pick < 34, pick < 56, pick < 74, pick < 88, pick < 97], [0, 1, 2, 3, 4], 5)]
+        fine = fractal(rng, 1.2, n=W)
+        footprint = fine > 0.42                                  # buildings vs courtyards inside a block
+        urban = np.where(footprint[..., None], roof, np.array((132, 128, 118))) * (0.9 + 0.2 * hf[..., None])
+        street = ((wu % bw) < 1.6) | ((wv % bh) < 1.6)
+        urban[street] = (104, 102, 98)
+        urban[(fine < 0.2) & ~street] = (64, 86, 52)             # street trees and small parks
         img = np.where(BUILT[..., None], urban, img)
 
     # ---- streams: polylines, supersampled for smooth edges

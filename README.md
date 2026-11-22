@@ -48,7 +48,9 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 **Eye-exam difficulty dial (levels 1–5):** rougher terrain, more ridges, more distractor streams, more villages and a finer contour interval. The report shows each model's **breaking level** per skill.
 
-**Real-terrain mode:** the same pipeline runs on real **Copernicus 30 m elevation + ESA WorldCover land cover** for Navi Mumbai and Hyderabad, both Indian data-centre hubs. Facility placements there are hypothetical.
+**Real-terrain mode:** the same pipeline runs on real **Copernicus 30 m elevation + ESA WorldCover land cover** for four Indian data-centre hubs: **Navi Mumbai, Hyderabad, Pune (Hinjewadi) and Chennai (Ambattur)**. Facility placements there are hypothetical.
+
+**Current dataset:** 125 scenes and **2,097 tasks** (1,498 synthetic, 599 on real terrain), including **308 counterfactual pairs**. Built in about 4.7 minutes on 4 CPU cores.
 
 ---
 
@@ -70,7 +72,9 @@ For every scene, the **same answer key** is rendered as three image styles:
 | **V13** blind baseline | Every question is also asked **without the image**; tasks guessable blind are flagged |
 | **V14** answer balance | Correct-answer positions and set sizes are rotated across the dataset |
 
-`dataset/manifest.json` records pass rates and every dropped question with its reason.
+`dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.87% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
+
+**Human baseline (V15):** `python3 human_eval.py build` writes `human_eval/index.html`, a page where a person answers 27 tasks spanning every skill (no answers shown). `python3 human_eval.py score answers_*.json` scores them with the same scorer the models get.
 
 ---
 
@@ -78,7 +82,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 35 tests
+python3 -m pytest -q                                    # 38 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
@@ -95,6 +99,14 @@ python3 evaluate.py --dataset dataset --per-cell 3 --blind --run frontier \
 ```
 
 `--per-cell N` samples N tasks per (question × style × level) cell, so a run covers everything at a predictable cost. Runs resume after interruption. Token usage and cost are recorded per call.
+
+**Adaptive eye exam (cheapest way to find breaking points):**
+
+```bash
+python3 staircase.py --dataset dataset --models claude:claude-opus-5-5 --trials 16 --run opus_eye
+```
+
+This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row make the next task harder, one wrong answer makes it easier. It converges where the model is right about 71% of the time, so lucky guesses can't climb. That's about 144 calls per model instead of about 2,000. Offline check: the oracle scores 5.5 (never fails) on every skill and the random guesser 0.5–1.5.
 
 ## Outputs of an evaluation run (`results/<run>/`)
 - `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost
@@ -119,7 +131,10 @@ thirstmap/scoring.py      robust answer parsing, scoring (exact / set-F1 / toler
 generate.py               scene -> render -> validate -> keep / drop / regenerate
 build_dataset.py          parallel batch build + manifest (counts, validation pass rates, answer balance)
 evaluate.py, report.py    model runs, metrics, charts, markdown report
-build_demo.py             self-contained demo page: image -> question -> model answers -> ✓/✗ -> answer reveal
+build_demo.py             self-contained demo page: image -> question -> model answers -> ✓/✗ -> answer reveal, + pairs
+staircase.py              adaptive eye exam (2-down/1-up) per model x skill
+human_eval.py             human baseline page + scorer (same tasks, same scorer)
+validation_report.py      collects all validation evidence into docs/VALIDATION_REPORT.md
 ```
 
 ## Honest limitations

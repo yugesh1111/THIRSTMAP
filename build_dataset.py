@@ -62,15 +62,16 @@ def main():
     ap.add_argument("--out", default="dataset")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--real-per-location", type=int, default=0,
-                    help="also build scenes on real terrain (Navi Mumbai, Hyderabad) at difficulty 3")
+                    help="also build scenes on real terrain (see --locations) at difficulty 3")
     ap.add_argument("--no-twins", action="store_true", help="skip counterfactual twins")
+    ap.add_argument("--locations", nargs="+", default=["navi_mumbai", "hyderabad", "pune", "chennai"])
     a = ap.parse_args()
 
     root = Path(a.out)
     scenes_dir = root / "scenes"
     scenes_dir.mkdir(parents=True, exist_ok=True)
     jobs = [(lv, k, str(scenes_dir), None, not a.no_twins) for lv in a.levels for k in range(a.per_level)]
-    jobs += [(3, k, str(scenes_dir), loc, not a.no_twins) for loc in ("navi_mumbai", "hyderabad")
+    jobs += [(3, k, str(scenes_dir), loc, not a.no_twins) for loc in a.locations
              for k in range(a.real_per_location)]
     t0 = time.time()
     with ProcessPoolExecutor(a.workers) as ex:
