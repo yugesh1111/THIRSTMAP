@@ -81,6 +81,15 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 ## Quick start
 
+One command reproduces everything (tests, dataset, baselines, eye exam, reports, verification, demo):
+
+```bash
+./run_all.sh            # full benchmark, about 25 min on 4 cores
+./run_all.sh --quick    # small version, about 2 min
+```
+
+Or run each stage yourself:
+
 ```bash
 pip install -r requirements.txt
 python3 -m pytest -q                                    # 38 tests
