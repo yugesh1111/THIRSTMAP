@@ -1,0 +1,49 @@
+name: dataset-release
+# Rebuilds the FULL dataset from code on GitHub's runners, validates and verifies it,
+# and publishes it as a GitHub Release. Trigger: push a tag like dataset-v1.0, or run manually.
+on:
+  push:
+    tags: ["dataset-v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: sudo apt-get install -y -qq fonts-dejavu-core zip
+      - run: pip install -r requirements-lock.txt
+      - name: build the full dataset (308 scenes + twins)
+        run: python build_dataset.py --per-level 50 --real-per-location 15 --out dataset --workers 4
+      - name: baselines, validation report, independent verification
+        run: |
+          python evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
+          python validation_report.py --dataset dataset --baselines results/offline_baselines --out release_docs
+          python verify_results.py --dataset dataset --run results/offline_baselines --regen 4 --out release_docs
+      - name: package
+        run: |
+          mkdir -p release
+          zip -q -1 -r release/thirstmap-dataset-part1-levels1-3.zip dataset/scenes/level1_* dataset/scenes/level2_* dataset/scenes/level3_* dataset/tasks.jsonl dataset/manifest.json
+          zip -q -1 -r release/thirstmap-dataset-part2-levels4-5.zip dataset/scenes/level4_* dataset/scenes/level5_* dataset/tasks.jsonl dataset/manifest.json
+          zip -q -1 -r release/thirstmap-dataset-part3-real-terrain.zip dataset/scenes/real_* dataset/tasks.jsonl dataset/manifest.json
+          cp dataset/manifest.json release_docs/VALIDATION_REPORT.md release_docs/VERIFICATION.md release/
+          (cd release && sha256sum *.zip > SHA256SUMS.txt)
+          ls -la release
+      - name: publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          [[ "$TAG" == dataset-v* ]] || TAG="dataset-run-${GITHUB_RUN_NUMBER}"
+          gh release create "$TAG" release/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
+            --title "ThirstMap dataset ($TAG)" --notes-file .github/dataset-release-notes.md

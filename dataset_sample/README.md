@@ -12,6 +12,6 @@ Evaluate on it directly:
 python3 evaluate.py --dataset dataset_sample --models mock:oracle mock:random --blind --run sample_check
 ```
 
-The **full dataset** (308 scenes, 5,761 tasks, 740 pairs, 2.1 GB) is attached to the GitHub Release as three zip parts
+The **full dataset** (308 scenes, 5,761 tasks, 740 pairs, 2.1 GB) is published by the `dataset-release` GitHub workflow as a Release with three zip parts
 (levels 1-3, levels 4-5, real terrain) with SHA-256 checksums, and can also be regenerated exactly with `./run_all.sh`.
 `manifest_full_dataset.json` describes the full dataset (counts, validator pass rates, dropped questions, answer balance).

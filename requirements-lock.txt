@@ -1,0 +1,13 @@
+# Exact versions used to build the published dataset (Python 3.13). Use this file to
+# reproduce the dataset byte-for-byte; requirements.txt allows newer versions.
+numpy==2.5.3
+pillow==12.3.0
+matplotlib==3.11.2
+pysheds==0.5
+rasterio==1.5.2
+numba==0.68.1
+scipy==1.18.1
+affine==3.0.1
+pyproj==3.8.0
+anthropic==2.12.0
+pytest==9.1.1
