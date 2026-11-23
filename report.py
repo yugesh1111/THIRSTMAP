@@ -220,6 +220,10 @@ def _pct(x):
 
 def markdown(S, out):
     L = ["# ThirstMap evaluation report", ""]
+    if any(m.startswith("mock:") for m in S["models"]):
+        L += ["> **Note:** `mock:*` entries are offline baselines, not AI models: `oracle` returns the answer key "
+              "(tests the scorer), `random` picks random options (chance level), `stubborn` repeats the original "
+              "answer on counterfactual twins. Their numbers are expected by construction; see docs/VERIFICATION.md.", ""]
     L += ["## Overall", "", "| Model | With image | Without image (blind) | Tasks |", "|---|---|---|---|"]
     for m, v in S["overall"].items():
         L.append(f"| {m} | {_pct(v['image'])} | {_pct(v['blind'])} | {v['n']} |")

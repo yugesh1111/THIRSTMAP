@@ -108,6 +108,13 @@ python3 staircase.py --dataset dataset --models claude:claude-opus-5-5 --trials 
 
 This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row make the next task harder, one wrong answer makes it easier. It converges where the model is right about 71% of the time, so lucky guesses can't climb. That's about 144 calls per model instead of about 2,000. Offline check: the oracle scores 5.5 (never fails) on every skill and the random guesser 0.5–1.5.
 
+## Results status (read this first)
+No frontier AI model has been evaluated yet; that needs API access. Everything under `results/` so far comes from **offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`), which test the dataset and the scorer. They are not model findings. **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
+- every reported number recomputed independently from the raw responses (exact match);
+- the random baseline at its exact mathematical chance level (13.9% expected vs 13.9% observed);
+- sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds;
+- spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
+
 ## Outputs of an evaluation run (`results/<run>/`)
 - `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost
 - `chart_accuracy_by_skill.png`, `chart_eye_exam.png`, `chart_by_style.png`

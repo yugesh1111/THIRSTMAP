@@ -1,5 +1,7 @@
 # ThirstMap evaluation report
 
+> **Note:** `mock:*` entries are offline baselines, not AI models: `oracle` returns the answer key (tests the scorer), `random` picks random options (chance level), `stubborn` repeats the original answer on counterfactual twins. Their numbers are expected by construction; see docs/VERIFICATION.md.
+
 ## Overall
 
 | Model | With image | Without image (blind) | Tasks |
