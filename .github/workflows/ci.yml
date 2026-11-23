@@ -70,3 +70,21 @@ jobs:
           thirstmap list
           thirstmap generate --level 1 --seed 3 --twin --out scenes
           ls scenes/*/answer_key.json scenes/*/map.png
+
+  notebook:
+    # the Colab quickstart, executed top to bottom (no API key: the optional Gemini cell skips itself)
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install nbconvert ipykernel
+      - name: execute ThirstMap_quickstart.ipynb
+        run: |
+          mkdir -p /tmp/nb && cp ThirstMap_quickstart.ipynb /tmp/nb/ && cd /tmp/nb
+          jupyter nbconvert --to notebook --execute --ExecutePreprocessor.timeout=1200 ThirstMap_quickstart.ipynb --output run.ipynb
+          python -c "import json; nb=json.load(open('run.ipynb')); e=[o for c in nb['cells'] if c['cell_type']=='code' for o in c['outputs'] if o['output_type']=='error']; assert not e, e; print('notebook ran without errors')"

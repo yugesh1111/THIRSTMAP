@@ -186,10 +186,11 @@ One command reproduces everything (tests, dataset, baselines, eye exam, reports,
 ./run_all.sh --quick    # small version, about 2 min
 ```
 
-**Install it as a command** (a 150 KB package, no clone needed; built and tested by CI for each release):
+**Install it as a command** (fetches only the code, about 1 MB, not the 650 MB of images; CI tests this install on every push):
 
 ```bash
-pip install https://github.com/yugesh1111/THIRSTMAP/releases/download/v1.0.0/thirstmap-1.0.0-py3-none-any.whl
+git clone --depth 1 --filter=blob:none --sparse https://github.com/yugesh1111/THIRSTMAP && git -C THIRSTMAP sparse-checkout set thirstmap
+pip install ./THIRSTMAP
 thirstmap generate --level 3 --seed 11 --twin --out my_scenes     # one scene + its twin, checked
 thirstmap list                                                     # every pipeline stage as a subcommand
 ```

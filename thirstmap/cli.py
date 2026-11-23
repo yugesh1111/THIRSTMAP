@@ -51,7 +51,7 @@ def tools_dir():
     root = Path(__file__).resolve().parent.parent
     if (root / "generate.py").exists():
         return root
-    sys.exit("thirstmap: pipeline scripts not found; reinstall with `pip install https://github.com/yugesh1111/THIRSTMAP/releases/download/v1.0.0/thirstmap-1.0.0-py3-none-any.whl`")
+    sys.exit("thirstmap: pipeline scripts not found; reinstall it (README, Quick start: Install it as a command)")
 
 
 def usage():
