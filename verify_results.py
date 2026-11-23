@@ -78,6 +78,7 @@ def main():
     ap.add_argument("--out", default="docs")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
     tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(ds / "tasks.jsonl")}
     L = ["# Independent verification", "",
          "This file is produced by `verify_results.py`, which does not reuse the report or scoring code.", "",

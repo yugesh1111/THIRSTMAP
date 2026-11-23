@@ -6,3 +6,6 @@ dataset/
 results/*/responses.jsonl
 data/real/*.tif
 demo/
+ci_dataset/
+ci_docs/
+results/ci*/
