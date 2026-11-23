@@ -175,7 +175,7 @@ This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row ma
   - the random baseline at its exact mathematical chance level (13.8% expected vs 13.7% observed, over 5,761 tasks);
   - 10 sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds (10/10);
   - spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
-- **Exact inputs:** `eval_set/` (published with the final run) holds exactly the tasks and images the open models saw, with SHA-256 checksums, so anyone can repeat the run on identical images.
+- **Exact inputs:** [`eval_set/`](eval_set/) holds exactly the 256 tasks and 330 MB of images the open models saw (168 questions, 16 reading checks, 72 appearance variants), with SHA-256 checksums and answer reveals. Repeat the run on identical images with `python3 evaluate.py --dataset eval_set --all --models hf:MODEL_ID --run rerun`.
 
 ## Outputs of an evaluation run (`results/<run>/`)
 - `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost

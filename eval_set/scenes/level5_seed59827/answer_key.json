@@ -1,0 +1,188 @@
+{
+  "scene_id": "level5_seed59827",
+  "seed": 59827,
+  "level": 5,
+  "params": {
+    "level": 5,
+    "beta": 2.5999999999999996,
+    "relief_m": 54,
+    "contour_m": 5,
+    "stream_cells": 100,
+    "main_cells": 2500,
+    "n_villages": 8,
+    "n_farms": 6
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "skill": "trace_downstream",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+      "answer": [
+        "V4",
+        "V5",
+        "V8"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8"
+      ],
+      "traps": {
+        "upstream_same_stream": [],
+        "near_but_other_stream": [
+          "V3"
+        ]
+      }
+    },
+    {
+      "id": "Q2",
+      "skill": "order_along_flow",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Which village would receive the wastewater first?",
+      "answer": "V4",
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8"
+      ],
+      "traps": {
+        "upstream_same_stream": [],
+        "near_but_other_stream": [
+          "V3"
+        ],
+        "later_village": [
+          "V5",
+          "V8"
+        ]
+      }
+    },
+    {
+      "id": "Q3",
+      "skill": "nature_based_filtering",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "A constructed wetland must clean ALL of the wastewater from O before it reaches ANY village. Which candidate site (A-D) works?",
+      "answer": "A",
+      "options": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "traps": {
+        "too_late_after_village": [
+          "C"
+        ],
+        "upstream_of_outfall": [
+          "B"
+        ]
+      }
+    },
+    {
+      "id": "Q4",
+      "skill": "read_elevation",
+      "styles": [
+        "map"
+      ],
+      "question": "Treated water is stored in pond P (spot height 130 m). Which farms can be supplied by a gravity pipe, i.e. lie LOWER than the pond? List all.",
+      "answer": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ],
+      "margin_m": 3,
+      "options": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5",
+        "F6"
+      ]
+    },
+    {
+      "id": "Q10",
+      "skill": "measure_along_flow",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Using the scale bar, roughly how far does the wastewater travel ALONG THE STREAM from outfall O to the first village it reaches? Answer in metres.",
+      "answer": 1150,
+      "tolerance": 287,
+      "options": [
+        0,
+        5000
+      ]
+    },
+    {
+      "id": "Q6",
+      "skill": "siting_downstream_impact",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Three sites S1-S3 are proposed for a new data centre. Each would discharge wastewater at its marked outfall (dashed line). Whose wastewater would reach NO village before leaving the area?",
+      "answer": "S1",
+      "options": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "id": "Q7",
+      "skill": "trace_upstream_catchment",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+      "answer": [
+        "V7"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8"
+      ],
+      "traps": {
+        "downstream_not_upstream": [
+          "V4",
+          "V5",
+          "V8"
+        ]
+      }
+    }
+  ],
+  "terrain": "synthetic",
+  "drain_note": "Streams drain off the southern edge.",
+  "credit": null
+}

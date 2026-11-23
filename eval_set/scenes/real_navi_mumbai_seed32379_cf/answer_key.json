@@ -1,0 +1,49 @@
+{
+  "scene_id": "real_navi_mumbai_seed32379_cf",
+  "pair_of": "real_navi_mumbai_seed32379",
+  "cf_kind": "intake",
+  "cf_change": "intake I moves to a different point of the stream network",
+  "seed": 32379,
+  "level": 3,
+  "params": {
+    "level": 3,
+    "beta": 3.1999999999999997,
+    "relief_m": 38,
+    "contour_m": 5,
+    "stream_cells": 180,
+    "main_cells": 2500,
+    "n_villages": 6,
+    "n_farms": 5
+  },
+  "questions": [
+    {
+      "id": "Q7",
+      "skill": "trace_upstream_catchment",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+      "answer": [
+        "V4"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6"
+      ],
+      "traps": {
+        "downstream_not_upstream": [
+          "V6",
+          "V2"
+        ]
+      }
+    }
+  ],
+  "terrain": "navi_mumbai",
+  "drain_note": "Water can leave the area across any edge.",
+  "credit": "Real terrain: Copernicus DEM GLO-30 (modified) · ESA WorldCover 2021 (CC BY 4.0)"
+}

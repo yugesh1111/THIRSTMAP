@@ -1,0 +1,60 @@
+{
+  "scene_id": "level2_seed30000_cf",
+  "pair_of": "level2_seed30000",
+  "cf_kind": "thermal",
+  "cf_change": "the cooling water is cooler (x0.35 at the outfall)",
+  "seed": 30000,
+  "level": 2,
+  "params": {
+    "level": 2,
+    "beta": 3.5,
+    "relief_m": 30,
+    "contour_m": 10,
+    "stream_cells": 220,
+    "main_cells": 2500,
+    "n_villages": 5,
+    "n_farms": 4
+  },
+  "questions": [
+    {
+      "id": "Q8",
+      "skill": "read_colour_scale_threshold",
+      "styles": [
+        "thermal"
+      ],
+      "question": "The thermal image shows how much warmer than normal the water is. At which monitoring points (M1-M4) is the water MORE than 3 °C warmer than normal? List all.",
+      "answer": [],
+      "margin_c": 0.8,
+      "options": [
+        "M1",
+        "M2",
+        "M3",
+        "M4"
+      ],
+      "traps": {
+        "other_stream": [
+          "M1",
+          "M4"
+        ]
+      }
+    },
+    {
+      "id": "Q9",
+      "skill": "read_colour_scale_value",
+      "styles": [
+        "thermal"
+      ],
+      "question": "About how many °C warmer than normal is the water at monitoring point M3?",
+      "answer": 1.8,
+      "tolerance": 1.5,
+      "point": 17318,
+      "options": [
+        0,
+        15
+      ]
+    }
+  ],
+  "terrain": "synthetic",
+  "drain_note": "Streams drain off the southern edge.",
+  "credit": null
+}

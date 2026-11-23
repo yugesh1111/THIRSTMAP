@@ -23,18 +23,25 @@ from thirstmap.models import cost_usd, make_adapter
 from thirstmap.scoring import score
 
 
-def load_tasks(dataset, per_cell=None, levels=None, styles=None, seed=0, pairs=0, probes=0, variants=0):
+def load_tasks(dataset, per_cell=None, levels=None, styles=None, seed=0, pairs=0, probes=0, variants=0,
+               everything=False):
     """Pick the tasks for a run.
 
     per_cell : up to N original tasks per (question, style, difficulty) cell
     pairs    : N complete counterfactual pairs (original + twin), balanced across twin kinds
     probes   : N perception-probe tasks per (probe, style) from probes.jsonl ("can it read the labels?")
     variants : N appearance groups (original satellite task + monsoon / haze / coarse versions)
+    everything: every task in tasks.jsonl, probes.jsonl and variants.jsonl (e.g. to re-run eval_set/ exactly)
     """
     ds = Path(dataset)
     tasks = [json.loads(l) for l in open(ds / "tasks.jsonl")]
     tasks = [t for t in tasks if (not levels or t["level"] in levels) and (not styles or t["style"] in styles)]
     rng = random.Random(seed)
+    if everything:
+        for extra in ("probes.jsonl", "variants.jsonl"):
+            if (ds / extra).exists():
+                tasks += [json.loads(l) for l in open(ds / extra)]
+        return tasks
     if not (per_cell or pairs or probes or variants):
         return tasks
     chosen = []
@@ -106,11 +113,13 @@ def main():
     ap.add_argument("--pairs", type=int, default=0, help="also include N complete counterfactual pairs")
     ap.add_argument("--probes", type=int, default=0, help="also include N perception probes per (probe, style)")
     ap.add_argument("--variants", type=int, default=0, help="also include N appearance groups (4 looks each)")
+    ap.add_argument("--all", action="store_true",
+                    help="every task in the folder, including probes and variants (e.g. --dataset eval_set)")
     a = ap.parse_args()
 
     root = Path(a.dataset).resolve()          # task image paths are relative to the dataset folder
     tasks = load_tasks(a.dataset, a.per_cell, a.levels, a.styles, pairs=a.pairs, probes=a.probes,
-                       variants=a.variants)
+                       variants=a.variants, everything=a.all)
     out = Path("results") / a.run
     out.mkdir(parents=True, exist_ok=True)
     resp_path = out / "responses.jsonl"

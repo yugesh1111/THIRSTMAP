@@ -3,7 +3,7 @@
 Datasets are byte-reproducible on the same platform but can differ slightly across machines
 (floating-point and font rendering details), so the evaluation inputs themselves are published:
 anyone can re-run the evaluation on identical images with
-    python3 evaluate.py --dataset eval_set --models ... --run my_rerun
+    python3 evaluate.py --dataset eval_set --all --models ... --run my_rerun
 (tasks.jsonl here contains only the evaluated tasks; probes.jsonl / variants.jsonl likewise).
 
 Usage: python3 publish_eval_set.py --dataset dataset --run results/open_models --out eval_set
@@ -64,8 +64,12 @@ machine (for example a GitHub runner) can produce a slightly different but equal
 floating-point and font-rendering details. Publishing the evaluated images removes that doubt:
 
 ```bash
-python3 evaluate.py --dataset eval_set --models hf:Qwen/Qwen2.5-VL-3B-Instruct --workers 1 --blind --run rerun
+python3 evaluate.py --dataset eval_set --all --models hf:Qwen/Qwen2.5-VL-3B-Instruct --workers 1 --run rerun
+python3 evaluate.py --dataset eval_set --all --models hf:Qwen/Qwen2.5-VL-3B-Instruct --workers 1 --blind --run rerun   # + no-image check
 ```
+
+`--all` asks every task here, including the reading checks (`probes.jsonl`) and the appearance variants
+(`variants.jsonl`). `scenes/*/answer_key.json` and the `*_reveal.png` images show the answers for checking by eye.
 """)
     print(f"{counts} -> {out}  ({len(sums)} files, {size:.0f} MB)")
 
