@@ -36,16 +36,34 @@ def build(a):
         common = set.intersection(*[v for v in per.values() if len(v) >= 0.8 * mx])
         tasks = [t for t in tasks if t["task_id"] in common]
     rng = random.Random(7)
+    chosen = []
+    if a.pairs:            # every complete before-and-after pair in the pool: humans get a pair score too
+        halves = defaultdict(dict)
+        for t in tasks:
+            if t.get("pair_id"):
+                halves[t["pair_id"]][t["variant"]] = t
+        for pid in sorted(halves):
+            if len(halves[pid]) == 2:
+                chosen += [halves[pid]["base"], halves[pid]["counterfactual"]]
+    have = {t["task_id"] for t in chosen}
+    count = defaultdict(int)
+    for t in chosen:
+        count[t["skill"]] += 1
     by = defaultdict(list)
     for t in tasks:
-        if t.get("variant") != "counterfactual":
+        if t.get("variant") != "counterfactual" and t["task_id"] not in have:
             by[t["skill"]].append(t)
-    chosen = []
-    for sk in SKILL_ORDER:
+    for sk in SKILL_ORDER:                   # then fill every skill up to per_skill questions
         pool = by.get(sk, [])
         rng.shuffle(pool)
-        chosen += pool[: a.per_skill]
-    rng.shuffle(chosen)
+        chosen += pool[: max(0, a.per_skill - count[sk])]
+    for _ in range(200):                     # shuffle so the two halves of a pair sit far apart
+        rng.shuffle(chosen)
+        pos = {t["task_id"]: k for k, t in enumerate(chosen)}
+        gaps = [abs(pos[t["task_id"]] - pos[t["pair_id"].replace("__", "_cf__", 1)]) for t in chosen
+                if t.get("variant") == "base" and t["pair_id"].replace("__", "_cf__", 1) in pos]
+        if not gaps or min(gaps) >= 6:
+            break
     if out.exists():
         for p in out.glob("img/*"):
             p.unlink()
@@ -58,7 +76,8 @@ def build(a):
         items.append(dict(id=t["task_id"], img="img/" + name, q=t["question"], ctx=ctx, kind=t["scoring"],
                           options=t["options"], skill=SKILL_LABEL[t["skill"]], style=t["style"],
                           unit="m" if t["qid"] == "Q10" else "°C"))
-    (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False)))
+    (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False))
+                                    .replace("__N__", str(len(items))))
     print(f"{len(items)} tasks -> {out / 'index.html'}")
 
 
@@ -102,6 +121,24 @@ def score_files(a):
         for m, v in sorted(got.items(), key=lambda kv: -sum(kv[1].values()) / max(1, len(kv[1]))):
             if len(v) == len(ids):
                 L.append(f"| {m.split(':', 1)[-1].split('@')[0].split('/')[-1]} | {100 * sum(v.values()) / len(v):.0f}% |")
+    # before-and-after pairs: a person (or model) scores a pair only if both halves are right
+    hp = []
+    by_person = defaultdict(dict)
+    for r in rows:
+        by_person[r["person"]][r["id"]] = r["correct"]
+    pair_ids = sorted({tasks[i]["pair_id"] for i in {r["id"] for r in rows} if tasks[i].get("pair_id")})
+    pair_ids = [p_ for p_ in pair_ids if p_ in {r["id"] for r in rows} and p_.replace("__", "_cf__", 1) in {r["id"] for r in rows}]
+    if pair_ids:
+        hp = [by_person[pp][p_] and by_person[pp][p_.replace("__", "_cf__", 1)] for pp in by_person for p_ in pair_ids
+              if p_ in by_person[pp] and p_.replace("__", "_cf__", 1) in by_person[pp]]
+        L += ["", f"### Before-and-after pairs ({len(pair_ids)} pairs; a pair counts only if both halves are right)", "",
+              "| Who | Pairs right |", "|---|---|", f"| **Humans ({len(people)})** | **{sum(hp)} of {len(hp)}** |"]
+        if a.run and (Path(a.run) / "responses.jsonl").exists():
+            for m, v in sorted(got.items()):
+                both = [v[p_] and v[p_.replace("__", "_cf__", 1)] for p_ in pair_ids
+                        if p_ in v and p_.replace("__", "_cf__", 1) in v]
+                if len(both) == len(pair_ids):
+                    L.append(f"| {m.split(':', 1)[-1].split('@')[0].split('/')[-1]} | {sum(both)} of {len(both)} |")
     secs = [r["seconds"] for r in rows if r.get("seconds")]
     if secs:
         L += ["", f"Median time per task: {sorted(secs)[len(secs) // 2]:.0f} s"]
@@ -109,7 +146,7 @@ def score_files(a):
     (Path(a.out) / "HUMAN_RESULTS.md").write_text("\n".join(L))
     (Path(a.out) / "human_summary.json").write_text(json.dumps(dict(
         people=len(people), answers=len(rows), accuracy=sum(r["correct"] for r in rows) / len(rows),
-        questions=len({r["id"] for r in rows})), indent=1))
+        questions=len({r["id"] for r in rows}), pairs_right=sum(hp), pairs_answered=len(hp)), indent=1))
     print("\n".join(L))
 
 
@@ -129,7 +166,7 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:0;background:var(-
 .muted{color:var(--ink2);font-size:14px}.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
 </style></head><body><div class="wrap">
 <h1 style="font-size:22px;margin:4px 0">Can you trace the water?</h1>
-<p class="muted">You will see 30 generated landscape images, each with one question about where water flows. Answer as carefully as you can, on your own: no help from other people, search engines or AI tools. There is no time limit; most people take 10 to 15 minutes. Your answers are compared with a water-flow simulation to check that people can solve these tasks; only your initials and your score are used, in a public hackathon project. Your progress is saved in this browser if you close the page.</p>
+<p class="muted">You will see __N__ questions about generated landscape images, each about where water flows. Answer as carefully as you can, on your own: no help from other people, search engines or AI tools. There is no time limit; most people take 10 to 15 minutes. Your answers are compared with a water-flow simulation to check that people can solve these tasks; only your initials and your score are used, in a public hackathon project. Your progress is saved in this browser if you close the page.</p>
 <p><label>Your initials: <input type="text" id="who" autocomplete="off"></label></p>
 <div class="bar"><i id="prog" style="width:0"></i></div><p class="muted" id="count"></p>
 <div id="stage"></div></div>
@@ -179,6 +216,7 @@ if __name__ == "__main__":
     b = sub.add_parser("build"); b.add_argument("--dataset", default="dataset")
     b.add_argument("--per-skill", type=int, default=3); b.add_argument("--out", default="human_eval")
     b.add_argument("--from-run", default=None, help="pick only tasks every model in this run answered")
+    b.add_argument("--pairs", action="store_true", help="include every complete before-and-after pair in the pool")
     s = sub.add_parser("score"); s.add_argument("files", nargs="+"); s.add_argument("--dataset", default="dataset")
     s.add_argument("--run", default="results/models", help="compare with the models' answers to the same tasks")
     s.add_argument("--out", default="human_eval")

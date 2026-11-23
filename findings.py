@@ -169,7 +169,10 @@ def leaderboard():
     if hs.exists():
         H = json.loads(hs.read_text())
         L += ["## People", "", f"{H['people']} people answered {H['questions']} questions the models also answered: "
-              f"**{pct(H['accuracy'])}** right ([human_eval/HUMAN_RESULTS.md](human_eval/HUMAN_RESULTS.md)).", ""]
+              f"**{pct(H['accuracy'])}** right"
+              + (f", and both halves of **{H['pairs_right']} of {H['pairs_answered']}** before-and-after pairs"
+                 if H.get("pairs_answered") else "")
+              + " ([human_eval/HUMAN_RESULTS.md](human_eval/HUMAN_RESULTS.md)).", ""]
     L += ["## Add your model", "", "```bash",
           "python3 evaluate.py --dataset eval_set --all --models hf:YOUR/MODEL --run mine          # local, open weights",
           "OPENAI_API_KEY=... python3 evaluate.py --dataset eval_set --all --models openai:MODEL@BASE_URL --run mine",
