@@ -87,7 +87,9 @@ def score_files(a):
     bad = errata.load(ds)
     tasks = {t["task_id"]: t for t in map(json.loads, open(ds / "tasks.jsonl")) if t["task_id"] not in bad}
     rows = []
-    for f in a.files:
+    import glob
+    files = [f for pat in a.files for f in (sorted(glob.glob(pat)) or [pat])]   # Windows shells do not expand *.txt
+    for f in files:
         txt = Path(f).read_text().strip()
         sub = json.loads(txt[txt.index("{"): txt.rindex("}") + 1])      # tolerate text around a pasted code
         for r in sub["answers"]:
