@@ -1,0 +1,52 @@
+{
+  "scene_id": "level5_seed60991_cf",
+  "pair_of": "level5_seed60991",
+  "cf_kind": "intake",
+  "cf_change": "intake I moves to a different point of the stream network",
+  "seed": 60991,
+  "level": 5,
+  "params": {
+    "level": 5,
+    "beta": 2.5999999999999996,
+    "relief_m": 54,
+    "contour_m": 5,
+    "stream_cells": 100,
+    "main_cells": 2500,
+    "n_villages": 8,
+    "n_farms": 6
+  },
+  "questions": [
+    {
+      "id": "Q7",
+      "skill": "trace_upstream_catchment",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+      "answer": [
+        "V6"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5",
+        "V6",
+        "V7",
+        "V8"
+      ],
+      "traps": {
+        "downstream_not_upstream": [
+          "V4",
+          "V1",
+          "V8"
+        ]
+      }
+    }
+  ],
+  "terrain": "synthetic",
+  "drain_note": "Streams drain off the southern edge.",
+  "credit": null
+}

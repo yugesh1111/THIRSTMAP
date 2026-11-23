@@ -1,0 +1,84 @@
+{
+  "scene_ok": true,
+  "checks": {
+    "V1_independent_pysheds": {
+      "passed": true,
+      "receiver_agreement": 0.9977,
+      "mismatches": {}
+    },
+    "V5_elevation_margin": {
+      "passed": "True",
+      "min_gap_m": 7.17
+    },
+    "V7_spatial_margin": {
+      "passed": true,
+      "min_cells": 25.96
+    },
+    "V8_single_wetland": {
+      "passed": false,
+      "n_correct": 0
+    },
+    "V9_path_visible_satellite": {
+      "passed": true,
+      "fraction": 1.0
+    },
+    "V10_labels_satellite": {
+      "passed": true,
+      "problems": []
+    },
+    "V9_path_visible_map": {
+      "passed": true,
+      "fraction": 1.0
+    },
+    "V10_labels_map": {
+      "passed": true,
+      "problems": []
+    },
+    "V11_style_applicability": {
+      "passed": true,
+      "wrong": []
+    }
+  },
+  "keep": [
+    "Q1",
+    "Q2",
+    "Q4",
+    "Q10",
+    "Q5",
+    "Q6",
+    "Q7"
+  ],
+  "drop": {
+    "Q3": "V8 wetland answer not unique"
+  },
+  "styles": {
+    "Q1": [
+      "map",
+      "satellite"
+    ],
+    "Q2": [
+      "map",
+      "satellite"
+    ],
+    "Q4": [
+      "map"
+    ],
+    "Q10": [
+      "map",
+      "satellite"
+    ],
+    "Q5": [
+      "map",
+      "satellite"
+    ],
+    "Q6": [
+      "map",
+      "satellite"
+    ],
+    "Q7": [
+      "map",
+      "satellite"
+    ]
+  },
+  "style_drop": {}
+}
