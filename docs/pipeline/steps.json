@@ -1,0 +1,50 @@
+{
+  "scene": "level4_seed48947",
+  "level": 4,
+  "seed": 48947,
+  "size_km": 4.0,
+  "cells": 160,
+  "cell_m": 25,
+  "elev_min_m": 48,
+  "elev_max_m": 149,
+  "stream_cells": 1465,
+  "lake_cells": 935,
+  "max_upstream_km2": 5.6,
+  "villages": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+  ],
+  "traps": {
+    "V6": "close, other stream"
+  },
+  "wetlands": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "answer": [
+    "V4",
+    "V7"
+  ],
+  "path_cells": 137,
+  "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+  "pysheds_agree_pct": 99.73,
+  "pysheds_disagree_cells": 70,
+  "answers_identical": "10/10",
+  "same_path": true,
+  "satellite_rebuilt_identical": true,
+  "pixel_cells": 137,
+  "pixel_visible_pct": 100.0,
+  "twin_change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+  "twin_answer": [
+    "V4",
+    "V6"
+  ],
+  "twin_pixels_changed_pct": 0.64
+}

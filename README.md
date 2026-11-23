@@ -39,7 +39,17 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 
 ## See it
 
-**Demo:** [`docs/demo/index.html`](docs/demo/index.html) shows 64 tasks with each open model's real reply, an automatic ✓/✗, and an answer-key reveal, plus counterfactual pairs. Download the folder and open the page in a browser (no server needed).
+**Demo:** [`docs/demo/index.html`](docs/demo/index.html) opens with the results, then walks one real scene through every pipeline step, then shows 64 tasks with each open model's real reply, an automatic ✓/✗ and an answer-key reveal, plus before-and-after pairs. Download the folder and open the page in a browser (no server needed).
+
+**How a task is made** (one real scene, `level4_seed48947`, from `pipeline_visuals.py`):
+
+| 1 Terrain | 2 Water simulation | 3 Scene script + traps | 4 Answer key |
+|---|---|---|---|
+| ![terrain](docs/pipeline/1_terrain.png) | ![water](docs/pipeline/2_water.png) | ![scene](docs/pipeline/3_scene.png) | ![answer](docs/pipeline/4_answer.png) |
+| Fractal terrain, 4 × 4 km, 25 m cells | Priority-flood + D8 routing draws the streams | DC-1, outfall O, villages, wetlands; V6 is the near-but-other-stream trap | Traced downhill from O: **V4, V7** |
+| **5 Independent check** | **6 Rendered (satellite style)** | **7 Pixel evidence** | **8 Twin** |
+| ![check](docs/pipeline/5_check.png) | ![satellite](docs/pipeline/6_satellite.jpg) | ![pixels](docs/pipeline/7_pixels.jpg) | ![twin](docs/pipeline/8_twin.jpg) |
+| pysheds agrees on 99.73% of cells, same answer to 10/10 questions | Also rendered as topographic map and thermal | 137/137 path cells visible in the pixels | Outfall moved (0.64% of pixels): answer becomes **V4, V6** |
 
 | One scene, three image styles, one answer key | Difficulty dial, level 1 → 5 |
 |---|---|
@@ -136,7 +146,8 @@ python3 generate.py --level 3 --seed 11 --twin          # one scene + its counte
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
 python3 evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
-python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines --out docs/demo
+python3 pipeline_visuals.py --scene level4_seed48947 --out docs/pipeline
+python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines --pipeline docs/pipeline --out docs/demo
 ```
 
 **Free open models, no keys (CPU or GPU):**
@@ -203,7 +214,8 @@ thirstmap/scoring.py      robust answer parsing, scoring (exact / set-F1 / toler
 generate.py               scene -> render -> validate -> keep / drop / regenerate
 build_dataset.py          parallel batch build + manifest (counts, validation pass rates, answer balance)
 evaluate.py, report.py    model runs, metrics, charts, markdown report
-build_demo.py             self-contained demo page: image -> question -> model answers -> ✓/✗ -> answer reveal, + pairs
+build_demo.py             self-contained demo page: results, pipeline walkthrough, tasks with real replies -> ✓/✗ -> answer reveal
+pipeline_visuals.py       one scene through every pipeline step (terrain, water, scene, answer, checks, styles, twin)
 staircase.py              adaptive eye exam (2-down/1-up) per model x skill
 human_eval.py             human baseline page + scorer (same tasks, same scorer)
 validation_report.py      collects all validation evidence into docs/VALIDATION_REPORT.md

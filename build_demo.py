@@ -1,7 +1,15 @@
-"""Build a self-contained demo page: image -> question -> each model's answer -> automatic ✓/✗ -> answer reveal.
+"""Build a self-contained demo page for judges.
 
-Usage: python3 build_demo.py --dataset dataset --run results/<run> [--per-skill 6] --out demo
-Open demo/index.html in a browser (no server needed).
+Sections: the results in one table, "How a task is made" (one real scene through every pipeline step,
+from pipeline_visuals.py), and a browser of tasks: image -> question -> each model's real reply ->
+automatic ✓/✗ -> answer-key reveal, with counterfactual pairs.
+
+Usage:
+  python3 pipeline_visuals.py --scene level4_seed48947 --out docs/pipeline
+  python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines \
+      --pipeline docs/pipeline --out docs/demo
+Open docs/demo/index.html in a browser (no server needed). --fragment writes the page body only
+(for hosts that add their own <html>/<head>/<body>).
 """
 import argparse
 import html
@@ -16,14 +24,155 @@ from PIL import Image
 from report import SKILL_LABEL, SKILL_ORDER
 from thirstmap.scoring import score
 
-
 BASELINES = {"mock:oracle": "baseline: answer key", "mock:random": "baseline: random guess"}
+SIZE = {"Qwen2.5-VL-3B": "3B", "Qwen2-VL-2B": "2B", "SmolVLM2-2.2B": "2.2B", "SmolVLM-256M": "0.26B"}
+E = html.escape
 
 
 def display(model):
     """'hf:Qwen/Qwen2.5-VL-3B-Instruct' -> 'Qwen2.5-VL-3B'."""
     name = model.split(":", 1)[-1].split("/")[-1].split("@")[0]
     return name.replace("-Instruct", "")
+
+
+def pct(x):
+    return "–" if x is None else f"{100 * x:.0f}%"
+
+
+def fmt(v):
+    if isinstance(v, list):
+        return ", ".join(map(str, v)) if v else "none"
+    return "–" if v is None else str(v)
+
+
+def results_html(run, finetune):
+    S = json.loads((run / "summary.json").read_text())
+    rows = []
+    for m in S["models"]:
+        vc = S["vs_chance"].get(m)
+        if not vc or not m.startswith("hf:"):
+            continue
+        probes = list(S.get("perception_probes", {}).get(m, {}).values())
+        read = sum(v["acc"] * v["n"] for v in probes) / sum(v["n"] for v in probes) if probes else None
+        rows.append(dict(name=display(m), acc=vc["correct"] / vc["n"], k=vc["correct"], n=vc["n"], chance=vc["chance"],
+                         p=vc["p_value"], blind=S["overall"][m]["blind"],
+                         pair=S["counterfactual_pairs"].get(m, {}).get("pair_accuracy"), read=read))
+    rows.sort(key=lambda r: -r["acc"])
+    top = max(0.25, max(r["acc"] for r in rows) * 1.25)
+    body = []
+    for r in rows:
+        w, c = 100 * r["acc"] / top, 100 * r["chance"] / top
+        body.append(
+            f'<tr><th scope="row">{E(r["name"])} <span class="muted">{SIZE.get(r["name"], "")}</span></th>'
+            f'<td><div class="acc"><span class="num">{pct(r["acc"])}</span>'
+            f'<span class="bar" title="{pct(r["acc"])} correct; random guessing: {pct(r["chance"])}">'
+            f'<i style="width:{w:.1f}%"></i><b style="left:{c:.1f}%"></b></span></div></td>'
+            f'<td class="num">{pct(r["blind"])}</td><td class="num">{r["p"]:.2f}</td>'
+            f'<td class="num">{pct(r["pair"])}</td><td class="num">{pct(r["read"])}</td></tr>')
+    chance = rows[0]["chance"] if rows else None
+    ft = ""
+    fs = finetune / "summary.json" if finetune else None
+    if fs and fs.exists():
+        F = json.loads(fs.read_text())
+        base = next((m for m in F["models"] if "(base)" in m), None)
+        tuned = next((m for m in F["models"] if "fine-tuned" in m), None)
+        if base and tuned:
+            vb, vt = F["vs_chance"][base], F["vs_chance"][tuned]
+            ft = (f'<p class="note"><b>Fine-tuning.</b> SmolVLM-256M trained on 300 ThirstMap tasks went from '
+                  f'{pct(vb["correct"] / vb["n"])} to {pct(vt["correct"] / vt["n"])} on {vt["n"]} questions from '
+                  f'scenes it never saw, and now scores {pct(vt["correct"] / vt["n"])} with the image against '
+                  f'{pct(F["overall"][tuned]["blind"])} without it. The dataset can teach the skill, a little.</p>')
+    return f"""<div class="table"><table>
+<thead><tr><th scope="col">Model</th><th scope="col">Correct, with the image <span class="key"><i></i>chance {pct(chance)}</span></th>
+<th scope="col">Without the image</th><th scope="col">p vs guessing</th><th scope="col">Both halves of a pair right</th>
+<th scope="col">Reads the labels</th></tr></thead>
+<tbody>{''.join(body)}</tbody></table></div>
+<p class="note">{rows[0]["n"] if rows else 0} questions per model, the same for every model, plus 30 before-and-after pairs and
+16 reading checks. Free open-weight models from Hugging Face, run locally with greedy decoding. Every reply on this
+page is the model's real, unedited output.</p>{ft}"""
+
+
+def pipeline_html(pdir, tasks, run):
+    f = json.loads((pdir / "steps.json").read_text())
+    scene = f["scene"]
+    q1 = next((t for t in tasks.values() if t["scene_id"] == scene and t["qid"] == "Q1" and t["style"] == "satellite"),
+              None)
+    cf = next((t for t in tasks.values() if q1 and t.get("pair_id") == q1.get("pair_id")
+               and t.get("variant") == "counterfactual"), None)
+    replies = defaultdict(dict)
+    for line in open(run / "responses.jsonl"):
+        r = json.loads(line)
+        if r["mode"] == "image" and r["task_id"] in {q1 and q1["task_id"], cf and cf["task_id"]}:
+            replies[r["task_id"]][display(r["model"])] = score(tasks[r["task_id"]], r["raw"]) | {"raw": r["raw"]}
+    why_txt = {"close, other stream": "is close to the data centre but on another stream",
+               "upstream, same stream": "is on the same stream but upstream of O"}
+    traps = "; ".join(f"{v} {why_txt.get(why, why)}" for v, why in f["traps"].items())
+    km = f"{f['size_km']:.0f}"
+
+    def fig(src, alt, cap=None):
+        c = f"<figcaption>{E(cap)}</figcaption>" if cap else ""
+        return f'<figure><img src="pipeline/{src}" alt="{E(alt)}" loading="lazy" width="640" height="640">{c}</figure>'
+
+    def reply_rows(task):
+        out = []
+        for name, sc in sorted(replies.get(task["task_id"], {}).items()):
+            tags = f' <span class="tag">{E(", ".join(sc["tags"]))}</span>' if sc["tags"] else ""
+            out.append(f'<li><span class="mark {"ok" if sc["correct"] else "bad"}" aria-label="'
+                       f'{"right" if sc["correct"] else "wrong"}">{"✓" if sc["correct"] else "✗"}</span>'
+                       f'<span><b>{E(name)}</b> answered {E(fmt(sc["parsed"]))}{tags}</span></li>')
+        return "".join(out)
+
+    steps = [
+        ("Terrain", f"Fractal terrain for a {km} × {km} km area on a {f['cells']} × {f['cells']} grid of "
+         f"{f['cell_m']} m cells. Elevation runs from {f['elev_min_m']} m (light) to {f['elev_max_m']} m (dark), "
+         "higher in the north, so streams drain south.", fig("1_terrain.png", "Shaded elevation of the scene")),
+        ("Water simulation", "Hollows are filled first (priority-flood), then every cell sends its water to its "
+         "steepest downhill neighbour (D8 routing). Counting the cells upstream of each point draws the streams: "
+         f"{f['stream_cells']:,} stream cells, {f['lake_cells']} cells of ponded water, and up to "
+         f"{f['max_upstream_km2']} km² draining through one point.", fig("2_water.png", "Flow accumulation map")),
+        ("Scene script", f"The script places data centre DC-1 and its outfall O, {len(f['villages'])} villages, "
+         f"{len(f['wetlands'])} candidate wetlands and a water intake I. Traps are built in: {traps} "
+         "(yellow). A model that answers by distance instead of by flow picks it.",
+         fig("3_scene.png", "Placements: data centre, outfall, villages, wetlands")),
+        ("Answer key", f"Tracing downhill from O gives the reference answer. The question: “{E(f['question'])}” "
+         f"The answer: <b>{E(fmt(f['answer']))}</b>. No model and no person is involved.",
+         fig("4_answer.png", "Wastewater path from O to the villages it reaches")),
+        ("Independent check", f"pysheds, a separate hydrology library, recomputes the flow. It agrees on "
+         f"{f['pysheds_agree_pct']}% of cells (red: the {f['pysheds_disagree_cells']} cells that differ), traces "
+         f"the same path (blue under orange) and gives the same answer to {f['answers_identical']} questions. "
+         "A question whose answers disagree is dropped, never edited.",
+         fig("5_check.png", "Cells where the two flow computations agree")),
+        ("Three image styles", "The scene is rendered as a satellite-style image, a topographic map and a thermal "
+         "image. One answer key serves all three, and each question is asked only in the styles that show its "
+         "evidence.",
+         '<div class="trio">' + fig("6_satellite.jpg", "Satellite-style image", "Satellite-style")
+         + fig("6_map.jpg", "Topographic map", "Topographic map")
+         + fig("6_thermal.jpg", "Thermal image", "Thermal, °C above normal") + "</div>"),
+        ("Pixel evidence", f"Before release, the answer path is checked in the image the model will see. Each dot is "
+         f"a path cell; green means water is visible there ({f['pixel_visible_pct']:.0f}% of {f['pixel_cells']} "
+         "cells). Labels must not overlap or leave the frame. Rebuilt from its seed, this image is "
+         f"{'pixel-identical to' if f.get('satellite_rebuilt_identical') else 'different from'} the dataset copy.",
+         fig("7_pixels.jpg", "Answer path cells checked on the satellite image")),
+        ("Before-and-after twin", f"The twin changes one thing: {E(f.get('twin_change') or '')}. Only "
+         f"{f.get('twin_pixels_changed_pct')}% of pixels change (outlined in pink). The correct answer moves from "
+         f"<b>{E(fmt(f['answer']))}</b> to <b>{E(fmt(f.get('twin_answer')))}</b>, so only a model that looks can be "
+         "right on both.",
+         '<div class="duo">' + fig("8_original.jpg", "Original scene", f"Original: {fmt(f['answer'])}")
+         + fig("8_twin.jpg", "Twin with the moved outfall outlined", f"Twin: {fmt(f.get('twin_answer'))}")
+         + "</div>"),
+    ]
+    if q1 and cf:
+        steps.append(("Scoring", "Each reply is parsed and compared with the key automatically. Wrong answers are "
+                      "tagged with the trap they fell for. These are the real replies of the four open models to this "
+                      "scene and its twin:",
+                      f'<div class="scores"><div><h4>Original · key {E(fmt(q1["answer"]))}</h4><ul class="replies">'
+                      f'{reply_rows(q1)}</ul></div><div><h4>Twin · key {E(fmt(cf["answer"]))}</h4>'
+                      f'<ul class="replies">{reply_rows(cf)}</ul></div></div>'))
+    out = []
+    for k, (title, text, visual) in enumerate(steps, 1):
+        out.append(f'<li class="step"><div class="text"><span class="n">{k}</span><h3>{E(title)}</h3>'
+                   f'<p>{text}</p></div><div class="visual">{visual}</div></li>')
+    return f'<ol class="steps">{"".join(out)}</ol>', scene
 
 
 def main():
@@ -35,6 +184,9 @@ def main():
     ap.add_argument("--out", default="demo")
     ap.add_argument("--baselines", default=None,
                     help="run with offline baselines (mock:oracle / mock:random) to show beside the models")
+    ap.add_argument("--finetune", default="results/finetune")
+    ap.add_argument("--pipeline", default=None, help="folder from pipeline_visuals.py")
+    ap.add_argument("--fragment", action="store_true", help="write the page body only, without <html>/<head>/<body>")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
     root = ds.resolve()
@@ -99,59 +251,155 @@ def main():
                           pair=t.get("pair_id"), variant=t.get("variant"), change=t.get("cf_change"),
                           question=t["question"], answer=t["answer"], image=names["image"],
                           reveal=names["reveal"], models=answers[tid]))
-    (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False)))
-    print(f"demo with {len(items)} tasks -> {out / 'index.html'}")
+    pipe = ""
+    if a.pipeline:
+        shutil.copytree(a.pipeline, out / "pipeline", ignore=shutil.ignore_patterns("*.json"))
+        steps, scene = pipeline_html(Path(a.pipeline), tasks, run)
+        pipe = (f'<section class="band" id="how"><div class="wrap"><h2>How a task is made</h2>'
+                f'<p class="lede">One real scene from the dataset (<code>{E(scene)}</code>), followed through every '
+                f'step of the pipeline.</p>{steps}</div></section>')
+    page = (HEAD + BODY.replace("__RESULTS__", results_html(run, Path(a.finetune) if a.finetune else None))
+            .replace("__PIPELINE__", pipe)
+            .replace("__DATA__", json.dumps(items, ensure_ascii=False).replace("</", "<\\/")))
+    if not a.fragment:
+        page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
+                '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
+                + page.replace("</style>", "</style></head><body>", 1) + "</body></html>\n")
+    (out / "index.html").write_text(page)
+    print(f"demo with {len(items)} tasks{' + pipeline walkthrough' if pipe else ''} -> {out / 'index.html'}")
 
 
-PAGE = r"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ThirstMap demo</title>
+HEAD = r"""<title>ThirstMap demo</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>
-:root{--bg:#f6f5f2;--card:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--line:#e4e3df;--ok:#008300;--bad:#e34948;--acc:#2a78d6}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121211;--card:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--line:#33332f;--ok:#0ca30c;--bad:#e66767;--acc:#3987e5}}
-:root[data-theme="dark"]{--bg:#121211;--card:#1a1a19;--ink:#f0efec;--ink2:#c3c2b7;--line:#33332f;--ok:#0ca30c;--bad:#e66767;--acc:#3987e5}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif}
-header{padding:20px 16px 8px;max-width:1200px;margin:auto}h1{font-size:22px;margin:0 0 4px}header p{margin:0;color:var(--ink2)}
-.bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 16px;max-width:1200px;margin:auto;align-items:center}
-select,button{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
-.stats{margin-left:auto;color:var(--ink2);font-size:14px}
-main{max-width:1200px;margin:auto;padding:0 16px 40px;display:grid;gap:16px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:12px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:hidden}
-@media (max-width:820px){.card{grid-template-columns:1fr}}
-.pic{position:relative;background:#000}.pic img{width:100%;display:block}
-.pic button{position:absolute;left:10px;bottom:10px;background:rgba(0,0,0,.7);color:#fff;border:0}
-.body{padding:16px;display:flex;flex-direction:column;gap:10px}
-.meta{display:flex;gap:6px;flex-wrap:wrap}.chip{font-size:12px;padding:2px 8px;border-radius:99px;border:1px solid var(--line);color:var(--ink2)}
+/* Layout: one reading column; results first, then the pipeline as numbered steps (text beside its picture), then the task browser. */
+:root{
+  --bg:#f3f6f7; --surface:#ffffff; --ink:#0f1417; --ink2:#4b5860; --line:#d9e1e5;
+  --water:#2a78d6; --waste:#d95926; --ok:#0b7a0b; --bad:#c13a3a; --chip:#eaf0f3;
+  --display:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --text:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0e1316; --surface:#161c20; --ink:#eef2f4; --ink2:#a7b3ba; --line:#2a343a;
+  --water:#3987e5; --waste:#e2703f; --ok:#34b334; --bad:#e66767; --chip:#1f272c; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1316; --surface:#161c20; --ink:#eef2f4; --ink2:#a7b3ba; --line:#2a343a;
+  --water:#3987e5; --waste:#e2703f; --ok:#34b334; --bad:#e66767; --chip:#1f272c; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--text)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3,h4{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.2}
+h1{font-size:clamp(26px,4vw,38px);font-weight:700}
+h2{font-size:24px;font-weight:600}
+h3{font-size:18px;font-weight:600}
+h4{font-size:14px;font-weight:600}
+p{margin:0}
+code{font-family:var(--mono);font-size:.88em}
+.muted,.note{color:var(--ink2)}
+.note{font-size:14px;max-width:75ch}
+header{padding-block:28px 8px}
+header .wrap{display:grid;gap:10px}
+.eyebrow{font:600 12px/1 var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--water)}
+.lede{color:var(--ink2);max-width:70ch}
+section{padding-block:22px}
+section .wrap{display:grid;gap:14px}
+.band{background:var(--surface);border-block:1px solid var(--line)}
+.table{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+tbody tr:last-child th,tbody tr:last-child td{border-bottom:0}
+thead th{font-weight:500;color:var(--ink2);font-size:13px}
+tbody th{font-weight:600;white-space:nowrap}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.acc{display:flex;align-items:center;gap:10px;min-width:170px}
+.acc .num{width:3.2em;font-weight:600}
+.bar{position:relative;flex:1;height:8px;background:var(--chip);border-radius:4px}
+.bar i{position:absolute;inset:0 auto 0 0;background:var(--water);border-radius:4px}
+.bar b{position:absolute;top:-5px;bottom:-5px;width:2px;background:var(--ink);margin-left:-1px}
+.key{display:inline-flex;align-items:center;gap:6px;margin-left:8px;font-size:12px}
+.key i{display:inline-block;width:2px;height:12px;background:var(--ink)}
+.steps{list-style:none;margin:6px 0 0;padding:0;display:grid;gap:28px}
+.step{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start;padding-top:22px;border-top:1px solid var(--line)}
+.visual>figure{max-width:520px}
+.step:first-child{border-top:0;padding-top:0}
+.step .text{display:grid;gap:8px;align-content:start}
+.step .n{font:700 13px/1 var(--display);color:var(--water);letter-spacing:.04em}
+.step p{color:var(--ink2);max-width:60ch}
+.step p b{color:var(--ink)}
+figure{margin:0;display:grid;gap:6px;min-width:0}
+figure img{width:100%;height:auto;display:block;border-radius:8px;border:1px solid var(--line);background:var(--bg)}
+figcaption{font-size:13px;color:var(--ink2)}
+.trio{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.scores{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.scores>div{border:1px solid var(--line);border-radius:10px;padding:12px;display:grid;gap:8px;background:var(--bg)}
+.replies{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14px}
+.replies li{display:grid;grid-template-columns:20px minmax(0,1fr);gap:6px}
+.mark{font-weight:700}.ok{color:var(--ok)}.bad{color:var(--bad)}
+.tag{font-size:12px;color:var(--bad)}
+@media (max-width:820px){.step{grid-template-columns:1fr}.trio{grid-template-columns:1fr 1fr}.scores{grid-template-columns:1fr}}
+@media (max-width:480px){.trio,.duo{grid-template-columns:1fr}}
+.bar-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+select,button{font:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+button{cursor:pointer}
+select:focus-visible,button:focus-visible{outline:2px solid var(--water);outline-offset:2px}
+.stats{margin-left:auto;color:var(--ink2);font-size:14px;font-variant-numeric:tabular-nums}
+#list{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:hidden}
+@media (max-width:820px){.card{grid-template-columns:1fr}.stats{margin-left:0;width:100%}}
+.pic{position:relative;background:var(--bg)}.pic img{width:100%;height:auto;display:block}
+.pic button{position:absolute;left:10px;bottom:10px;background:var(--surface);border-color:var(--line)}
+.body{padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.meta{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--ink2)}
 .q{font-weight:600}.gold{font-size:14px;color:var(--ink2)}.gold b{color:var(--ink)}
-.ans{border-top:1px solid var(--line);padding-top:8px;display:grid;gap:6px}
-.row{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start}
-.mark{font-weight:700;font-size:16px}.ok{color:var(--ok)}.bad{color:var(--bad)}
-.row small{color:var(--ink2);display:block}.tag{font-size:12px;color:var(--bad)}
-.row.base{opacity:.62;font-size:14px}
-</style></head><body>
-<header><h1>ThirstMap: can AI trace water through the landscape?</h1>
-<p>Each task: a generated image, a question, a reference answer computed by a water-flow simulation. Every model answer is scored automatically. Press “Show answer key” to see the truth.</p>
-<p>Models: free open-weight vision-language models run locally (real, unedited replies). Grey rows are offline baselines for scale: one returns the answer key (the scorer marks it right), one guesses at random.</p></header>
-<div class="bar">
-<select id="fs"><option value="">All skills</option></select>
-<select id="fy"><option value="">All image styles</option><option>satellite</option><option>map</option><option>thermal</option></select>
-<select id="fr"><option value="">All results</option><option value="bad">Only tasks a model got wrong</option><option value="pairs">Counterfactual pairs</option></select>
+.ans{border-top:1px solid var(--line);padding-top:8px;display:grid;gap:8px}
+.row{display:grid;grid-template-columns:20px minmax(0,1fr);gap:8px;align-items:start;font-size:14px}
+.row small{color:var(--ink2);display:block;font-family:var(--mono);font-size:12px;overflow-wrap:anywhere}
+.row.base{opacity:.65}
+footer{padding-block:24px 36px;color:var(--ink2);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style>
+"""
+
+BODY = r"""<header><div class="wrap">
+<span class="eyebrow">Innodata AI Hackathon · Track 2: Visual Task Factory</span>
+<h1>ThirstMap: can AI trace water through the landscape?</h1>
+<p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
+the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
+already knows every answer.</p>
+</div></header>
+<section><div class="wrap">
+<h2>Results</h2>
+__RESULTS__
+</div></section>
+__PIPELINE__
+<section id="tasks"><div class="wrap">
+<h2>Browse the tasks</h2>
+<p class="lede">Each card shows the image the model saw, the question, the answer key from the simulation, and every
+model's real reply, scored automatically. Grey rows are offline baselines for scale: one returns the answer key, one
+guesses at random. Press “Show answer key” to see the water path.</p>
+<div class="bar-row">
+<select id="fs" aria-label="Skill"><option value="">All skills</option></select>
+<select id="fy" aria-label="Image style"><option value="">All image styles</option><option>satellite</option><option>map</option><option>thermal</option></select>
+<select id="fr" aria-label="Which tasks"><option value="">All tasks</option><option value="bad">Tasks a model got wrong</option><option value="pairs">Before-and-after pairs</option></select>
 <span class="stats" id="stats"></span></div>
-<main id="list"></main>
+<div id="list"></div>
+</div></section>
+<footer><div class="wrap">Synthetic terrain; real-terrain scenes use Copernicus DEM GLO-30 and ESA WorldCover 2021 with
+hypothetical facilities. Code, dataset and full results: github.com/yugesh1111/THIRSTMAP</div></footer>
+<script id="data" type="application/json">__DATA__</script>
 <script>
 const DATA = JSON.parse(document.getElementById('data').textContent);
-</script>
-</body></html>"""
-
-PAGE = PAGE.replace("""<script>
-const DATA""", """<script id="data" type="application/json">__DATA__</script>
-<script>
-const DATA""").replace("</script>\n</body>", r"""
-const fmt = v => Array.isArray(v) ? (v.length ? v.join(', ') : 'none') : (v === null || v === undefined ? '—' : String(v));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt = v => Array.isArray(v) ? (v.length ? v.join(', ') : 'none') : (v === null || v === undefined ? '–' : String(v));
 const fs = document.getElementById('fs'), fy = document.getElementById('fy'), fr = document.getElementById('fr');
 [...new Set(DATA.map(d => d.skill))].forEach(s => { const o = document.createElement('option'); o.textContent = s; fs.appendChild(o); });
 function render(){
-  const L = document.getElementById('list'); L.innerHTML = '';
+  const L = document.getElementById('list'); L.textContent = '';
   let n = 0, right = 0, total = 0;
   DATA.filter(d => (!fs.value || d.skill === fs.value) && (!fy.value || d.style === fy.value)
      && (fr.value !== 'bad' || Object.values(d.models).some(m => !m.correct && !m.baseline))
@@ -159,25 +407,25 @@ function render(){
     n++;
     const c = document.createElement('article'); c.className = 'card';
     const rows = Object.entries(d.models).map(([name, m]) => { if (!m.baseline) { total++; if (m.correct) right++; }
-      return `<div class="row${m.baseline ? ' base' : ''}"><span class="mark ${m.correct ? 'ok' : 'bad'}">${m.correct ? '✓' : '✗'}</span>
-      <div><b>${name}</b>: ${fmt(m.parsed)}${m.tags && m.tags.length ? ` <span class="tag">(${m.tags.join(', ')})</span>` : ''}
-      <small>${(m.raw || '').replace(/</g,'&lt;').slice(0,160)}</small></div></div>`; }).join('');
-    c.innerHTML = `<div class="pic"><img src="${d.image}" alt="${d.style} image for task" loading="lazy">
-      <button>Show answer key</button></div>
-      <div class="body"><div class="meta"><span class="chip">${d.skill}</span><span class="chip">${d.style}</span>
+      return `<div class="row${m.baseline ? ' base' : ''}"><span class="mark ${m.correct ? 'ok' : 'bad'}" aria-label="${m.correct ? 'right' : 'wrong'}">${m.correct ? '✓' : '✗'}</span>
+      <div><b>${esc(name)}</b>: ${esc(fmt(m.parsed))}${m.tags && m.tags.length ? ` <span class="tag">(${esc(m.tags.join(', '))})</span>` : ''}
+      ${m.raw ? `<small>${esc(m.raw.slice(0, 160))}</small>` : ''}</div></div>`; }).join('');
+    c.innerHTML = `<div class="pic"><img src="${esc(d.image)}" alt="${esc(d.style)} image for this task" loading="lazy">
+      <button type="button">Show answer key</button></div>
+      <div class="body"><div class="meta"><span class="chip">${esc(d.skill)}</span><span class="chip">${esc(d.style)}</span>
       <span class="chip">difficulty ${d.level}/5</span>${d.pair ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
-      ${d.variant === 'counterfactual' ? `<div class="gold">What changed from the original: <b>${d.change}</b>. Everything else is identical, so the correct answer must change.</div>` : ''}
-      <div class="q">${d.question}</div><div class="gold">Reference answer (from simulation): <b>${fmt(d.answer)}</b></div>
+      ${d.variant === 'counterfactual' ? `<div class="gold">What changed from the original: <b>${esc(d.change)}</b>. Everything else is identical, so the correct answer changes.</div>` : ''}
+      <div class="q">${esc(d.question)}</div><div class="gold">Answer key (from the simulation): <b>${esc(fmt(d.answer))}</b></div>
       <div class="ans">${rows}</div></div>`;
     const img = c.querySelector('img'), b = c.querySelector('button');
-    b.onclick = () => { const on = img.src.endsWith(d.reveal); img.src = on ? d.image : d.reveal; b.textContent = on ? 'Show answer key' : 'Hide answer key'; };
+    b.onclick = () => { const on = img.getAttribute('src') === d.reveal; img.src = on ? d.image : d.reveal; b.textContent = on ? 'Show answer key' : 'Hide answer key'; };
     L.appendChild(c);
   });
-  document.getElementById('stats').textContent = `${n} tasks · ${right}/${total} model answers correct (baselines not counted)`;
+  document.getElementById('stats').textContent = `${n} tasks · ${right} of ${total} model answers right (baselines not counted)`;
 }
 [fs, fy, fr].forEach(e => e.onchange = render); render();
 </script>
-</body>""")
+"""
 
 if __name__ == "__main__":
     main()
