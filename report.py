@@ -17,12 +17,14 @@ SKILL_ORDER = ["trace_downstream", "order_along_flow", "measure_along_flow", "na
                "siting_downstream_impact",
                "trace_upstream_catchment", "read_flow_direction", "read_elevation",
                "read_colour_scale_threshold", "read_colour_scale_value"]
+PROBE_ORDER = ["probe_read_labels", "probe_read_number"]
 SKILL_LABEL = {"trace_downstream": "Trace downstream", "order_along_flow": "Order along flow",
                "measure_along_flow": "Measure along flow",
                "nature_based_filtering": "Place wetland", "siting_downstream_impact": "Site selection",
                "trace_upstream_catchment": "Trace upstream", "read_flow_direction": "Flow direction",
                "read_elevation": "Read elevation", "read_colour_scale_threshold": "Thermal threshold",
-               "read_colour_scale_value": "Thermal value"}
+               "read_colour_scale_value": "Thermal value",
+               "probe_read_labels": "Probe: read labels", "probe_read_number": "Probe: read a number"}
 
 
 def _style_axes(ax):
@@ -43,9 +45,11 @@ def acc(rows):
 def build_report(run_dir, dataset):
     run_dir, dataset = Path(run_dir), Path(dataset)
     tasks = {}
-    for line in open(dataset / "tasks.jsonl"):
-        t = json.loads(line)
-        tasks[t["task_id"]] = t
+    for fname in ("tasks.jsonl", "probes.jsonl", "variants.jsonl"):
+        if (dataset / fname).exists():
+            for line in open(dataset / fname):
+                t = json.loads(line)
+                tasks[t["task_id"]] = t
     latest = {}
     for line in open(run_dir / "responses.jsonl"):
         r = json.loads(line)
@@ -54,7 +58,10 @@ def build_report(run_dir, dataset):
         latest[(r["model"], r["mode"], r["task_id"])] = r
     rows = [dict(r, **{k: tasks[r["task_id"]][k] for k in ("skill", "style", "level", "qid", "scene_id")})
             for r in latest.values()]
-    models = sorted({r["model"] for r in rows}, key=lambda m: (m.startswith("mock"), m))
+    probe_rows = [r for r in rows if tasks[r["task_id"]].get("probe")]
+    var_rows = [r for r in rows if tasks[r["task_id"]].get("appearance")]
+    rows = [r for r in rows if not tasks[r["task_id"]].get("probe") and not tasks[r["task_id"]].get("appearance")]
+    models = sorted({r["model"] for r in rows + probe_rows}, key=lambda m: (m.startswith("mock"), m))
     img = [r for r in rows if r["mode"] == "image"]
     blind = [r for r in rows if r["mode"] == "blind"]
 
@@ -135,6 +142,34 @@ def build_report(run_dir, dataset):
             unchanged_answer_rate=sum(json.dumps(v["base"][0]["parsed"], sort_keys=True)
                                       == json.dumps(v["counterfactual"][0]["parsed"], sort_keys=True) for v in vs) / len(vs))
         S["counterfactual_pairs"][m] = dict(stat(full), by_kind={k: stat(v) for k, v in by_kind.items()})
+    # appearance invariance: same scene + answers, different look (monsoon / haze / coarse)
+    S["appearance_invariance"] = {}
+    for m in models:
+        base = {r["task_id"]: r for r in rows if r["model"] == m and r["mode"] == "image"}
+        groups = defaultdict(dict)
+        for r in var_rows:
+            if r["model"] == m and r["mode"] == "image":
+                gid = tasks[r["task_id"]]["group_id"]
+                if gid in base:
+                    groups[gid]["dry"] = base[gid]
+                groups[gid][tasks[r["task_id"]]["appearance"]] = r
+        full = [g for g in groups.values() if len(g) == 4]
+        if full:
+            same = lambda g: len({json.dumps(x["parsed"], sort_keys=True) for x in g.values()}) == 1
+            S["appearance_invariance"][m] = dict(
+                groups=len(full),
+                accuracy_by_look={lk: sum(g[lk]["correct"] for g in full) / len(full)
+                                  for lk in ("dry", "monsoon", "haze", "coarse")},
+                same_answer_all_looks=sum(same(g) for g in full) / len(full),
+                right_in_all_looks=sum(all(x["correct"] for x in g.values()) for g in full) / len(full))
+    S["perception_probes"] = {}
+    for m in models:
+        pr = [r for r in probe_rows if r["model"] == m and r["mode"] == "image"]
+        if pr:
+            g = defaultdict(list)
+            for r in pr:
+                g[f"{r['qid']}:{r['style']}"].append(r["correct"])
+            S["perception_probes"][m] = {k: dict(n=len(v), acc=sum(v) / len(v)) for k, v in sorted(g.items())}
     S["cost"] = {m: dict(input_tokens=sum(r.get("input_tokens") or 0 for r in rows if r["model"] == m),
                          output_tokens=sum(r.get("output_tokens") or 0 for r in rows if r["model"] == m),
                          usd=round(sum(r.get("cost_usd") or 0 for r in rows if r["model"] == m), 4),
@@ -250,6 +285,27 @@ def markdown(S, out):
     for m, v in S["counterfactual_pairs"].items():
         L.append(f"| {m} | {v['pairs']} | {_pct(v['single_task_accuracy'])} | {_pct(v['pair_accuracy'])} | "
                  f"{_pct(v['unchanged_answer_rate'])} |")
+    if S.get("appearance_invariance"):
+        L += ["", "## Appearance invariance (same scene and answers, different look)", "",
+              "Each group is one satellite question shown four ways: dry season (original), monsoon, haze, and a "
+              "coarser sensor. The correct answer never changes, so a robust model answers the same every time.", "",
+              "| Model | Groups | Dry | Monsoon | Haze | Coarse | Same answer in all 4 | Right in all 4 |",
+              "|---|---|---|---|---|---|---|---|"]
+        for m, v in S["appearance_invariance"].items():
+            a = v["accuracy_by_look"]
+            L.append(f"| {m} | {v['groups']} | {_pct(a['dry'])} | {_pct(a['monsoon'])} | {_pct(a['haze'])} | "
+                     f"{_pct(a['coarse'])} | {_pct(v['same_answer_all_looks'])} | {_pct(v['right_in_all_looks'])} |")
+    if S.get("perception_probes"):
+        keys = sorted({k for v in S["perception_probes"].values() for k in v})
+        names = {"P1:satellite": "Read village labels (satellite)", "P1:map": "Read village labels (map)",
+                 "P2:map": "Read pond spot height (map)", "P3:thermal": "Read monitoring labels (thermal)"}
+        L += ["", "## Perception probes: can the model even read the image?", "",
+              "No reasoning needed: these only ask the model to read what is printed on the image. "
+              "Low scores here mean failures elsewhere start with perception, not reasoning.", "",
+              "| Probe | " + " | ".join(S["perception_probes"]) + " |", "|---|" + "---|" * len(S["perception_probes"])]
+        for k in keys:
+            L.append(f"| {names.get(k, k)} | " + " | ".join(
+                f"{100 * v[k]['acc']:.0f}% (n={v[k]['n']})" if k in v else "–" for v in S["perception_probes"].values()) + " |")
     L += ["", "## Traps and error diagnosis", "", "| Model | Trap tasks | Fell for a trap | Most common errors |", "|---|---|---|---|"]
     for m in S["models"]:
         t = S["trap_fall_rate"][m]

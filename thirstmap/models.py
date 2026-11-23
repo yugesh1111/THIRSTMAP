@@ -114,6 +114,48 @@ class GeminiAdapter:
                     output_tokens=getattr(um, "candidates_token_count", None), latency_s=round(time.time() - t0, 2))
 
 
+class HFVisionAdapter:
+    """Open-weight vision-language model from Hugging Face, run locally with `transformers`.
+
+    No API key needed; runs on CPU (slow) or GPU. `max_side` downsizes the image's longer side
+    before encoding to bound cost on CPU (recorded in the model name so runs are comparable).
+    """
+
+    def __init__(self, model_id, root=".", max_side=None, dtype=None, max_new_tokens=48):
+        import torch
+        from transformers import AutoModelForImageTextToText, AutoProcessor
+        self.torch = torch
+        dt = dtype or (torch.bfloat16 if any(k in model_id.lower() for k in ("3b", "7b", "2b")) else torch.float32)
+        self.processor = AutoProcessor.from_pretrained(model_id)
+        self.model = AutoModelForImageTextToText.from_pretrained(model_id, dtype=dt).eval()
+        self.root, self.max_side, self.max_new_tokens = Path(root), max_side, max_new_tokens
+        self.name = f"hf:{model_id}" + (f"@{max_side}px" if max_side else "")
+
+    def _image(self, path):
+        from PIL import Image
+        im = Image.open(path).convert("RGB")
+        if self.max_side and max(im.size) > self.max_side:
+            s = self.max_side / max(im.size)
+            im = im.resize((round(im.width * s), round(im.height * s)), Image.LANCZOS)
+        return im
+
+    def ask(self, task, with_image=True):
+        content = []
+        if with_image:
+            content.append({"type": "image", "image": self._image(self.root / task["image"])})
+        content.append({"type": "text", "text": _prompt(task, with_image)})
+        msgs = [{"role": "user", "content": content}]
+        inputs = self.processor.apply_chat_template(msgs, add_generation_prompt=True, tokenize=True,
+                                                    return_dict=True, return_tensors="pt")
+        t0 = time.time()
+        with self.torch.inference_mode():
+            out = self.model.generate(**inputs, max_new_tokens=self.max_new_tokens, do_sample=False)
+        n_in = inputs["input_ids"].shape[1]
+        text = self.processor.decode(out[0][n_in:], skip_special_tokens=True)
+        return dict(raw=text, stop_reason=None, served_model=self.name, input_tokens=int(n_in),
+                    output_tokens=int(out.shape[1] - n_in), latency_s=round(time.time() - t0, 2))
+
+
 class MockAdapter:
     """Offline baselines.
 
@@ -147,7 +189,7 @@ class MockAdapter:
 
 def make_adapter(spec, root="."):
     """spec examples: claude:claude-opus-5-5  claude:claude-sonnet-5-5@low  openai:MODEL
-    openai:MODEL@https://host/v1  gemini:MODEL  mock:oracle  mock:random"""
+    openai:MODEL@https://host/v1  gemini:MODEL  hf:HF_MODEL_ID[@MAXSIDEpx]  mock:oracle  mock:random"""
     kind, _, rest = spec.partition(":")
     if kind == "claude":
         model, _, effort = rest.partition("@")
@@ -157,6 +199,9 @@ def make_adapter(spec, root="."):
         return OpenAICompatAdapter(model, base or None, root=root)
     if kind == "gemini":
         return GeminiAdapter(rest, root=root)
+    if kind == "hf":
+        model, _, side = rest.partition("@")
+        return HFVisionAdapter(model, root=root, max_side=int(side.rstrip("px")) if side else None)
     if kind == "mock":
         return MockAdapter(rest)
     raise ValueError(f"unknown model spec {spec}")

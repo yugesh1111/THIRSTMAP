@@ -22,16 +22,74 @@ from thirstmap.models import cost_usd, make_adapter
 from thirstmap.scoring import score
 
 
-def load_tasks(dataset, per_cell=None, levels=None, styles=None, seed=0):
-    tasks = [json.loads(l) for l in open(Path(dataset) / "tasks.jsonl")]
+def load_tasks(dataset, per_cell=None, levels=None, styles=None, seed=0, pairs=0, probes=0, variants=0):
+    """Pick the tasks for a run.
+
+    per_cell : up to N original tasks per (question, style, difficulty) cell
+    pairs    : N complete counterfactual pairs (original + twin), balanced across twin kinds
+    probes   : N perception-probe tasks per (probe, style) from probes.jsonl ("can it read the labels?")
+    variants : N appearance groups (original satellite task + monsoon / haze / coarse versions)
+    """
+    ds = Path(dataset)
+    tasks = [json.loads(l) for l in open(ds / "tasks.jsonl")]
     tasks = [t for t in tasks if (not levels or t["level"] in levels) and (not styles or t["style"] in styles)]
+    rng = random.Random(seed)
+    if not (per_cell or pairs or probes or variants):
+        return tasks
+    chosen = []
     if per_cell:
         cells = defaultdict(list)
         for t in tasks:
-            cells[(t["qid"], t["style"], t["level"])].append(t)
-        rng = random.Random(seed)
-        tasks = [t for k in sorted(cells) for t in rng.sample(cells[k], min(per_cell, len(cells[k])))]
-    return tasks
+            if t.get("variant") != "counterfactual":
+                cells[(t["qid"], t["style"], t["level"])].append(t)
+        chosen += [t for k in sorted(cells) for t in rng.sample(cells[k], min(per_cell, len(cells[k])))]
+    if pairs:
+        by_pair = defaultdict(dict)
+        for t in tasks:
+            if t.get("pair_id"):
+                by_pair[t["pair_id"]][t["variant"]] = t
+        by_kind = defaultdict(list)
+        for pid, v in sorted(by_pair.items()):
+            if len(v) == 2:
+                by_kind[v["counterfactual"]["cf_kind"]].append(v)
+        kinds = sorted(by_kind)
+        picked, k = [], 0
+        while len(picked) < pairs and any(by_kind.values()):
+            pool = by_kind[kinds[k % len(kinds)]]
+            if pool:
+                picked.append(pool.pop(rng.randrange(len(pool))))
+            k += 1
+        have = {t["task_id"] for t in chosen}
+        chosen += [t for v in picked for t in (v["base"], v["counterfactual"]) if t["task_id"] not in have]
+    if probes and (ds / "probes.jsonl").exists():
+        cells = defaultdict(list)
+        for line in open(ds / "probes.jsonl"):
+            t = json.loads(line)
+            cells[(t["qid"], t["style"])].append(t)
+        chosen += [t for k in sorted(cells) for t in rng.sample(cells[k], min(probes, len(cells[k])))]
+    if variants and (ds / "variants.jsonl").exists():
+        groups = defaultdict(list)
+        for line in open(ds / "variants.jsonl"):
+            t = json.loads(line)
+            groups[t["group_id"]].append(t)
+        base = {t["task_id"]: t for t in tasks}
+        by_q = defaultdict(list)
+        for gid in sorted(groups):
+            if gid in base:
+                by_q[base[gid]["qid"]].append(gid)
+        picked, k = [], 0
+        qs = sorted(by_q)
+        while len(picked) < variants and any(by_q.values()):
+            pool = by_q[qs[k % len(qs)]]
+            if pool:
+                picked.append(pool.pop(rng.randrange(len(pool))))
+            k += 1
+        have = {t["task_id"] for t in chosen}
+        for gid in picked:
+            for t in [base[gid]] + groups[gid]:
+                if t["task_id"] not in have:
+                    chosen.append(t); have.add(t["task_id"])
+    return chosen
 
 
 def main():
@@ -43,11 +101,15 @@ def main():
     ap.add_argument("--levels", type=int, nargs="*")
     ap.add_argument("--styles", nargs="*")
     ap.add_argument("--blind", action="store_true", help="also ask every question WITHOUT the image")
-    ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--workers", type=int, default=4, help="parallel calls (use 1 for local hf: models)")
+    ap.add_argument("--pairs", type=int, default=0, help="also include N complete counterfactual pairs")
+    ap.add_argument("--probes", type=int, default=0, help="also include N perception probes per (probe, style)")
+    ap.add_argument("--variants", type=int, default=0, help="also include N appearance groups (4 looks each)")
     a = ap.parse_args()
 
     root = Path(a.dataset).resolve()          # task image paths are relative to the dataset folder
-    tasks = load_tasks(a.dataset, a.per_cell, a.levels, a.styles)
+    tasks = load_tasks(a.dataset, a.per_cell, a.levels, a.styles, pairs=a.pairs, probes=a.probes,
+                       variants=a.variants)
     out = Path("results") / a.run
     out.mkdir(parents=True, exist_ok=True)
     resp_path = out / "responses.jsonl"

@@ -101,7 +101,9 @@ def _parcels(rng, shape):
     return col, bund
 
 
-def render(s, p, nm, P, reveal=False, truth=None, title=None):
+def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze=0.0, coarse=1):
+    """season: "dry" | "monsoon"; haze: 0-1 extra atmospheric haze; coarse: ground-resolution
+    divisor (2 = half the resolution). Appearance only: the scene and its answers are unchanged."""
     rng = np.random.default_rng(s["seed"] + 77)
     disp = s["disp"]
     z_hi = _up(disp, Image.BICUBIC)
@@ -162,6 +164,11 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None):
         urban[street] = (104, 102, 98)
         urban[(fine < 0.2) & ~street] = (64, 86, 52)             # street trees and small parks
         img = np.where(BUILT[..., None], urban, img)
+
+    if season == "monsoon":                  # wet season: vegetation greens, soil darkens
+        lum = img.mean(-1, keepdims=True)
+        green = np.concatenate([0.62 * lum, 1.05 * lum + 10, 0.55 * lum], -1)
+        img = 0.35 * img + 0.65 * green
 
     # ---- streams: polylines, supersampled for smooth edges
     lines = stream_polylines(s, P)
@@ -249,8 +256,15 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None):
     # ---- sensor look: slight blur, grain, gentle haze
     arr = np.asarray(base.filter(ImageFilter.GaussianBlur(0.55)), float)
     arr = arr + rng.normal(0, 2.6, arr.shape)
-    arr = 0.94 * arr + 0.06 * np.array((205, 210, 215))
-    base = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8)).convert("RGBA")
+    if haze:                                 # extra atmospheric haze lowers contrast
+        h = 0.06 + 0.6 * haze
+        arr = (1 - h) * arr + h * np.array((205, 210, 215))
+    else:                                    # default look (kept bit-identical with the published dataset)
+        arr = 0.94 * arr + 0.06 * np.array((205, 210, 215))
+    base = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+    if coarse > 1:                           # coarser sensor: fewer ground pixels (labels stay crisp)
+        base = base.resize((W // coarse, W // coarse), Image.BILINEAR).resize((W, W), Image.BILINEAR)
+    base = base.convert("RGBA")
 
     # ---- annotation layer (labels an analyst would add)
     ann = Image.new("RGBA", base.size, (0, 0, 0, 0))
