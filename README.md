@@ -4,7 +4,7 @@
 
 > **AI is drinking India's water. We test whether AI can even see where that water goes.**
 
-India's data centres use an estimated ~150 billion litres of water a year, and that could reach ~358 billion by 2030. About 70% of capacity sits in water-stressed Mumbai and Chennai, and none of India's state data-centre policies require water-impact mapping. AI geospatial agents are being built to answer exactly these questions from imagery: *Where does this facility's warm wastewater go? Which villages receive it? Where could a wetland clean it?*
+India's data centres use an estimated ~150 billion litres of water a year, and that could reach ~358 billion by 2030 ([Down To Earth](https://www.downtoearth.org.in/water/india-is-using-water-to-build-the-machines-that-tell-us-we-are-running-out-of-it), citing a [CEEW study](https://www.ceew.in/sites/default/files/ceew-data-centre-study-web-ready-final.pdf)). About 70% of capacity sits in water-stressed Mumbai and Chennai, and none of India's 15 state data-centre policies require water-stress mapping ([Down To Earth](https://www.downtoearth.org.in/science-technology/thirsty-data-centres-thin-regulation-who-is-watching-indias-water)). 43% of data centres worldwide already sit in high water-stress areas ([S&P Global](https://www.spglobal.com/sustainable1/en/insights/special-editorial/beneath-the-surface-water-stress-in-data-centers)). AI geospatial agents are being built to answer exactly these questions from imagery ([Google Earth AI](https://research.google/blog/putting-earth-ai-to-work-geospatial-agents-for-our-planets-biggest-challenges/)): *Where does this facility's warm wastewater go? Which villages receive it? Where could a wetland clean it?* Figures are estimates from secondary reporting; all sources are listed in [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md#sources).
 
 **ThirstMap is a factory of visual tasks** that tests whether frontier multimodal models can be trusted with that job. Our code builds each landscape and simulates its water, so **it already knows every answer**, much like the brief's bar-chart example but for terrain and water flow.
 
@@ -39,7 +39,9 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 
 ## See it
 
-**Demo:** [`docs/demo/index.html`](docs/demo/index.html) opens with the results, then walks one real scene through every pipeline step, then shows 64 tasks with each open model's real reply, an automatic ✓/✗ and an answer-key reveal, plus before-and-after pairs. Download the folder and open the page in a browser (no server needed).
+**Live demo (no login): https://yugesh1111.github.io/THIRSTMAP/**
+
+**Demo:** [`docs/demo/index.html`](docs/demo/index.html) opens with the results, then walks one real scene through every pipeline step, then shows 64 tasks with each open model's real reply, an automatic ✓/✗ and an answer-key reveal, plus before-and-after pairs. It is also in the repo; open the file in a browser, no server needed.
 
 **How a task is made** (one real scene, `level4_seed48947`, from `pipeline_visuals.py`):
 
