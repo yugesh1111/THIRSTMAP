@@ -1,6 +1,6 @@
-# Findings: how well do open vision-language models trace water through the landscape?
+# Findings: how well do vision-language models trace water through the landscape?
 
-Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Every model answered the **same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception probes, and every question again **without the image**. Frontier API models (Claude, GPT, Gemini) run with the same harness once keys are available.
+Four free, open-weight models from Hugging Face run locally on CPU. Every model answered the **same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception probes, and every question again **without the image**. Claude and GPT run with the same harness once keys are available.
 
 | Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
 |---|---|---|---|---|---|---|---|---|---|
@@ -9,9 +9,27 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 | Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | 88% (n=24) | 94% (n=16) |
 | SmolVLM-256M-Instruct | 0.26B | **8%** (11/144) | 10% | 13% | 0.99 | 0% | 73% | – | 0% (n=16) |
 
+## Frontier check (Gemini, free API tier)
+
+A free Gemini key allows 20 requests per model per day, so the frontier check uses request economy: **batched** = every question about one image in one request (18 images, 6 of them before-and-after pairs; images resized to 768 px), sent identically to Gemini and to the open models; **single** = one question per request, the protocol of the main table, on the 20 questions Gemini 3.5 Flash answered before its daily quota ran out.
+
+| Model | Protocol | Questions | Accuracy | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
+|---|---|---|---|---|---|---|---|---|
+| gemini-3.1-flash-lite | batched | 89 | **46%** (41/89) | 14% | 1.4e-13 | 0% (9) | 33% | 299 |
+| gemini-3.5-flash-lite | batched | 89 | **39%** (35/89) | 14% | 1.7e-09 | 0% (9) | 22% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 89 | **11%** (10/89) | 14% | 0.79 | 0% (9) | 44% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 89 | **6%** (5/89) | 14% | 1 | 0% (9) | 33% | 229 |
+| gemini-3.5-flash | single | 20 | **75%** (15/20) | 8% | 2.5e-13 | – | – | – |
+| Qwen2.5-VL-3B-Instruct | single | 20 | **15%** (3/20) | 8% | 0.2 | – | – | – |
+| Qwen2-VL-2B-Instruct | single | 20 | **10%** (2/20) | 8% | 0.47 | – | – | – |
+| SmolVLM-256M-Instruct | single | 20 | **10%** (2/20) | 8% | 0.47 | – | – | – |
+| SmolVLM2-2.2B-Instruct | single | 20 | **5%** (1/20) | 8% | 0.8 | – | – | – |
+
 ## What the numbers say
 
-- **No open model is significantly better than random guessing overall** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
+- **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
+- **A frontier model does much better, but is not reliable yet.** On the same 89 questions (batched protocol), gemini-3.1-flash-lite got 46% right against 11% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 1.4e-13). One question per request, gemini-3.5-flash got 75% of 20 questions against 15% for Qwen2.5-VL-3B-Instruct.
+- **No model passes the before-and-after test.** Each twin changes one thing so the correct answer flips; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got both halves of **0 of 9** pairs right: the frontier models often change their answer for the twin, but never get both the original scene and its changed twin right.
 - **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; SmolVLM2-2.2B-Instruct 8% vs 12%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
 - **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); SmolVLM2-2.2B-Instruct 77% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%).
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 88%.
@@ -73,7 +91,7 @@ The scorer is lenient: a reply that names the right labels counts even if it is 
 
 ## Caveats
 
-- These are small open models (0.26B–3B parameters) on CPU, not frontier systems.
+- The open models are small (0.26B–3B parameters) and ran on CPU with greedy decoding.
 - About 10–30 tasks per skill per model: per-skill differences of a few points are noise; the overall test against chance uses all tasks.
 - Images are synthetic renders; the real-terrain subset uses real elevation and land cover with hypothetical facilities.
 - Exact inputs are published in `eval_set/` so the run can be repeated on identical images.

@@ -8,8 +8,8 @@
 > **"AI is drinking India's water. We tested whether AI can even see where that water goes."**
 
 Alternative for the demo:
-> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed four open AI vision models a map and asked one question: where does the wastewater go? None of them did better than random guessing, and none got both halves of a single before-and-after pair right."*
-> (real results: [`FINDINGS.md`](FINDINGS.md); frontier API models still to be run)
+> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed AI vision models a map and asked one question: where does the wastewater go? Gemini got far more right than the open models, yet no model, Gemini included, got both halves of a single before-and-after pair right."*
+> (real results: [`FINDINGS.md`](FINDINGS.md))
 
 **Title:** *ThirstMap — can AI trace water through the landscape?*
 
@@ -26,7 +26,7 @@ Alternative for the demo:
 | Pick an image family and a real-world visual problem | Terrain imagery (satellite-style, topographic map, thermal) · where a data centre's water comes from and goes | ✅ |
 | Generate **synthetic** images and questions | Every image is rendered by our code from a scene script (real elevation can be an *input*, the image is still generated) | ✅ |
 | Reference answers checked **without the tested model** | Water-flow simulation + independent second implementation (pysheds) + unit tests | ✅ |
-| Evaluate advanced multimodal models; strengths & weaknesses | Four open models evaluated for real (per skill, style, difficulty, trap, pairs, appearance, reading checks, vs exact chance); Claude / GPT / Gemini adapters ready for API keys | ✅ open models, ⏳ frontier |
+| Evaluate advanced multimodal models; strengths & weaknesses | Four open models and three Gemini models evaluated for real (per skill, style, difficulty, trap, pairs, appearance, reading checks, vs exact chance); Claude / GPT adapters ready for API keys | ✅ open models + Gemini (frontier check) |
 | *Stand out:* every question needs genuine visual understanding | Answers exist only in the picture; every question is also asked without the image (V13) | ✅ |
 | *Stand out:* each image holds enough evidence | Pixel-level path-visibility + label-legibility validators; questions only asked in styles that show the evidence | ✅ |
 | *Stand out:* vary visual relationships and reasoning, **not just count** | Trace, order, connectivity vs proximity, elevation comparison, direction, siting, catchment, colour-scale reading — no counting tasks at all | ✅ |
@@ -36,7 +36,7 @@ Alternative for the demo:
 | *Submit:* findings on model strengths/weaknesses | FINDINGS.md: accuracy vs chance with p-values, per-skill profile, pairs, appearance, reading checks, fine-tuning | ✅ |
 | *Submit:* **a demo where scoring separates right from wrong** | `docs/demo/index.html`: image → question → real model replies → auto ✓/✗ → answer reveal, beside answer-key and random baselines | ✅ |
 | *Their example:* "your code draws a bar chart, so it already knows which bar is tallest" | Same principle: our code builds the terrain, so it already knows where every drop of water goes | ✅ |
-| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | 41 tests, CI, ARCHITECTURE.md, demo, reports | ✅ |
+| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | 44 tests, CI, ARCHITECTURE.md, demo, reports | ✅ |
 | FAQ: no API keys in code | Keys only via environment variables | ✅ |
 | FAQ: organiser-provided model API access | Harness supports Claude, OpenAI-compatible, Gemini and Hugging Face models + offline baselines | ✅ ready |
 

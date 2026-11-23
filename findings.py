@@ -108,7 +108,8 @@ def frontier_lines(dataset):
     opn = [r for r in rows if r["m"].startswith("hf:")]
     bullet = None
     if api and opn:
-        b = max(api, key=lambda r: r["acc"])
+        big = max(r["n"] for r in api)                   # lead with the largest comparison, not the luckiest
+        b = max((r for r in api if r["n"] == big), key=lambda r: r["acc"])
         o = max((r for r in opn if r["proto"] == b["proto"]), key=lambda r: r["acc"], default=None)
         if o:
             gap = b["acc"] - o["acc"]
@@ -117,8 +118,19 @@ def frontier_lines(dataset):
             bullet = (f"- **{head}** On the same {b['n']} questions ({b['proto']} protocol), {short(b['m'])} got "
                       f"{pct(b['acc'])} right against {pct(o['acc'])} for the best open model, {short(o['m'])} "
                       f"(chance {pct(b['chance'])}, p = {b['p']:.2g})"
-                      + (f"; it got both halves of {pct(b['pair'])} of the before-and-after pairs right"
-                         if b["pair"] is not None else "") + ".")
+                      + ".")
+            single = [r for r in api if r["proto"] == "single"]
+            if single:
+                sg = max(single, key=lambda r: r["acc"])
+                so = max((r for r in opn if r["proto"] == "single"), key=lambda r: r["acc"], default=None)
+                bullet += (f" One question per request, {short(sg['m'])} got {pct(sg['acc'])} of {sg['n']} questions"
+                           + (f" against {pct(so['acc'])} for {short(so['m'])}" if so else "") + ".")
+        paired = [r for r in rows if r["pairs"]]
+        if paired and all(r["pair"] == 0 for r in paired):
+            bullet += ("\n- **No model passes the before-and-after test.** Each twin changes one thing so the "
+                       "correct answer flips; " + ", ".join(short(r["m"]) for r in paired)
+                       + f" got both halves of **0 of {paired[0]['pairs']}** pairs right: the frontier models often change their "
+                       "answer for the twin, but never get both the original scene and its changed twin right.")
     return L, bullet
 
 

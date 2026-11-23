@@ -5,7 +5,7 @@ This file is produced by `verify_results.py`, which does not reuse the report co
 > **Important:** the models named `mock:*` are offline *baselines* used to test the dataset and the
 > scorer: `oracle` returns the answer key, `random` picks random options, `stubborn` repeats the
 > original answer on counterfactual twins. They are **not** AI models. Real open-weight models are
-> checked in section 1b. No frontier API model has been evaluated yet (that needs API keys).
+> checked in section 1b, open models and Gemini alike.
 
 ## 1. Reported accuracies recomputed from raw responses
 
@@ -37,7 +37,7 @@ Expected correct by pure chance (computed from each task's options): **796.4** o
 | Q9 | 278 | 20.0% | 21.9% |
 | Q10 | 616 | 12.3% | 11.2% |
 
-## 1b. Real open-model answers (results/models)
+## 1b. Real model answers (results/models)
 
 These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
 
@@ -74,6 +74,34 @@ Ten random raw replies, exactly as the models wrote them:
 | SmolVLM-256M-Instruct | real_navi_mumbai_seed32379_cf__Q7__map | ['V4'] | `{ "answer": [ { "label": "V1", "source": "V3", "unit": "m", "unit_score": "1", "unit_score` | ❌ |
 | Qwen2.5-VL-3B-Instruct | level2_seed21111__Q7__satellite | ['V2'] | `{"answer": ["V2"]}` | ✅ |
 | Qwen2.5-VL-3B-Instruct | level5_seed76732__Q6__map | S3 | ````json {"answer": "S2"} ```` | ❌ |
+
+## 1b. Real model answers (results/frontier)
+
+These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
+
+Compared on the 89 tasks that every model answered with the image.
+
+| Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |
+|---|---|---|---|---|---|---|
+| hf:Qwen/Qwen2-VL-2B-Instruct | image | 89 | 5.6% | 5.6% ✅ | 5.6% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 89 | 11.2% | 11.2% ✅ | 11.2% | 100.0% |
+| openai:gemini-3.1-flash-lite | image | 89 | 46.1% | 46.1% ✅ | 46.1% | 100.0% |
+| openai:gemini-3.5-flash-lite | image | 89 | 39.3% | 39.3% ✅ | 39.3% | 100.0% |
+
+Ten random raw replies, exactly as the models wrote them:
+
+| Model | Task | Key | Raw reply | Scored |
+|---|---|---|---|---|
+| openai:gemini-3.5-flash-lite | real_chennai_seed39037__Q6__map | S2 | `{"answer": "S2"}` | ✅ |
+| openai:gemini-3.1-flash-lite | real_chennai_seed39037__Q7__map | ['V1'] | `{"answer": ["V1", "V5"]}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level4_seed58903__Q10__map | 2550 | `{"answer": 1000}` | ❌ |
+| Qwen2-VL-2B-Instruct | real_chennai_seed31409__Q3__satellite | A | `{"answer": "B"}` | ❌ |
+| openai:gemini-3.1-flash-lite | level4_seed58903__Q10__map | 2550 | `{"answer": 3400}` | ❌ |
+| openai:gemini-3.1-flash-lite | level3_seed34416__Q9__thermal | 6.7 | `{"answer": 9}` | ❌ |
+| Qwen2-VL-2B-Instruct | level2_seed22760__Q10__map | 2210 | `{"answer": 4}` | ❌ |
+| openai:gemini-3.1-flash-lite | level3_seed31409_cf__Q7__map | ['V4'] | `{"answer": ["V4"]}` | ✅ |
+| Qwen2.5-VL-3B-Instruct | real_navi_mumbai_seed31312__Q1__satellite | ['V4', 'V5'] | `{"answer": ["V1", "V4"]}` | ❌ |
+| Qwen2-VL-2B-Instruct | level3_seed58561__Q6__satellite | S1 | `{"answer": "B"}` | ❌ |
 
 ## 3. Dataset regenerated from recorded seeds
 

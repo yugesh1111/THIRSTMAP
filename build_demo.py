@@ -82,6 +82,29 @@ def results_html(run, finetune):
                   f'{pct(vb["correct"] / vb["n"])} to {pct(vt["correct"] / vt["n"])} on {vt["n"]} questions from '
                   f'scenes it never saw, and now scores {pct(vt["correct"] / vt["n"])} with the image against '
                   f'{pct(F["overall"][tuned]["blind"])} without it. The dataset can teach the skill, a little.</p>')
+    fr = ""
+    fs2 = Path("results/frontier/summary.json")
+    if fs2.exists():
+        F = json.loads(fs2.read_text())
+        frows = []
+        for m in F["models"]:
+            vc = F["vs_chance"].get(m)
+            if vc:
+                pr = F["counterfactual_pairs"].get(m, {})
+                frows.append((vc["correct"] / vc["n"], f'<tr><th scope="row">{E(display(m))}</th>'
+                              f'<td class="num">{pct(vc["correct"] / vc["n"])} ({vc["correct"]}/{vc["n"]})</td>'
+                              f'<td class="num">{pct(vc["chance"])}</td><td class="num">{vc["p_value"]:.1g}</td>'
+                              f'<td class="num">{pr.get("pair_accuracy", 0) * 100:.0f}% of {pr.get("pairs", 0)}</td></tr>'))
+        if frows:
+            fr = ('<h3>Frontier check: Gemini vs open models on the same 89 questions</h3>'
+                  '<div class="table"><table><thead><tr><th scope="col">Model</th><th scope="col">Correct</th>'
+                  '<th scope="col">Chance</th><th scope="col">p vs guessing</th>'
+                  '<th scope="col">Both halves of a pair right</th></tr></thead><tbody>'
+                  + "".join(r for _, r in sorted(frows, key=lambda x: -x[0])) + '</tbody></table></div>'
+                  '<p class="note">A free Gemini key allows 20 requests per model per day, so every question about an image '
+                  'went in one request (18 images, 89 questions), identically for every model. Gemini answers far more '
+                  'questions correctly, yet no model got both the original and its changed twin right. Pick '
+                  '“Frontier check” in the task browser to see every reply.</p>')
     return f"""<div class="table"><table>
 <thead><tr><th scope="col">Model</th><th scope="col">Correct, with the image <span class="key"><i></i>chance {pct(chance)}</span></th>
 <th scope="col">Without the image</th><th scope="col">p vs guessing</th><th scope="col">Both halves of a pair right</th>
@@ -89,7 +112,7 @@ def results_html(run, finetune):
 <tbody>{''.join(body)}</tbody></table></div>
 <p class="note">{rows[0]["n"] if rows else 0} questions per model, the same for every model, plus 30 before-and-after pairs and
 16 reading checks. Free open-weight models from Hugging Face, run locally with greedy decoding. Every reply on this
-page is the model's real, unedited output.</p>{ft}"""
+page is the model's real, unedited output.</p>{ft}{fr}"""
 
 
 def pipeline_html(pdir, tasks, run):
@@ -186,6 +209,7 @@ def main():
                     help="run with offline baselines (mock:oracle / mock:random) to show beside the models")
     ap.add_argument("--finetune", default="results/finetune")
     ap.add_argument("--pipeline", default=None, help="folder from pipeline_visuals.py")
+    ap.add_argument("--frontier", default=None, help="results folder from frontier.py (batched protocol)")
     ap.add_argument("--fragment", action="store_true", help="write the page body only, without <html>/<head>/<body>")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
@@ -257,6 +281,31 @@ def main():
                           pair=t.get("pair_id"), variant=t.get("variant"), change=t.get("cf_change"),
                           question=t["question"], answer=t["answer"], image=names["image"],
                           reveal=names["reveal"], models=answers[tid]))
+    fdir = Path(a.frontier) if a.frontier else None
+    if fdir and (fdir / "responses.jsonl").exists():
+        fans = defaultdict(dict)
+        for line in open(fdir / "responses.jsonl"):
+            r = json.loads(line)
+            if r["task_id"] in tasks and not r.get("error"):
+                sc = score(tasks[r["task_id"]], r.get("raw", ""))
+                fans[r["task_id"]][display(r["model"])] = dict(raw=r.get("raw", "")[:200], parsed=sc["parsed"],
+                                                               correct=sc["correct"], tags=sc["tags"])
+        most = max(len(v) for v in fans.values())
+        order = {i["image"]: k for k, i in enumerate(json.loads((fdir / "set.json").read_text())["images"])}
+        for tid in sorted((t for t, v in fans.items() if len(v) == most),
+                          key=lambda t: (order.get(f"{tasks[t]['scene_id']}__{tasks[t]['style']}", 99), tasks[t]["qid"])):
+            t = tasks[tid]
+            names = {}
+            for key in ("image", "reveal"):
+                src = root / t[key]
+                name = src.parent.name + "_" + src.stem + ".jpg"
+                if not (out / "img" / name).exists():
+                    Image.open(src).convert("RGB").save(out / "img" / name, quality=85)
+                names[key] = "img/" + name
+            items.append(dict(id=tid, skill=SKILL_LABEL[t["skill"]], style=t["style"], level=t["level"],
+                              pair=t.get("pair_id"), variant=t.get("variant"), change=t.get("cf_change"),
+                              question=t["question"], answer=t["answer"], image=names["image"],
+                              reveal=names["reveal"], models=fans[tid], frontier=True))
     pipe = ""
     if a.pipeline:
         shutil.copytree(a.pipeline, out / "pipeline", ignore=shutil.ignore_patterns("*.json"))
@@ -395,7 +444,7 @@ guesses at random. Press “Show answer key” to see the water path.</p>
 <div class="bar-row">
 <select id="fs" aria-label="Skill"><option value="">All skills</option></select>
 <select id="fy" aria-label="Image style"><option value="">All image styles</option><option>satellite</option><option>map</option><option>thermal</option></select>
-<select id="fr" aria-label="Which tasks"><option value="">All tasks</option><option value="bad">Tasks a model got wrong</option><option value="pairs">Before-and-after pairs</option></select>
+<select id="fr" aria-label="Which tasks"><option value="">All tasks</option><option value="bad">Tasks a model got wrong</option><option value="pairs">Before-and-after pairs</option><option value="frontier">Frontier check: Gemini vs open models</option></select>
 <span class="stats" id="stats"></span></div>
 <div id="list"></div>
 </div></section>
@@ -413,7 +462,7 @@ function render(){
   let n = 0, right = 0, total = 0;
   DATA.filter(d => (!fs.value || d.skill === fs.value) && (!fy.value || d.style === fy.value)
      && (fr.value !== 'bad' || Object.values(d.models).some(m => !m.correct && !m.baseline))
-     && (fr.value !== 'pairs' || d.pair)).forEach(d => {
+     && (fr.value !== 'pairs' || d.pair) && (fr.value === 'frontier' ? d.frontier : !d.frontier)).forEach(d => {
     n++;
     const c = document.createElement('article'); c.className = 'card';
     const rows = Object.entries(d.models).map(([name, m]) => { if (!m.baseline) { total++; if (m.correct) right++; }
@@ -423,7 +472,7 @@ function render(){
     c.innerHTML = `<div class="pic"><img src="${esc(d.image)}" alt="${esc(d.style)} image for this task" loading="lazy">
       <button type="button">Show answer key</button></div>
       <div class="body"><div class="meta"><span class="chip">${esc(d.skill)}</span><span class="chip">${esc(d.style)}</span>
-      <span class="chip">difficulty ${d.level}/5</span>${d.pair ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
+      <span class="chip">difficulty ${d.level}/5</span>${d.frontier ? '<span class="chip">batched protocol</span>' : ''}${d.pair ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
       ${d.variant === 'counterfactual' ? `<div class="gold">What changed from the original: <b>${esc(d.change)}</b>. Everything else is identical, so the correct answer changes.</div>` : ''}
       <div class="q">${esc(d.question)}</div><div class="gold">Answer key (from the simulation): <b>${esc(fmt(d.answer))}</b></div>
       <div class="ans">${rows}</div></div>`;

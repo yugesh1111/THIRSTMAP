@@ -1,8 +1,8 @@
 # Evaluation set (exact inputs the models saw)
 
 These are **exactly** the tasks and images used for the open-model evaluation in `results/models`
-(and the fine-tuning test, if present): 168 from tasks.jsonl, 16 from probes.jsonl, 72 from variants.jsonl.
-543 files, 330 MB, with SHA-256 checksums in `SHA256SUMS.json`.
+(and the fine-tuning test, if present): 257 from tasks.jsonl, 16 from probes.jsonl, 72 from variants.jsonl.
+594 files, 355 MB, with SHA-256 checksums in `SHA256SUMS.json`.
 
 Why publish the inputs? The generator is byte-for-byte reproducible on the same platform, but a different
 machine (for example a GitHub runner) can produce a slightly different but equally valid dataset because of
