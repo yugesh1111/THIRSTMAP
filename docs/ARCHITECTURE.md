@@ -13,7 +13,8 @@ flowchart LR
   subgraph VAL["2 · Validate (drop, never edit)"]
     V1["V1 pysheds recomputes every answer"]
     V9["V9 answer visible in rendered pixels"]
-    VM["V5/V7/V8 margins · V10 labels · V11 styles"]
+    VM["V5/V7/V8 margins · V10/V10b labels · V11 styles"]
+    AU["audit_labels.py: self-audit of v1.0<br/>errata.jsonl excluded everywhere"]
   end
   subgraph EVAL["3 · Evaluate"]
     E["evaluate.py<br/>Claude / OpenAI-compatible / Gemini<br/>Hugging Face open models (hf:)<br/>+ oracle / random / stubborn baselines<br/>with and without the image"]
@@ -29,6 +30,8 @@ flowchart LR
     VER["verify_results.py: independent recompute,<br/>second parser on real replies, chance check,<br/>byte-identical regeneration"]
     VR["validation_report.py"]
     D["build_demo.py: ✓/✗ demo page"]
+    OV["overlays.py: model answers drawn on the image,<br/>consequence of every error"]
+    RC["realism_check.py: simulated streams<br/>vs ESA WorldCover water"]
   end
   Q --> VAL
   R --> VAL
@@ -43,6 +46,8 @@ flowchart LR
   B --> ST
   B --> H
   E --> D
+  E --> OV --> D
+  B --> AU
   E --> VER
   B --> VR
 ```
@@ -67,6 +72,8 @@ A **scene script** (terrain + simulated water + placements) is the single source
 | Appearance variants | Season, haze and sensor resolution must not change a correct answer |
 | Raw replies are the source of truth | The report and demo re-score every raw reply; a second parser re-checks them |
 | Batch prompting for API models | A free tier allows ~20 requests a day; one request answers every question about an image (~5), and open models get the same prompts |
+| Audit the released dataset, version the checks | Drawing model answers on the images exposed labels under the scale bar and a zero-count placement bug; affected tasks are excluded (`errata.jsonl`), new builds fix both (checks v2), and v1.0 still rebuilds byte for byte |
+| Draw every model error on the image it saw | Makes failures inspectable, and is how the dataset audit found its two problems |
 | Publish the exact evaluated inputs | Dataset builds can differ slightly across machines; `eval_set/` removes the doubt |
 
 ## Repeatability

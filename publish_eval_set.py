@@ -50,6 +50,11 @@ def main():
             (out / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(ds / rel, out / rel)
     shutil.copy(ds / "manifest.json", out / "manifest_full_dataset.json")
+    if (ds / "errata.jsonl").exists():                  # audit exclusions for the published tasks
+        with open(out / "errata.jsonl", "w") as f:
+            for line in open(ds / "errata.jsonl"):
+                if json.loads(line)["task_id"] in used:
+                    f.write(line)
     sums = {rel: hashlib.sha256((out / rel).read_bytes()).hexdigest() for rel in sorted(files) if (out / rel).exists()}
     (out / "SHA256SUMS.json").write_text(json.dumps(sums, indent=1))
     size = sum(p.stat().st_size for p in out.rglob("*") if p.is_file()) / 2 ** 20

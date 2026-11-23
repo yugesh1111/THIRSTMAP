@@ -65,7 +65,7 @@ def lake_values(s, dT):
     return comp.reshape(N, N), vals
 
 
-def render(s, p, nm, P, reveal=False, truth=None, title=""):
+def render(s, p, nm, P, reveal=False, truth=None, title="", reserve=False):
     rng = np.random.default_rng(s["seed"] + 91)
     dT = p["plume"]["dT"]
     hs = hillshade(_up(s["disp"], Image.BICUBIC))
@@ -98,6 +98,11 @@ def render(s, p, nm, P, reveal=False, truth=None, title=""):
     a = ImageDraw.Draw(ann)
     f, fs = _font(15), _font(12)
     boxes = []
+    # drawn over the map later (colour legend, scale bar, north arrow): labels must not sit there (check V10b)
+    km_px_ = W / L_KM
+    RESERVED = [(6, W - 88, 286, W - 22), (W - 32 - km_px_ - 8, W - 40, W - 24, W - 12), (W - 40, 12, W - 20, 54)]
+    if reserve:
+        boxes += [("+legend", RESERVED[0]), ("1 km", RESERVED[1]), ("N", RESERVED[2])]
 
     def lbl(xy, t, font=f, col=(255, 255, 255, 255)):
         a.text(xy, t, font=font, fill=col, stroke_width=3, stroke_fill=(0, 0, 0, 255))
@@ -148,4 +153,5 @@ def render(s, p, nm, P, reveal=False, truth=None, title=""):
     framed.info["labels"] = [(t, (x0, y0 + bar, x1, y1 + bar)) for t, (x0, y0, x1, y1) in boxes
                              if t not in ("1 km", "N") and not t.startswith("+")]
     framed.info["offset"] = bar
+    framed.info["reserved"] = [(x0, y0 + bar, x1, y1 + bar) for x0, y0, x1, y1 in RESERVED]
     return framed

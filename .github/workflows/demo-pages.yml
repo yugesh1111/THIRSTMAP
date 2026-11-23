@@ -4,7 +4,7 @@ name: demo-pages
 on:
   push:
     branches: [main]
-    paths: ["docs/demo/**", "human_eval/**"]
+    paths: ["docs/demo/**", "human_eval/**", "docs/video/**"]
   workflow_dispatch:
 
 permissions:
@@ -26,6 +26,7 @@ jobs:
         run: |
           mkdir site && cp -r docs/demo/. site/ && touch site/.nojekyll
           mkdir site/human && cp -r human_eval/index.html human_eval/img site/human/
+          cp docs/video/thirstmap_demo.mp4 site/thirstmap_demo.mp4
           cd site
           git init -q -b gh-pages
           git config user.name "Amritha S"

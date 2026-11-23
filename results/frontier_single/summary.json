@@ -2,43 +2,44 @@
   "models": [
     "openai:gemini-3.5-flash"
   ],
-  "n_responses": 20,
-  "compared_on_tasks": 20,
+  "n_responses": 19,
+  "compared_on_tasks": 19,
   "answers_outside_common_set": {},
+  "excluded_by_audit": 1,
   "chance_by_skill": {
-    "trace_downstream": 0.027547946957465277,
     "measure_along_flow": 0.10195555555555555,
+    "trace_downstream": 0.028258063374023437,
     "order_along_flow": 0.19642857142857142
   },
   "tasks_by_skill_evaluated": {
-    "trace_downstream": 9,
     "measure_along_flow": 9,
+    "trace_downstream": 8,
     "order_along_flow": 2
   },
   "vs_chance": {
     "openai:gemini-3.5-flash": {
       "correct": 15,
-      "n": 20,
-      "chance": 0.07791943327371652,
-      "p_value": 2.514895571221084e-13
+      "n": 19,
+      "chance": 0.08086956051838581,
+      "p_value": 1.1702116821416332e-13
     }
   },
   "format": {
     "openai:gemini-3.5-flash": {
       "well_formed": 1.0,
-      "accuracy_well_formed_only": 0.75
+      "accuracy_well_formed_only": 0.7894736842105263
     }
   },
   "overall": {
     "openai:gemini-3.5-flash": {
-      "image": 0.75,
+      "image": 0.7894736842105263,
       "blind": null,
-      "n": 20
+      "n": 19
     }
   },
   "by_skill": {
     "openai:gemini-3.5-flash": {
-      "trace_downstream": 0.6666666666666666,
+      "trace_downstream": 0.75,
       "measure_along_flow": 0.8888888888888888,
       "order_along_flow": 0.5
     }
@@ -46,14 +47,14 @@
   "by_style": {
     "openai:gemini-3.5-flash": {
       "map": 0.75,
-      "satellite": 0.75
+      "satellite": 0.8571428571428571
     }
   },
   "by_level": {
     "openai:gemini-3.5-flash": {
       "1": 0.8,
       "2": 1.0,
-      "3": 0.5,
+      "3": 0.6666666666666666,
       "4": 0.6,
       "5": 1.0
     }
@@ -92,18 +93,17 @@
   "map_vs_satellite": {},
   "error_tags": {
     "openai:gemini-3.5-flash": {
-      "missed_some": 2,
       "trap:near_but_other_stream": 1,
-      "extra_unrelated": 1,
       "underestimate": 1,
+      "missed_some": 1,
       "wrong_choice": 1
     }
   },
   "trap_fall_rate": {
     "openai:gemini-3.5-flash": {
-      "exposed": 11,
+      "exposed": 10,
       "fell": 1,
-      "rate": 0.09090909090909091
+      "rate": 0.1
     }
   },
   "counterfactual_pairs": {},
@@ -111,10 +111,10 @@
   "perception_probes": {},
   "cost": {
     "openai:gemini-3.5-flash": {
-      "input_tokens": 23755,
-      "output_tokens": 294,
+      "input_tokens": 22556,
+      "output_tokens": 278,
       "usd": 0,
-      "mean_latency_s": 58.71
+      "mean_latency_s": 58.3
     }
   }
 }

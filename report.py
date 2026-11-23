@@ -47,6 +47,9 @@ def acc(rows):
 def build_report(run_dir, dataset):
     run_dir, dataset = Path(run_dir), Path(dataset)
     tasks = {}
+    from thirstmap import errata
+    excluded = errata.load(dataset)          # tasks a dataset audit found unfair (docs/AUDIT.md)
+    n_excluded = len({json.loads(l)["task_id"] for l in open(run_dir / "responses.jsonl")} & excluded)
     for fname in ("tasks.jsonl", "probes.jsonl", "variants.jsonl"):
         if (dataset / fname).exists():
             for line in open(dataset / fname):
@@ -55,7 +58,7 @@ def build_report(run_dir, dataset):
     latest = {}
     for line in open(run_dir / "responses.jsonl"):
         r = json.loads(line)
-        if r.get("error") or r["task_id"] not in tasks:
+        if r.get("error") or r["task_id"] not in tasks or r["task_id"] in excluded:
             continue
         r.update(score(tasks[r["task_id"]], r["raw"]))   # the raw reply is the source of truth: always re-score
         latest[(r["model"], r["mode"], r["task_id"])] = r
@@ -79,7 +82,8 @@ def build_report(run_dir, dataset):
 
     from scipy.stats import binomtest
     from thirstmap.scoring import chance
-    S = dict(models=models, n_responses=len(rows), compared_on_tasks=len(common), answers_outside_common_set=extra)
+    S = dict(models=models, n_responses=len(rows), compared_on_tasks=len(common), answers_outside_common_set=extra,
+             excluded_by_audit=n_excluded)
     img_tasks = {r["task_id"] for r in rows if r["mode"] == "image"}
     S["chance_by_skill"] = {sk: sum(chance(tasks[t]) for t in ids) / len(ids)
                             for sk, ids in _group([tasks[t] for t in img_tasks], ("skill",)).items()
@@ -303,6 +307,9 @@ def markdown(S, out):
     L += ["## Overall", "", "| Model | With image | Without image (blind) | Tasks |", "|---|---|---|---|"]
     for m, v in S["overall"].items():
         L.append(f"| {m} | {_pct(v['image'])} | {_pct(v['blind'])} | {v['n']} |")
+    if S.get("excluded_by_audit"):
+        L += ["", f"{S['excluded_by_audit']} evaluated tasks are left out of every number here: the dataset audit found "
+              "them unfair (an option label under the scale bar, north arrow or legend, or a malformed scene; docs/AUDIT.md)."]
     if S.get("answers_outside_common_set"):
         L += ["", f"All models are compared on the same {S['compared_on_tasks']} tasks. Answers to tasks that not every "
               "model was given (" + ", ".join(f"{m}: {n}" for m, n in S["answers_outside_common_set"].items())

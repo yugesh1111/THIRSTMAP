@@ -2,7 +2,8 @@ __pycache__/
 *.pyc
 .pytest_cache/
 out/
-dataset/
+dataset/*
+!dataset/errata.jsonl
 results/*/responses.jsonl
 data/real/*.tif
 /demo/

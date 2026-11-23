@@ -11,48 +11,48 @@ This file is produced by `verify_results.py`, which does not reuse the report co
 
 | Model | Mode | Responses | Recomputed | In summary.json | Match |
 |---|---|---|---|---|---|
-| mock:oracle | blind | 5761 | 100.00% | 100.00% | ✅ |
-| mock:oracle | image | 5761 | 100.00% | 100.00% | ✅ |
-| mock:random | blind | 5761 | 13.97% | 13.97% | ✅ |
-| mock:random | image | 5761 | 13.68% | 13.68% | ✅ |
-| mock:stubborn | blind | 5761 | 87.16% | 87.16% | ✅ |
-| mock:stubborn | image | 5761 | 87.16% | 87.16% | ✅ |
+| mock:oracle | blind | 5330 | 100.00% | 100.00% | ✅ |
+| mock:oracle | image | 5330 | 100.00% | 100.00% | ✅ |
+| mock:random | blind | 5330 | 14.37% | 14.37% | ✅ |
+| mock:random | image | 5330 | 13.88% | 13.88% | ✅ |
+| mock:stubborn | blind | 5330 | 87.75% | 87.75% | ✅ |
+| mock:stubborn | image | 5330 | 87.75% | 87.75% | ✅ |
 
 **All reported accuracies reproduced exactly: yes.**
 
 ## 2. Random baseline vs exact chance
 
-Expected correct by pure chance (computed from each task's options): **796.4** of 5761 (13.8%). Observed: **788** (13.7%). Difference = -0.33 standard deviations (consistent with chance).
+Expected correct by pure chance (computed from each task's options): **752.3** of 5330 (14.1%). Observed: **740** (13.9%). Difference = -0.51 standard deviations (consistent with chance).
 
 | Question type | Tasks | Expected | Observed |
 |---|---|---|---|
-| Q1 | 767 | 2.6% | 3.4% |
-| Q2 | 775 | 17.2% | 17.7% |
-| Q3 | 614 | 25.0% | 23.8% |
-| Q4 | 308 | 4.9% | 4.9% |
-| Q5 | 578 | 12.5% | 11.2% |
-| Q6 | 606 | 33.3% | 32.8% |
-| Q7 | 914 | 4.3% | 4.0% |
-| Q8 | 305 | 9.8% | 10.8% |
-| Q9 | 278 | 20.0% | 21.9% |
-| Q10 | 616 | 12.3% | 11.2% |
+| Q1 | 664 | 2.6% | 3.3% |
+| Q2 | 672 | 17.4% | 17.7% |
+| Q3 | 571 | 25.0% | 24.0% |
+| Q4 | 302 | 4.8% | 5.0% |
+| Q5 | 566 | 12.5% | 11.3% |
+| Q6 | 596 | 33.3% | 32.9% |
+| Q7 | 804 | 4.4% | 3.7% |
+| Q8 | 279 | 10.0% | 11.5% |
+| Q9 | 272 | 20.0% | 22.1% |
+| Q10 | 604 | 12.2% | 10.8% |
 
 ## 1b. Real model answers (results/models)
 
 These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
 
-Compared on the 144 tasks that every model answered with the image.
+Compared on the 130 tasks that every model answered with the image.
 
 | Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |
 |---|---|---|---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | blind | 144 | 9.7% | 9.7% ✅ | 9.7% | 100.0% |
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | image | 144 | 7.6% | 7.6% ✅ | 8.3% | 99.3% |
-| hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | blind | 144 | 11.8% | 11.8% ✅ | 11.8% | 100.0% |
-| hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | image | 144 | 8.3% | 8.3% ✅ | 8.3% | 100.0% |
-| hf:Qwen/Qwen2-VL-2B-Instruct | blind | 144 | 9.0% | 9.0% ✅ | 9.0% | 100.0% |
-| hf:Qwen/Qwen2-VL-2B-Instruct | image | 144 | 8.3% | 8.3% ✅ | 8.3% | 100.0% |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | blind | 144 | 13.2% | 13.2% ✅ | 13.2% | 100.0% |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 144 | 16.0% | 16.0% ✅ | 16.0% | 100.0% |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | blind | 130 | 10.0% | 10.0% ✅ | 10.0% | 100.0% |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | image | 130 | 8.5% | 8.5% ✅ | 9.2% | 99.2% |
+| hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | blind | 130 | 11.5% | 11.5% ✅ | 11.5% | 100.0% |
+| hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | image | 130 | 8.5% | 8.5% ✅ | 8.5% | 100.0% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | blind | 130 | 9.2% | 9.2% ✅ | 9.2% | 100.0% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | image | 130 | 9.2% | 9.2% ✅ | 9.2% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | blind | 130 | 13.8% | 13.8% ✅ | 13.8% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 130 | 16.9% | 16.9% ✅ | 16.9% | 100.0% |
 
 **1 replies where the two parsers disagree** (first 12):
 
@@ -64,44 +64,44 @@ Ten random raw replies, exactly as the models wrote them:
 
 | Model | Task | Key | Raw reply | Scored |
 |---|---|---|---|---|
-| SmolVLM-256M-Instruct | level4_seed44229__Q4__map | ['F1', 'F3', 'F4', 'F5'] | `{ "answer": [ { "label": "V1", "unit": "V1", "unit_length": "125 m", "unit_width": "125 m"` | ❌ |
-| Qwen2-VL-2B-Instruct | level1_seed100250__Q10__map | 1690 | `{"answer": 100}` | ❌ |
-| SmolVLM-256M-Instruct | level3_seed47829_cf__Q7__satellite | ['V2'] | `{ "answer": [] }` | ❌ |
-| Qwen2.5-VL-3B-Instruct | level5_seed77508__Q5__map | SW | ````json {"answer": "E"} ```` | ❌ |
-| Qwen2.5-VL-3B-Instruct | level5_seed54139__Q7__satellite | ['V1', 'V3'] | `{"answer": ["V3"]}` | ❌ |
-| SmolVLM2-2.2B-Instruct | level3_seed47829_cf__Q7__satellite | ['V2'] | `{"answer": ["V5", "V6", "V3", "V2", "V1"]}` | ❌ |
-| Qwen2.5-VL-3B-Instruct | level4_seed45587_cf__Q8__thermal | [] | `{"answer": ["M2"]}` | ❌ |
-| SmolVLM-256M-Instruct | real_navi_mumbai_seed32379_cf__Q7__map | ['V4'] | `{ "answer": [ { "label": "V1", "source": "V3", "unit": "m", "unit_score": "1", "unit_score` | ❌ |
-| Qwen2.5-VL-3B-Instruct | level2_seed21111__Q7__satellite | ['V2'] | `{"answer": ["V2"]}` | ✅ |
-| Qwen2.5-VL-3B-Instruct | level5_seed76732__Q6__map | S3 | ````json {"answer": "S2"} ```` | ❌ |
+| SmolVLM-256M-Instruct | level4_seed51954__Q8__thermal | ['M2', 'M3'] | `{ "answer": [ { "label": "V6", "value": "v6" }, { "label": "V2", "value": "v2" }, {` | ❌ |
+| Qwen2-VL-2B-Instruct | level1_seed12850__Q2__satellite | V1 | `{"answer": "S1"}` | ❌ |
+| SmolVLM2-2.2B-Instruct | level1_seed91943__Q10__satellite | 690 | `1` | ❌ |
+| Qwen2.5-VL-3B-Instruct | real_pune_seed47441__Q5__satellite | SE | `{"answer": "E"}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level2_seed48554__Q9__thermal | 6.3 | `{"answer": 10}` | ❌ |
+| Qwen2-VL-2B-Instruct | real_chennai_seed31506__Q10__satellite | 590 | `{"answer": 1000}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level4_seed48947__Q1__satellite | ['V4', 'V7'] | `{"answer": ["V2"]}` | ❌ |
+| SmolVLM-256M-Instruct | level3_seed31894__Q2__satellite | V3 | `V2` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level4_seed68374__Q6__satellite | S2 | ````json {"answer": "S2"} ```` | ✅ |
+| SmolVLM2-2.2B-Instruct | level2_seed32910_cf__Q8__thermal | [] | `{"answer": ["M1", "M2", "M3", "M4"]}` | ❌ |
 
 ## 1b. Real model answers (results/frontier)
 
 These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
 
-Compared on the 89 tasks that every model answered with the image.
+Compared on the 83 tasks that every model answered with the image.
 
 | Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |
 |---|---|---|---|---|---|---|
-| hf:Qwen/Qwen2-VL-2B-Instruct | image | 89 | 5.6% | 5.6% ✅ | 5.6% | 100.0% |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 89 | 11.2% | 11.2% ✅ | 11.2% | 100.0% |
-| openai:gemini-3.1-flash-lite | image | 89 | 46.1% | 46.1% ✅ | 46.1% | 100.0% |
-| openai:gemini-3.5-flash-lite | image | 89 | 39.3% | 39.3% ✅ | 39.3% | 100.0% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | image | 83 | 4.8% | 4.8% ✅ | 4.8% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 83 | 12.0% | 12.0% ✅ | 12.0% | 100.0% |
+| openai:gemini-3.1-flash-lite | image | 83 | 48.2% | 48.2% ✅ | 48.2% | 100.0% |
+| openai:gemini-3.5-flash-lite | image | 83 | 39.8% | 39.8% ✅ | 39.8% | 100.0% |
 
 Ten random raw replies, exactly as the models wrote them:
 
 | Model | Task | Key | Raw reply | Scored |
 |---|---|---|---|---|
-| openai:gemini-3.5-flash-lite | real_chennai_seed39037__Q6__map | S2 | `{"answer": "S2"}` | ✅ |
-| openai:gemini-3.1-flash-lite | real_chennai_seed39037__Q7__map | ['V1'] | `{"answer": ["V1", "V5"]}` | ❌ |
-| Qwen2.5-VL-3B-Instruct | level4_seed58903__Q10__map | 2550 | `{"answer": 1000}` | ❌ |
-| Qwen2-VL-2B-Instruct | real_chennai_seed31409__Q3__satellite | A | `{"answer": "B"}` | ❌ |
+| openai:gemini-3.5-flash-lite | level4_seed48947__Q10__map | 390 | `{"answer": 1200}` | ❌ |
+| openai:gemini-3.1-flash-lite | level4_seed48947__Q3__map | D | `{"answer": "D"}` | ✅ |
+| Qwen2.5-VL-3B-Instruct | level3_seed31409__Q2__map | V6 | `` | ❌ |
 | openai:gemini-3.1-flash-lite | level4_seed58903__Q10__map | 2550 | `{"answer": 3400}` | ❌ |
-| openai:gemini-3.1-flash-lite | level3_seed34416__Q9__thermal | 6.7 | `{"answer": 9}` | ❌ |
-| Qwen2-VL-2B-Instruct | level2_seed22760__Q10__map | 2210 | `{"answer": 4}` | ❌ |
-| openai:gemini-3.1-flash-lite | level3_seed31409_cf__Q7__map | ['V4'] | `{"answer": ["V4"]}` | ✅ |
-| Qwen2.5-VL-3B-Instruct | real_navi_mumbai_seed31312__Q1__satellite | ['V4', 'V5'] | `{"answer": ["V1", "V4"]}` | ❌ |
-| Qwen2-VL-2B-Instruct | level3_seed58561__Q6__satellite | S1 | `{"answer": "B"}` | ❌ |
+| openai:gemini-3.1-flash-lite | level3_seed31409__Q3__map | D | `{"answer": "D"}` | ✅ |
+| Qwen2-VL-2B-Instruct | level4_seed58903_cf__Q1__map | ['V5'] | `{"answer": ["V1", "V2", "V3", "V4", "V5"]}` | ❌ |
+| openai:gemini-3.1-flash-lite | level5_seed52684__Q6__satellite | S3 | `{"answer": "S2"}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level4_seed58903__Q5__map | S | `{"answer": "E"}` | ❌ |
+| Qwen2-VL-2B-Instruct | level5_seed52684__Q7__satellite | ['V1'] | `{"answer": ["V1", "V4"]}` | ❌ |
+| openai:gemini-3.1-flash-lite | level3_seed58561__Q6__satellite | S1 | `{"answer": "S2"}` | ❌ |
 
 ## 3. Dataset regenerated from recorded seeds
 

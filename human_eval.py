@@ -22,7 +22,9 @@ from thirstmap.scoring import score
 
 def build(a):
     ds, out = Path(a.dataset), Path(a.out)
-    tasks = [json.loads(l) for l in open(ds / "tasks.jsonl")]
+    from thirstmap import errata
+    bad = errata.load(ds)
+    tasks = [t for t in map(json.loads, open(ds / "tasks.jsonl")) if t["task_id"] not in bad]
     if a.from_run:      # only questions every model in that run answered, so humans and models share items
         ids = {t["task_id"] for t in tasks}
         per = defaultdict(set)
@@ -61,7 +63,9 @@ def build(a):
 
 def score_files(a):
     ds = Path(a.dataset)
-    tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(ds / "tasks.jsonl")}
+    from thirstmap import errata
+    bad = errata.load(ds)
+    tasks = {t["task_id"]: t for t in map(json.loads, open(ds / "tasks.jsonl")) if t["task_id"] not in bad}
     rows = []
     for f in a.files:
         txt = Path(f).read_text().strip()
@@ -102,6 +106,9 @@ def score_files(a):
         L += ["", f"Median time per task: {sorted(secs)[len(secs) // 2]:.0f} s"]
     Path(a.out).mkdir(exist_ok=True)
     (Path(a.out) / "HUMAN_RESULTS.md").write_text("\n".join(L))
+    (Path(a.out) / "human_summary.json").write_text(json.dumps(dict(
+        people=len(people), answers=len(rows), accuracy=sum(r["correct"] for r in rows) / len(rows),
+        questions=len({r["id"] for r in rows})), indent=1))
     print("\n".join(L))
 
 

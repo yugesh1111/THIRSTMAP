@@ -1,0 +1,24 @@
+{"task_id": "level1_seed11589__Q8__thermal", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 55 options for Q7 (design: 4)"}
+{"task_id": "level2_seed45644__Q8__thermal", "check": "V10b", "hidden_labels": ["M4"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level2_seed46226__Q5__satellite", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 53 options for Q8 (design: 4)"}
+{"task_id": "level2_seed62646__Q6__map", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 60 options for Q8 (design: 4)"}
+{"task_id": "level2_seed33201__Q1__satellite", "check": "V10b", "hidden_labels": ["V3"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed39037__Q5__map", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 60 options for Q8 (design: 4)"}
+{"task_id": "level3_seed39037__Q7__satellite", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 60 options for Q8 (design: 4)"}
+{"task_id": "level3_seed39037_cf__Q7__satellite", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 60 options for Q8 (design: 4)"}
+{"task_id": "level3_seed58561__Q1__satellite", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed58561__Q2__satellite", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed58561__Q7__satellite", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed58561_cf__Q1__satellite", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed58561_cf__Q2__satellite", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level3_seed98544__Q2__satellite", "check": "count", "reason": "scene generator bug (fixed in checks v2): a request for zero items filled every free site; this scene has 61 options for Q8 (design: 4)"}
+{"task_id": "level4_seed42677__Q7__satellite", "check": "V10b", "hidden_labels": ["V3"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level5_seed53945__Q7__satellite", "check": "V10b", "hidden_labels": ["V5"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "level5_seed53945_cf__Q7__satellite", "check": "V10b", "hidden_labels": ["V5"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_navi_mumbai_seed39134__Q1__satellite", "check": "V10b", "hidden_labels": ["V5"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_navi_mumbai_seed39134_cf__Q1__satellite", "check": "V10b", "hidden_labels": ["V5"], "answer_hidden": true, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_navi_mumbai_seed47344__Q8__thermal", "check": "V10b", "hidden_labels": ["M3"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_navi_mumbai_seed47344_cf__Q8__thermal", "check": "V10b", "hidden_labels": ["M3"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_pune_seed47441__Q8__thermal", "check": "V10b", "hidden_labels": ["M4"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_pune_seed48217__Q2__satellite", "check": "V10b", "hidden_labels": ["V3"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}
+{"task_id": "real_chennai_seed31797__Q7__map", "check": "V10b", "hidden_labels": ["V1"], "answer_hidden": false, "reason": "an option label is drawn under the scale bar, north arrow or colour legend"}

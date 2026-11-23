@@ -4,54 +4,83 @@
     "mock:random",
     "mock:stubborn"
   ],
-  "n_responses": 34566,
+  "n_responses": 31980,
+  "compared_on_tasks": 5330,
+  "answers_outside_common_set": {},
+  "excluded_by_audit": 431,
   "chance_by_skill": {
-    "read_colour_scale_threshold": 0.09789319672144295,
-    "trace_upstream_catchment": 0.04286427952209659,
-    "read_flow_direction": 0.125,
+    "measure_along_flow": 0.12181523178807949,
+    "read_colour_scale_threshold": 0.09984926075268817,
+    "read_elevation": 0.04835305070364238,
     "nature_based_filtering": 0.25,
+    "read_flow_direction": 0.125,
     "siting_downstream_impact": 0.3333333333333333,
-    "order_along_flow": 0.17222203602848762,
-    "read_elevation": 0.04922022646103896,
-    "measure_along_flow": 0.12285,
-    "read_colour_scale_value": 0.19995203836930459,
-    "trace_downstream": 0.02566516762053668
+    "read_colour_scale_value": 0.19995098039215686,
+    "trace_upstream_catchment": 0.043992313835704296,
+    "order_along_flow": 0.1740734835600907,
+    "trace_downstream": 0.026196484434593843
+  },
+  "tasks_by_skill_evaluated": {
+    "measure_along_flow": 604,
+    "read_colour_scale_threshold": 279,
+    "read_elevation": 302,
+    "nature_based_filtering": 571,
+    "read_flow_direction": 566,
+    "siting_downstream_impact": 596,
+    "read_colour_scale_value": 272,
+    "trace_upstream_catchment": 804,
+    "order_along_flow": 672,
+    "trace_downstream": 664
   },
   "vs_chance": {
     "mock:oracle": {
-      "correct": 5761,
-      "n": 5761,
-      "chance": 0.13823376746865693,
+      "correct": 5330,
+      "n": 5330,
+      "chance": 0.14115046253971686,
       "p_value": 0.0
     },
     "mock:random": {
-      "correct": 788,
-      "n": 5761,
-      "chance": 0.13823376746865693,
-      "p_value": 0.6309240370516915
+      "correct": 740,
+      "n": 5330,
+      "chance": 0.14115046253971686,
+      "p_value": 0.6919181841036353
     },
     "mock:stubborn": {
-      "correct": 5021,
-      "n": 5761,
-      "chance": 0.13823376746865693,
+      "correct": 4677,
+      "n": 5330,
+      "chance": 0.14115046253971686,
       "p_value": 0.0
+    }
+  },
+  "format": {
+    "mock:oracle": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 1.0
+    },
+    "mock:random": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.13883677298311445
+    },
+    "mock:stubborn": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.877485928705441
     }
   },
   "overall": {
     "mock:oracle": {
       "image": 1.0,
       "blind": 1.0,
-      "n": 5761
+      "n": 5330
     },
     "mock:random": {
-      "image": 0.13678180871376497,
-      "blind": 0.13973268529769137,
-      "n": 5761
+      "image": 0.13883677298311445,
+      "blind": 0.14371482176360226,
+      "n": 5330
     },
     "mock:stubborn": {
-      "image": 0.871550078111439,
-      "blind": 0.871550078111439,
-      "n": 5761
+      "image": 0.877485928705441,
+      "blind": 0.877485928705441,
+      "n": 5330
     }
   },
   "by_skill": {
@@ -68,28 +97,28 @@
       "trace_upstream_catchment": 1.0
     },
     "mock:random": {
-      "order_along_flow": 0.1767741935483871,
-      "nature_based_filtering": 0.23778501628664495,
-      "trace_downstream": 0.03389830508474576,
-      "measure_along_flow": 0.11201298701298701,
-      "read_flow_direction": 0.11245674740484429,
-      "siting_downstream_impact": 0.32838283828382836,
-      "read_elevation": 0.048701298701298704,
-      "read_colour_scale_threshold": 0.10819672131147541,
-      "read_colour_scale_value": 0.21942446043165467,
-      "trace_upstream_catchment": 0.04048140043763676
+      "order_along_flow": 0.17708333333333334,
+      "nature_based_filtering": 0.23992994746059546,
+      "trace_downstream": 0.03313253012048193,
+      "measure_along_flow": 0.1076158940397351,
+      "read_flow_direction": 0.11307420494699646,
+      "siting_downstream_impact": 0.3288590604026846,
+      "read_elevation": 0.04966887417218543,
+      "read_colour_scale_threshold": 0.11469534050179211,
+      "read_colour_scale_value": 0.22058823529411764,
+      "trace_upstream_catchment": 0.03731343283582089
     },
     "mock:stubborn": {
-      "trace_downstream": 0.7926988265971316,
-      "order_along_flow": 0.7948387096774193,
+      "trace_downstream": 0.7981927710843374,
+      "order_along_flow": 0.8005952380952381,
       "nature_based_filtering": 1.0,
       "measure_along_flow": 1.0,
       "siting_downstream_impact": 1.0,
-      "trace_upstream_catchment": 0.6695842450765864,
+      "trace_upstream_catchment": 0.6666666666666666,
       "read_flow_direction": 1.0,
       "read_elevation": 1.0,
-      "read_colour_scale_value": 0.8345323741007195,
-      "read_colour_scale_threshold": 0.7573770491803279
+      "read_colour_scale_value": 0.8308823529411765,
+      "read_colour_scale_threshold": 0.7455197132616488
     }
   },
   "by_style": {
@@ -99,14 +128,14 @@
       "thermal": 1.0
     },
     "mock:random": {
-      "map": 0.12691466083150985,
-      "satellite": 0.14203612479474548,
-      "thermal": 0.16123499142367068
+      "map": 0.12828560219693996,
+      "satellite": 0.14394618834080716,
+      "thermal": 0.16696914700544466
     },
     "mock:stubborn": {
-      "map": 0.887308533916849,
-      "satellite": 0.8723316912972086,
-      "thermal": 0.7941680960548885
+      "map": 0.8948607296979207,
+      "satellite": 0.8798206278026905,
+      "thermal": 0.7876588021778584
     }
   },
   "by_level": {
@@ -118,18 +147,18 @@
       "5": 1.0
     },
     "mock:random": {
-      "1": 0.17060085836909872,
-      "2": 0.1425531914893617,
-      "3": 0.13175675675675674,
-      "4": 0.11948331539289558,
-      "5": 0.125
+      "1": 0.17256637168141592,
+      "2": 0.143698468786808,
+      "3": 0.13453389830508475,
+      "4": 0.1186046511627907,
+      "5": 0.1278648974668275
     },
     "mock:stubborn": {
-      "1": 0.8830472103004292,
-      "2": 0.8872340425531915,
-      "3": 0.8696911196911197,
-      "4": 0.8654467168998924,
-      "5": 0.8536036036036037
+      "1": 0.8816371681415929,
+      "2": 0.8916372202591284,
+      "3": 0.8771186440677966,
+      "4": 0.8744186046511628,
+      "5": 0.8624849215922799
     }
   },
   "eye_exam_curves": {
@@ -207,90 +236,90 @@
     },
     "mock:random": {
       "order_along_flow": {
-        "1": 0.28448275862068967,
-        "2": 0.17857142857142858,
-        "3": 0.16842105263157894,
-        "4": 0.1640625,
-        "5": 0.11194029850746269
+        "1": 0.29464285714285715,
+        "2": 0.18478260869565216,
+        "3": 0.1680327868852459,
+        "4": 0.1308411214953271,
+        "5": 0.11965811965811966
       },
       "nature_based_filtering": {
-        "1": 0.17346938775510204,
-        "2": 0.25,
-        "3": 0.24311926605504589,
-        "4": 0.26,
-        "5": 0.25510204081632654
+        "1": 0.1827956989247312,
+        "2": 0.25806451612903225,
+        "3": 0.23618090452261306,
+        "4": 0.2736842105263158,
+        "5": 0.25274725274725274
       },
       "trace_downstream": {
-        "1": 0.05172413793103448,
-        "2": 0.08035714285714286,
-        "3": 0.0176678445229682,
-        "4": 0.03968253968253968,
-        "5": 0.007692307692307693
+        "1": 0.05357142857142857,
+        "2": 0.08695652173913043,
+        "3": 0.012396694214876033,
+        "4": 0.0380952380952381,
+        "5": 0.008849557522123894
       },
       "measure_along_flow": {
-        "1": 0.12244897959183673,
-        "2": 0.1,
-        "3": 0.14678899082568808,
+        "1": 0.11458333333333333,
+        "2": 0.09375,
+        "3": 0.14150943396226415,
         "4": 0.09,
         "5": 0.06
       },
       "read_flow_direction": {
-        "1": 0.09574468085106383,
-        "2": 0.08695652173913043,
-        "3": 0.11165048543689321,
+        "1": 0.08695652173913043,
+        "2": 0.09090909090909091,
+        "3": 0.115,
         "4": 0.09375,
         "5": 0.17777777777777778
       },
       "siting_downstream_impact": {
         "1": 0.4479166666666667,
-        "2": 0.33,
-        "3": 0.29906542056074764,
+        "2": 0.3229166666666667,
+        "3": 0.30288461538461536,
         "4": 0.2755102040816326,
         "5": 0.32653061224489793
       },
       "read_elevation": {
-        "1": 0.14285714285714285,
-        "2": 0.04,
-        "3": 0.045871559633027525,
+        "1": 0.14583333333333334,
+        "2": 0.041666666666666664,
+        "3": 0.04716981132075472,
         "4": 0.02,
         "5": 0.0
       },
       "read_colour_scale_threshold": {
-        "1": 0.046875,
-        "2": 0.08620689655172414,
-        "3": 0.11764705882352941,
-        "4": 0.13953488372093023,
+        "1": 0.04918032786885246,
+        "2": 0.07692307692307693,
+        "3": 0.13592233009708737,
+        "4": 0.14285714285714285,
         "5": 0.23809523809523808
       },
       "read_colour_scale_value": {
-        "1": 0.2807017543859649,
-        "2": 0.24074074074074073,
-        "3": 0.19444444444444445,
+        "1": 0.2857142857142857,
+        "2": 0.25,
+        "3": 0.19047619047619047,
         "4": 0.125,
         "5": 0.3157894736842105
       },
       "trace_upstream_catchment": {
-        "1": 0.09027777777777778,
-        "2": 0.05555555555555555,
-        "3": 0.02564102564102564,
-        "4": 0.013513513513513514,
-        "5": 0.033783783783783786
+        "1": 0.08695652173913043,
+        "2": 0.04285714285714286,
+        "3": 0.02973977695167286,
+        "4": 0.007874015748031496,
+        "5": 0.023076923076923078
       }
     },
     "mock:stubborn": {
       "trace_downstream": {
-        "1": 0.8448275862068966,
-        "2": 0.8928571428571429,
-        "3": 0.7632508833922261,
-        "4": 0.7777777777777778,
-        "5": 0.7384615384615385
+        "1": 0.8392857142857143,
+        "2": 0.9130434782608695,
+        "3": 0.768595041322314,
+        "4": 0.780952380952381,
+        "5": 0.7433628318584071
       },
       "order_along_flow": {
-        "1": 0.8448275862068966,
-        "2": 0.8928571428571429,
-        "3": 0.7649122807017544,
-        "4": 0.78125,
-        "5": 0.746268656716418
+        "1": 0.8392857142857143,
+        "2": 0.9130434782608695,
+        "3": 0.7704918032786885,
+        "4": 0.7850467289719626,
+        "5": 0.7521367521367521
       },
       "nature_based_filtering": {
         "1": 1.0,
@@ -314,11 +343,11 @@
         "5": 1.0
       },
       "trace_upstream_catchment": {
-        "1": 0.6805555555555556,
-        "2": 0.6172839506172839,
-        "3": 0.6987179487179487,
-        "4": 0.6621621621621622,
-        "5": 0.6621621621621622
+        "1": 0.6811594202898551,
+        "2": 0.6,
+        "3": 0.6988847583643123,
+        "4": 0.6614173228346457,
+        "5": 0.6615384615384615
       },
       "read_flow_direction": {
         "1": 1.0,
@@ -335,17 +364,17 @@
         "5": 1.0
       },
       "read_colour_scale_value": {
-        "1": 0.8245614035087719,
-        "2": 0.8518518518518519,
-        "3": 0.8611111111111112,
+        "1": 0.8214285714285714,
+        "2": 0.8461538461538461,
+        "3": 0.8571428571428571,
         "4": 0.8,
         "5": 0.7368421052631579
       },
       "read_colour_scale_threshold": {
-        "1": 0.734375,
-        "2": 0.7931034482758621,
-        "3": 0.773109243697479,
-        "4": 0.7441860465116279,
+        "1": 0.7213114754098361,
+        "2": 0.7692307692307693,
+        "3": 0.7669902912621359,
+        "4": 0.7380952380952381,
         "5": 0.6666666666666666
       }
     }
@@ -433,54 +462,54 @@
     },
     "mock:random": {
       "order_along_flow": [
-        0.1767741935483871,
-        0.1896774193548387
+        0.17708333333333334,
+        0.20089285714285715
       ],
       "nature_based_filtering": [
-        0.23778501628664495,
-        0.23778501628664495
+        0.23992994746059546,
+        0.23467600700525393
       ],
       "trace_downstream": [
-        0.03389830508474576,
-        0.02607561929595828
+        0.03313253012048193,
+        0.025602409638554216
       ],
       "measure_along_flow": [
-        0.11201298701298701,
-        0.12987012987012986
+        0.1076158940397351,
+        0.1291390728476821
       ],
       "read_flow_direction": [
-        0.11245674740484429,
-        0.10380622837370242
+        0.11307420494699646,
+        0.10600706713780919
       ],
       "siting_downstream_impact": [
-        0.32838283828382836,
-        0.36468646864686466
+        0.3288590604026846,
+        0.3674496644295302
       ],
       "read_elevation": [
-        0.048701298701298704,
-        0.022727272727272728
+        0.04966887417218543,
+        0.023178807947019868
       ],
       "read_colour_scale_threshold": [
-        0.10819672131147541,
-        0.11147540983606558
+        0.11469534050179211,
+        0.1111111111111111
       ],
       "read_colour_scale_value": [
-        0.21942446043165467,
-        0.2014388489208633
+        0.22058823529411764,
+        0.20220588235294118
       ],
       "trace_upstream_catchment": [
-        0.04048140043763676,
-        0.037199124726477024
+        0.03731343283582089,
+        0.03731343283582089
       ]
     },
     "mock:stubborn": {
       "trace_downstream": [
-        0.7926988265971316,
-        0.7926988265971316
+        0.7981927710843374,
+        0.7981927710843374
       ],
       "order_along_flow": [
-        0.7948387096774193,
-        0.7948387096774193
+        0.8005952380952381,
+        0.8005952380952381
       ],
       "nature_based_filtering": [
         1.0,
@@ -495,8 +524,8 @@
         1.0
       ],
       "trace_upstream_catchment": [
-        0.6695842450765864,
-        0.6695842450765864
+        0.6666666666666666,
+        0.6666666666666666
       ],
       "read_flow_direction": [
         1.0,
@@ -507,107 +536,107 @@
         1.0
       ],
       "read_colour_scale_value": [
-        0.8345323741007195,
-        0.8345323741007195
+        0.8308823529411765,
+        0.8308823529411765
       ],
       "read_colour_scale_threshold": [
-        0.7573770491803279,
-        0.7573770491803279
+        0.7455197132616488,
+        0.7455197132616488
       ]
     }
   },
   "tasks_guessable_without_image": [],
   "map_vs_satellite": {
     "mock:oracle": {
-      "n": 2434,
-      "both_right": 2434,
+      "n": 2192,
+      "both_right": 2192,
       "only_map": 0,
       "only_satellite": 0,
       "both_wrong": 0
     },
     "mock:random": {
-      "n": 2434,
-      "both_right": 72,
-      "only_map": 261,
-      "only_satellite": 274,
-      "both_wrong": 1827
+      "n": 2192,
+      "both_right": 69,
+      "only_map": 239,
+      "only_satellite": 251,
+      "both_wrong": 1633
     },
     "mock:stubborn": {
-      "n": 2434,
-      "both_right": 2125,
+      "n": 2192,
+      "both_right": 1936,
       "only_map": 0,
       "only_satellite": 0,
-      "both_wrong": 309
+      "both_wrong": 256
     }
   },
   "error_tags": {
     "mock:oracle": {},
     "mock:random": {
-      "missed_some": 1722,
-      "wrong_choice": 1043,
-      "extra_unrelated": 759,
-      "overestimate": 595,
-      "trap:downstream_not_upstream": 539,
-      "trap:near_but_other_stream": 361,
-      "wrong_direction": 285,
-      "underestimate": 169,
-      "trap:other_stream": 158,
-      "trap:later_village": 152,
-      "trap:too_late_after_village": 141,
-      "off_by_one_sector": 140,
-      "trap:upstream_same_stream": 92,
-      "reversed_direction": 88,
-      "trap:cooled_downstream": 76,
-      "trap:upstream_of_outfall": 33,
-      "trap:upstream_of_O": 9
+      "missed_some": 1535,
+      "wrong_choice": 963,
+      "extra_unrelated": 673,
+      "overestimate": 589,
+      "trap:downstream_not_upstream": 476,
+      "trap:near_but_other_stream": 314,
+      "wrong_direction": 281,
+      "underestimate": 162,
+      "trap:later_village": 140,
+      "trap:other_stream": 138,
+      "off_by_one_sector": 136,
+      "trap:too_late_after_village": 130,
+      "reversed_direction": 85,
+      "trap:upstream_same_stream": 77,
+      "trap:cooled_downstream": 70,
+      "trap:upstream_of_outfall": 29,
+      "trap:upstream_of_O": 5
     },
     "mock:stubborn": {
-      "extra_unrelated": 476,
-      "missed_some": 350,
-      "wrong_choice": 119,
+      "extra_unrelated": 425,
+      "missed_some": 303,
+      "wrong_choice": 101,
       "overestimate": 45,
-      "trap:later_village": 40,
+      "trap:later_village": 33,
       "underestimate": 1
     }
   },
   "trap_fall_rate": {
     "mock:oracle": {
-      "exposed": 3375,
+      "exposed": 2990,
       "fell": 0,
       "rate": 0.0
     },
     "mock:random": {
-      "exposed": 3375,
-      "fell": 1488,
-      "rate": 0.4408888888888889
+      "exposed": 2990,
+      "fell": 1316,
+      "rate": 0.44013377926421404
     },
     "mock:stubborn": {
-      "exposed": 3375,
-      "fell": 40,
-      "rate": 0.011851851851851851
+      "exposed": 2990,
+      "fell": 33,
+      "rate": 0.011036789297658863
     }
   },
   "counterfactual_pairs": {
     "mock:oracle": {
-      "pairs": 740,
+      "pairs": 653,
       "single_task_accuracy": 1.0,
       "pair_accuracy": 1.0,
       "unchanged_answer_rate": 0.0,
       "by_kind": {
         "outfall": {
-          "pairs": 318,
+          "pairs": 268,
           "single_task_accuracy": 1.0,
           "pair_accuracy": 1.0,
           "unchanged_answer_rate": 0.0
         },
         "intake": {
-          "pairs": 302,
+          "pairs": 268,
           "single_task_accuracy": 1.0,
           "pair_accuracy": 1.0,
           "unchanged_answer_rate": 0.0
         },
         "thermal": {
-          "pairs": 120,
+          "pairs": 117,
           "single_task_accuracy": 1.0,
           "pair_accuracy": 1.0,
           "unchanged_answer_rate": 0.0
@@ -615,51 +644,51 @@
       }
     },
     "mock:random": {
-      "pairs": 740,
-      "single_task_accuracy": 0.0891891891891892,
-      "pair_accuracy": 0.014864864864864866,
-      "unchanged_answer_rate": 0.06891891891891892,
+      "pairs": 653,
+      "single_task_accuracy": 0.08805513016845329,
+      "pair_accuracy": 0.015313935681470138,
+      "unchanged_answer_rate": 0.07197549770290965,
       "by_kind": {
         "outfall": {
-          "pairs": 318,
-          "single_task_accuracy": 0.10377358490566038,
-          "pair_accuracy": 0.018867924528301886,
-          "unchanged_answer_rate": 0.11006289308176101
+          "pairs": 268,
+          "single_task_accuracy": 0.09888059701492537,
+          "pair_accuracy": 0.018656716417910446,
+          "unchanged_answer_rate": 0.11567164179104478
         },
         "intake": {
-          "pairs": 302,
-          "single_task_accuracy": 0.041390728476821195,
+          "pairs": 268,
+          "single_task_accuracy": 0.03917910447761194,
           "pair_accuracy": 0.0,
-          "unchanged_answer_rate": 0.033112582781456956
+          "unchanged_answer_rate": 0.03731343283582089
         },
         "thermal": {
-          "pairs": 120,
-          "single_task_accuracy": 0.17083333333333334,
-          "pair_accuracy": 0.041666666666666664,
-          "unchanged_answer_rate": 0.05
+          "pairs": 117,
+          "single_task_accuracy": 0.1752136752136752,
+          "pair_accuracy": 0.042735042735042736,
+          "unchanged_answer_rate": 0.05128205128205128
         }
       }
     },
     "mock:stubborn": {
-      "pairs": 740,
+      "pairs": 653,
       "single_task_accuracy": 0.5,
       "pair_accuracy": 0.0,
       "unchanged_answer_rate": 1.0,
       "by_kind": {
         "outfall": {
-          "pairs": 318,
+          "pairs": 268,
           "single_task_accuracy": 0.5,
           "pair_accuracy": 0.0,
           "unchanged_answer_rate": 1.0
         },
         "intake": {
-          "pairs": 302,
+          "pairs": 268,
           "single_task_accuracy": 0.5,
           "pair_accuracy": 0.0,
           "unchanged_answer_rate": 1.0
         },
         "thermal": {
-          "pairs": 120,
+          "pairs": 117,
           "single_task_accuracy": 0.5,
           "pair_accuracy": 0.0,
           "unchanged_answer_rate": 1.0

@@ -10,6 +10,25 @@ India's data centres use an estimated ~150 billion litres of water a year, and t
 
 See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and design decisions, and [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) for the full problem statement, sources, and a line-by-line fit to the Track 2 brief.
 
+## For judges: the 3-minute tour
+
+| Look at | Where | What it shows |
+|---|---|---|
+| **90-second video** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
+| **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
+| **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
+| **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
+| **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 30 of the questions the models answered |
+| **Run it** | `./run_all.sh --quick` (about 2 minutes) | tests, a small dataset, baselines, reports, demo |
+
+| Judging criterion | Where ThirstMap answers it |
+|---|---|
+| Implementation (25%) | One-command pipeline from terrain to report; 47 tests and CI; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
+| Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; exact inputs published with checksums |
+| Variation (20%) | 10 reasoning skills and no counting; satellite, map and thermal styles; 5 difficulty levels; real terrain for 4 cities; before-and-after twins; season, haze and sensor variants |
+| Originality (15%) | Twins with one minimal change that must flip the answer; consequence of every model error drawn on the image it saw |
+| Impact (15%) | India's data-centre water problem; what each AI mistake would mean on the ground; [`docs/POLICY_NOTE.md`](docs/POLICY_NOTE.md) proposes a pass bar for AI water screening |
+
 ---
 
 <!-- FINDINGS:START -->
@@ -17,10 +36,10 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 | Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
 |---|---|---|---|---|---|---|---|---|---|
-| Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | 75% (n=24) | 69% (n=16) |
-| SmolVLM2-2.2B-Instruct | 2.2B | **8%** (12/144) | 12% | 13% | 0.97 | 0% | 77% | – | 69% (n=16) |
-| Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | 88% (n=24) | 94% (n=16) |
-| SmolVLM-256M-Instruct | 0.26B | **8%** (11/144) | 10% | 13% | 0.99 | 0% | 73% | – | 0% (n=16) |
+| Qwen2.5-VL-3B-Instruct | 3B | **17%** (22/130) | 14% | 13% | 0.15 | 0% | 92% | 75% (n=20) | 69% (n=16) |
+| Qwen2-VL-2B-Instruct | 2B | **9%** (12/130) | 9% | 13% | 0.95 | 0% | 85% | 95% (n=20) | 94% (n=16) |
+| SmolVLM-256M-Instruct | 0.26B | **8%** (11/130) | 10% | 13% | 0.97 | 0% | 73% | – | 0% (n=16) |
+| SmolVLM2-2.2B-Instruct | 2.2B | **8%** (11/130) | 12% | 13% | 0.97 | 0% | 81% | – | 69% (n=16) |
 
 ### Frontier check (Gemini, free API tier)
 
@@ -28,27 +47,27 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 | Model | Protocol | Questions | Accuracy | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
 |---|---|---|---|---|---|---|---|---|
-| gemini-3.1-flash-lite | batched | 89 | **46%** (41/89) | 14% | 1.4e-13 | 0% (9) | 33% | 299 |
-| gemini-3.5-flash-lite | batched | 89 | **39%** (35/89) | 14% | 1.7e-09 | 0% (9) | 22% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 89 | **11%** (10/89) | 14% | 0.79 | 0% (9) | 44% | 229 |
-| Qwen2-VL-2B-Instruct | batched | 89 | **6%** (5/89) | 14% | 1 | 0% (9) | 33% | 229 |
-| gemini-3.5-flash | single | 20 | **75%** (15/20) | 8% | 2.5e-13 | – | – | – |
-| Qwen2.5-VL-3B-Instruct | single | 20 | **15%** (3/20) | 8% | 0.2 | – | – | – |
-| Qwen2-VL-2B-Instruct | single | 20 | **10%** (2/20) | 8% | 0.47 | – | – | – |
-| SmolVLM-256M-Instruct | single | 20 | **10%** (2/20) | 8% | 0.47 | – | – | – |
-| SmolVLM2-2.2B-Instruct | single | 20 | **5%** (1/20) | 8% | 0.8 | – | – | – |
+| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
+| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 14% | 0.75 | 0% (7) | 43% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 14% | 1 | 0% (7) | 43% | 229 |
+| gemini-3.5-flash | single | 19 | **79%** (15/19) | 8% | 1.2e-13 | – | – | – |
+| Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | 8% | 0.2 | – | – | – |
+| Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | 8% | 0.46 | – | – | – |
+| SmolVLM-256M-Instruct | single | 19 | **11%** (2/19) | 8% | 0.46 | – | – | – |
+| SmolVLM2-2.2B-Instruct | single | 19 | **5%** (1/19) | 8% | 0.8 | – | – | – |
 
 ### What the numbers say
 
-- **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
-- **A frontier model does much better, but is not reliable yet.** On the same 89 questions (batched protocol), gemini-3.1-flash-lite got 46% right against 11% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 1.4e-13). One question per request, gemini-3.5-flash got 75% of 20 questions against 15% for Qwen2.5-VL-3B-Instruct.
-- **No model passes the before-and-after test.** Each twin changes one thing so the correct answer flips; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got both halves of **0 of 9** pairs right: the frontier models often change their answer for the twin, but never get both the original scene and its changed twin right.
-- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; SmolVLM2-2.2B-Instruct 8% vs 12%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
-- **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); SmolVLM2-2.2B-Instruct 77% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%).
-- **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 88%.
-- **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; SmolVLM2-2.2B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
+- **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 17% against a chance level of 13% (p = 0.15).
+- **A frontier model does much better, but is not reliable yet.** On the same 83 questions (batched protocol), gemini-3.1-flash-lite got 48% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 1.2e-13). One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
+- **No model passes the before-and-after test.** Each twin changes one thing so the correct answer flips; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got both halves of **0 of 7** pairs right: the frontier models often change their answer for the twin, but never get both the original scene and its changed twin right.
+- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 17% vs 14%; Qwen2-VL-2B-Instruct 9% vs 9%; SmolVLM-256M-Instruct 8% vs 10%; SmolVLM2-2.2B-Instruct 8% vs 12%.
+- **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 92% (both right: 0%); Qwen2-VL-2B-Instruct 85% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%); SmolVLM2-2.2B-Instruct 81% (both right: 0%).
+- **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 95%.
+- **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%; SmolVLM2-2.2B-Instruct 69%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
 - **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
-- **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 ThirstMap tasks raised it from 10% to 19% on held-out scenes (p = 0.0026), and the tuned model now does better with the image than without it (19% vs 11%, p = 0.0033).
+- **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 ThirstMap tasks raised it from 10% to 19% on held-out scenes (p = 0.0096), and the tuned model now does better with the image than without it (19% vs 11%, p = 0.013).
 
 ![accuracy by skill vs chance](results/models/chart_accuracy_by_skill.png)
 
@@ -70,6 +89,8 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 | **5 Independent check** | **6 Rendered (satellite style)** | **7 Pixel evidence** | **8 Twin** |
 | ![check](docs/pipeline/5_check.png) | ![satellite](docs/pipeline/6_satellite.jpg) | ![pixels](docs/pipeline/7_pixels.jpg) | ![twin](docs/pipeline/8_twin.jpg) |
 | pysheds agrees on 99.73% of cells, same answer to 10/10 questions | Also rendered as topographic map and thermal | 137/137 path cells visible in the pixels | Outfall moved (0.64% of pixels): answer becomes **V4, V6** |
+
+![where the models sent the water: a 12-second excerpt of the video](docs/video/teaser.gif)
 
 ![how a task is made](docs/gifs/pipeline.gif)
 
@@ -142,6 +163,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 | **V5/V7/V8** margins | No farm within 3 m of the pond's height, unaffected villages ≥ 5 cells from the path, exactly one correct wetland, no temperature within 0.8 °C of the threshold |
 | **V9** pixel evidence | The answer path is checked **in the rendered pixels** of each style |
 | **V10** legibility | Labels never overlap and stay inside the image |
+| **V10b** labels clear | No option label sits under the scale bar, north arrow or colour legend (added after a self-audit; [`docs/AUDIT.md`](docs/AUDIT.md)) |
 | **V11** style applicability | Questions are only asked in styles that contain the evidence |
 | **V13** blind baseline | Every question is also asked **without the image**; tasks guessable blind are flagged |
 | **V14** answer balance | Correct-answer positions and set sizes are rotated across the dataset |
@@ -165,7 +187,7 @@ Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 44 tests
+python3 -m pytest -q                                    # 47 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
@@ -189,7 +211,7 @@ python3 findings.py --run results/models                  # docs/FINDINGS.md + R
 **Frontier models on a free API tier (request economy):** a free Gemini key allows about 20 requests per model per day, so `frontier.py` asks every question about an image in one request (batch prompting), resizes images to 768 px, keeps a hard request budget per model, stops on a daily-quota error and never re-sends an answered image. The open models get the identical batched prompts and images, so the comparison is like for like.
 
 ```bash
-python3 frontier.py select --out results/frontier                  # 18 images (6 before-and-after pairs), 89 questions
+python3 frontier.py select --out results/frontier                  # 18 images (6 before-and-after pairs), 89 questions (83 after the audit)
 OPENAI_API_KEY=proxy-injected python3 frontier.py run --budget 20 \
     --models "openai:gemini-3.1-flash-lite@https://generativelanguage.googleapis.com/v1beta/openai/"
 python3 frontier.py run --models hf:Qwen/Qwen2.5-VL-3B-Instruct      # same prompts, local

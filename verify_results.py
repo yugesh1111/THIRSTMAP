@@ -112,6 +112,10 @@ def main():
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
     tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(ds / "tasks.jsonl")}
+    audited = set()                                  # tasks the label audit excluded (docs/AUDIT.md)
+    if (ds / "errata.jsonl").exists():
+        audited = {json.loads(l)["task_id"] for l in open(ds / "errata.jsonl") if l.strip()}
+    tasks = {k: v for k, v in tasks.items() if k not in audited}
     L = ["# Independent verification", "",
          "This file is produced by `verify_results.py`, which does not reuse the report code and checks the scorer with parsers of its own.", "",
          "> **Important:** the models named `mock:*` are offline *baselines* used to test the dataset and the",
@@ -126,7 +130,7 @@ def main():
           "| Model | Mode | Responses | Recomputed | In summary.json | Match |", "|---|---|---|---|---|---|"]
     latest = {}
     for r in rows:
-        if not r.get("error"):
+        if not r.get("error") and r["task_id"] in tasks:
             latest[(r["model"], r["mode"], r["task_id"])] = r
     by = defaultdict(list)
     for (m, mode, tid), r in latest.items():
@@ -243,7 +247,7 @@ def main():
         same_key = same_img = False
         for k, base in cands:
             sub = tmp / f"k{k}"
-            folder, *_ = generate(key["level"], base, sub, bi=k, twin=True)
+            folder, *_ = generate(key["level"], base, sub, bi=k, twin=True, strict=key.get("checks", 1) >= 2)
             got = json.loads((folder / "answer_key.json").read_text())
             got.pop("balance_index", None)
             want = {kk: vv for kk, vv in key.items() if kk != "balance_index"}

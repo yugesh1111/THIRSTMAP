@@ -40,3 +40,24 @@ def test_human_scorer_accepts_pasted_text(tmp_path):
     score_files(Namespace(files=[str(sheet)], dataset=str(ds), run=str(tmp_path / "none"), out=str(tmp_path / "o")))
     text = (tmp_path / "o" / "HUMAN_RESULTS.md").read_text()
     assert "Overall human accuracy: 50%" in text
+
+
+def test_zero_count_pick_returns_nothing_in_checks_v2():
+    import numpy as np
+    from thirstmap import scene
+    pool, rng = [0, 50, 5000, 12000, 20000], np.random.default_rng(0)
+    old = scene._ZERO_PICKS_NONE
+    try:
+        scene._ZERO_PICKS_NONE = True
+        assert scene._pick_spaced(rng, pool, 0, []) == []
+        scene._ZERO_PICKS_NONE = False                  # v1.0 behaviour, kept so the dataset rebuilds exactly
+        assert len(scene._pick_spaced(rng, pool, 0, [])) > 1
+    finally:
+        scene._ZERO_PICKS_NONE = old
+
+
+def test_label_occlusions():
+    from thirstmap.validate import label_occlusions
+    labels = [("V1", (10, 10, 30, 20)), ("V2", (100, 100, 120, 110))]
+    assert label_occlusions(labels, [(0, 0, 25, 25)]) == {"V1"}
+    assert label_occlusions(labels, []) == set()

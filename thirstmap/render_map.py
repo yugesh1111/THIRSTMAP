@@ -15,7 +15,7 @@ TINT = LinearSegmentedColormap.from_list(
     "tint", [(.56, .68, .46), (.74, .73, .52), (.72, .60, .44), (.86, .80, .70)])
 
 
-def render(s, p, nm, P, reveal=False, truth=None, title=""):
+def render(s, p, nm, P, reveal=False, truth=None, title="", reserve=False):
     disp = s["disp"]
     fig, ax = plt.subplots(figsize=(8.6, 8.6), dpi=100)
     fig.subplots_adjust(left=.02, right=.98, bottom=.05, top=.95)
@@ -131,11 +131,22 @@ def render(s, p, nm, P, reveal=False, truth=None, title=""):
         X, Y = ax.transData.transform(km(i))
         return X, H - Y
 
-    labels = []
+    def px_xy(x, y):
+        X, Y = ax.transData.transform((x, y))
+        return X, H - Y
+
+    labels, reserved = [], []
     for t in ax.texts[n_contour_texts:]:
+        if t.get_text() in ("1 km", "N"):            # drawn over the map: labels must not sit there (V10b)
+            e = t.get_window_extent(rend)
+            reserved.append((e.x0, H - e.y1, e.x1, H - e.y0))
         if t.get_text() in ("✓", "✗", "1 km", "N"):
             continue
         e = t.get_window_extent(rend)
         labels.append((t.get_text(), (e.x0, H - e.y1, e.x1, H - e.y0)))
-    fig.tm_px, fig.tm_labels = px, labels
+    (x0, y0), (x1, y1) = px_xy(L_KM - 1.25, L_KM - .15), px_xy(L_KM - .25, L_KM - .15)
+    reserved.append((min(x0, x1) - 4, min(y0, y1) - 6, max(x0, x1) + 4, max(y0, y1) + 6))      # scale bar line
+    (ax0, ay0), (ax1, ay1) = px_xy(L_KM - .2, .12), px_xy(L_KM - .2, .42)
+    reserved.append((ax0 - 8, min(ay0, ay1), ax0 + 8, max(ay0, ay1)))                         # north arrow
+    fig.tm_px, fig.tm_labels, fig.tm_reserved = px, labels, reserved
     return fig

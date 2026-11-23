@@ -101,7 +101,7 @@ def _parcels(rng, shape):
     return col, bund
 
 
-def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze=0.0, coarse=1):
+def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze=0.0, coarse=1, reserve=False):
     """season: "dry" | "monsoon"; haze: 0-1 extra atmospheric haze; coarse: ground-resolution
     divisor (2 = half the resolution). Appearance only: the scene and its answers are unchanged."""
     rng = np.random.default_rng(s["seed"] + 77)
@@ -271,6 +271,11 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze
     a = ImageDraw.Draw(ann)
     f, fs = _font(15), _font(12)
     boxes = []
+    # areas drawn over the map later (scale bar, north arrow): labels must not sit there (check V10b)
+    km_px_ = W / L_KM
+    RESERVED = [(W - 32 - km_px_ - 8, W - 40, W - 24, W - 12), (W - 40, 12, W - 20, 54)]
+    if reserve:                       # new builds: keep labels out of these areas when placing them
+        boxes += [("1 km", RESERVED[0]), ("N", RESERVED[1])]
 
     STM = BED > 0.25
 
@@ -360,4 +365,5 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze
     framed.info["labels"] = [(t, (x0, y0 + bar, x1, y1 + bar)) for t, (x0, y0, x1, y1) in boxes
                              if t not in ("1 km", "N")]
     framed.info["offset"] = bar
+    framed.info["reserved"] = [(x0, y0 + bar, x1, y1 + bar) for x0, y0, x1, y1 in RESERVED]
     return framed

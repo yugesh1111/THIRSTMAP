@@ -96,13 +96,13 @@ def results_html(run, finetune):
                               f'<td class="num">{pct(vc["chance"])}</td><td class="num">{vc["p_value"]:.1g}</td>'
                               f'<td class="num">{pr.get("pair_accuracy", 0) * 100:.0f}% of {pr.get("pairs", 0)}</td></tr>'))
         if frows:
-            fr = ('<h3>Frontier check: Gemini vs open models on the same 89 questions</h3>'
+            fr = (f'<h3>Frontier check: Gemini vs open models on the same {F.get("compared_on_tasks", "")} questions</h3>'
                   '<div class="table"><table><thead><tr><th scope="col">Model</th><th scope="col">Correct</th>'
                   '<th scope="col">Chance</th><th scope="col">p vs guessing</th>'
                   '<th scope="col">Both halves of a pair right</th></tr></thead><tbody>'
                   + "".join(r for _, r in sorted(frows, key=lambda x: -x[0])) + '</tbody></table></div>'
                   '<p class="note">A free Gemini key allows 20 requests per model per day, so every question about an image '
-                  'went in one request (18 images, 89 questions), identically for every model. Gemini answers far more '
+                  'went in one request, identically for every model. Gemini answers far more '
                   'questions correctly, yet no model got both the original and its changed twin right. Pick '
                   '“Frontier check” in the task browser to see every reply.</p>')
     return f"""<div class="table"><table>
@@ -210,14 +210,18 @@ def main():
     ap.add_argument("--finetune", default="results/finetune")
     ap.add_argument("--pipeline", default=None, help="folder from pipeline_visuals.py")
     ap.add_argument("--frontier", default=None, help="results folder from frontier.py (batched protocol)")
+    ap.add_argument("--analysis", default=None, help="folder from overlays.py (answer overlays, pairs, stories)")
     ap.add_argument("--fragment", action="store_true", help="write the page body only, without <html>/<head>/<body>")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
     root = ds.resolve()
+    from thirstmap import errata
+    bad = errata.load(ds)                    # audited-out tasks are never shown (docs/AUDIT.md)
     tasks = {}
     for line in open(ds / "tasks.jsonl"):
         t = json.loads(line)
-        tasks[t["task_id"]] = t
+        if t["task_id"] not in bad:
+            tasks[t["task_id"]] = t
     answers = defaultdict(dict)
     for line in open(run / "responses.jsonl"):
         r = json.loads(line)
@@ -306,6 +310,50 @@ def main():
                               pair=t.get("pair_id"), variant=t.get("variant"), change=t.get("cf_change"),
                               question=t["question"], answer=t["answer"], image=names["image"],
                               reveal=names["reveal"], models=fans[tid], frontier=True))
+    show = ""
+    adir = Path(a.analysis) if a.analysis else None
+    if adir and (adir / "analysis.json").exists():
+        A = json.loads((adir / "analysis.json").read_text())
+        best = A.get("best_api")
+        (out / "analysis").mkdir(exist_ok=True)
+        stories = defaultdict(list)
+        for st in A["stories"]:
+            if st["model"] == best:
+                stories[st["task_id"]].append(st["text"])
+        for it in items:
+            if it.get("frontier"):
+                ov = A["overlays"].get(it["id"], {}).get(best)
+                if ov and (adir / ov).exists():
+                    shutil.copy(adir / ov, out / "analysis" / Path(ov).name)
+                    it["overlay"] = "analysis/" + Path(ov).name
+                    it["overlay_by"] = display(best)
+                it["stories"] = stories.get(it["id"], [])
+        picks = [x for x in A["pairs"] if x["model"] == best and x["original_right"] != x["twin_right"]]
+        picks += [x for x in A["pairs"] if x["model"] == best and x not in picks]
+        cards, seen = [], set()
+        for x in picks:
+            if x["qid"] in seen or len(cards) >= 3 or not (adir / x["file"]).exists():
+                continue
+            seen.add(x["qid"])
+            shutil.copy(adir / x["file"], out / "analysis" / Path(x["file"]).name)
+            twin_story = [st["text"] for st in A["stories"] if st["model"] == best
+                          and st["task_id"] == x["pair_id"].replace("__", "_cf__", 1)]
+            verdict = (f"Right on the original, wrong on the twin{' with the same answer' if x['same_answer'] else ''}."
+                       if x["original_right"] and not x["twin_right"] else
+                       "Wrong on the original, right on the twin." if x["twin_right"] and not x["original_right"]
+                       else "Wrong on both.")
+            cards.append(f'<figure class="pairfig"><img src="analysis/{E(Path(x["file"]).name)}" alt="{E(display(best))} answers '
+                         f'on a scene and its twin, drawn on the images" loading="lazy" width="1304" height="840">'
+                         f'<figcaption><b>{E(x["question"])}</b> {E(verdict)} Original key {E(fmt(x["original"]["answer"]))}, '
+                         f'model said {E(fmt(x["original"]["model"]))}; twin key {E(fmt(x["twin"]["answer"]))}, '
+                         f'model said {E(fmt(x["twin"]["model"]))}.'
+                         + (f' <span class="story">On the ground: {E(" ".join(twin_story[:2]))}</span>' if twin_story else "")
+                         + '</figcaption></figure>')
+        if cards:
+            show = ('<section id="where"><div class="wrap"><h2>Where the models sent the water</h2>'
+                    f'<p class="lede">The best frontier model’s answers ({E(display(best))}) drawn on the exact images it saw, '
+                    'for a scene and its twin. Blue is the true water path; green, red and amber mark right, wrong and '
+                    'missed answers.</p>' + "".join(cards) + '</div></section>')
     pipe = ""
     if a.pipeline:
         shutil.copytree(a.pipeline, out / "pipeline", ignore=shutil.ignore_patterns("*.json"))
@@ -314,7 +362,7 @@ def main():
                 f'<p class="lede">One real scene from the dataset (<code>{E(scene)}</code>), followed through every '
                 f'step of the pipeline.</p>{steps}</div></section>')
     page = (HEAD + BODY.replace("__RESULTS__", results_html(run, Path(a.finetune) if a.finetune else None))
-            .replace("__PIPELINE__", pipe)
+            .replace("__PIPELINE__", pipe + show)
             .replace("__DATA__", json.dumps(items, ensure_ascii=False).replace("</", "<\\/")))
     if not a.fragment:
         page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
@@ -408,7 +456,10 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--water);outline
 .card{background:var(--surface);border:1px solid var(--line);border-radius:12px;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);overflow:hidden}
 @media (max-width:820px){.card{grid-template-columns:1fr}.stats{margin-left:0;width:100%}}
 .pic{position:relative;background:var(--bg)}.pic img{width:100%;height:auto;display:block}
-.pic button{position:absolute;left:10px;bottom:10px;background:var(--surface);border-color:var(--line)}
+.pic .btns{position:absolute;left:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px}
+.pic .btns button{background:var(--surface);border-color:var(--line)}
+.pairfig{display:grid;gap:8px;margin:0 0 18px}.pairfig img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+.pairfig figcaption{font-size:14px;color:var(--ink2);max-width:90ch}.pairfig .story{display:block;margin-top:4px;color:var(--ink)}
 .body{padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .meta{display:flex;gap:6px;flex-wrap:wrap}
 .chip{font-size:12px;padding:2px 8px;border-radius:99px;background:var(--chip);color:var(--ink2)}
@@ -428,7 +479,8 @@ BODY = r"""<header><div class="wrap">
 <p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
-<p class="links"><a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
+<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">Watch the 90-second video</a>
+<a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (30 questions, about 10 minutes)</a></p>
 </div></header>
 <section><div class="wrap">
@@ -470,14 +522,17 @@ function render(){
       <div><b>${esc(name)}</b>: ${esc(fmt(m.parsed))}${m.tags && m.tags.length ? ` <span class="tag">(${esc(m.tags.join(', '))})</span>` : ''}
       ${m.raw ? `<small>${esc(m.raw.slice(0, 160))}</small>` : ''}</div></div>`; }).join('');
     c.innerHTML = `<div class="pic"><img src="${esc(d.image)}" alt="${esc(d.style)} image for this task" loading="lazy">
-      <button type="button">Show answer key</button></div>
+      <span class="btns"><button type="button" class="bk">Show answer key</button>${d.overlay ? `<button type="button" class="bo">Show ${esc(d.overlay_by)}’s answer</button>` : ''}</span></div>
       <div class="body"><div class="meta"><span class="chip">${esc(d.skill)}</span><span class="chip">${esc(d.style)}</span>
       <span class="chip">difficulty ${d.level}/5</span>${d.frontier ? '<span class="chip">batched protocol</span>' : ''}${d.pair ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
       ${d.variant === 'counterfactual' ? `<div class="gold">What changed from the original: <b>${esc(d.change)}</b>. Everything else is identical, so the correct answer changes.</div>` : ''}
       <div class="q">${esc(d.question)}</div><div class="gold">Answer key (from the simulation): <b>${esc(fmt(d.answer))}</b></div>
-      <div class="ans">${rows}</div></div>`;
-    const img = c.querySelector('img'), b = c.querySelector('button');
-    b.onclick = () => { const on = img.getAttribute('src') === d.reveal; img.src = on ? d.image : d.reveal; b.textContent = on ? 'Show answer key' : 'Hide answer key'; };
+      <div class="ans">${rows}</div>${d.stories && d.stories.length ? `<div class="gold"><b>What ${esc(d.overlay_by || 'the model')}’s mistake would mean:</b> ${d.stories.map(esc).join(' ')}</div>` : ''}</div>`;
+    const img = c.querySelector('img'), bk = c.querySelector('.bk'), bo = c.querySelector('.bo');
+    const showImg = (src) => { img.src = src; bk.textContent = src === d.reveal ? 'Hide answer key' : 'Show answer key';
+      if (bo) bo.textContent = src === d.overlay ? 'Hide ' + d.overlay_by + '’s answer' : 'Show ' + d.overlay_by + '’s answer'; };
+    bk.onclick = () => showImg(img.getAttribute('src') === d.reveal ? d.image : d.reveal);
+    if (bo) bo.onclick = () => showImg(img.getAttribute('src') === d.overlay ? d.image : d.overlay);
     L.appendChild(c);
   });
   document.getElementById('stats').textContent = `${n} tasks · ${right} of ${total} model answers right (baselines not counted)`;

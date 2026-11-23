@@ -4,7 +4,9 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| openai:gemini-3.5-flash | 75% | – | 20 |
+| openai:gemini-3.5-flash | 79% | – | 19 |
+
+1 evaluated tasks are left out of every number here: the dataset audit found them unfair (an option label under the scale bar, north arrow or legend, or a malformed scene; docs/AUDIT.md).
 
 ## Better than guessing?
 
@@ -12,7 +14,7 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 
 | Model | Correct | Accuracy | Chance | p-value |
 |---|---|---|---|---|
-| openai:gemini-3.5-flash | 15/20 | 75% | 8% | 2.5e-13 |
+| openai:gemini-3.5-flash | 15/19 | 79% | 8% | 1.2e-13 |
 
 ### Strict check: well-formed replies only
 
@@ -20,7 +22,7 @@ The scorer is lenient: it accepts a correct answer even when the reply is badly 
 
 | Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |
 |---|---|---|---|
-| openai:gemini-3.5-flash | 100% | 75% | 75% |
+| openai:gemini-3.5-flash | 100% | 79% | 79% |
 
 ## Accuracy by visual skill
 
@@ -28,7 +30,7 @@ Tasks = distinct tasks per skill (every model answers the same ones); with 10-30
 
 | Skill | Tasks | Chance | openai:gemini-3.5-flash |
 |---|---|---|---|
-| Trace downstream | 9 | 3% | 67% |
+| Trace downstream | 8 | 3% | 75% |
 | Order along flow | 2 | 20% | 50% |
 | Measure along flow | 9 | 10% | 89% |
 
@@ -56,7 +58,7 @@ Pair accuracy counts a pair only if BOTH the original and its twin are answered 
 
 | Model | Trap tasks | Fell for a trap | Most common errors |
 |---|---|---|---|
-| openai:gemini-3.5-flash | 11 | 9% | missed_some (2), trap:near_but_other_stream (1), extra_unrelated (1), underestimate (1) |
+| openai:gemini-3.5-flash | 10 | 10% | trap:near_but_other_stream (1), underestimate (1), missed_some (1), wrong_choice (1) |
 
 Tasks a majority of real models answered correctly WITHOUT the image: 0
 
@@ -64,7 +66,7 @@ Tasks a majority of real models answered correctly WITHOUT the image: 0
 
 | Model | Input tokens | Output tokens | USD | Mean latency (s) |
 |---|---|---|---|---|
-| openai:gemini-3.5-flash | 23755 | 294 | 0 | 58.71 |
+| openai:gemini-3.5-flash | 22556 | 278 | 0 | 58.3 |
 
 ![skills](chart_accuracy_by_skill.png)
 

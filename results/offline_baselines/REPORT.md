@@ -6,9 +6,11 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| mock:oracle | 100% | 100% | 5761 |
-| mock:random | 14% | 14% | 5761 |
-| mock:stubborn | 87% | 87% | 5761 |
+| mock:oracle | 100% | 100% | 5330 |
+| mock:random | 14% | 14% | 5330 |
+| mock:stubborn | 88% | 88% | 5330 |
+
+431 evaluated tasks are left out of every number here: the dataset audit found them unfair (an option label under the scale bar, north arrow or legend, or a malformed scene; docs/AUDIT.md).
 
 ## Better than guessing?
 
@@ -16,24 +18,36 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 
 | Model | Correct | Accuracy | Chance | p-value |
 |---|---|---|---|---|
-| mock:oracle | 5761/5761 | 100% | 14% | 0 |
-| mock:random | 788/5761 | 14% | 14% | 0.63 |
-| mock:stubborn | 5021/5761 | 87% | 14% | 0 |
+| mock:oracle | 5330/5330 | 100% | 14% | 0 |
+| mock:random | 740/5330 | 14% | 14% | 0.69 |
+| mock:stubborn | 4677/5330 | 88% | 14% | 0 |
+
+### Strict check: well-formed replies only
+
+The scorer is lenient: it accepts a correct answer even when the reply is badly formatted. Counting a reply as right only if it is also well-formed (JSON with "answer", or a plain JSON value):
+
+| Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |
+|---|---|---|---|
+| mock:oracle | 100% | 100% | 100% |
+| mock:random | 100% | 14% | 14% |
+| mock:stubborn | 100% | 88% | 88% |
 
 ## Accuracy by visual skill
 
-| Skill | Chance | mock:oracle | mock:random | mock:stubborn |
-|---|---|---|---|---|
-| Trace downstream | 3% | 100% | 3% | 79% |
-| Order along flow | 17% | 100% | 18% | 79% |
-| Measure along flow | 12% | 100% | 11% | 100% |
-| Place wetland | 25% | 100% | 24% | 100% |
-| Site selection | 33% | 100% | 33% | 100% |
-| Trace upstream | 4% | 100% | 4% | 67% |
-| Flow direction | 12% | 100% | 11% | 100% |
-| Read elevation | 5% | 100% | 5% | 100% |
-| Thermal threshold | 10% | 100% | 11% | 76% |
-| Thermal value | 20% | 100% | 22% | 83% |
+Tasks = distinct tasks per skill (every model answers the same ones); with 10-30 tasks per skill, differences of a few points are within noise.
+
+| Skill | Tasks | Chance | mock:oracle | mock:random | mock:stubborn |
+|---|---|---|---|---|---|
+| Trace downstream | 664 | 3% | 100% | 3% | 80% |
+| Order along flow | 672 | 17% | 100% | 18% | 80% |
+| Measure along flow | 604 | 12% | 100% | 11% | 100% |
+| Place wetland | 571 | 25% | 100% | 24% | 100% |
+| Site selection | 596 | 33% | 100% | 33% | 100% |
+| Trace upstream | 804 | 4% | 100% | 4% | 67% |
+| Flow direction | 566 | 12% | 100% | 11% | 100% |
+| Read elevation | 302 | 5% | 100% | 5% | 100% |
+| Thermal threshold | 279 | 10% | 100% | 11% | 75% |
+| Thermal value | 272 | 20% | 100% | 22% | 83% |
 
 ## Eye exam: breaking level (first difficulty where accuracy < 50%)
 
@@ -54,9 +68,9 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 
 | Model | Pairs | Both right | Only map right | Only satellite right | Both wrong |
 |---|---|---|---|---|---|
-| mock:oracle | 2434 | 2434 | 0 | 0 | 0 |
-| mock:random | 2434 | 72 | 261 | 274 | 1827 |
-| mock:stubborn | 2434 | 2125 | 0 | 0 | 309 |
+| mock:oracle | 2192 | 2192 | 0 | 0 | 0 |
+| mock:random | 2192 | 69 | 239 | 251 | 1633 |
+| mock:stubborn | 2192 | 1936 | 0 | 0 | 256 |
 
 ## Counterfactual pairs (one minimal change that must flip the answer)
 
@@ -64,17 +78,17 @@ Pair accuracy counts a pair only if BOTH the original and its twin are answered 
 
 | Model | Pairs | Single-task accuracy | Pair accuracy | Unchanged answer |
 |---|---|---|---|---|
-| mock:oracle | 740 | 100% | 100% | 0% |
-| mock:random | 740 | 9% | 1% | 7% |
-| mock:stubborn | 740 | 50% | 0% | 100% |
+| mock:oracle | 653 | 100% | 100% | 0% |
+| mock:random | 653 | 9% | 2% | 7% |
+| mock:stubborn | 653 | 50% | 0% | 100% |
 
 ## Traps and error diagnosis
 
 | Model | Trap tasks | Fell for a trap | Most common errors |
 |---|---|---|---|
-| mock:oracle | 3375 | 0% | – |
-| mock:random | 3375 | 44% | missed_some (1722), wrong_choice (1043), extra_unrelated (759), overestimate (595) |
-| mock:stubborn | 3375 | 1% | extra_unrelated (476), missed_some (350), wrong_choice (119), overestimate (45) |
+| mock:oracle | 2990 | 0% | – |
+| mock:random | 2990 | 44% | missed_some (1535), wrong_choice (963), extra_unrelated (673), overestimate (589) |
+| mock:stubborn | 2990 | 1% | extra_unrelated (425), missed_some (303), wrong_choice (101), overestimate (45) |
 
 Tasks a majority of real models answered correctly WITHOUT the image: 0
 

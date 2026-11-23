@@ -6,6 +6,7 @@ V7  spatial margin: unaffected villages are clearly away from the wastewater pat
 V8  exactly one correct wetland
 V9  the evidence is visible in the rendered pixels (each image style)
 V10 labels are inside the image and do not overlap
+V10b no option label sits under the scale bar, north arrow or colour legend (dataset checks version 2)
 V11 questions are only asked in styles that contain the evidence
 Q8  temperature margin around the 3 deg C threshold
 Nothing is ever hand-edited: failing questions are dropped, failing scenes are regenerated.
@@ -149,8 +150,15 @@ def label_overlaps(labels, size):
     return bad
 
 
+def label_occlusions(labels, reserved):
+    """Labels whose box touches an area drawn over the map afterwards (scale bar, north arrow, legend)."""
+    return {t for t, a in labels for b in reserved
+            if a[0] < b[2] and b[0] < a[2] and a[1] < b[3] and b[1] < a[3]}
+
+
 # ---------------------------------------------------------------- main entry
-def validate(s, p, qs, nm, images):
+def validate(s, p, qs, nm, images, strict=False):
+    """strict=True (checks version 2) also drops a question in a style where one of its option labels is hidden."""
     """images: {style: (rgb ndarray, cell->pixel fn, label boxes)}. Returns report dict."""
     checks, drop = {}, {}
     key = {q["id"]: q for q in qs}
@@ -201,7 +209,17 @@ def validate(s, p, qs, nm, images):
     # V9: evidence visible in pixels, per style
     cells = s["path"][2: (pos[hit[-1]] + 1) if hit else 40]     # first cells sit under the O marker
     style_drop = {}
-    for style, (arr, to_px, labels) in images.items():
+    hidden_drop = {}
+    for style, entry in images.items():
+        arr, to_px, labels = entry[:3]
+        reserved = entry[3] if len(entry) > 3 else []
+        hidden = label_occlusions(labels, reserved)
+        checks[f"V10b_labels_clear_{style}"] = dict(passed=not hidden, hidden=sorted(hidden))
+        if strict and hidden:
+            for q in qs:
+                if style in q["styles"] and hidden & {str(o) for o in (q.get("options") or [])}:
+                    style_drop.setdefault(q["id"], []).append(style)
+                    hidden_drop[q["id"]] = True
         dT = pl["dT"] if (style == "thermal" and pl) else None
         frac = path_visibility(style, arr, to_px, cells, dT)
         checks[f"V9_path_visible_{style}"] = dict(passed=frac >= 0.9, fraction=round(frac, 3))
@@ -221,9 +239,10 @@ def validate(s, p, qs, nm, images):
     for q in qs:
         left = [st for st in q["styles"] if st not in style_drop.get(q["id"], [])]
         if not left:
-            drop.setdefault(q["id"], "V9 evidence not visible in any style")
+            drop.setdefault(q["id"], "V10b an option label is hidden in every style" if q["id"] in hidden_drop
+                            else "V9 evidence not visible in any style")
         styles[q["id"]] = left
-    scene_ok = all(c["passed"] for k, c in checks.items() if k.startswith("V10")) and not wrong
+    scene_ok = all(c["passed"] for k, c in checks.items() if k.startswith("V10_")) and not wrong
     keep = [q["id"] for q in qs if q["id"] not in drop]
     return dict(scene_ok=scene_ok, checks=checks, keep=keep, drop=drop,
                 styles={k: v for k, v in styles.items() if k in keep}, style_drop=style_drop)

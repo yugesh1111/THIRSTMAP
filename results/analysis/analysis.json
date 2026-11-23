@@ -1,0 +1,2969 @@
+{
+ "best_api": "openai:gemini-3.1-flash-lite",
+ "best_open": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+ "overlays": {
+  "level2_seed22760__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed22760_cf__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760_cf__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312__Q1__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q1__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312__Q2__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q2__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312__Q3__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q3__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312__Q6__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q6__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312__Q7__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_navi_mumbai_seed31312_cf__Q7__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312_cf__Q7__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903_cf__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903_cf__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed58903_cf__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903_cf__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed58561__Q3__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed58561__Q3__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed58561__Q6__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed58561__Q6__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed34416__Q8__thermal": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed34416__Q8__thermal__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed34416_cf__Q8__thermal": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed34416_cf__Q8__thermal__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level3_seed31409_cf__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409_cf__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level5_seed52684__Q1__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q1__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level5_seed52684__Q2__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q2__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level5_seed52684__Q3__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q3__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level5_seed52684__Q6__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q6__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level5_seed52684__Q7__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q7__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level2_seed24506__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed31409__Q1__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q1__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed31409__Q2__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q2__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed31409__Q3__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q3__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed31409__Q6__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q6__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed31409__Q7__satellite": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q7__satellite__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "real_chennai_seed39037__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q7__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q1__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q1__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q2__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q2__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q3__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q3__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q4__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q4__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q6__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q6__map__gemini-3.1-flash-lite.jpg"
+  },
+  "level4_seed48947__Q7__map": {
+   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q7__map__gemini-3.1-flash-lite.jpg"
+  }
+ },
+ "pairs": [
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "file": "pairs/level2_seed22760__Q7__map__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V2"
+    ],
+    "model": [
+     "V1",
+     "V4"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V1"
+    ],
+    "model": [
+     "V3"
+    ]
+   }
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "file": "pairs/level3_seed31409__Q7__map__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V4",
+     "V5"
+    ],
+    "model": []
+   },
+   "twin": {
+    "answer": [
+     "V4"
+    ],
+    "model": [
+     "V2"
+    ]
+   }
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "file": "pairs/level3_seed34416__Q8__thermal__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": true,
+   "same_answer": true,
+   "change": "the cooling water is cooler (x0.3 at the outfall)",
+   "question": "The thermal image shows how much warmer than normal the water is. At which monitoring points (M1-M4) is the water MORE than 3 °C warmer than normal? List all.",
+   "original": {
+    "answer": [
+     "M1",
+     "M3"
+    ],
+    "model": []
+   },
+   "twin": {
+    "answer": [],
+    "model": []
+   }
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "file": "pairs/level4_seed58903__Q1__map__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+   "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+   "original": {
+    "answer": [
+     "V4",
+     "V7"
+    ],
+    "model": [
+     "V3",
+     "V4"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V5"
+    ],
+    "model": [
+     "V3",
+     "V5"
+    ]
+   }
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "level4_seed58903__Q2__map",
+   "qid": "Q2",
+   "file": "pairs/level4_seed58903__Q2__map__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": true,
+   "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+   "question": "Which village would receive the wastewater first?",
+   "original": {
+    "answer": "V7",
+    "model": "V3"
+   },
+   "twin": {
+    "answer": "V5",
+    "model": "V3"
+   }
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "pair_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "file": "pairs/real_navi_mumbai_seed31312__Q7__satellite__Qwen2.5-VL-3B.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V2",
+     "V3"
+    ],
+    "model": [
+     "V1",
+     "V4"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V3"
+    ],
+    "model": [
+     "V2"
+    ]
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "file": "pairs/level2_seed22760__Q7__map__gemini-3.1-flash-lite.jpg",
+   "original_right": true,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V2"
+    ],
+    "model": [
+     "V2"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V1"
+    ],
+    "model": [
+     "V3",
+     "V5"
+    ]
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "file": "pairs/level3_seed31409__Q7__map__gemini-3.1-flash-lite.jpg",
+   "original_right": false,
+   "twin_right": true,
+   "same_answer": false,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V4",
+     "V5"
+    ],
+    "model": [
+     "V5"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V4"
+    ],
+    "model": [
+     "V4"
+    ]
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "file": "pairs/level3_seed34416__Q8__thermal__gemini-3.1-flash-lite.jpg",
+   "original_right": true,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "the cooling water is cooler (x0.3 at the outfall)",
+   "question": "The thermal image shows how much warmer than normal the water is. At which monitoring points (M1-M4) is the water MORE than 3 °C warmer than normal? List all.",
+   "original": {
+    "answer": [
+     "M1",
+     "M3"
+    ],
+    "model": [
+     "M1",
+     "M3"
+    ]
+   },
+   "twin": {
+    "answer": [],
+    "model": [
+     "M3"
+    ]
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "file": "pairs/level4_seed58903__Q1__map__gemini-3.1-flash-lite.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+   "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+   "original": {
+    "answer": [
+     "V4",
+     "V7"
+    ],
+    "model": [
+     "V5"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V5"
+    ],
+    "model": [
+     "V1"
+    ]
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "level4_seed58903__Q2__map",
+   "qid": "Q2",
+   "file": "pairs/level4_seed58903__Q2__map__gemini-3.1-flash-lite.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": false,
+   "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+   "question": "Which village would receive the wastewater first?",
+   "original": {
+    "answer": "V7",
+    "model": "V5"
+   },
+   "twin": {
+    "answer": "V5",
+    "model": "V1"
+   }
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "pair_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "file": "pairs/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.1-flash-lite.jpg",
+   "original_right": false,
+   "twin_right": false,
+   "same_answer": true,
+   "change": "intake I moves to a different point of the stream network",
+   "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
+   "original": {
+    "answer": [
+     "V2",
+     "V3"
+    ],
+    "model": [
+     "V2"
+    ]
+   },
+   "twin": {
+    "answer": [
+     "V3"
+    ],
+    "model": [
+     "V2"
+    ]
+   }
+  }
+ ],
+ "stories": [
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2210 m to the first village, not 1600.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V4 first leaves V5 exposed."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at C sits upstream of the outfall and would never see the wastewater; the working site is B."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V4, V5; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2720 m to the first village, not 1600.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V7 first; warning V5 first leaves V7 exposed."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not SE: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V2; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2550 m to the first village, not 3400.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed58903_cf__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V1 first leaves V5 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed58561__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V1, V5; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed34416__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 6.7 °C warmer than normal, not 9.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M3 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed34416_cf__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 2.0 °C warmer than normal, not 6.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed31409__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V2; the safe site is S2."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level3_seed31409__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 640 m to the first village, not 1100.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level5_seed52684__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V8 first; warning V4 first leaves V8 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level5_seed52684__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V4, V5, V6, V8; the safe site is S3."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level5_seed52684__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level5_seed52684__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V7 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed24506__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not S: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed24506__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V2, V3; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed24506__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 550 m to the first village, not 1200.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed31409__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not N: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed31409__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S1 would be approved as safe, but its wastewater reaches V5; the safe site is S2."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "real_chennai_seed39037__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 890 m to the first village, not 1600.0 m."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level2_seed45644__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 8.3 °C warmer than normal, not 10.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F6 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V4, V6; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V6 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.1-flash-lite",
+   "task_id": "level4_seed48947__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 390 m to the first village, not 800.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at C would not clean all the wastewater; the working site is D."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not SE: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V3, V5; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V4 first leaves V5 exposed."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V4, V5; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2720 m to the first village, not 1800.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V7 first; warning V1 first leaves V7 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at A would not clean all the wastewater; the working site is D."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F6 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not NW: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V2; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2550 m to the first village, not 400.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed58903_cf__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V1 first leaves V5 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "The river at M1 is more than 3 °C warmer than normal, but no heat warning would be raised."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed34416__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 6.7 °C warmer than normal, not 10.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M1 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M3 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed34416_cf__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 2.0 °C warmer than normal, not 6.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed31409__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 640 m to the first village, not 1200.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level5_seed52684__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V8 first; warning V4 first leaves V8 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level5_seed52684__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SE, not W: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level5_seed52684__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V7 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level5_seed52684__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 670 m to the first village, not 1300.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed24506__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V2, V3; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level2_seed24506__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 550 m to the first village, not 1300.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not NW: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S1 would be approved as safe, but its wastewater reaches V5; the safe site is S2."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed31409__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 890 m to the first village, not 450.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "real_chennai_seed39037__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 890 m to the first village, not 1200.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F6 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S2 would be approved as safe, but its wastewater reaches V4, V6; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash-lite",
+   "task_id": "level4_seed48947__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 390 m to the first village, not 1200.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V1 first leaves V5 exposed."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2210 m to the first village, not 500.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is upstream of the outfall, and water does not flow uphill."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at D would not clean all the wastewater; the working site is B."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2720 m to the first village, not 1000.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V7 first; warning V3 first leaves V7 exposed."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V4, V7; the safe site is S1."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2550 m to the first village, not 1000.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed58903_cf__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V3 first leaves V5 exposed."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed58561__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "The river at M1 is more than 3 °C warmer than normal, but no heat warning would be raised."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "The river at M3 is more than 3 °C warmer than normal, but no heat warning would be raised."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed34416_cf__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 2.0 °C warmer than normal, not 6.0 °C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V8 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at D would not clean all the wastewater; the working site is C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SE, not NE: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level5_seed52684__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 670 m to the first village, not 1000.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V2 first; warning V1 first leaves V2 exposed."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at D would not clean all the wastewater; the working site is C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V2, V3; the safe site is S1."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed24506__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 550 m to the first village, not 1000.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at D would not clean all the wastewater; the working site is A."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V3 first; warning V1 first leaves V3 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at D would not clean all the wastewater; the working site is B."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not NE: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V3, V4; the safe site is S2."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level2_seed45644__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 8.3 °C warmer than normal, not 10.0 °C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V7 first; warning V1 first leaves V7 exposed."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SE, not E: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V4; the safe site is S1."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+   "task_id": "level4_seed48947__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 390 m to the first village, not 1000.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would clean the water only after it has already reached a village; the working site is D."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not N: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2210 m to the first village, not 4.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed22760_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is upstream of the outfall, and water does not flow uphill."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2720 m to the first village, not 1.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is D."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not N: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2550 m to the first village, not 1.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903_cf__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed58903_cf__Q2__map",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V1 first leaves V5 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed58561__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would clean the water only after it has already reached a village; the working site is D."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed58561__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 1070 m to the first village, not 4.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M2 would be a false alarm: it is on another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M4 would be a false alarm: the water has cooled below 3 °C by then."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 6.7 °C warmer than normal, not 12.0 °C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M1 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M2 would be a false alarm: it is on another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M3 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M4 would be a false alarm: the water has cooled below 3 °C by then."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed34416_cf__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 2.0 °C warmer than normal, not 12.0 °C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is D."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F4 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 640 m to the first village, not 1.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V8 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SE, not N: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level5_seed52684__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 670 m to the first village, not 4.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F3 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed24506__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 550 m to the first village, not 4.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V2 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V5 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V6 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q3__satellite",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is A."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V6 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed31409__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 890 m to the first village, not 4.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F5 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "real_chennai_seed39037__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 890 m to the first village, not 1.0 m."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level2_seed45644__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 8.3 °C warmer than normal, not 3.0 °C."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V7 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V1 would be alarmed for nothing: the wastewater never reaches it."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q3__map",
+   "qid": "Q3",
+   "protocol": "batched",
+   "text": "A wetland at B would not clean all the wastewater; the working site is D."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F2 could take treated water by gravity but would be left out."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V4 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "hf:Qwen/Qwen2-VL-2B-Instruct",
+   "task_id": "level4_seed48947__Q10__map",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 390 m to the first village, not 128.0 m."
+  }
+ ],
+ "mechanism": {
+  "openai:gemini-3.1-flash-lite": {
+   "wrong": 6,
+   "nearest": 2,
+   "chance": 1.2166666666666666,
+   "first": [
+    8,
+    10
+   ],
+   "later": [
+    9,
+    10
+   ]
+  },
+  "openai:gemini-3.5-flash-lite": {
+   "wrong": 9,
+   "nearest": 3,
+   "chance": 1.8833333333333333,
+   "first": [
+    8,
+    10
+   ],
+   "later": [
+    8,
+    10
+   ]
+  },
+  "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+   "wrong": 32,
+   "nearest": 7,
+   "chance": 8.416666666666668,
+   "first": [
+    5,
+    26
+   ],
+   "later": [
+    9,
+    29
+   ]
+  },
+  "hf:Qwen/Qwen2-VL-2B-Instruct": {
+   "wrong": 69,
+   "nearest": 16,
+   "chance": 17.41666666666665,
+   "first": [
+    14,
+    26
+   ],
+   "later": [
+    22,
+    29
+   ]
+  },
+  "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+   "wrong": 13,
+   "nearest": 3,
+   "chance": 2.8,
+   "first": [
+    5,
+    13
+   ],
+   "later": [
+    2,
+    15
+   ]
+  },
+  "hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct": {
+   "wrong": 26,
+   "nearest": 6,
+   "chance": 6.300000000000002,
+   "first": [
+    8,
+    13
+   ],
+   "later": [
+    9,
+    15
+   ]
+  }
+ }
+}

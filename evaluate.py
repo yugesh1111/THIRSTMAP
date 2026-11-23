@@ -25,6 +25,15 @@ from thirstmap.scoring import score
 
 def load_tasks(dataset, per_cell=None, levels=None, styles=None, seed=0, pairs=0, probes=0, variants=0,
                everything=False):
+    """Sample tasks (see _sample), then drop tasks a dataset audit excluded, so earlier samples stay identical."""
+    from thirstmap import errata
+    bad = errata.load(dataset)
+    return [t for t in _sample(dataset, per_cell, levels, styles, seed, pairs, probes, variants, everything)
+            if t["task_id"] not in bad]
+
+
+def _sample(dataset, per_cell=None, levels=None, styles=None, seed=0, pairs=0, probes=0, variants=0,
+            everything=False):
     """Pick the tasks for a run.
 
     per_cell : up to N original tasks per (question, style, difficulty) cell

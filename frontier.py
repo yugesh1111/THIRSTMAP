@@ -37,7 +37,9 @@ def image_key(t):
 
 def select(a):
     ds, out = Path(a.dataset), Path(a.out)
-    tasks = [json.loads(l) for l in open(ds / "tasks.jsonl")]
+    from thirstmap import errata
+    bad = errata.load(ds)
+    tasks = [t for t in map(json.loads, open(ds / "tasks.jsonl")) if t["task_id"] not in bad]
     by_img = defaultdict(list)
     for t in tasks:
         by_img[image_key(t)].append(t)

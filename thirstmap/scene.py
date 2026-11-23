@@ -55,7 +55,15 @@ def build(seed, P, real=None):
     return None
 
 
+# Dataset checks version 2 (P["checks"] = 2): a request for zero items returns none. Version 1 (dataset v1.0)
+# returned EVERY free site for k = 0, which gave a few scenes 50+ villages or monitoring points; it stays
+# reproducible so that v1.0 rebuilds byte for byte (the affected scenes are excluded: docs/AUDIT.md).
+_ZERO_PICKS_NONE = False
+
+
 def _pick_spaced(rng, pool, k, taken, min_d=10):
+    if k <= 0 and _ZERO_PICKS_NONE:
+        return []
     pool = list(pool)
     rng.shuffle(pool)
     out = []
@@ -235,6 +243,8 @@ def make(seed, P, max_tries=50, bi=None, real=None):
     bi (balance index) rotates answer positions/sizes so that, across a dataset,
     no answer is favoured (V14). Defaults to the seed.
     """
+    global _ZERO_PICKS_NONE
+    _ZERO_PICKS_NONE = P.get("checks", 1) >= 2
     bi = seed if bi is None else bi
     for k in range(max_tries):
         sd = seed + 1000 * k
