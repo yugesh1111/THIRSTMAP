@@ -23,6 +23,8 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+from thirstmap.scoring import chance
+
 
 def norm(v):
     if isinstance(v, list):
@@ -41,18 +43,6 @@ def simple_correct(t, raw):
     if t["scoring"] == "number":
         return abs(float(a) - float(t["answer"])) <= t["tolerance"]
     return norm(a) == norm(t["answer"])
-
-
-def chance(t):
-    """Exact probability that the mock random baseline is right on this task."""
-    sc, opts, gold = t["scoring"], t["options"], t["answer"]
-    if sc in ("choice", "compass"):
-        return 1 / len(opts)
-    if sc == "set":
-        k, n = len(gold), len(opts)
-        return 0.35 ** k * 0.65 ** (n - k)
-    lo, hi = opts
-    return (min(gold + t["tolerance"], hi) - max(gold - t["tolerance"], lo)) / (hi - lo)
 
 
 def recover_jobs(key, k_max=500):

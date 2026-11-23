@@ -65,7 +65,21 @@ def build_report(run_dir, dataset):
     img = [r for r in rows if r["mode"] == "image"]
     blind = [r for r in rows if r["mode"] == "blind"]
 
+    from scipy.stats import binomtest
+    from thirstmap.scoring import chance
     S = dict(models=models, n_responses=len(rows))
+    img_tasks = {r["task_id"] for r in rows if r["mode"] == "image"}
+    S["chance_by_skill"] = {sk: sum(chance(tasks[t]) for t in ids) / len(ids)
+                            for sk, ids in _group([tasks[t] for t in img_tasks], ("skill",)).items()
+                            for ids in [[x["task_id"] for x in ids]]}
+    S["vs_chance"] = {}
+    for m in models:
+        mine = [r for r in rows if r["model"] == m and r["mode"] == "image"]
+        if mine:
+            k, n = sum(r["correct"] for r in mine), len(mine)
+            c = sum(chance(tasks[r["task_id"]]) for r in mine) / n
+            S["vs_chance"][m] = dict(correct=k, n=n, chance=c,
+                                     p_value=binomtest(k, n, c, alternative="greater").pvalue)
     by = lambda rs, *keys: _group(rs, keys)
     S["overall"] = {m: dict(image=acc([r for r in img if r["model"] == m]),
                             blind=acc([r for r in blind if r["model"] == m]),
@@ -203,6 +217,10 @@ def charts(S, out):
         ax.barh(ys, vals, height=h * 0.85, color=SERIES[k % 8], label=m, edgecolor=SURFACE, linewidth=1)
         for y, v in zip(ys, vals):
             ax.text(v + 1, y, f"{v:.0f}%", va="center", fontsize=7, color=INK2)
+    for i, sk in enumerate(skills):                  # chance level: what random guessing would score
+        c = 100 * S.get("chance_by_skill", {}).get(sk, 0)
+        ax.plot([c, c], [i - h * 0.6, i + h * (len(models) - 0.4)], color=INK, lw=1.6, ls=(0, (2, 1.5)))
+    ax.plot([], [], color=INK, lw=1.6, ls=(0, (2, 1.5)), label="chance (random guessing)")
     ax.set_yticks([i + h * (len(models) - 1) / 2 for i in range(len(skills))])
     ax.set_yticklabels([SKILL_LABEL[s] for s in skills])
     ax.invert_yaxis()
@@ -264,11 +282,20 @@ def markdown(S, out):
     L += ["## Overall", "", "| Model | With image | Without image (blind) | Tasks |", "|---|---|---|---|"]
     for m, v in S["overall"].items():
         L.append(f"| {m} | {_pct(v['image'])} | {_pct(v['blind'])} | {v['n']} |")
-    L += ["", "## Accuracy by visual skill", "", "| Skill | " + " | ".join(S["models"]) + " |",
-          "|---|" + "---|" * len(S["models"])]
+    if S.get("vs_chance"):
+        L += ["", "## Better than guessing?", "",
+              "Chance = expected accuracy of a random guesser on exactly these tasks (from each task's options). "
+              "p = one-sided binomial test that the model beats chance.", "",
+              "| Model | Correct | Accuracy | Chance | p-value |", "|---|---|---|---|---|"]
+        for m, v in S["vs_chance"].items():
+            L.append(f"| {m} | {v['correct']}/{v['n']} | {_pct(v['correct'] / v['n'])} | {_pct(v['chance'])} | "
+                     f"{v['p_value']:.2g} |")
+    L += ["", "## Accuracy by visual skill", "", "| Skill | Chance | " + " | ".join(S["models"]) + " |",
+          "|---|---|" + "---|" * len(S["models"])]
     for sk in SKILL_ORDER:
         if any(sk in S["by_skill"][m] for m in S["models"]):
-            L.append(f"| {SKILL_LABEL[sk]} | " + " | ".join(_pct(S["by_skill"][m].get(sk)) for m in S["models"]) + " |")
+            L.append(f"| {SKILL_LABEL[sk]} | {_pct(S['chance_by_skill'].get(sk))} | "
+                     + " | ".join(_pct(S["by_skill"][m].get(sk)) for m in S["models"]) + " |")
     L += ["", "## Eye exam: breaking level (first difficulty where accuracy < 50%)", "",
           "| Skill | " + " | ".join(S["models"]) + " |", "|---|" + "---|" * len(S["models"])]
     for sk in SKILL_ORDER:

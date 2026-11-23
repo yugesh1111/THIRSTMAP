@@ -10,20 +10,30 @@
 | mock:random | 14% | 14% | 5761 |
 | mock:stubborn | 87% | 87% | 5761 |
 
+## Better than guessing?
+
+Chance = expected accuracy of a random guesser on exactly these tasks (from each task's options). p = one-sided binomial test that the model beats chance.
+
+| Model | Correct | Accuracy | Chance | p-value |
+|---|---|---|---|---|
+| mock:oracle | 5761/5761 | 100% | 14% | 0 |
+| mock:random | 788/5761 | 14% | 14% | 0.63 |
+| mock:stubborn | 5021/5761 | 87% | 14% | 0 |
+
 ## Accuracy by visual skill
 
-| Skill | mock:oracle | mock:random | mock:stubborn |
-|---|---|---|---|
-| Trace downstream | 100% | 3% | 79% |
-| Order along flow | 100% | 18% | 79% |
-| Measure along flow | 100% | 11% | 100% |
-| Place wetland | 100% | 24% | 100% |
-| Site selection | 100% | 33% | 100% |
-| Trace upstream | 100% | 4% | 67% |
-| Flow direction | 100% | 11% | 100% |
-| Read elevation | 100% | 5% | 100% |
-| Thermal threshold | 100% | 11% | 76% |
-| Thermal value | 100% | 22% | 83% |
+| Skill | Chance | mock:oracle | mock:random | mock:stubborn |
+|---|---|---|---|---|
+| Trace downstream | 3% | 100% | 3% | 79% |
+| Order along flow | 17% | 100% | 18% | 79% |
+| Measure along flow | 12% | 100% | 11% | 100% |
+| Place wetland | 25% | 100% | 24% | 100% |
+| Site selection | 33% | 100% | 33% | 100% |
+| Trace upstream | 4% | 100% | 4% | 67% |
+| Flow direction | 12% | 100% | 11% | 100% |
+| Read elevation | 5% | 100% | 5% | 100% |
+| Thermal threshold | 10% | 100% | 11% | 76% |
+| Thermal value | 20% | 100% | 22% | 83% |
 
 ## Eye exam: breaking level (first difficulty where accuracy < 50%)
 

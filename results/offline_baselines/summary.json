@@ -5,6 +5,38 @@
     "mock:stubborn"
   ],
   "n_responses": 34566,
+  "chance_by_skill": {
+    "read_colour_scale_threshold": 0.09789319672144295,
+    "trace_upstream_catchment": 0.04286427952209659,
+    "read_flow_direction": 0.125,
+    "nature_based_filtering": 0.25,
+    "siting_downstream_impact": 0.3333333333333333,
+    "order_along_flow": 0.17222203602848762,
+    "read_elevation": 0.04922022646103896,
+    "measure_along_flow": 0.12285,
+    "read_colour_scale_value": 0.19995203836930459,
+    "trace_downstream": 0.02566516762053668
+  },
+  "vs_chance": {
+    "mock:oracle": {
+      "correct": 5761,
+      "n": 5761,
+      "chance": 0.13823376746865693,
+      "p_value": 0.0
+    },
+    "mock:random": {
+      "correct": 788,
+      "n": 5761,
+      "chance": 0.13823376746865693,
+      "p_value": 0.6309240370516915
+    },
+    "mock:stubborn": {
+      "correct": 5021,
+      "n": 5761,
+      "chance": 0.13823376746865693,
+      "p_value": 0.0
+    }
+  },
   "overall": {
     "mock:oracle": {
       "image": 1.0,
@@ -635,6 +667,8 @@
       }
     }
   },
+  "appearance_invariance": {},
+  "perception_probes": {},
   "cost": {
     "mock:oracle": {
       "input_tokens": 0,

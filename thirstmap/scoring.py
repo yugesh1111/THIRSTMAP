@@ -109,3 +109,19 @@ def diagnose(task, pred, parse_ok):
     elif not tags:
         tags.append("wrong_choice")
     return tags
+
+
+def chance(task):
+    """Probability that the random baseline (mock:random) answers this task correctly.
+
+    choice/compass: 1/number of options; set: each option picked independently with p=0.35;
+    number: uniform over the option range, within the tolerance.
+    """
+    sc, opts, gold = task["scoring"], task["options"], task["answer"]
+    if sc in ("choice", "compass"):
+        return 1 / len(opts)
+    if sc == "set":
+        k, n = len(gold), len(opts)
+        return 0.35 ** k * 0.65 ** (n - k)
+    lo, hi = opts
+    return (min(gold + task["tolerance"], hi) - max(gold - task["tolerance"], lo)) / (hi - lo)
