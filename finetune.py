@@ -67,6 +67,8 @@ def main():
     ap.add_argument("--max-side", type=int, default=512)
     ap.add_argument("--lr", type=float, default=2e-4)
     ap.add_argument("--out", default="results/finetune")
+    ap.add_argument("--split-images", action="store_true",
+                    help="let the processor tile each image (more tokens, much slower on CPU)")
     a = ap.parse_args()
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForImageTextToText, AutoProcessor
@@ -92,6 +94,8 @@ def main():
           f"test {len(test)} tasks from {len(held_out)} held-out scene families (no overlap)", flush=True)
 
     processor = AutoProcessor.from_pretrained(a.model)
+    if not a.split_images and hasattr(processor.image_processor, "do_image_splitting"):
+        processor.image_processor.do_image_splitting = False   # one view per image: ~6x fewer tokens
     out = Path(a.out); out.mkdir(parents=True, exist_ok=True)
     resp = out / "responses.jsonl"
     short = a.model.split("/")[-1]
@@ -137,6 +141,7 @@ def main():
     model.save_pretrained(adapter_dir)
     (adapter_dir / "TRAINING.json").write_text(json.dumps(dict(
         base_model=a.model, train_tasks=len(train), epochs=a.epochs, lr=a.lr, max_side=a.max_side,
+        image_splitting=a.split_images,
         lora=dict(r=16, alpha=32), held_out_scene_families=len(held_out), train_seconds=round(time.time() - t0)),
         indent=2))
     evaluate(model, f"hf:{short}@{a.max_side}px (fine-tuned on ThirstMap)")
