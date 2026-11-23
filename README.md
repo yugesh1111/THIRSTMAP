@@ -12,6 +12,18 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 ---
 
+## See it
+
+| One scene, three image styles, one answer key | Difficulty dial, level 1 → 5 |
+|---|---|
+| ![styles](docs/gifs/styles.gif) | ![difficulty](docs/gifs/difficulty.gif) |
+| **Counterfactual twin: one small change, the answer must flip** | **Appearance variants: the answer must NOT change** |
+| ![counterfactual](docs/gifs/counterfactual.gif) | ![appearance](docs/gifs/appearance.gif) |
+
+![real terrain](docs/gifs/real_terrain.gif)
+
+*Real terrain (Copernicus elevation + ESA land cover) for four Indian data-centre hubs; the facility and villages are hypothetical.*
+
 ## What it produces
 
 For every scene, the **same answer key** is rendered as three image styles:
