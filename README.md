@@ -8,7 +8,7 @@ India's data centres use an estimated ~150 billion litres of water a year, and t
 
 **ThirstMap is a factory of visual tasks** that tests whether frontier multimodal models can be trusted with that job. Our code builds each landscape and simulates its water, so **it already knows every answer**, much like the brief's bar-chart example but for terrain and water flow.
 
-See [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) for the full problem statement, sources, and a line-by-line fit to the Track 2 brief.
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and design decisions, and [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md) for the full problem statement, sources, and a line-by-line fit to the Track 2 brief.
 
 ---
 
@@ -20,7 +20,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 |---|---|---|
 | Relief shading, land cover, channels, villages, data-centre roofs and cooling towers | Contours, streams, symbols | Water temperature above normal on a 0–15 °C colour scale |
 
-…and up to **9 question types**. None of them is a counting task:
+…and up to **10 question types**. None of them is a counting task:
 
 | Q | Visual skill | Example | Styles |
 |---|---|---|---|
@@ -33,6 +33,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 | Q7 | Trace upstream | Which villages share the water source at intake I? | sat, map |
 | Q8 | Colour-scale threshold | At which monitoring points is water > 3 °C warmer? | thermal |
 | Q9 | Colour-scale value | How many °C warmer is the water at M2? | thermal |
+| Q10 | Measure along a winding path | How far (m) does the wastewater travel along the stream to the first village? | sat, map |
 
 **Traps are built in:** a village on the *same* stream but *upstream*, a village *close* to the data centre but on *another* stream, a wetland placed *after* a village (too late), and monitoring points upstream or on other streams. When a model answers wrong, the scorer names the trap it fell for.
 

@@ -115,3 +115,22 @@ def dist(a, b):
 def km(i):
     r, c = rc(i)
     return ((c + 0.5) * CELL_M / 1000, (r + 0.5) * CELL_M / 1000)
+
+
+def polyline_length_m(cells):
+    """Length in metres of a path of cells after the same smoothing the renderers use
+    (5-point moving average, then 3 rounds of Chaikin corner-cutting)."""
+    pts = [((rc(i)[1] + 0.5) * CELL_M, (rc(i)[0] + 0.5) * CELL_M) for i in cells]
+    if len(pts) < 2:
+        return 0.0
+    if len(pts) > 4:
+        xs = np.convolve(np.pad([q[0] for q in pts], 2, mode="edge"), np.ones(5) / 5, "valid")
+        ys = np.convolve(np.pad([q[1] for q in pts], 2, mode="edge"), np.ones(5) / 5, "valid")
+        pts = [pts[0]] + list(zip(xs[1:-1], ys[1:-1])) + [pts[-1]]
+    for _ in range(3):
+        new = [pts[0]]
+        for (ax, ay), (bx, by) in zip(pts[:-1], pts[1:]):
+            new += [(.75 * ax + .25 * bx, .75 * ay + .25 * by), (.25 * ax + .75 * bx, .25 * ay + .75 * by)]
+        new.append(pts[-1])
+        pts = new
+    return float(sum(math.hypot(bx - ax, by - ay) for (ax, ay), (bx, by) in zip(pts[:-1], pts[1:])))

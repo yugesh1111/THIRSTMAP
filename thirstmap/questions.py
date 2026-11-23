@@ -5,7 +5,7 @@ it. Example: comparing elevations needs contour lines, so Q4 is map-only.
 """
 import math
 
-from .terrain import rc
+from .terrain import polyline_length_m, rc
 
 COMPASS = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"]
 
@@ -61,6 +61,13 @@ def answer_key(s, p):
              answer=lower, margin_m=3),
     ]
     qs = [q for q in qs if q["answer"] is not None]       # e.g. no wetland question in an outfall twin
+    if hit:                                               # Q10: measure a distance along a winding river
+        d_m = polyline_length_m(s["path"][: s["path"].index(hit[0]) + 1])
+        if d_m >= 300:
+            qs.append(dict(id="Q10", skill="measure_along_flow", styles=both,
+                           question="Using the scale bar, roughly how far does the wastewater travel ALONG THE "
+                                    "STREAM from outfall O to the first village it reaches? Answer in metres.",
+                           answer=int(round(d_m, -1)), tolerance=int(round(0.25 * d_m))))
     fdir = flow_direction(s)
     if fdir:
         qs.append(dict(id="Q5", skill="read_flow_direction", styles=both,
@@ -100,7 +107,8 @@ def answer_key(s, p):
     V = sorted(nm["village"].values(), key=lambda x: int(x[1:]))
     opts = {"Q1": V, "Q2": V, "Q7": V, "Q3": sorted(nm["wetland"].values()),
             "Q4": sorted(nm["farm"].values(), key=lambda x: int(x[1:])), "Q5": COMPASS,
-            "Q6": sorted(nm["site"].values()), "Q8": sorted(nm["monitor"].values()), "Q9": [0, 15]}
+            "Q6": sorted(nm["site"].values()), "Q8": sorted(nm["monitor"].values()), "Q9": [0, 15],
+            "Q10": [0, 5000]}
     vl = lambda xs: [nm["village"][v] for v in xs]
     traps = {"Q1": {"upstream_same_stream": vl(p["trap_up"]), "near_but_other_stream": vl(p["trap_near"])},
              "Q2": {"upstream_same_stream": vl(p["trap_up"]), "near_but_other_stream": vl(p["trap_near"]),

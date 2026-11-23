@@ -59,6 +59,8 @@ def test_independent_implementation_agrees(level, seed):
     for q in qs:
         if q["id"] == "Q9":
             assert abs(q["answer"] - ind["Q9"]) <= 0.3
+        elif q["id"] == "Q10":
+            assert abs(q["answer"] - ind["Q10"]) <= 0.05 * q["answer"]
         else:
             assert q["answer"] == ind[q["id"]], q["id"]
 

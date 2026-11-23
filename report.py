@@ -13,10 +13,12 @@ import matplotlib.pyplot as plt
 
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
 SURFACE, INK, INK2, GRID = "#fcfcfb", "#0b0b0b", "#52514e", "#e4e3df"
-SKILL_ORDER = ["trace_downstream", "order_along_flow", "nature_based_filtering", "siting_downstream_impact",
+SKILL_ORDER = ["trace_downstream", "order_along_flow", "measure_along_flow", "nature_based_filtering",
+               "siting_downstream_impact",
                "trace_upstream_catchment", "read_flow_direction", "read_elevation",
                "read_colour_scale_threshold", "read_colour_scale_value"]
 SKILL_LABEL = {"trace_downstream": "Trace downstream", "order_along_flow": "Order along flow",
+               "measure_along_flow": "Measure along flow",
                "nature_based_filtering": "Place wetland", "siting_downstream_impact": "Site selection",
                "trace_upstream_catchment": "Trace upstream", "read_flow_direction": "Flow direction",
                "read_elevation": "Read elevation", "read_colour_scale_threshold": "Thermal threshold",

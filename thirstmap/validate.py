@@ -15,12 +15,13 @@ import numpy as np
 from .questions import flow_direction
 from .render_thermal import colour
 from .scene import plume_values
-from .terrain import N, dist, outlet_mask, trace
+from .terrain import N, dist, outlet_mask, polyline_length_m, trace
 
 DIRS = {64: (-1, 0), 128: (-1, 1), 1: (0, 1), 2: (1, 1), 4: (1, 0), 8: (1, -1), 16: (0, -1), 32: (-1, -1)}
 EVIDENCE_STYLES = {"Q1": {"map", "satellite"}, "Q2": {"map", "satellite"}, "Q3": {"map", "satellite"},
                    "Q4": {"map"}, "Q5": {"map", "satellite"}, "Q6": {"map", "satellite"},
-                   "Q7": {"map", "satellite"}, "Q8": {"thermal"}, "Q9": {"thermal"}}
+                   "Q7": {"map", "satellite"}, "Q8": {"thermal"}, "Q9": {"thermal"},
+                   "Q10": {"map", "satellite"}}
 
 
 def pysheds_routing(filled, outlet="south"):
@@ -73,6 +74,10 @@ def independent_answers(s, p, nm, qs=None):
     hit2 = sorted([v for v in p["villages"] if v in pos2], key=pos2.get)
     ans = {"Q1": sorted(nm["village"][v] for v in hit2),
            "Q2": nm["village"][hit2[0]] if hit2 else "none"}
+    if hit2:
+        d_m = polyline_length_m(path2[: pos2[hit2[0]] + 1])
+        if d_m >= 300:
+            ans["Q10"] = int(round(d_m, -1))
     first = pos2[hit2[0]] if hit2 else len(path2)
     good = [w for w in p["wet"] if w in pos2 and pos2[w] < first]
     ans["Q3"] = nm["wetland"][good[0]] if len(good) == 1 else f"AMBIGUOUS({len(good)})"
@@ -103,6 +108,8 @@ def independent_answers(s, p, nm, qs=None):
 def _same(q, a, b):
     if q == "Q9":
         return isinstance(b, float) and abs(a - b) <= 0.3
+    if q == "Q10":
+        return isinstance(b, (int, float)) and abs(a - b) <= 0.05 * a
     return a == b
 
 

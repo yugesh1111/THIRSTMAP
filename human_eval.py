@@ -43,7 +43,8 @@ def build(a):
         name = t["image"].replace("/", "_").replace(".png", ".jpg")
         Image.open(ds / t["image"]).convert("RGB").save(out / "img" / name, quality=88)
         items.append(dict(id=t["task_id"], img="img/" + name, q=t["question"], kind=t["scoring"],
-                          options=t["options"], skill=SKILL_LABEL[t["skill"]], style=t["style"]))
+                          options=t["options"], skill=SKILL_LABEL[t["skill"]], style=t["style"],
+                          unit="m" if t["qid"] == "Q10" else "°C"))
     (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False)))
     print(f"{len(items)} tasks -> {out / 'index.html'}")
 
@@ -116,7 +117,7 @@ function show(){
     return; }
   const d = T[k]; let inp = '';
   if (d.kind === 'set') inp = '<div class="opts">' + d.options.map(o => `<label><input type="checkbox" value="${o}"> ${o}</label>`).join('') + '</div><p class="muted">Tick all that apply (none is allowed).</p>';
-  else if (d.kind === 'number') inp = '<input type="number" step="0.1" id="num"> °C';
+  else if (d.kind === 'number') inp = `<input type="number" step="0.1" id="num"> ${d.unit}`;
   else inp = '<div class="opts">' + d.options.map(o => `<label><input type="radio" name="r" value="${o}"> ${o}</label>`).join('') + '</div>';
   st.innerHTML = `<div class="card"><img src="${d.img}" alt="task image"><div class="side"><span class="muted">${d.style} image</span>
     <b>${d.q}</b>${inp}<button id="next">Next</button></div></div>`;

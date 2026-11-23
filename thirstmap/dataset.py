@@ -11,7 +11,8 @@ ANSWER_FORMAT = {
     "number": "a single number",
 }
 SCORING = {"Q1": "set", "Q2": "choice", "Q3": "choice", "Q4": "set", "Q5": "compass",
-           "Q6": "choice", "Q7": "set", "Q8": "set", "Q9": "number"}
+           "Q6": "choice", "Q7": "set", "Q8": "set", "Q9": "number",
+           "Q10": "number"}
 
 STYLE_INTRO = {
     "satellite": "This is an annotated satellite-style image of a 4 km x 4 km area. "
