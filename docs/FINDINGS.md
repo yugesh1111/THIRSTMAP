@@ -1,6 +1,6 @@
 # Findings: how well do vision-language models trace water through the landscape?
 
-Four free, open-weight models from Hugging Face run locally on CPU. Every model answered the **same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception probes, and every question again **without the image**. Claude and GPT run with the same harness once keys are available.
+Four free, open-weight models from Hugging Face run locally on CPU (main table), and Gemini through a free API key (frontier check below). Every model answered the **same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception probes, and every question again **without the image**. Claude and GPT run with the same harness once keys are available.
 
 | Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
 |---|---|---|---|---|---|---|---|---|---|

@@ -145,7 +145,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 **Real-terrain mode:** the same pipeline runs on real **Copernicus 30 m elevation + ESA WorldCover land cover** for four Indian data-centre hubs: **Navi Mumbai, Hyderabad, Pune (Hinjewadi) and Chennai (Ambattur)**. Facility placements there are hypothetical.
 
-**Current dataset:** 308 scenes and **5,761 tasks** (4,642 synthetic, 1,119 on real terrain), including **740 counterfactual pairs**; 2.1 GB of images. Built in about 18 minutes on 4 CPU cores. The **full dataset** is published as a GitHub Release (three zip parts with SHA-256 checksums, plus its manifest, validation report and verification). The `dataset-release` workflow **rebuilds it from the code on GitHub's own runners** whenever a `dataset-v*` tag is pushed, using the locked versions in `requirements-lock.txt`. A ready-to-use slice ships in the repo as **[`dataset_sample/`](dataset_sample/)**: 28 scenes plus their twins, 529 tasks and 69 pairs, in the same format, so you can run `evaluate.py --dataset dataset_sample` straight away.
+**Current dataset:** 308 scenes and **5,761 tasks** (4,642 synthetic, 1,119 on real terrain), including **740 counterfactual pairs**; 431 of them (7.5%) are excluded by the self-audit ([`docs/AUDIT.md`](docs/AUDIT.md)), leaving 5,330 scored tasks; 2.1 GB of images. Built in about 18 minutes on 4 CPU cores. The **full dataset** is published as a GitHub Release (three zip parts with SHA-256 checksums, plus its manifest, validation report and verification). The `dataset-release` workflow **rebuilds it from the code on GitHub's own runners** whenever a `dataset-v*` tag is pushed, using the locked versions in `requirements-lock.txt`. A ready-to-use slice ships in the repo as **[`dataset_sample/`](dataset_sample/)**: 28 scenes plus their twins, 529 tasks and 69 pairs, in the same format, so you can run `evaluate.py --dataset dataset_sample` straight away.
 
 ---
 
@@ -237,14 +237,14 @@ This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row ma
 
 ## Results status (read this first)
 - **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/models/REPORT.md`](results/models/REPORT.md). Every raw answer is in `results/models/responses.jsonl`.
-- **Frontier API models** (Claude, GPT, Gemini) have not been run yet; that needs API keys. The harness is the same: one command, below.
+- **Frontier models, real runs:** Gemini 3.1 Flash-Lite and 3.5 Flash-Lite answered the same 83 questions as two open models (`frontier.py`, within a free API key's 20 requests per model per day), and Gemini 3.5 Flash answered 19 single questions; see [`LEADERBOARD.md`](LEADERBOARD.md). Claude and GPT run with the same harness once keys are available.
 - **Offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`) test the dataset and the scorer. They are **not model findings**.
 - **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
   - every reported number recomputed independently from the raw responses (exact match);
-  - the random baseline at its exact mathematical chance level (13.8% expected vs 13.7% observed, over 5,761 tasks);
+  - the random baseline at its exact mathematical chance level (14.1% expected vs 13.9% observed, over the 5,330 tasks left after the audit);
   - 10 sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds (10/10);
   - spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
-- **Exact inputs:** [`eval_set/`](eval_set/) holds exactly the 256 tasks and 330 MB of images the open models saw (168 questions, 16 reading checks, 72 appearance variants), with SHA-256 checksums and answer reveals. Repeat the run on identical images with `python3 evaluate.py --dataset eval_set --all --models hf:MODEL_ID --run rerun`.
+- **Exact inputs:** [`eval_set/`](eval_set/) holds exactly the tasks and images the models saw: 257 questions, 16 reading checks and 72 appearance variants (594 files, 355 MB), with SHA-256 checksums, answer reveals and the audit's `errata.jsonl`. Repeat any run on identical images with `python3 evaluate.py --dataset eval_set --all --models hf:MODEL_ID --run rerun`.
 
 ## Outputs of an evaluation run (`results/<run>/`)
 - `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost

@@ -218,7 +218,9 @@ def main():
     rows.sort(key=lambda r: -r["acc"])
     api = [short(r["m"]) for r in rows if not r["m"].startswith("hf:")]
     L = ["# Findings: how well do vision-language models trace water through the landscape?", "",
-         "Four free, open-weight models from Hugging Face run locally on CPU"
+         ("Four free, open-weight models from Hugging Face run locally on CPU (main table), and Gemini through a free "
+          "API key (frontier check below)" if Path("results/frontier/summary.json").exists() else
+          "Four free, open-weight models from Hugging Face run locally on CPU")
          + (f", and {', '.join(api)} through its API" if api else "") + ". Every model answered the "
          "**same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception "
          "probes, and every question again **without the image**. Claude and GPT run with the same harness once "

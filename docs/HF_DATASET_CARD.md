@@ -23,7 +23,7 @@ A visual reasoning benchmark generated from code. Each scene is a landscape whos
 independent hydrology library (pysheds) before release. Scenes show an AI data centre, its wastewater outfall,
 villages, candidate wetlands and siting options; questions ask where the water goes.
 
-- **5,761 tasks** from 308 scenes (4,642 synthetic, 1,119 on real terrain for Navi Mumbai, Hyderabad, Pune and
+- **5,761 tasks** (5,330 after the audit's exclusions) from 308 scenes (4,642 synthetic, 1,119 on real terrain for Navi Mumbai, Hyderabad, Pune and
   Chennai from Copernicus DEM GLO-30 and ESA WorldCover)
 - **3 image styles** per scene: satellite-style, topographic map, thermal; **5 difficulty levels**
 - **10 skills, no counting**: trace downstream, order along the flow, distance along a winding stream, wetland
