@@ -14,12 +14,13 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 | Look at | Where | What it shows |
 |---|---|---|
+| **One page** | [`docs/ThirstMap_summary.pdf`](docs/ThirstMap_summary.pdf) · [`docs/FAQ.md`](docs/FAQ.md) | the whole project on one A4 page; tough questions (small samples, synthetic data, fine-tuning) answered with the numbers |
 | **90-second video** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
 | **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
 | **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
 | **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 32 questions Gemini and the open models also answered, including all 7 before-and-after pairs |
-| **Run it** | `./run_all.sh --quick` (about 2 minutes) | tests, a small dataset, baselines, reports, demo |
+| **Run it** | [Colab notebook](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) (3 minutes, no key) · `pip install` → `thirstmap` command · `./run_all.sh --quick` | build a scene and its twin, answer a question yourself, score models; or the whole pipeline |
 
 | Judging criterion | Where ThirstMap answers it |
 |---|---|

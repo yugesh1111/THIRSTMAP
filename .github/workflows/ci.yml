@@ -1,6 +1,6 @@
 name: ci
 # Every push: unit tests, then a small end-to-end run (generate -> validate -> evaluate -> verify)
-# that must reproduce its own numbers and regenerate scenes byte-for-byte.
+# that must reproduce its own numbers and regenerate scenes byte-for-byte; and the pip-installed command.
 on:
   push:
   pull_request:
@@ -51,3 +51,22 @@ jobs:
             results/ci/REPORT.md
             results/ci_eye/EYE_EXAM.md
             ci_docs/VERIFICATION.md
+
+  package:
+    # pip install, then the `thirstmap` command from outside the repository, without system fonts (as on Colab)
+    runs-on: ubuntu-latest
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install .
+      - name: the thirstmap command works anywhere
+        run: |
+          mkdir -p /tmp/pkg && cd /tmp/pkg
+          thirstmap list
+          thirstmap generate --level 1 --seed 3 --twin --out scenes
+          ls scenes/*/answer_key.json scenes/*/map.png

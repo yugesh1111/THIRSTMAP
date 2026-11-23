@@ -24,6 +24,7 @@ dependencies = [
 real = ["rasterio>=1.3"]
 models = ["anthropic", "openai", "transformers", "torch", "peft", "num2words"]
 test = ["pytest"]
+docs = ["reportlab", "qrcode"]
 
 [project.urls]
 Homepage = "https://yugesh1111.github.io/THIRSTMAP/"
