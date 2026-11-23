@@ -150,7 +150,8 @@ def main():
     block = "\n".join(["<!-- FINDINGS:START -->", "## Findings (open models, real runs)", ""] +
                       [x.replace("## ", "### ", 1) if x.startswith("## ") else x for x in L[L.index("| Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |"):
                         L.index("## Accuracy by skill (chance = random guessing on the same tasks)")]] +
-                      ["Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · "
+                      ["![accuracy by skill vs chance](results/open_models/chart_accuracy_by_skill.png)", "",
+                       "Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · "
                        "per-run report: [results/open_models/REPORT.md](results/open_models/REPORT.md)",
                        "<!-- FINDINGS:END -->"])
     if "<!-- FINDINGS:START -->" in s:

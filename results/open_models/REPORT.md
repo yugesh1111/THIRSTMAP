@@ -4,7 +4,7 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 10% | – | 91 |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 7% | – | 136 |
 | hf:Qwen/Qwen2-VL-2B-Instruct | 8% | 9% | 144 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 16% | 13% | 144 |
 
@@ -14,7 +14,7 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 
 | Model | Correct | Accuracy | Chance | p-value |
 |---|---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 9/91 | 10% | 14% | 0.92 |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 10/136 | 7% | 13% | 0.99 |
 | hf:Qwen/Qwen2-VL-2B-Instruct | 12/144 | 8% | 13% | 0.97 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 23/144 | 16% | 13% | 0.18 |
 
@@ -24,7 +24,7 @@ Tasks = distinct tasks per skill (every model answers the same ones); with 10-30
 
 | Skill | Tasks | Chance | hf:HuggingFaceTB/SmolVLM-256M-Instruct | hf:Qwen/Qwen2-VL-2B-Instruct | hf:Qwen/Qwen2.5-VL-3B-Instruct |
 |---|---|---|---|---|---|
-| Trace downstream | 15 | 2% | 20% | 0% | 0% |
+| Trace downstream | 15 | 2% | 13% | 0% | 0% |
 | Order along flow | 24 | 18% | 0% | 17% | 17% |
 | Measure along flow | 10 | 11% | 0% | 20% | 30% |
 | Place wetland | 10 | 25% | 10% | 40% | 30% |
@@ -32,8 +32,8 @@ Tasks = distinct tasks per skill (every model answers the same ones); with 10-30
 | Trace upstream | 30 | 4% | 0% | 0% | 10% |
 | Flow direction | 10 | 12% | 20% | 10% | 0% |
 | Read elevation | 5 | 8% | 20% | 20% | 20% |
-| Thermal threshold | 19 | 11% | 14% | 0% | 26% |
-| Thermal value | 11 | 20% | 40% | 0% | 9% |
+| Thermal threshold | 19 | 11% | 13% | 0% | 26% |
+| Thermal value | 11 | 20% | 18% | 0% | 9% |
 
 ## Eye exam: breaking level (first difficulty where accuracy < 50%)
 
@@ -61,7 +61,7 @@ Pair accuracy counts a pair only if BOTH the original and its twin are answered 
 
 | Model | Pairs | Single-task accuracy | Pair accuracy | Unchanged answer |
 |---|---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 3 | 17% | 0% | 100% |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 26 | 4% | 0% | 77% |
 | hf:Qwen/Qwen2-VL-2B-Instruct | 30 | 5% | 0% | 87% |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 30 | 18% | 0% | 87% |
 
@@ -80,7 +80,7 @@ No reasoning needed: these only ask the model to read what is printed on the ima
 
 | Model | Trap tasks | Fell for a trap | Most common errors |
 |---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 51 | 18% | missed_some (29), unparseable_or_no_answer (27), underestimate (9), extra_unrelated (6) |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 90 | 18% | missed_some (52), unparseable_or_no_answer (34), extra_unrelated (10), underestimate (9) |
 | hf:Qwen/Qwen2-VL-2B-Instruct | 98 | 66% | trap:downstream_not_upstream (29), trap:other_stream (18), missed_some (16), unparseable_or_no_answer (15) |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 98 | 27% | missed_some (52), extra_unrelated (21), wrong_choice (19), overestimate (13) |
 
@@ -90,7 +90,7 @@ Tasks a majority of real models answered correctly WITHOUT the image: 3
 
 | Model | Input tokens | Output tokens | USD | Mean latency (s) |
 |---|---|---|---|---|
-| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 113176 | 2793 | 0 | 21.72 |
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 169256 | 3657 | 0 | 18.83 |
 | hf:Qwen/Qwen2-VL-2B-Instruct | 168420 | 5055 | 0 | 6.05 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 168420 | 2857 | 0 | 6.69 |
 
