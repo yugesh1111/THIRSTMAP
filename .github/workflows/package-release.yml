@@ -1,9 +1,16 @@
 name: package-release
 # Builds the pip package on GitHub's runners, installs it in a clean environment, runs the `thirstmap` command
-# outside the repository, and publishes the wheel as a GitHub Release. Trigger: push a tag like v1.0.0.
+# outside the repository, and publishes the wheel as a GitHub Release. Trigger: push a tag like v1.0.0,
+# or run it manually with the tag to create.
 on:
   push:
     tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to create"
+        default: "v1.0.0"
+        required: true
 
 permissions:
   contents: write
@@ -33,6 +40,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/*.whl dist/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" \
-            --target "$GITHUB_SHA" --title "ThirstMap $GITHUB_REF_NAME (pip package)" \
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
+          gh release create "$TAG" dist/*.whl dist/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" \
+            --target "$GITHUB_SHA" --title "ThirstMap $TAG (pip package)" \
             --notes-file .github/package-release-notes.md
