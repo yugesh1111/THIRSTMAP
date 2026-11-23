@@ -71,6 +71,8 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 ![accuracy by skill vs chance](results/models/chart_accuracy_by_skill.png)
 
+![how often each model fell for a trap](docs/trap_chart.png)
+
 Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · per-run report: [results/models/REPORT.md](results/models/REPORT.md)
 <!-- FINDINGS:END -->
 

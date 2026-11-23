@@ -93,6 +93,8 @@ The scorer is lenient: a reply that names the right labels counts even if it is 
 
 Every wrong answer is drawn on the image the model saw (`overlays.py`, shown in the demo under *Where the models sent the water*) and turned into what it would mean on the ground, for example: “V4 receives the warm wastewater but would not be warned.”
 
+![how often each model fell for a trap, and which traps](trap_chart.png)
+
 - **Built-in traps catch them.** Share of answers that picked a trap option (a village close to the data centre but on another stream, a village upstream of the outfall, a wetland after a village, a monitoring point on another stream): gemini-3.1-flash-lite 16% (7/44); gemini-3.5-flash-lite 18% (8/44); Qwen2.5-VL-3B-Instruct 27% (12/44); Qwen2-VL-2B-Instruct 52% (23/44).
 - **It is not simply distance.** We tested whether wrong villages are the ones nearest the outfall (answering by proximity instead of flow): 37 of 155 wrong picks were the nearest non-receiving village, against 38 expected by chance, so a simple proximity shortcut does not explain the errors.
 

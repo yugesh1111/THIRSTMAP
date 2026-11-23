@@ -191,6 +191,77 @@ def leaderboard():
     Path("LEADERBOARD.md").write_text("\n".join(L) + "\n")
 
 
+TRAP_LABEL = {"near_but_other_stream": "village near the data centre,\nbut on another stream",
+              "upstream_same_stream": "village upstream on\nthe same stream",
+              "downstream_not_upstream": "village downstream of the intake\n(does not share its water)",
+              "too_late_after_village": "wetland placed after\na village (too late)",
+              "upstream_of_outfall": "wetland upstream\nof the outfall",
+              "later_village": "a later village named\nas the first",
+              "cooled_downstream": "point where the water\nhas already cooled",
+              "other_stream": "monitoring point\non another stream"}
+
+
+def trap_chart(path="results/frontier/summary.json", out="docs/trap_chart.png"):
+    """Two panels: how often each model fell for a built-in trap, and which traps (best API vs best open model)."""
+    f = Path(path)
+    if not f.exists():
+        return None
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
+    S = json.loads(f.read_text())
+    rates = S.get("trap_fall_rate", {})
+    if not rates:
+        return None
+    BLUE, ORANGE, INK, INK2, GRID = "#2a78d6", "#eb6834", "#0b0b0b", "#52514e", "#e4e3df"
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10.5})
+    fig, (a, b) = plt.subplots(1, 2, figsize=(13, 5.2), gridspec_kw=dict(width_ratios=[1, 1.35]))
+    order = sorted(rates, key=lambda m: rates[m]["rate"])
+    y = range(len(order))
+    cols = [BLUE if not m.startswith("hf:") else ORANGE for m in order]
+    a.barh(list(y), [rates[m]["rate"] * 100 for m in order], color=cols, height=0.55)
+    for k, m in enumerate(order):
+        a.text(rates[m]["rate"] * 100 + 1, k, f"{rates[m]['rate'] * 100:.0f}%  ({rates[m]['fell']}/{rates[m]['exposed']})",
+               va="center", color=INK, fontsize=10)
+    a.set_yticks(list(y), [short(m) for m in order], color=INK)
+    a.set_xlim(0, max(r["rate"] for r in rates.values()) * 100 + 22)
+    a.set_xlabel("answers that picked a trap option (%)", color=INK2)
+    a.set_title("How often each model fell for a built-in trap", loc="left", fontsize=12, fontweight="bold", color=INK)
+    api = [m for m in rates if not m.startswith("hf:")]
+    opn = [m for m in rates if m.startswith("hf:")]
+    best_api = min(api, key=lambda m: rates[m]["rate"]) if api else None
+    best_open = min(opn, key=lambda m: rates[m]["rate"]) if opn else None
+    tags = S.get("error_tags", {})
+    kinds = sorted({t[5:] for m in (best_api, best_open) if m for t in tags.get(m, {}) if t.startswith("trap:")},
+                   key=lambda k: -sum(tags.get(m, {}).get("trap:" + k, 0) for m in (best_api, best_open) if m))
+    yy = list(range(len(kinds)))
+    for off, m, col in ((-0.18, best_api, BLUE), (0.18, best_open, ORANGE)):
+        if m:
+            vals = [tags.get(m, {}).get("trap:" + k, 0) for k in kinds]
+            b.barh([v + off for v in yy], vals, height=0.34, color=col, label=short(m))
+            for v, n in zip(yy, vals):
+                if n:
+                    b.text(n + 0.15, v + off, str(n), va="center", fontsize=9.5, color=INK)
+    b.set_yticks(yy, [TRAP_LABEL.get(k, k.replace("_", " ")) for k in kinds], color=INK, fontsize=9.5)
+    b.invert_yaxis()
+    b.set_xlabel("times the model picked this trap", color=INK2)
+    b.set_title("Which traps catch them", loc="left", fontsize=12, fontweight="bold", color=INK)
+    b.legend(frameon=False, loc="lower right")
+    for ax in (a, b):
+        ax.spines[["top", "right"]].set_visible(False)
+        ax.spines[["left", "bottom"]].set_color(GRID)
+        ax.tick_params(colors=INK2, length=0)
+        ax.grid(axis="x", color=GRID, linewidth=0.8)
+        ax.set_axisbelow(True)
+    fig.text(0.01, 0.01, f"Frontier check: same {S.get('compared_on_tasks', '')} questions for every model. Blue: "
+             "Gemini (API); orange: open models.", color=INK2, fontsize=9)
+    fig.tight_layout(rect=(0, 0.04, 1, 1))
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    fig.savefig(out, dpi=170, facecolor="#fcfcfb")
+    plt.close(fig)
+    return out
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="results/models")
@@ -389,6 +460,9 @@ def main():
               "models sent the water*) and turned into what it would mean on the ground, for example: “"
               + next((st["text"] for st in A.get("stories", []) if st["qid"] == "Q1" and not st["model"].startswith("hf:")),
                      A["stories"][0]["text"] if A.get("stories") else "") + "”", ""]
+        if trap_chart():
+            L.append("![how often each model fell for a trap, and which traps](trap_chart.png)")
+            L.append("")
         if traps:
             L.append("- **Built-in traps catch them.** Share of answers that picked a trap option (a village close to the "
                      "data centre but on another stream, a village upstream of the outfall, a wetland after a village, a "
@@ -423,6 +497,7 @@ def main():
                       [x.replace("## ", "### ", 1) if x.startswith("## ") else x for x in L[L.index("| Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |"):
                         L.index("## Accuracy by skill (chance = random guessing on the same tasks)")]] +
                       ["![accuracy by skill vs chance](results/models/chart_accuracy_by_skill.png)", "",
+                       "![how often each model fell for a trap](docs/trap_chart.png)", "",
                        "Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · "
                        "per-run report: [results/models/REPORT.md](results/models/REPORT.md)",
                        "<!-- FINDINGS:END -->"])

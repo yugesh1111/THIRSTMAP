@@ -105,6 +105,11 @@ def results_html(run, finetune):
                   'went in one request, identically for every model. Gemini answers far more '
                   'questions correctly, yet no model got both the original and its changed twin right. Pick '
                   '“Frontier check” in the task browser to see every reply.</p>')
+    tc = ""
+    if Path("docs/trap_chart.png").exists():
+        tc = ('<figure class="pairfig"><img src="trap_chart.png" alt="How often each model fell for a built-in trap, '
+              'and which traps" loading="lazy" width="2210" height="884"><figcaption>Gemini falls for the built-in '
+              'traps far less often than the open models, but still does.</figcaption></figure>')
     return f"""<div class="table"><table>
 <thead><tr><th scope="col">Model</th><th scope="col">Correct, with the image <span class="key"><i></i>chance {pct(chance)}</span></th>
 <th scope="col">Without the image</th><th scope="col">p vs guessing</th><th scope="col">Both halves of a pair right</th>
@@ -112,7 +117,7 @@ def results_html(run, finetune):
 <tbody>{''.join(body)}</tbody></table></div>
 <p class="note">{rows[0]["n"] if rows else 0} questions per model, the same for every model, plus 30 before-and-after pairs and
 16 reading checks. Free open-weight models from Hugging Face, run locally with greedy decoding. Every reply on this
-page is the model's real, unedited output.</p>{ft}{fr}"""
+page is the model's real, unedited output.</p>{ft}{fr}{tc}"""
 
 
 def pipeline_html(pdir, tasks, run):
@@ -196,6 +201,76 @@ def pipeline_html(pdir, tasks, run):
         out.append(f'<li class="step"><div class="text"><span class="n">{k}</span><h3>{E(title)}</h3>'
                    f'<p>{text}</p></div><div class="visual">{visual}</div></li>')
     return f'<ol class="steps">{"".join(out)}</ol>', scene
+
+
+def try_section(fdir, tasks, root, out, n_single=4):
+    """'Try it yourself': a few frontier questions that are NOT in the human test, scored in the browser."""
+    best, acc = None, defaultdict(list)
+    rows = {}
+    for line in open(fdir / "responses.jsonl"):
+        r = json.loads(line)
+        if r["mode"] == "image" and r["task_id"] in tasks and not r.get("error") and not r["model"].startswith("hf:"):
+            sc = score(tasks[r["task_id"]], r["raw"])
+            rows[(r["model"], r["task_id"])] = sc
+            acc[r["model"]].append(sc["correct"])
+    if not acc:
+        return "", []
+    best = max(acc, key=lambda m: sum(acc[m]) / len(acc[m]))
+    held = set()
+    hp = Path("human_eval/index.html")
+    if hp.exists():                                    # keep the human test's questions unseen
+        import re as _re
+        m_ = _re.search(r'<script id="data" type="application/json">(.*?)</script>', hp.read_text(), _re.S)
+        if m_:
+            held = {d["id"] for d in json.loads(html.unescape(m_.group(1)))}
+    pool = [tasks[t] for (m, t) in rows if m == best and t not in held]
+    pick = []
+    # one before-and-after pair the best model got right on one side only
+    for t in sorted(pool, key=lambda t: t["task_id"]):
+        if t.get("variant") == "base" and t.get("pair_id"):
+            twin = t["pair_id"].replace("__", "_cf__", 1)
+            if twin in tasks and (best, twin) in rows and twin not in held and \
+                    rows[(best, t["task_id"])]["correct"] != rows[(best, twin)]["correct"]:
+                pick = [t, tasks[twin]]
+                break
+    target = len(pick) + n_single + (0 if pick else 2)
+    for distinct_scene in (True, False):          # different skills, preferably from different scenes and styles
+        seen = {t["skill"] for t in pick}
+        scenes = {t["scene_id"].removesuffix("_cf") for t in pick}
+        styles = defaultdict(int)
+        for t in pick:
+            styles[t["style"]] += 1
+        for t in sorted(pool, key=lambda t: (styles[t["style"]], t["level"], t["task_id"])):
+            if len(pick) >= target:
+                break
+            if t["skill"] in seen or t.get("pair_id") or t["qid"] == "Q4":
+                continue
+            if distinct_scene and t["scene_id"].removesuffix("_cf") in scenes:
+                continue
+            pick.append(t); seen.add(t["skill"]); scenes.add(t["scene_id"].removesuffix("_cf")); styles[t["style"]] += 1
+    data = []
+    for t in pick:
+        names = {}
+        for key in ("image", "reveal"):
+            src = root / t[key]
+            name = src.parent.name + "_" + src.stem + ".jpg"
+            if not (out / "img" / name).exists():
+                Image.open(src).convert("RGB").save(out / "img" / name, quality=85)
+            names[key] = "img/" + name
+        g = rows[(best, t["task_id"])]
+        data.append(dict(id=t["task_id"], image=names["image"], reveal=names["reveal"], q=t["question"],
+                         ctx=t["prompt"].split("Question:")[0].strip(), scoring=t["scoring"], options=t["options"],
+                         answer=t["answer"], tol=t.get("tolerance"), unit="m" if t["qid"] == "Q10" else "°C",
+                         skill=SKILL_LABEL[t["skill"]], variant=t.get("variant"), change=t.get("cf_change"),
+                         model=display(best), model_answer=g["parsed"], model_right=g["correct"]))
+    if not data:
+        return "", []
+    section = (f'<section id="try"><div class="wrap"><h2>Try it yourself</h2>'
+               f'<p class="lede">Answer {len(data)} questions the way the models did, then check: the page scores you '
+               f'with the same rules as the models and shows what {E(display(best))} answered. '
+               'These questions are not in the human test.</p>'
+               '<p class="stats" id="tally" aria-live="polite"></p><div id="trylist"></div></div></section>')
+    return section, data
 
 
 def main():
@@ -354,6 +429,11 @@ def main():
                     f'<p class="lede">The best frontier model’s answers ({E(display(best))}) drawn on the exact images it saw, '
                     'for a scene and its twin. Blue is the true water path; green, red and amber mark right, wrong and '
                     'missed answers.</p>' + "".join(cards) + '</div></section>')
+    if Path("docs/trap_chart.png").exists():
+        shutil.copy("docs/trap_chart.png", out / "trap_chart.png")
+    try_html, try_data = "", []
+    if fdir and (fdir / "responses.jsonl").exists():
+        try_html, try_data = try_section(fdir, tasks, root, out)
     pipe = ""
     if a.pipeline:
         shutil.copytree(a.pipeline, out / "pipeline", ignore=shutil.ignore_patterns("*.json"))
@@ -362,7 +442,8 @@ def main():
                 f'<p class="lede">One real scene from the dataset (<code>{E(scene)}</code>), followed through every '
                 f'step of the pipeline.</p>{steps}</div></section>')
     page = (HEAD + BODY.replace("__RESULTS__", results_html(run, Path(a.finetune) if a.finetune else None))
-            .replace("__PIPELINE__", pipe + show)
+            .replace("__PIPELINE__", pipe + try_html + show)
+            .replace("__TRY__", json.dumps(try_data, ensure_ascii=False).replace("</", "<\\/"))
             .replace("__DATA__", json.dumps(items, ensure_ascii=False).replace("</", "<\\/")))
     if not a.fragment:
         page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
@@ -458,6 +539,9 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--water);outline
 .pic{position:relative;background:var(--bg)}.pic img{width:100%;height:auto;display:block}
 .pic .btns{position:absolute;left:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px}
 .pic .btns button{background:var(--surface);border-color:var(--line)}
+.opts{display:flex;flex-wrap:wrap;gap:8px}.opts label{border:1px solid var(--line);border-radius:8px;padding:6px 10px;cursor:pointer}
+.num{font:inherit;padding:6px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink);width:9em}
+#trylist{display:grid;gap:16px}
 .pairfig{display:grid;gap:8px;margin:0 0 18px}.pairfig img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
 .pairfig figcaption{font-size:14px;color:var(--ink2);max-width:90ch}.pairfig .story{display:block;margin-top:4px;color:var(--ink)}
 .body{padding:16px;display:flex;flex-direction:column;gap:10px;min-width:0}
@@ -503,6 +587,7 @@ guesses at random. Press “Show answer key” to see the water path.</p>
 <footer><div class="wrap">Synthetic terrain; real-terrain scenes use Copernicus DEM GLO-30 and ESA WorldCover 2021 with
 hypothetical facilities. Code, dataset and full results: github.com/yugesh1111/THIRSTMAP</div></footer>
 <script id="data" type="application/json">__DATA__</script>
+<script id="trydata" type="application/json">__TRY__</script>
 <script>
 const DATA = JSON.parse(document.getElementById('data').textContent);
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -538,6 +623,45 @@ function render(){
   document.getElementById('stats').textContent = `${n} tasks · ${right} of ${total} model answers right (baselines not counted)`;
 }
 [fs, fy, fr].forEach(e => e.onchange = render); render();
+
+// ---- Try it yourself: same scoring rules as the models (exact set, single choice, compass, number within tolerance)
+const TRY = JSON.parse(document.getElementById('trydata').textContent || '[]');
+const COMPASS = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+const tryScore = (d, v) => d.scoring === 'set' ? JSON.stringify([...v].sort()) === JSON.stringify([...d.answer].sort())
+  : d.scoring === 'number' ? (v !== null && Math.abs(v - d.answer) <= d.tol) : v === d.answer;
+let you = 0, done = 0;
+function tally(){ const g = TRY.filter(d => d.model_right).length;
+  document.getElementById('tally').textContent = done ? `You: ${you} of ${done} checked · ${TRY[0].model}: ${g} of ${TRY.length} on these questions` : `${TRY.length} questions · ${TRY[0].model} got ${g} right`; }
+if (TRY.length) {
+  const L = document.getElementById('trylist');
+  TRY.forEach((d, k) => {
+    const c = document.createElement('article'); c.className = 'card';
+    let inp = '';
+    const opts = d.scoring === 'compass' ? COMPASS : d.options;
+    if (d.scoring === 'set') inp = '<div class="opts">' + opts.map(o => `<label><input type="checkbox" value="${esc(o)}"> ${esc(o)}</label>`).join('') + '</div><p class="gold">Tick all that apply (none is allowed).</p>';
+    else if (d.scoring === 'number') inp = `<p><input type="number" step="0.1" class="num" aria-label="your answer"> ${esc(d.unit)}</p>`;
+    else inp = '<div class="opts">' + opts.map(o => `<label><input type="radio" name="t${k}" value="${esc(o)}"> ${esc(o)}</label>`).join('') + '</div>';
+    c.innerHTML = `<div class="pic"><a href="${esc(d.image)}" target="_blank" rel="noopener"><img src="${esc(d.image)}" alt="${esc(d.skill)} question image" loading="lazy"></a></div>
+      <div class="body"><div class="meta"><span class="chip">${esc(d.skill)}</span>${d.variant ? `<span class="chip">${d.variant === 'base' ? 'pair: original' : 'pair: twin'}</span>` : ''}</div>
+      ${d.variant === 'counterfactual' ? `<div class="gold">Same place as the question above, with one change: <b>${esc(d.change)}</b>.</div>` : ''}
+      <div class="gold">${esc(d.ctx)}</div><div class="q">${esc(d.q)}</div>${inp}
+      <p><button type="button" class="chk">Check my answer</button></p><div class="res" aria-live="polite"></div></div>`;
+    c.querySelector('.chk').onclick = () => {
+      let v;
+      if (d.scoring === 'set') v = [...c.querySelectorAll('input[type=checkbox]:checked')].map(e => e.value);
+      else if (d.scoring === 'number') { const x = c.querySelector('.num').value; if (x === '') return; v = parseFloat(x); }
+      else { const e = c.querySelector('input[type=radio]:checked'); if (!e) return; v = e.value; }
+      const ok = tryScore(d, v); you += ok ? 1 : 0; done += 1; tally();
+      c.querySelectorAll('input, .chk').forEach(e => e.disabled = true);
+      c.querySelector('img').src = d.reveal;
+      c.querySelector('.res').innerHTML = `<div class="row"><span class="mark ${ok ? 'ok' : 'bad'}">${ok ? '✓' : '✗'}</span><div><b>You</b>: ${esc(fmt(v))}</div></div>
+        <div class="row"><span class="mark ${d.model_right ? 'ok' : 'bad'}">${d.model_right ? '✓' : '✗'}</span><div><b>${esc(d.model)}</b>: ${esc(fmt(d.model_answer))}</div></div>
+        <div class="gold">Answer key (from the simulation): <b>${esc(fmt(d.answer))}</b>. The image now shows the true water path.</div>`;
+    };
+    L.appendChild(c);
+  });
+  tally();
+}
 </script>
 """
 
