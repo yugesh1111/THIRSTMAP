@@ -45,17 +45,17 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 A free Gemini key allows 20 requests per model per day, so the frontier check uses request economy: **batched** = every question about one image in one request (18 images, 6 of them before-and-after pairs; images resized to 768 px), sent identically to Gemini and to the open models; **single** = one question per request, the protocol of the main table, on the 20 questions Gemini 3.5 Flash answered before its daily quota ran out.
 
-| Model | Protocol | Questions | Accuracy | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
-|---|---|---|---|---|---|---|---|---|
-| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
-| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 14% | 0.75 | 0% (7) | 43% | 229 |
-| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 14% | 1 | 0% (7) | 43% | 229 |
-| gemini-3.5-flash | single | 19 | **79%** (15/19) | 8% | 1.2e-13 | – | – | – |
-| Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | 8% | 0.2 | – | – | – |
-| Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | 8% | 0.46 | – | – | – |
-| SmolVLM-256M-Instruct | single | 19 | **11%** (2/19) | 8% | 0.46 | – | – | – |
-| SmolVLM2-2.2B-Instruct | single | 19 | **5%** (1/19) | 8% | 0.8 | – | – | – |
+| Model | Protocol | Questions | Accuracy | Without image | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
+|---|---|---|---|---|---|---|---|---|---|
+| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | – | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
+| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | – | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 158 |
+| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 159 |
+| gemini-3.5-flash | single | 19 | **79%** (15/19) | – | 8% | 1.2e-13 | – | – | – |
+| Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | – | 8% | 0.2 | – | – | – |
+| Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |
+| SmolVLM-256M-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |
+| SmolVLM2-2.2B-Instruct | single | 19 | **5%** (1/19) | – | 8% | 0.8 | – | – | – |
 
 ### What the numbers say
 

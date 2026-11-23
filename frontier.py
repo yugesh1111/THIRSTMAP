@@ -125,11 +125,13 @@ def run(a):
     S = json.loads((out / "set.json").read_text())
     tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(ds / "tasks.jsonl")}
     resp, reqs = out / "responses.jsonl", out / "requests.jsonl"
+    mode = "blind" if a.blind else "image"
     for spec in a.models:
         ad = make(spec, out)
         done = set()
         if reqs.exists():
-            done = {r["image"] for r in map(json.loads, open(reqs)) if r["model"] == ad.name and not r.get("error")}
+            done = {r["image"] for r in map(json.loads, open(reqs))
+                    if r["model"] == ad.name and not r.get("error") and r.get("mode", "image") == mode}
         sent = 0
         for img in S["images"]:
             if img["image"] in done:
@@ -142,11 +144,11 @@ def run(a):
             sent += 1
             t0 = time.time()
             try:
-                r = ad.ask(pseudo, with_image=True)
+                r = ad.ask(pseudo, with_image=not a.blind)
             except Exception as e:                                   # noqa: BLE001 (recorded, then continue)
                 msg = str(getattr(e, "body", e))
                 with open(reqs, "a") as f:
-                    f.write(json.dumps(dict(model=ad.name, image=img["image"], error=f"{type(e).__name__}: {msg[:300]}",
+                    f.write(json.dumps(dict(model=ad.name, image=img["image"], mode=mode, error=f"{type(e).__name__}: {msg[:300]}",
                                             latency_s=round(time.time() - t0, 1))) + "\n")
                 print(f"{ad.name} {img['image']}: {type(e).__name__}")
                 if "per day" in msg or "PerDay" in msg:
@@ -155,13 +157,13 @@ def run(a):
                 continue
             obj = parse_batch(r["raw"])
             with open(reqs, "a") as f:
-                f.write(json.dumps(dict(model=ad.name, image=img["image"], raw=r["raw"], served_model=r.get("served_model"),
+                f.write(json.dumps(dict(model=ad.name, image=img["image"], mode=mode, raw=r["raw"], served_model=r.get("served_model"),
                                         input_tokens=r.get("input_tokens"), output_tokens=r.get("output_tokens"),
                                         latency_s=r.get("latency_s"), questions=len(ts))) + "\n")
             with open(resp, "a") as f:
                 for t in ts:
                     raw = json.dumps({"answer": obj[t["qid"]]}) if t["qid"] in obj else ""
-                    f.write(json.dumps(dict(model=ad.name, mode="image", task_id=t["task_id"], raw=raw,
+                    f.write(json.dumps(dict(model=ad.name, mode=mode, task_id=t["task_id"], raw=raw,
                                             protocol="batched", latency_s=r.get("latency_s"), **score(t, raw)),
                                        default=str) + "\n")
             got = sum(score(t, json.dumps({"answer": obj.get(t["qid"])}))["correct"] for t in ts if t["qid"] in obj)
@@ -181,6 +183,7 @@ def main():
     r.add_argument("--dataset", default="dataset"); r.add_argument("--out", default="results/frontier")
     r.add_argument("--models", nargs="+", required=True)
     r.add_argument("--budget", type=int, default=20, help="max requests per model in this call, failures included")
+    r.add_argument("--blind", action="store_true", help="control: the same batched questions WITHOUT the image")
     a = ap.parse_args()
     select(a) if a.cmd == "select" else run(a)
 

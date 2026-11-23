@@ -67,6 +67,7 @@ def frontier_lines(dataset):
             pr = F["counterfactual_pairs"].get(m, {})
             t = tok.get(m)
             rows.append(dict(m=m, proto="batched", n=vc["n"], k=vc["correct"], acc=vc["correct"] / vc["n"],
+                             blind=F["overall"].get(m, {}).get("blind"),
                              chance=vc["chance"], p=vc["p_value"], pair=pr.get("pair_accuracy"),
                              same=pr.get("unchanged_answer_rate"), pairs=pr.get("pairs"),
                              tpa=round(t[0] / t[1]) if t and t[1] else None))
@@ -88,7 +89,7 @@ def frontier_lines(dataset):
                 continue
             k = sum(score(tasks[t], v[t]["raw"])["correct"] for t in ids)
             c = sum(chance(tasks[t]) for t in ids) / len(ids)
-            rows.append(dict(m=m, proto="single", n=len(ids), k=k, acc=k / len(ids), chance=c,
+            rows.append(dict(m=m, proto="single", n=len(ids), k=k, acc=k / len(ids), chance=c, blind=None,
                              p=binomtest(k, len(ids), c, alternative="greater").pvalue, pair=None, same=None,
                              pairs=None, tpa=None))
     if not rows:
@@ -99,12 +100,13 @@ def frontier_lines(dataset):
           "pairs; images resized to 768 px), sent identically to Gemini and to the open models; **single** = one "
           "question per request, the protocol of the main table, on the 20 questions Gemini 3.5 Flash answered "
           "before its daily quota ran out.", "",
-          "| Model | Protocol | Questions | Accuracy | Chance | p (beats chance) | Both halves of a pair right | "
-          "Same answer to original & twin | Tokens per answer |", "|---|---|---|---|---|---|---|---|---|"]
+          "| Model | Protocol | Questions | Accuracy | Without image | Chance | p (beats chance) | "
+          "Both halves of a pair right | Same answer to original & twin | Tokens per answer |",
+          "|---|---|---|---|---|---|---|---|---|---|"]
     for r in sorted(rows, key=lambda r: (r["proto"], -r["acc"])):
         pairs = f" ({r['pairs']})" if r["pairs"] else ""
         L.append(f"| {short(r['m'])} | {r['proto']} | {r['n']} | **{pct(r['acc'])}** ({r['k']}/{r['n']}) | "
-                 f"{pct(r['chance'])} | {r['p']:.2g} | {pct(r['pair'])}{pairs} | {pct(r['same'])} | "
+                 f"{pct(r['blind'])} | {pct(r['chance'])} | {r['p']:.2g} | {pct(r['pair'])}{pairs} | {pct(r['same'])} | "
                  f"{r['tpa'] if r['tpa'] else '–'} |")
     api = [r for r in rows if not r["m"].startswith("hf:")]
     opn = [r for r in rows if r["m"].startswith("hf:")]
@@ -121,6 +123,12 @@ def frontier_lines(dataset):
                       f"{pct(b['acc'])} right against {pct(o['acc'])} for the best open model, {short(o['m'])} "
                       f"(chance {pct(b['chance'])}, p = {b['p']:.2g})"
                       + ".")
+            if b.get("blind") is not None:
+                gap = b["acc"] - b["blind"]
+                bullet += (f" Without the image it gets {pct(b['blind'])}, so "
+                           + ("its score comes from looking at the image." if gap >= 0.15 else
+                              "part of its score comes from the question text alone." if gap > 0.05 else
+                              "its score does not come from the image."))
             single = [r for r in api if r["proto"] == "single"]
             if single:
                 sg = max(single, key=lambda r: r["acc"])

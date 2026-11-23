@@ -4,8 +4,8 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| hf:Qwen/Qwen2-VL-2B-Instruct | 5% | – | 83 |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | 12% | – | 83 |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 5% | 10% | 83 |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | 12% | 12% | 83 |
 | openai:gemini-3.1-flash-lite | 48% | – | 83 |
 | openai:gemini-3.5-flash-lite | 40% | – | 83 |
 
@@ -96,8 +96,8 @@ Tasks a majority of real models answered correctly WITHOUT the image: 0
 
 | Model | Input tokens | Output tokens | USD | Mean latency (s) |
 |---|---|---|---|---|
-| hf:Qwen/Qwen2-VL-2B-Instruct | 0 | 0 | 0 | 34.97 |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | 0 | 0 | 0 | 57.27 |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 0 | 0 | 0 | 29.56 |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | 0 | 0 | 0 | 48.49 |
 | openai:gemini-3.1-flash-lite | 0 | 0 | 0 | 7.64 |
 | openai:gemini-3.5-flash-lite | 0 | 0 | 0 | 1.44 |
 

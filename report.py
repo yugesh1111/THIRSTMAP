@@ -73,9 +73,14 @@ def build_report(run_dir, dataset):
     for r in rows:
         if r["mode"] == "image":
             per_model[r["model"]].add(r["task_id"])
-    common = set.intersection(*per_model.values()) if per_model else set()
+    # models that answered under 80% of what the best-covered model answered (a run cut short by a quota)
+    # do not shrink the common set; they keep their own, smaller n
+    mx = max((len(v) for v in per_model.values()), default=0)
+    full = [v for v in per_model.values() if len(v) >= 0.8 * mx]
+    common = set.intersection(*full) if full else set()
+    partial = {m for m, v in per_model.items() if len(v) < 0.8 * mx}
     extra = {m: len(v - common) for m, v in per_model.items() if v - common}
-    rows = [r for r in rows if r["task_id"] in common]
+    rows = [r for r in rows if r["task_id"] in common or r["model"] in partial]
     models = sorted({r["model"] for r in rows + probe_rows}, key=lambda m: (m.startswith("mock"), m))
     img = [r for r in rows if r["mode"] == "image"]
     blind = [r for r in rows if r["mode"] == "blind"]
