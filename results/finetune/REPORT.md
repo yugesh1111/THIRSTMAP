@@ -4,8 +4,8 @@
 
 | Model | With image | Without image (blind) | Tasks |
 |---|---|---|---|
-| hf:SmolVLM-256M-Instruct@512px (base) | 10% | – | 168 |
-| hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap) | 19% | – | 168 |
+| hf:SmolVLM-256M-Instruct@512px (base) | 10% | 10% | 168 |
+| hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap) | 19% | 11% | 168 |
 
 ## Better than guessing?
 
@@ -84,8 +84,8 @@ Tasks a majority of real models answered correctly WITHOUT the image: 0
 
 | Model | Input tokens | Output tokens | USD | Mean latency (s) |
 |---|---|---|---|---|
-| hf:SmolVLM-256M-Instruct@512px (base) | 0 | 0 | 0 | 3.04 |
-| hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap) | 0 | 0 | 0 | 1.31 |
+| hf:SmolVLM-256M-Instruct@512px (base) | 0 | 0 | 0 | 1.98 |
+| hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap) | 0 | 0 | 0 | 0.95 |
 
 ![skills](chart_accuracy_by_skill.png)
 

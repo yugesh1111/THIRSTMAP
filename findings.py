@@ -16,6 +16,21 @@ SIZE = {"Qwen2.5-VL-3B-Instruct": "3B", "Qwen2-VL-2B-Instruct": "2B", "SmolVLM2-
         "SmolVLM-256M-Instruct": "0.26B"}
 
 
+def paired(run, tasks, a, b):
+    """Exact McNemar test on the same questions: (only a right, only b right, one-sided p that a > b)."""
+    from scipy.stats import binomtest
+    from thirstmap.scoring import score
+    got = {}
+    for line in open(Path(run) / "responses.jsonl"):
+        r = json.loads(line)
+        if r["task_id"] in tasks and not r.get("error"):
+            got[(r["model"], r["mode"], r["task_id"])] = score(tasks[r["task_id"]], r["raw"])["correct"]
+    ids = {k[2] for k in got if k[:2] == a} & {k[2] for k in got if k[:2] == b}
+    x = sum(got[a + (t,)] and not got[b + (t,)] for t in ids)
+    y = sum(got[b + (t,)] and not got[a + (t,)] for t in ids)
+    return x, y, (binomtest(x, x + y, 0.5, alternative="greater").pvalue if x + y else 1.0)
+
+
 def pct(x):
     return "–" if x is None else f"{100 * x:.0f}%"
 
@@ -28,6 +43,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", default="results/open_models")
     ap.add_argument("--finetune", default="results/finetune")
+    ap.add_argument("--dataset", default="dataset")
     a = ap.parse_args()
     S = json.loads((Path(a.run) / "summary.json").read_text())
     models = [m for m in S["models"] if m.startswith("hf:")]
@@ -123,6 +139,7 @@ def main():
         meta = next(iter(Path("models").glob("*thirstmap-lora/TRAINING.json")), None)
         info = json.loads(meta.read_text()) if meta else {}
         if base and tuned:
+            ft_bullet = None
             vb, vt = F["vs_chance"][base], F["vs_chance"][tuned]
             ob, ot = F["overall"][base], F["overall"][tuned]
             fb, ft_ = F.get("format", {}).get(base, {}), F.get("format", {}).get(tuned, {})
@@ -139,19 +156,36 @@ def main():
                          f"{pct(v['chance'])} | {v['p_value']:.2g} | {pct(f.get('well_formed'))} | "
                          f"{pct(f.get('accuracy_well_formed_only'))} |")
             gain = vt["correct"] / vt["n"] - vb["correct"] / vb["n"]
+            tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(Path(a.dataset) / "tasks.jsonl")}
+            x1, y1, p1 = paired(a.finetune, tasks, (tuned, "image"), (base, "image"))
+            gain_txt = (f"Fine-tuning raised accuracy by {gain * 100:.0f} percentage points (paired test on the same "
+                        f"questions: {x1} answers became right, {y1} became wrong, p = {p1:.2g}).")
             if ot.get("blind") is not None:
                 gap = vt["correct"] / vt["n"] - ot["blind"]
-                if gap >= 0.05:
-                    verdict = (f"The tuned model scores {pct(gap)} points higher with the image than without it, so part "
-                               "of the gain comes from looking at the image, not only from learning the answer format "
-                               "and typical answers.")
+                x2, y2, p2 = paired(a.finetune, tasks, (tuned, "image"), (tuned, "blind"))
+                base_same = ob.get("blind") is not None and abs(ob["image"] - ob["blind"]) < 0.03
+                if gap >= 0.05 and p2 < 0.05:
+                    verdict = (f"**The tuned model learned to use the image:** it scores {gap * 100:.0f} percentage points "
+                               f"higher with the image than without it ({x2} questions right only with the image, {y2} "
+                               f"only without; p = {p2:.2g})"
+                               + (", while the base model scored the same either way" if base_same else "")
+                               + ". So the gain is not just the answer format or typical answers. It is still far from "
+                               "reliable: most answers remain wrong.")
+                    ft_bullet = (f"- **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 "
+                                 f"ThirstMap tasks raised it from {pct(vb['correct'] / vb['n'])} to "
+                                 f"{pct(vt['correct'] / vt['n'])} on held-out scenes (p = {p1:.2g}), and the tuned model "
+                                 f"now does better with the image than without it ({pct(vt['correct'] / vt['n'])} vs "
+                                 f"{pct(ot['blind'])}, p = {p2:.2g}).")
+                elif gap >= 0.05:
+                    verdict = (f"The tuned model scores {gap * 100:.0f} percentage points higher with the image than "
+                               f"without it, but that difference is not significant on these questions (p = {p2:.2g}).")
                 else:
                     verdict = (f"But the tuned model scores about as well without the image ({pct(ot['blind'])}), so the "
                                "gain comes mostly from learning the answer format and typical answers, not from reading "
                                "the image. Small models need more than a few hundred examples to learn to trace water.")
             else:
                 verdict = "(No without-image control was run for this fine-tune.)"
-            L += ["", f"Fine-tuning changed accuracy by {gain * 100:+.0f} points. {verdict}", "",
+            L += ["", f"{gain_txt} {verdict}", "",
                   "| Skill | Chance | base | fine-tuned |", "|---|---|---|---|"]
             for s_ in SKILL_ORDER:
                 if s_ in F["by_skill"].get(base, {}):
@@ -159,6 +193,8 @@ def main():
                              f"{pct(F['by_skill'][base].get(s_))} | {pct(F['by_skill'][tuned].get(s_))} |")
             L += ["", f"The adapter is in `{meta.parent}/` ({sum(f.stat().st_size for f in meta.parent.iterdir()) / 2**20:.0f} MB); "
                   "load it with `peft.PeftModel.from_pretrained`."]
+            if ft_bullet:
+                L.insert(L.index("## Accuracy by skill (chance = random guessing on the same tasks)") - 1, ft_bullet)
     fm = S.get("format", {})
     if fm:
         L += ["", "## Strict check: well-formed replies only", "",

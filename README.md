@@ -30,6 +30,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 88%.
 - **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; SmolVLM2-2.2B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
 - **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
+- **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 ThirstMap tasks raised it from 10% to 19% on held-out scenes (p = 0.0026), and the tuned model now does better with the image than without it (19% vs 11%, p = 0.0033).
 
 ![accuracy by skill vs chance](results/open_models/chart_accuracy_by_skill.png)
 

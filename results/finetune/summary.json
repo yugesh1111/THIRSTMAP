@@ -3,32 +3,32 @@
     "hf:SmolVLM-256M-Instruct@512px (base)",
     "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)"
   ],
-  "n_responses": 336,
+  "n_responses": 672,
   "compared_on_tasks": 168,
   "answers_outside_common_set": {},
   "chance_by_skill": {
+    "trace_downstream": 0.024750721622121708,
     "nature_based_filtering": 0.25,
     "trace_upstream_catchment": 0.04347336375355114,
     "order_along_flow": 0.17610544217687077,
-    "siting_downstream_impact": 0.3333333333333333,
     "read_flow_direction": 0.125,
-    "read_colour_scale_value": 0.2,
-    "trace_downstream": 0.024750721622121708,
-    "read_elevation": 0.07773524375,
     "read_colour_scale_threshold": 0.11246282894736843,
-    "measure_along_flow": 0.10282857142857142
+    "read_colour_scale_value": 0.2,
+    "measure_along_flow": 0.10282857142857142,
+    "read_elevation": 0.07773524375,
+    "siting_downstream_impact": 0.3333333333333333
   },
   "tasks_by_skill_evaluated": {
+    "trace_downstream": 19,
     "nature_based_filtering": 13,
     "trace_upstream_catchment": 33,
     "order_along_flow": 28,
-    "siting_downstream_impact": 13,
     "read_flow_direction": 13,
-    "read_colour_scale_value": 11,
-    "trace_downstream": 19,
-    "read_elevation": 5,
     "read_colour_scale_threshold": 19,
-    "measure_along_flow": 14
+    "read_colour_scale_value": 11,
+    "measure_along_flow": 14,
+    "read_elevation": 5,
+    "siting_downstream_impact": 13
   },
   "vs_chance": {
     "hf:SmolVLM-256M-Instruct@512px (base)": {
@@ -57,12 +57,12 @@
   "overall": {
     "hf:SmolVLM-256M-Instruct@512px (base)": {
       "image": 0.09523809523809523,
-      "blind": null,
+      "blind": 0.10119047619047619,
       "n": 168
     },
     "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
       "image": 0.19047619047619047,
-      "blind": null,
+      "blind": 0.10714285714285714,
       "n": 168
     }
   },
@@ -292,7 +292,92 @@
       "read_flow_direction": 1
     }
   },
-  "blind_gap_by_skill": {},
+  "blind_gap_by_skill": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "measure_along_flow": [
+        0.07142857142857142,
+        0.0
+      ],
+      "read_colour_scale_threshold": [
+        0.3157894736842105,
+        0.3684210526315789
+      ],
+      "read_colour_scale_value": [
+        0.18181818181818182,
+        0.18181818181818182
+      ],
+      "order_along_flow": [
+        0.0,
+        0.0
+      ],
+      "trace_downstream": [
+        0.0,
+        0.0
+      ],
+      "siting_downstream_impact": [
+        0.0,
+        0.0
+      ],
+      "read_elevation": [
+        0.2,
+        0.2
+      ],
+      "trace_upstream_catchment": [
+        0.09090909090909091,
+        0.15151515151515152
+      ],
+      "nature_based_filtering": [
+        0.23076923076923078,
+        0.15384615384615385
+      ],
+      "read_flow_direction": [
+        0.0,
+        0.0
+      ]
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "measure_along_flow": [
+        0.2857142857142857,
+        0.21428571428571427
+      ],
+      "read_colour_scale_threshold": [
+        0.3684210526315789,
+        0.0
+      ],
+      "read_colour_scale_value": [
+        0.18181818181818182,
+        0.2727272727272727
+      ],
+      "order_along_flow": [
+        0.25,
+        0.10714285714285714
+      ],
+      "trace_downstream": [
+        0.0,
+        0.05263157894736842
+      ],
+      "siting_downstream_impact": [
+        0.15384615384615385,
+        0.15384615384615385
+      ],
+      "read_elevation": [
+        0.0,
+        0.0
+      ],
+      "trace_upstream_catchment": [
+        0.09090909090909091,
+        0.030303030303030304
+      ],
+      "nature_based_filtering": [
+        0.38461538461538464,
+        0.23076923076923078
+      ],
+      "read_flow_direction": [
+        0.15384615384615385,
+        0.15384615384615385
+      ]
+    }
+  },
   "tasks_guessable_without_image": [],
   "map_vs_satellite": {},
   "error_tags": {
@@ -398,13 +483,13 @@
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 3.04
+      "mean_latency_s": 1.98
     },
     "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 1.31
+      "mean_latency_s": 0.95
     }
   }
 }

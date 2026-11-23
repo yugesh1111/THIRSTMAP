@@ -17,6 +17,7 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 88%.
 - **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; SmolVLM2-2.2B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
 - **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
+- **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 ThirstMap tasks raised it from 10% to 19% on held-out scenes (p = 0.0026), and the tuned model now does better with the image than without it (19% vs 11%, p = 0.0033).
 
 ## Accuracy by skill (chance = random guessing on the same tasks)
 
@@ -39,10 +40,10 @@ HuggingFaceTB/SmolVLM-256M-Instruct was fine-tuned with LoRA on 300 tasks for 2 
 
 | Model | Accuracy | Without image | Chance | p (beats chance) | Well-formed replies | Accuracy, well-formed only |
 |---|---|---|---|---|---|---|
-| base | **10%** (16/168) | – | 13% | 0.94 | 1% | 0% |
-| fine-tuned on ThirstMap | **19%** (32/168) | – | 13% | 0.021 | 99% | 19% |
+| base | **10%** (16/168) | 10% | 13% | 0.94 | 1% | 0% |
+| fine-tuned on ThirstMap | **19%** (32/168) | 11% | 13% | 0.021 | 99% | 19% |
 
-Fine-tuning changed accuracy by +10 points. (No without-image control was run for this fine-tune.)
+Fine-tuning raised accuracy by 10 percentage points (paired test on the same questions: 23 answers became right, 7 became wrong, p = 0.0026). **The tuned model learned to use the image:** it scores 8 percentage points higher with the image than without it (19 questions right only with the image, 5 only without; p = 0.0033), while the base model scored the same either way. So the gain is not just the answer format or typical answers. It is still far from reliable: most answers remain wrong.
 
 | Skill | Chance | base | fine-tuned |
 |---|---|---|---|
