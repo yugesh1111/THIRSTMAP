@@ -17,8 +17,8 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 |---|---|---|---|---|---|---|---|---|---|
 | gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | – | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
 | gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | – | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 158 |
-| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 159 |
+| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 229 |
 | gemini-3.5-flash | single | 19 | **79%** (15/19) | – | 8% | 1.2e-13 | – | – | – |
 | Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | – | 8% | 0.2 | – | – | – |
 | Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |

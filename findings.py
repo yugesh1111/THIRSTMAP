@@ -57,7 +57,7 @@ def frontier_lines(dataset):
         F = json.loads((fdir / "summary.json").read_text())
         tok = defaultdict(lambda: [0, 0])
         for r in map(json.loads, open(fdir / "requests.jsonl")):
-            if not r.get("error") and r.get("input_tokens"):
+            if not r.get("error") and r.get("input_tokens") and r.get("mode", "image") == "image":
                 tok[r["model"]][0] += r["input_tokens"] + (r.get("output_tokens") or 0)
                 tok[r["model"]][1] += r["questions"]
         for m in F["models"]:
