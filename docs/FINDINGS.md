@@ -33,6 +33,17 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 | Thermal threshold | 19 | 11% | 26% | 11% | 0% | 16% |
 | Thermal value | 11 | 20% | 9% | 18% | 0% | 18% |
 
+## Strict check: well-formed replies only
+
+The scorer is lenient: a reply that names the right labels counts even if it is badly formatted (small models often write broken JSON). Counting only well-formed replies does not change the conclusion:
+
+| Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |
+|---|---|---|---|
+| Qwen2.5-VL-3B-Instruct | 100% | 16% | 16% |
+| SmolVLM2-2.2B-Instruct | 88% | 8% | 8% |
+| Qwen2-VL-2B-Instruct | 92% | 8% | 8% |
+| SmolVLM-256M-Instruct | 29% | 8% | 2% |
+
 ## Caveats
 
 - These are small open models (0.26B–3B parameters) on CPU, not frontier systems.

@@ -17,6 +17,15 @@ from report import SKILL_LABEL, SKILL_ORDER
 from thirstmap.scoring import score
 
 
+BASELINES = {"mock:oracle": "baseline: answer key", "mock:random": "baseline: random guess"}
+
+
+def display(model):
+    """'hf:Qwen/Qwen2.5-VL-3B-Instruct' -> 'Qwen2.5-VL-3B'."""
+    name = model.split(":", 1)[-1].split("/")[-1].split("@")[0]
+    return name.replace("-Instruct", "")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="dataset")
@@ -24,6 +33,8 @@ def main():
     ap.add_argument("--per-skill", type=int, default=6)
     ap.add_argument("--pairs", type=int, default=8, help="counterfactual pairs to include")
     ap.add_argument("--out", default="demo")
+    ap.add_argument("--baselines", default=None,
+                    help="run with offline baselines (mock:oracle / mock:random) to show beside the models")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
     root = ds.resolve()
@@ -36,8 +47,17 @@ def main():
         r = json.loads(line)
         if not r.get("error") and r["mode"] == "image" and r["task_id"] in tasks:
             sc = score(tasks[r["task_id"]], r.get("raw", ""))       # re-score the raw reply, as the report does
-            answers[r["task_id"]][r["model"]] = dict(raw=r.get("raw", "")[:400], parsed=sc["parsed"],
-                                                     correct=sc["correct"], tags=sc["tags"])
+            answers[r["task_id"]][display(r["model"])] = dict(raw=r.get("raw", "")[:400], parsed=sc["parsed"],
+                                                              correct=sc["correct"], tags=sc["tags"])
+    most = max(len(v) for v in answers.values())          # only tasks that every model answered
+    answers = {tid: v for tid, v in answers.items() if len(v) == most}
+    if a.baselines:
+        for line in open(Path(a.baselines) / "responses.jsonl"):
+            r = json.loads(line)
+            if r["mode"] == "image" and r["task_id"] in answers and r["model"] in BASELINES:
+                sc = score(tasks[r["task_id"]], r.get("raw", ""))
+                answers[r["task_id"]][BASELINES[r["model"]]] = dict(raw="", parsed=sc["parsed"], correct=sc["correct"],
+                                                                    tags=sc["tags"], baseline=True)
     by_skill = defaultdict(list)
     for tid in answers:
         by_skill[tasks[tid]["skill"]].append(tid)
@@ -107,9 +127,11 @@ main{max-width:1200px;margin:auto;padding:0 16px 40px;display:grid;gap:16px}
 .row{display:grid;grid-template-columns:22px minmax(0,1fr);gap:8px;align-items:start}
 .mark{font-weight:700;font-size:16px}.ok{color:var(--ok)}.bad{color:var(--bad)}
 .row small{color:var(--ink2);display:block}.tag{font-size:12px;color:var(--bad)}
+.row.base{opacity:.62;font-size:14px}
 </style></head><body>
 <header><h1>ThirstMap: can AI trace water through the landscape?</h1>
-<p>Each task: a generated image, a question, a reference answer computed by a water-flow simulation. Every model answer is scored automatically. Press “Show answer key” to see the truth.</p></header>
+<p>Each task: a generated image, a question, a reference answer computed by a water-flow simulation. Every model answer is scored automatically. Press “Show answer key” to see the truth.</p>
+<p>Models: free open-weight vision-language models run locally (real, unedited replies). Grey rows are offline baselines for scale: one returns the answer key (the scorer marks it right), one guesses at random.</p></header>
 <div class="bar">
 <select id="fs"><option value="">All skills</option></select>
 <select id="fy"><option value="">All image styles</option><option>satellite</option><option>map</option><option>thermal</option></select>
@@ -132,12 +154,12 @@ function render(){
   const L = document.getElementById('list'); L.innerHTML = '';
   let n = 0, right = 0, total = 0;
   DATA.filter(d => (!fs.value || d.skill === fs.value) && (!fy.value || d.style === fy.value)
-     && (fr.value !== 'bad' || Object.values(d.models).some(m => !m.correct))
+     && (fr.value !== 'bad' || Object.values(d.models).some(m => !m.correct && !m.baseline))
      && (fr.value !== 'pairs' || d.pair)).forEach(d => {
     n++;
     const c = document.createElement('article'); c.className = 'card';
-    const rows = Object.entries(d.models).map(([name, m]) => { total++; if (m.correct) right++;
-      return `<div class="row"><span class="mark ${m.correct ? 'ok' : 'bad'}">${m.correct ? '✓' : '✗'}</span>
+    const rows = Object.entries(d.models).map(([name, m]) => { if (!m.baseline) { total++; if (m.correct) right++; }
+      return `<div class="row${m.baseline ? ' base' : ''}"><span class="mark ${m.correct ? 'ok' : 'bad'}">${m.correct ? '✓' : '✗'}</span>
       <div><b>${name}</b>: ${fmt(m.parsed)}${m.tags && m.tags.length ? ` <span class="tag">(${m.tags.join(', ')})</span>` : ''}
       <small>${(m.raw || '').replace(/</g,'&lt;').slice(0,160)}</small></div></div>`; }).join('');
     c.innerHTML = `<div class="pic"><img src="${d.image}" alt="${d.style} image for task" loading="lazy">
@@ -151,7 +173,7 @@ function render(){
     b.onclick = () => { const on = img.src.endsWith(d.reveal); img.src = on ? d.image : d.reveal; b.textContent = on ? 'Show answer key' : 'Hide answer key'; };
     L.appendChild(c);
   });
-  document.getElementById('stats').textContent = `${n} tasks · ${right}/${total} model answers correct`;
+  document.getElementById('stats').textContent = `${n} tasks · ${right}/${total} model answers correct (baselines not counted)`;
 }
 [fs, fy, fr].forEach(e => e.onchange = render); render();
 </script>

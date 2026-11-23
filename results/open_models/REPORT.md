@@ -22,6 +22,17 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 | hf:Qwen/Qwen2-VL-2B-Instruct | 12/144 | 8% | 13% | 0.97 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 23/144 | 16% | 13% | 0.18 |
 
+### Strict check: well-formed replies only
+
+The scorer is lenient: it accepts a correct answer even when the reply is badly formatted. Counting a reply as right only if it is also well-formed (JSON with "answer", or a plain JSON value):
+
+| Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |
+|---|---|---|---|
+| hf:HuggingFaceTB/SmolVLM-256M-Instruct | 29% | 8% | 2% |
+| hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | 88% | 8% | 8% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 92% | 8% | 8% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | 100% | 16% | 16% |
+
 ## Accuracy by visual skill
 
 Tasks = distinct tasks per skill (every model answers the same ones); with 10-30 tasks per skill, differences of a few points are within noise.

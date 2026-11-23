@@ -49,6 +49,18 @@ def _labels(value, options):
     return sorted(set(out))
 
 
+def well_formed(raw):
+    """True if the reply states an answer in the requested form: a JSON object with "answer"
+    (code fences allowed), or the whole reply is a plain JSON value such as ["V1", "V2"] or "SE"."""
+    txt = re.sub(r"^```(?:json)?|```$", "", (raw or "").strip()).strip()
+    try:
+        v = json.loads(txt)
+        return not isinstance(v, dict) or "answer" in v
+    except (ValueError, TypeError):
+        obj, ok = _extract_json(raw)
+        return ok and isinstance(obj, dict) and "answer" in obj
+
+
 def parse(raw, task):
     obj, ok = _extract_json(raw)
     if isinstance(obj, dict) and "answer" in obj:

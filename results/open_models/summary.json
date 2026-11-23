@@ -12,28 +12,28 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct": 24
   },
   "chance_by_skill": {
-    "nature_based_filtering": 0.25,
-    "trace_downstream": 0.024378506140625,
-    "read_elevation": 0.07773524375,
     "read_flow_direction": 0.125,
     "trace_upstream_catchment": 0.04491108544270834,
-    "read_colour_scale_value": 0.2,
-    "measure_along_flow": 0.10500000000000001,
     "order_along_flow": 0.17519841269841271,
-    "siting_downstream_impact": 0.3333333333333333,
-    "read_colour_scale_threshold": 0.11246282894736843
+    "read_colour_scale_threshold": 0.11246282894736843,
+    "read_colour_scale_value": 0.2,
+    "read_elevation": 0.07773524375,
+    "measure_along_flow": 0.10500000000000001,
+    "nature_based_filtering": 0.25,
+    "trace_downstream": 0.024378506140625,
+    "siting_downstream_impact": 0.3333333333333333
   },
   "tasks_by_skill_evaluated": {
-    "nature_based_filtering": 10,
-    "trace_downstream": 15,
-    "read_elevation": 5,
     "read_flow_direction": 10,
     "trace_upstream_catchment": 30,
-    "read_colour_scale_value": 11,
-    "measure_along_flow": 10,
     "order_along_flow": 24,
-    "siting_downstream_impact": 10,
-    "read_colour_scale_threshold": 19
+    "read_colour_scale_threshold": 19,
+    "read_colour_scale_value": 11,
+    "read_elevation": 5,
+    "measure_along_flow": 10,
+    "nature_based_filtering": 10,
+    "trace_downstream": 15,
+    "siting_downstream_impact": 10
   },
   "vs_chance": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
@@ -59,6 +59,24 @@
       "n": 144,
       "chance": 0.13039288445997127,
       "p_value": 0.17696825917110243
+    }
+  },
+  "format": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "well_formed": 0.2916666666666667,
+      "accuracy_well_formed_only": 0.020833333333333332
+    },
+    "hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct": {
+      "well_formed": 0.8819444444444444,
+      "accuracy_well_formed_only": 0.0763888888888889
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "well_formed": 0.9236111111111112,
+      "accuracy_well_formed_only": 0.08333333333333333
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.1597222222222222
     }
   },
   "overall": {

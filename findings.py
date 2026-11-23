@@ -137,6 +137,17 @@ def main():
             for s in SKILL_ORDER:
                 if s in F["by_skill"].get(base, {}):
                     L.append(f"| {SKILL_LABEL[s]} | {pct(F['by_skill'][base].get(s))} | {pct(F['by_skill'][tuned].get(s))} |")
+    fm = S.get("format", {})
+    if fm:
+        L += ["", "## Strict check: well-formed replies only", "",
+              "The scorer is lenient: a reply that names the right labels counts even if it is badly formatted "
+              "(small models often write broken JSON). Counting only well-formed replies does not change the "
+              "conclusion:", "", "| Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |",
+              "|---|---|---|---|"]
+        for r in rows:
+            v = fm.get(r["m"])
+            if v:
+                L.append(f"| {r['name']} | {pct(v['well_formed'])} | {pct(r['acc'])} | {pct(v['accuracy_well_formed_only'])} |")
     L += ["", "## Caveats", "",
           "- These are small open models (0.26B–3B parameters) on CPU, not frontier systems.",
           "- About 10–30 tasks per skill per model: per-skill differences of a few points are noise; "

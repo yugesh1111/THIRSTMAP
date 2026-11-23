@@ -48,3 +48,11 @@ def test_cut_off_json_still_states_answer():
     raw = ' {\n    "answer": "SE",\n    "city": "V3",\n    "country": "VILLAGE",\n    "sub_city'
     assert score(T_DIR, raw)["correct"]
     assert not score(T_DIR, ' {\n    "answer": "NW",\n    "note": "upstr')["correct"]
+
+
+def test_well_formed():
+    from thirstmap.scoring import well_formed
+    assert well_formed('{"answer": ["V1"]}') and well_formed('```json\n["V1", "V2"]\n```') and well_formed('"SE"')
+    assert well_formed('Here: {"answer": "S2"}')
+    assert not well_formed('{ "answer": [ { "label": "V1", "location": "V2", "unit')
+    assert not well_formed("The villages are V1 and V2.")

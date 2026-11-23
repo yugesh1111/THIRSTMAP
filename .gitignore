@@ -5,7 +5,7 @@ out/
 dataset/
 results/*/responses.jsonl
 data/real/*.tif
-demo/
+/demo/
 ci_dataset/
 ci_docs/
 results/ci*/

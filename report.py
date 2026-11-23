@@ -93,6 +93,14 @@ def build_report(run_dir, dataset):
             c = sum(chance(tasks[r["task_id"]]) for r in mine) / n
             S["vs_chance"][m] = dict(correct=k, n=n, chance=c,
                                      p_value=binomtest(k, n, c, alternative="greater").pvalue)
+    from thirstmap.scoring import well_formed
+    S["format"] = {}
+    for m in models:
+        mine = [r for r in rows if r["model"] == m and r["mode"] == "image"]
+        if mine:
+            wf = [well_formed(r["raw"]) for r in mine]
+            S["format"][m] = dict(well_formed=sum(wf) / len(mine),
+                                  accuracy_well_formed_only=sum(r["correct"] and w for r, w in zip(mine, wf)) / len(mine))
     by = lambda rs, *keys: _group(rs, keys)
     S["overall"] = {m: dict(image=acc([r for r in img if r["model"] == m]),
                             blind=acc([r for r in blind if r["model"] == m]),
@@ -307,6 +315,14 @@ def markdown(S, out):
         for m, v in S["vs_chance"].items():
             L.append(f"| {m} | {v['correct']}/{v['n']} | {_pct(v['correct'] / v['n'])} | {_pct(v['chance'])} | "
                      f"{v['p_value']:.2g} |")
+    if S.get("format"):
+        L += ["", "### Strict check: well-formed replies only", "",
+              "The scorer is lenient: it accepts a correct answer even when the reply is badly formatted. Counting a "
+              "reply as right only if it is also well-formed (JSON with \"answer\", or a plain JSON value):", "",
+              "| Model | Well-formed replies | Accuracy (all) | Accuracy (well-formed only) |", "|---|---|---|---|"]
+        for m, v in S["format"].items():
+            L.append(f"| {m} | {_pct(v['well_formed'])} | {_pct(S['overall'][m]['image'])} | "
+                     f"{_pct(v['accuracy_well_formed_only'])} |")
     L += ["", "## Accuracy by visual skill", "",
           "Tasks = distinct tasks per skill (every model answers the same ones); with 10-30 tasks per skill, "
           "differences of a few points are within noise.", "",

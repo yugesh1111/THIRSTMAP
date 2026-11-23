@@ -38,6 +38,8 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 
 ## See it
 
+**Demo:** [`docs/demo/index.html`](docs/demo/index.html) shows 64 tasks with each open model's real reply, an automatic ✓/✗, and an answer-key reveal, plus counterfactual pairs. Download the folder and open the page in a browser (no server needed).
+
 | One scene, three image styles, one answer key | Difficulty dial, level 1 → 5 |
 |---|---|
 | ![styles](docs/gifs/styles.gif) | ![difficulty](docs/gifs/difficulty.gif) |
@@ -133,7 +135,7 @@ python3 generate.py --level 3 --seed 11 --twin          # one scene + its counte
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
 python3 evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
-python3 build_demo.py --dataset dataset --run results/offline_baselines --out demo   # open demo/index.html
+python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines --out docs/demo
 ```
 
 **Free open models, no keys (CPU or GPU):**
