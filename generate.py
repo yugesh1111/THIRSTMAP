@@ -80,7 +80,7 @@ def generate(level, seed, out_root, max_tries=20, bi=None, real=None, twin=False
     (out / "answer_key.json").write_text(json.dumps(
         {"scene_id": out.name, "seed": s["seed"], "level": level, "params": P, "questions": kept,
          "terrain": real or "synthetic", "drain_note": s["drain_note"],
-         "credit": R["credit"] if R else None},
+         "credit": R["credit"] if R else None, "balance_index": bi},
         indent=2, ensure_ascii=False))
     (out / "validation.json").write_text(json.dumps(report, indent=2, default=str))
     if not twin:

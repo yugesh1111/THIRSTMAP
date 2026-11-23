@@ -51,7 +51,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 **Real-terrain mode:** the same pipeline runs on real **Copernicus 30 m elevation + ESA WorldCover land cover** for four Indian data-centre hubs: **Navi Mumbai, Hyderabad, Pune (Hinjewadi) and Chennai (Ambattur)**. Facility placements there are hypothetical.
 
-**Current dataset:** 125 scenes and **2,097 tasks** (1,498 synthetic, 599 on real terrain), including **308 counterfactual pairs**. Built in about 4.7 minutes on 4 CPU cores.
+**Current dataset:** 308 scenes and **5,761 tasks** (4,642 synthetic, 1,119 on real terrain), including **740 counterfactual pairs**; 2.1 GB of images. Built in about 18 minutes on 4 CPU cores. The full dataset is attached to the GitHub release as zip parts.
 
 ---
 
@@ -73,7 +73,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 | **V13** blind baseline | Every question is also asked **without the image**; tasks guessable blind are flagged |
 | **V14** answer balance | Correct-answer positions and set sizes are rotated across the dataset |
 
-`dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.87% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
+`dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.85% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
 
 **Human baseline (V15):** `python3 human_eval.py build` writes `human_eval/index.html`, a page where a person answers 27 tasks spanning every skill (no answers shown). `python3 human_eval.py score answers_*.json` scores them with the same scorer the models get.
 
@@ -121,8 +121,8 @@ This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row ma
 ## Results status (read this first)
 No frontier AI model has been evaluated yet; that needs API access. Everything under `results/` so far comes from **offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`), which test the dataset and the scorer. They are not model findings. **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
 - every reported number recomputed independently from the raw responses (exact match);
-- the random baseline at its exact mathematical chance level (13.9% expected vs 13.9% observed);
-- sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds;
+- the random baseline at its exact mathematical chance level (13.8% expected vs 13.7% observed, over 5,761 tasks);
+- 10 sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds (10/10);
 - spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
 
 ## Outputs of an evaluation run (`results/<run>/`)

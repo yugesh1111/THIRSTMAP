@@ -1,0 +1,14 @@
+{
+  "dataset": "dataset",
+  "models": [
+    "mock:oracle",
+    "mock:random",
+    "mock:stubborn"
+  ],
+  "run": "offline_baselines",
+  "per_cell": null,
+  "levels": null,
+  "styles": null,
+  "blind": true,
+  "workers": 4
+}

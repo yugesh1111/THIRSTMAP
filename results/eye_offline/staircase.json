@@ -1,0 +1,2742 @@
+{
+  "mock:oracle": {
+    "trace_downstream": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed42917__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V5",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed32476__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V5",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed42192__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed41416__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed93152__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V2",
+            "V5",
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V3",
+            "V5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53654__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V4",
+            "V7",
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54818__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V2",
+            "V5",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed76732__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V3",
+            "V5",
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75956__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V5",
+            "V6",
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed62834__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V6",
+            "V7",
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed51132__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V4",
+            "V5",
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed59342__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V2",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53848__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V2",
+            "V5",
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55497__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V6",
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed60991__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V4",
+            "V8"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "order_along_flow": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed48799__Q2__satellite",
+          "correct": true,
+          "parsed": "V6",
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed73526__Q2__satellite",
+          "correct": true,
+          "parsed": "V6",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed51275__Q2__satellite",
+          "correct": true,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed68277__Q2__satellite",
+          "correct": true,
+          "parsed": "V6",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63610__Q2__satellite",
+          "correct": true,
+          "parsed": "V1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed62834__Q2__satellite",
+          "correct": true,
+          "parsed": "V6",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55497__Q2__satellite",
+          "correct": true,
+          "parsed": "V7",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed78963__Q2__satellite",
+          "correct": true,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53848__Q2__satellite",
+          "correct": true,
+          "parsed": "V2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q2__satellite",
+          "correct": true,
+          "parsed": "V8",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75568__Q2__satellite",
+          "correct": true,
+          "parsed": "V2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed70462__Q2__satellite",
+          "correct": true,
+          "parsed": "V1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed77508__Q2__satellite",
+          "correct": true,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q2__satellite",
+          "correct": true,
+          "parsed": "V5",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54236__Q2__satellite",
+          "correct": true,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55109__Q2__satellite",
+          "correct": true,
+          "parsed": "V4",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "measure_along_flow": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed32670__Q10__satellite",
+          "correct": true,
+          "parsed": 470.0,
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed32379__Q10__satellite",
+          "correct": true,
+          "parsed": 2090.0,
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed49917__Q10__satellite",
+          "correct": true,
+          "parsed": 1450.0,
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed51469__Q10__satellite",
+          "correct": true,
+          "parsed": 2680.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed52684__Q10__satellite",
+          "correct": true,
+          "parsed": 670.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed76053__Q10__satellite",
+          "correct": true,
+          "parsed": 480.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q10__satellite",
+          "correct": true,
+          "parsed": 1260.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed83681__Q10__satellite",
+          "correct": true,
+          "parsed": 760.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63319__Q10__satellite",
+          "correct": true,
+          "parsed": 510.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q10__satellite",
+          "correct": true,
+          "parsed": 1140.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q10__satellite",
+          "correct": true,
+          "parsed": 1120.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75956__Q10__satellite",
+          "correct": true,
+          "parsed": 940.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54721__Q10__satellite",
+          "correct": true,
+          "parsed": 420.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53654__Q10__satellite",
+          "correct": true,
+          "parsed": 930.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75374__Q10__satellite",
+          "correct": true,
+          "parsed": 830.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61185__Q10__satellite",
+          "correct": true,
+          "parsed": 770.0,
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "nature_based_filtering": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed58561__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed31409__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed65076__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed49917__Q3__satellite",
+          "correct": true,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed60991__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61282__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed93928__Q3__satellite",
+          "correct": true,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed51326__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61312__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed57303__Q3__satellite",
+          "correct": true,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54818__Q3__satellite",
+          "correct": true,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53654__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed62349__Q3__satellite",
+          "correct": true,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75568__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q3__satellite",
+          "correct": true,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "siting_downstream_impact": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed47150__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed55263__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed42871__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed65076__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed70850__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53460__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63610__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61185__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75471__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63319__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed77508__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed76053__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed60409__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54721__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed66873__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "trace_upstream_catchment": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed33155__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V4",
+            "V5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed67062__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed42386__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V4",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed85085__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed52520__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V5",
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed68425__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V4",
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed57303__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V8"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75956__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V2",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55109__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed51132__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54527__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55594__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed52878__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed59342__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V7"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61185__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V5",
+            "V8"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_flow_direction": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed32088__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed67062__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed58127__Q5__satellite",
+          "correct": true,
+          "parsed": "W",
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed41416__Q5__satellite",
+          "correct": true,
+          "parsed": "SE",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed66873__Q5__satellite",
+          "correct": true,
+          "parsed": "SW",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed93152__Q5__satellite",
+          "correct": true,
+          "parsed": "SW",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed75471__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55497__Q5__satellite",
+          "correct": true,
+          "parsed": "NE",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61312__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q5__satellite",
+          "correct": true,
+          "parsed": "W",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53848__Q5__satellite",
+          "correct": true,
+          "parsed": "SW",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55594__Q5__satellite",
+          "correct": true,
+          "parsed": "W",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54721__Q5__satellite",
+          "correct": true,
+          "parsed": "E",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed70850__Q5__satellite",
+          "correct": true,
+          "parsed": "W",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed57303__Q5__satellite",
+          "correct": true,
+          "parsed": "SE",
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q5__satellite",
+          "correct": true,
+          "parsed": "SE",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_elevation": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed55263__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F2",
+            "F3",
+            "F4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed40783__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F3",
+            "F4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed42386__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F3",
+            "F4",
+            "F5",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed42677__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F2",
+            "F3",
+            "F5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed59827__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed78963__Q4__map",
+          "correct": true,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F4",
+            "F5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed70850__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed62834__Q4__map",
+          "correct": true,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63610__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F4",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed111221__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61282__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed76732__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F4",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55594__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63319__Q4__map",
+          "correct": true,
+          "parsed": [
+            "F2",
+            "F5",
+            "F6"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_colour_scale_threshold": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed98544__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1",
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed51127__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed45296__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed44326__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M2",
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61312__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed76732__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed63610__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed59342__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53169__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed66873__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55497__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed52520__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M1",
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed57303__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53945__Q8__thermal",
+          "correct": true,
+          "parsed": [
+            "M3"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_colour_scale_value": {
+      "threshold": 5.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed42529__Q9__thermal",
+          "correct": true,
+          "parsed": 3.8,
+          "cost_usd": null
+        },
+        {
+          "level": 3,
+          "task_id": "level3_seed41462__Q9__thermal",
+          "correct": true,
+          "parsed": 6.3,
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed43938__Q9__thermal",
+          "correct": true,
+          "parsed": 4.2,
+          "cost_usd": null
+        },
+        {
+          "level": 4,
+          "task_id": "level4_seed45587__Q9__thermal",
+          "correct": true,
+          "parsed": 4.1,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed54527__Q9__thermal",
+          "correct": true,
+          "parsed": 10.3,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed68425__Q9__thermal",
+          "correct": true,
+          "parsed": 4.1,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed52520__Q9__thermal",
+          "correct": true,
+          "parsed": 7.4,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed57303__Q9__thermal",
+          "correct": true,
+          "parsed": 5.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53169__Q9__thermal",
+          "correct": true,
+          "parsed": 3.9,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed90824__Q9__thermal",
+          "correct": true,
+          "parsed": 6.1,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61961__Q9__thermal",
+          "correct": true,
+          "parsed": 4.5,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed61312__Q9__thermal",
+          "correct": true,
+          "parsed": 8.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed53945__Q9__thermal",
+          "correct": true,
+          "parsed": 4.6,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed55497__Q9__thermal",
+          "correct": true,
+          "parsed": 3.9,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed66873__Q9__thermal",
+          "correct": true,
+          "parsed": 4.0,
+          "cost_usd": null
+        },
+        {
+          "level": 5,
+          "task_id": "level5_seed59342__Q9__thermal",
+          "correct": true,
+          "parsed": 5.8,
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    }
+  },
+  "mock:random": {
+    "trace_downstream": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed33834__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed55794__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V4",
+            "V5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed29367__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13820__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed30628__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed22224__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed91943__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19314__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14014__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed100250__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed15566__Q1__satellite",
+          "correct": true,
+          "parsed": [
+            "V1",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed34958__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V2",
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12074__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed23194__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20963__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed39420__Q1__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V4"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "order_along_flow": {
+      "threshold": 1.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed32670__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed22663__Q2__satellite",
+          "correct": false,
+          "parsed": "V5",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28494__Q2__satellite",
+          "correct": true,
+          "parsed": "V1",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28785__Q2__satellite",
+          "correct": false,
+          "parsed": "V2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13335__Q2__satellite",
+          "correct": false,
+          "parsed": "V1",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14402__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13723__Q2__satellite",
+          "correct": false,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed35443__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed11783__Q2__satellite",
+          "correct": true,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26845__Q2__satellite",
+          "correct": true,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed65071__Q2__satellite",
+          "correct": false,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed38838__Q2__satellite",
+          "correct": true,
+          "parsed": "V3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed23679__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26942__Q2__satellite",
+          "correct": false,
+          "parsed": "V4",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed36316__Q2__satellite",
+          "correct": true,
+          "parsed": "V1",
+          "cost_usd": null
+        }
+      ],
+      "reversals": [
+        1,
+        2
+      ]
+    },
+    "measure_along_flow": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed51127__Q10__satellite",
+          "correct": false,
+          "parsed": 1905.4,
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed29515__Q10__satellite",
+          "correct": false,
+          "parsed": 2401.9,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20381__Q10__satellite",
+          "correct": false,
+          "parsed": 2054.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13917__Q10__satellite",
+          "correct": false,
+          "parsed": 2998.4,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed11783__Q10__satellite",
+          "correct": false,
+          "parsed": 4075.3,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed51863__Q10__satellite",
+          "correct": false,
+          "parsed": 2809.3,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q10__satellite",
+          "correct": true,
+          "parsed": 1462.2,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19799__Q10__satellite",
+          "correct": false,
+          "parsed": 212.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13723__Q10__satellite",
+          "correct": false,
+          "parsed": 1316.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed91943__Q10__satellite",
+          "correct": false,
+          "parsed": 1571.3,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed38256__Q10__satellite",
+          "correct": false,
+          "parsed": 3416.0,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12171__Q10__satellite",
+          "correct": false,
+          "parsed": 4841.1,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13335__Q10__satellite",
+          "correct": false,
+          "parsed": 1881.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12074__Q10__satellite",
+          "correct": true,
+          "parsed": 2563.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed35443__Q10__satellite",
+          "correct": false,
+          "parsed": 2898.8,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed39420__Q10__satellite",
+          "correct": false,
+          "parsed": 1151.9,
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "nature_based_filtering": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed42238__Q3__satellite",
+          "correct": false,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed23245__Q3__satellite",
+          "correct": false,
+          "parsed": "D",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed15566__Q3__satellite",
+          "correct": false,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed38256__Q3__satellite",
+          "correct": false,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13917__Q3__satellite",
+          "correct": false,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12850__Q3__satellite",
+          "correct": false,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28785__Q3__satellite",
+          "correct": false,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed21545__Q3__satellite",
+          "correct": false,
+          "parsed": "C",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14014__Q3__satellite",
+          "correct": false,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13335__Q3__satellite",
+          "correct": false,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26942__Q3__satellite",
+          "correct": false,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13238__Q3__satellite",
+          "correct": false,
+          "parsed": "B",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed45884__Q3__satellite",
+          "correct": false,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12171__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed36316__Q3__satellite",
+          "correct": false,
+          "parsed": "A",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12074__Q3__satellite",
+          "correct": true,
+          "parsed": "D",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "siting_downstream_impact": {
+      "threshold": 1.33,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed51612__Q6__satellite",
+          "correct": false,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed32910__Q6__satellite",
+          "correct": false,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed45884__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed30000__Q6__satellite",
+          "correct": false,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed29367__Q6__satellite",
+          "correct": false,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed23679__Q6__satellite",
+          "correct": true,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed30531__Q6__satellite",
+          "correct": false,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed21545__Q6__satellite",
+          "correct": false,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12074__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14111__Q6__satellite",
+          "correct": false,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19799__Q6__satellite",
+          "correct": false,
+          "parsed": "S3",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed39420__Q6__satellite",
+          "correct": false,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13335__Q6__satellite",
+          "correct": false,
+          "parsed": "S2",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13917__Q6__satellite",
+          "correct": true,
+          "parsed": "S1",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14402__Q6__satellite",
+          "correct": true,
+          "parsed": "S3",
+          "cost_usd": null
+        }
+      ],
+      "reversals": [
+        1,
+        2,
+        1
+      ]
+    },
+    "trace_upstream_catchment": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed34222__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed65071__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed11589__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V12",
+            "V14",
+            "V15",
+            "V20",
+            "V23",
+            "V24",
+            "V27",
+            "V28",
+            "V29",
+            "V3",
+            "V36",
+            "V4",
+            "V40",
+            "V45",
+            "V5"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed36316__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13917__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed22224__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed35443__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13432__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V2",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20381__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed78239__Q7__satellite",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13723__Q7__satellite",
+          "correct": true,
+          "parsed": [
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28785__Q7__satellite",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed34958__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14596__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V1",
+            "V2",
+            "V3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed23194__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V3",
+            "V4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12171__Q7__satellite",
+          "correct": false,
+          "parsed": [
+            "V2"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_flow_direction": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed42529__Q5__satellite",
+          "correct": false,
+          "parsed": "NE",
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed61773__Q5__satellite",
+          "correct": false,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20381__Q5__satellite",
+          "correct": false,
+          "parsed": "NE",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13432__Q5__satellite",
+          "correct": false,
+          "parsed": "N",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14596__Q5__satellite",
+          "correct": false,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed15372__Q5__satellite",
+          "correct": false,
+          "parsed": "N",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12850__Q5__satellite",
+          "correct": false,
+          "parsed": "SW",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed36316__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28785__Q5__satellite",
+          "correct": false,
+          "parsed": "N",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed22224__Q5__satellite",
+          "correct": true,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13335__Q5__satellite",
+          "correct": false,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14014__Q5__satellite",
+          "correct": false,
+          "parsed": "NW",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q5__satellite",
+          "correct": false,
+          "parsed": "SE",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed91943__Q5__satellite",
+          "correct": false,
+          "parsed": "NW",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed38838__Q5__satellite",
+          "correct": false,
+          "parsed": "S",
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed91555__Q5__satellite",
+          "correct": false,
+          "parsed": "N",
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_elevation": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed31409__Q4__map",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed61773__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2",
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed35443__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F1",
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14402__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed15566__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28494__Q4__map",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12850__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed35055__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2",
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26942__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed11783__Q4__map",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26845__Q4__map",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14111__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed21545__Q4__map",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20963__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed78239__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F1",
+            "F2",
+            "F3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed36316__Q4__map",
+          "correct": false,
+          "parsed": [
+            "F2"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_colour_scale_threshold": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed42820__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed31940__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M2",
+            "M3",
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13432__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12171__Q8__thermal",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19799__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28785__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1",
+            "M2",
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed51863__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed11589__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M2",
+            "M3"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1",
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed13820__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1",
+            "M2"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed34958__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19314__Q8__thermal",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20381__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M2",
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed26942__Q8__thermal",
+          "correct": false,
+          "parsed": [],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed78239__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M1",
+            "M3",
+            "M4"
+          ],
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed46854__Q8__thermal",
+          "correct": false,
+          "parsed": [
+            "M3",
+            "M4"
+          ],
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    },
+    "read_colour_scale_value": {
+      "threshold": 0.5,
+      "trials": [
+        {
+          "level": 3,
+          "task_id": "level3_seed38940__Q9__thermal",
+          "correct": false,
+          "parsed": 5.8,
+          "cost_usd": null
+        },
+        {
+          "level": 2,
+          "task_id": "level2_seed32910__Q9__thermal",
+          "correct": false,
+          "parsed": 9.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed12850__Q9__thermal",
+          "correct": false,
+          "parsed": 3.8,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19896__Q9__thermal",
+          "correct": false,
+          "parsed": 0.4,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed38256__Q9__thermal",
+          "correct": false,
+          "parsed": 0.6,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed20963__Q9__thermal",
+          "correct": true,
+          "parsed": 6.3,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed34958__Q9__thermal",
+          "correct": false,
+          "parsed": 10.7,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed21545__Q9__thermal",
+          "correct": false,
+          "parsed": 7.5,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19411__Q9__thermal",
+          "correct": false,
+          "parsed": 12.5,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14596__Q9__thermal",
+          "correct": false,
+          "parsed": 4.6,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14014__Q9__thermal",
+          "correct": true,
+          "parsed": 6.4,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed14111__Q9__thermal",
+          "correct": false,
+          "parsed": 9.4,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed28494__Q9__thermal",
+          "correct": true,
+          "parsed": 11.5,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed19799__Q9__thermal",
+          "correct": false,
+          "parsed": 14.4,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed22224__Q9__thermal",
+          "correct": true,
+          "parsed": 5.1,
+          "cost_usd": null
+        },
+        {
+          "level": 1,
+          "task_id": "level1_seed51863__Q9__thermal",
+          "correct": false,
+          "parsed": 10.6,
+          "cost_usd": null
+        }
+      ],
+      "reversals": []
+    }
+  }
+}

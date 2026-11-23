@@ -55,15 +55,25 @@ def chance(t):
     return (min(gold + t["tolerance"], hi) - max(gold - t["tolerance"], lo)) / (hi - lo)
 
 
-def recover_job(level, seed, k_max=40):
-    """Invert build_dataset's seed schedule to recover the job index (balance index)."""
+def recover_jobs(key, k_max=500):
+    """Job candidates (balance index, base seed) for a scene.
+
+    New builds record the balance index in the answer key; older ones are recovered by
+    inverting build_dataset's seed schedule (seed = base + 1000*j + 7919*t). Every
+    candidate is returned, and the caller accepts the one that reproduces the scene.
+    """
+    level, seed = key["level"], key["seed"]
+    if "balance_index" in key:
+        k = key["balance_index"]
+        return [(k, 1000 + 97 * k + 10007 * level)]
+    out = []
     for k in range(k_max):
         base = 1000 + 97 * k + 10007 * level
-        for j in range(60):
-            for t in range(20):
-                if base + 1000 * j + 7919 * t == seed:
-                    return k, base
-    return None, None
+        for t in range(20):
+            rest = seed - base - 7919 * t
+            if rest >= 0 and rest % 1000 == 0 and rest // 1000 < 60:
+                out.append((k, base))
+    return out
 
 
 def sha(p):
@@ -142,14 +152,23 @@ def main():
     n_ok = 0
     for kp in sample:
         key = json.loads(kp.read_text())
-        k, base = recover_job(key["level"], key["seed"])
-        if k is None:
+        cands = recover_jobs(key)
+        imgs = sorted(p.name for p in kp.parent.glob("*.png"))
+        same_key = same_img = False
+        for k, base in cands:
+            sub = tmp / f"k{k}"
+            folder, *_ = generate(key["level"], base, sub, bi=k, twin=True)
+            got = json.loads((folder / "answer_key.json").read_text())
+            got.pop("balance_index", None)
+            want = {kk: vv for kk, vv in key.items() if kk != "balance_index"}
+            same_key = got == want
+            same_img = (folder.name == kp.parent.name
+                        and all(sha(kp.parent / n) == sha(folder / n) for n in imgs))
+            if same_key and same_img:
+                break
+        if not cands:
             L.append(f"| {kp.parent.name} | seed schedule not found | – |")
             continue
-        folder, *_ = generate(key["level"], base, tmp, bi=k, twin=True)
-        same_key = json.loads((folder / "answer_key.json").read_text()) == key
-        imgs = sorted(p.name for p in kp.parent.glob("*.png"))
-        same_img = all(sha(kp.parent / n) == sha(folder / n) for n in imgs)
         n_ok += same_key and same_img
         L.append(f"| {kp.parent.name} | {'✅' if same_key else '❌'} | {'✅' if same_img else '❌'} ({len(imgs)} images) |")
     shutil.rmtree(tmp, ignore_errors=True)
