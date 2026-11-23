@@ -12,6 +12,7 @@ import argparse
 import json
 import random
 import threading
+import time
 import traceback
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -147,7 +148,14 @@ def main():
             n_err += bool(fu.result().get("error"))
             if k % 50 == 0 or k == len(futs):
                 print(f"  {k}/{len(futs)} done, {n_err} errors")
-    (out / "run_config.json").write_text(json.dumps(vars(a), indent=2))
+    # keep every invocation that wrote into this run folder (runs resume and accumulate)
+    cfg_path = out / "run_config.json"
+    hist = []
+    if cfg_path.exists():
+        old = json.loads(cfg_path.read_text())
+        hist = old.get("invocations", [old]) if isinstance(old, dict) else old
+    hist.append(dict(vars(a), finished_utc=time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), calls=len(jobs)))
+    cfg_path.write_text(json.dumps({"invocations": hist}, indent=2))
     build_report(out, Path(a.dataset))
 
 
