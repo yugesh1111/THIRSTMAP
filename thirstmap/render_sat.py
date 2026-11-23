@@ -6,6 +6,8 @@ vegetation) and use the annotations, as an analyst would with real imagery.
 """
 import math
 
+from pathlib import Path
+
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
@@ -39,8 +41,12 @@ def hillshade(z, azimuth=315.0, altitude=42.0, exag=2.5):
 def _font(size):
     try:
         return ImageFont.truetype("DejaVuSans-Bold.ttf", size)
-    except OSError:
-        return ImageFont.load_default(size=size)
+    except OSError:                       # no system DejaVu (e.g. Colab): matplotlib ships the same font
+        try:
+            import matplotlib
+            return ImageFont.truetype(str(Path(matplotlib.get_data_path()) / "fonts/ttf/DejaVuSans-Bold.ttf"), size)
+        except OSError:
+            return ImageFont.load_default(size=size)
 
 
 def _chaikin(pts, widths, rounds=2):

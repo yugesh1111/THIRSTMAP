@@ -14,3 +14,7 @@ results/ci*/
 !results/finetune/responses.jsonl
 !results/frontier/responses.jsonl
 !results/frontier_single/responses.jsonl
+
+# packaging
+build/
+*.egg-info/

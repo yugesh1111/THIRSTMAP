@@ -23,7 +23,10 @@ LOCATIONS = {
     "chennai": (13.10, 80.15, "Chennai (Ambattur / Avadi), Tamil Nadu"),
 }
 CREDIT = "Real terrain: Copernicus DEM GLO-30 (modified) · ESA WorldCover 2021 (CC BY 4.0)"
-CACHE = Path(__file__).resolve().parent.parent / "data" / "real"
+_REPO = Path(__file__).resolve().parent.parent
+# in a clone: <repo>/data/real; when installed as a package: ~/.cache/thirstmap/real (override: THIRSTMAP_CACHE)
+CACHE = Path(os.environ.get("THIRSTMAP_CACHE") or
+             (_REPO / "data" / "real" if (_REPO / "generate.py").exists() else Path.home() / ".cache" / "thirstmap" / "real"))
 CA = "/root/.ccr/ca-bundle.crt"
 
 

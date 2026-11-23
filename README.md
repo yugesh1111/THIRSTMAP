@@ -23,7 +23,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 | Judging criterion | Where ThirstMap answers it |
 |---|---|
-| Implementation (25%) | One-command pipeline from terrain to report; 47 tests and CI; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
+| Implementation (25%) | One-command pipeline from terrain to report; 48 tests and CI; `pip install` gives a `thirstmap` command; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
 | Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; exact inputs published with checksums |
 | Variation (20%) | 10 reasoning skills and no counting; satellite, map and thermal styles; 5 difficulty levels; real terrain for 4 cities; before-and-after twins; season, haze and sensor variants |
 | Originality (15%) | Twins with one minimal change that must flip the answer; consequence of every model error drawn on the image it saw |
@@ -185,11 +185,21 @@ One command reproduces everything (tests, dataset, baselines, eye exam, reports,
 ./run_all.sh --quick    # small version, about 2 min
 ```
 
+**Install it as a command** (no clone needed; works anywhere):
+
+```bash
+pip install "git+https://github.com/yugesh1111/THIRSTMAP"
+thirstmap generate --level 3 --seed 11 --twin --out my_scenes     # one scene + its twin, checked
+thirstmap list                                                     # every pipeline stage as a subcommand
+```
+
+Each subcommand runs the matching script with the same options (`thirstmap build`, `evaluate`, `report`, `frontier`, `verify`, `human`, …). In the browser instead: [`ThirstMap_quickstart.ipynb`](ThirstMap_quickstart.ipynb) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb).
+
 Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 47 tests
+python3 -m pytest -q                                    # 48 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4

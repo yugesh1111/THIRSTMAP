@@ -61,3 +61,13 @@ def test_label_occlusions():
     labels = [("V1", (10, 10, 30, 20)), ("V2", (100, 100, 120, 110))]
     assert label_occlusions(labels, [(0, 0, 25, 25)]) == {"V1"}
     assert label_occlusions(labels, []) == set()
+
+
+def test_cli_lists_and_dispatches(capsys, tmp_path, monkeypatch):
+    import pytest
+    from thirstmap import cli
+    assert cli.main([]) == 0 and "generate" in capsys.readouterr().out
+    assert cli.main(["nope"]) == 2
+    with pytest.raises(SystemExit) as e:                 # argparse --help exits 0 after printing the options
+        cli.main(["generate", "--help"])
+    assert e.value.code == 0 and "--level" in capsys.readouterr().out

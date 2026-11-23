@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thirstmap"
+version = "1.0.0"
+description = "A visual task factory: simulated terrain and water flow, verified answers, before-and-after twins, and an evaluation harness for vision-language models."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Amritha S" }]
+keywords = ["benchmark", "vision-language models", "synthetic data", "hydrology", "evaluation"]
+dependencies = [
+    "numpy>=1.24",
+    "pillow>=10.1",
+    "matplotlib>=3.7",
+    "scipy>=1.10",
+    "pysheds>=0.4",
+    "affine>=2.4",
+]
+
+[project.optional-dependencies]
+real = ["rasterio>=1.3"]
+models = ["anthropic", "openai", "transformers", "torch", "peft", "num2words"]
+test = ["pytest"]
+
+[project.urls]
+Homepage = "https://yugesh1111.github.io/THIRSTMAP/"
+Repository = "https://github.com/yugesh1111/THIRSTMAP"
+
+[project.scripts]
+thirstmap = "thirstmap.cli:main"
+
+[tool.setuptools]
+# the package, plus the pipeline scripts shipped under their own namespace (no top-level name clashes)
+packages = ["thirstmap", "thirstmap_tools"]
+
+[tool.setuptools.package-dir]
+thirstmap_tools = "."
