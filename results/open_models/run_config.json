@@ -1,7 +1,7 @@
 {
   "dataset": "dataset",
   "models": [
-    "hf:Qwen/Qwen2.5-VL-3B-Instruct"
+    "hf:Qwen/Qwen2-VL-2B-Instruct"
   ],
   "run": "open_models",
   "per_cell": 1,
@@ -10,5 +10,6 @@
   "blind": true,
   "workers": 1,
   "pairs": 30,
-  "probes": 4
+  "probes": 4,
+  "variants": 0
 }

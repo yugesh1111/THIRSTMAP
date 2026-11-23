@@ -1,33 +1,47 @@
 {
   "models": [
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct",
+    "hf:Qwen/Qwen2-VL-2B-Instruct",
     "hf:Qwen/Qwen2.5-VL-3B-Instruct"
   ],
-  "n_responses": 288,
+  "n_responses": 590,
   "chance_by_skill": {
-    "trace_downstream": 0.024378506140625,
-    "order_along_flow": 0.17519841269841271,
-    "measure_along_flow": 0.10500000000000001,
-    "read_colour_scale_threshold": 0.11246282894736843,
     "trace_upstream_catchment": 0.04491108544270834,
-    "siting_downstream_impact": 0.3333333333333333,
-    "read_colour_scale_value": 0.2,
-    "read_flow_direction": 0.125,
+    "trace_downstream": 0.024378506140625,
     "nature_based_filtering": 0.25,
+    "order_along_flow": 0.17519841269841271,
+    "read_colour_scale_value": 0.2,
+    "measure_along_flow": 0.10500000000000001,
+    "read_flow_direction": 0.125,
+    "read_colour_scale_threshold": 0.11246282894736843,
+    "siting_downstream_impact": 0.3333333333333333,
     "read_elevation": 0.07773524375
   },
   "tasks_by_skill_evaluated": {
-    "trace_downstream": 15,
-    "order_along_flow": 24,
-    "measure_along_flow": 10,
-    "read_colour_scale_threshold": 19,
     "trace_upstream_catchment": 30,
-    "siting_downstream_impact": 10,
-    "read_colour_scale_value": 11,
-    "read_flow_direction": 10,
+    "trace_downstream": 15,
     "nature_based_filtering": 10,
+    "order_along_flow": 24,
+    "read_colour_scale_value": 11,
+    "measure_along_flow": 10,
+    "read_flow_direction": 10,
+    "read_colour_scale_threshold": 19,
+    "siting_downstream_impact": 10,
     "read_elevation": 5
   },
   "vs_chance": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "correct": 2,
+      "n": 14,
+      "chance": 0.05595044776227679,
+      "p_value": 0.18282685568395057
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "correct": 12,
+      "n": 144,
+      "chance": 0.13039288445997127,
+      "p_value": 0.9704389843022729
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "correct": 23,
       "n": 144,
@@ -36,6 +50,16 @@
     }
   },
   "overall": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "image": 0.14285714285714285,
+      "blind": null,
+      "n": 14
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "image": 0.08333333333333333,
+      "blind": 0.09027777777777778,
+      "n": 144
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "image": 0.1597222222222222,
       "blind": 0.13194444444444445,
@@ -43,6 +67,22 @@
     }
   },
   "by_skill": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "trace_downstream": 0.2,
+      "measure_along_flow": 0.0
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": 0.0,
+      "measure_along_flow": 0.2,
+      "order_along_flow": 0.16666666666666666,
+      "nature_based_filtering": 0.4,
+      "read_elevation": 0.2,
+      "read_flow_direction": 0.1,
+      "siting_downstream_impact": 0.0,
+      "trace_upstream_catchment": 0.0,
+      "read_colour_scale_threshold": 0.0,
+      "read_colour_scale_value": 0.0
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": 0.0,
       "measure_along_flow": 0.3,
@@ -57,6 +97,15 @@
     }
   },
   "by_style": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "map": 0.2222222222222222,
+      "satellite": 0.0
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "map": 0.1,
+      "satellite": 0.109375,
+      "thermal": 0.0
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "map": 0.1,
       "satellite": 0.1875,
@@ -64,6 +113,20 @@
     }
   },
   "by_level": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "1": 0.3333333333333333,
+      "2": 0.3333333333333333,
+      "3": 0.0,
+      "4": 0.0,
+      "5": 0.0
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "1": 0.13793103448275862,
+      "2": 0.1111111111111111,
+      "3": 0.08333333333333333,
+      "4": 0.07407407407407407,
+      "5": 0.0
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "1": 0.20689655172413793,
       "2": 0.18518518518518517,
@@ -73,6 +136,93 @@
     }
   },
   "eye_exam_curves": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "trace_downstream": {
+        "1": 0.5,
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0
+      }
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "1": 0.0,
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.5,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "1": 0.5,
+        "2": 0.0,
+        "3": 0.25,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "nature_based_filtering": {
+        "1": 0.5,
+        "2": 0.5,
+        "3": 0.5,
+        "4": 0.5,
+        "5": 0.0
+      },
+      "read_elevation": {
+        "1": 1.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "1": 0.0,
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_value": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      }
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": {
         "1": 0.0,
@@ -147,6 +297,22 @@
     }
   },
   "breaking_level": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "trace_downstream": 3,
+      "measure_along_flow": 1
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": 1,
+      "measure_along_flow": 1,
+      "order_along_flow": 2,
+      "nature_based_filtering": 5,
+      "read_elevation": 2,
+      "read_flow_direction": 1,
+      "siting_downstream_impact": 1,
+      "trace_upstream_catchment": 1,
+      "read_colour_scale_threshold": 1,
+      "read_colour_scale_value": 1
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": 1,
       "measure_along_flow": 1,
@@ -161,6 +327,48 @@
     }
   },
   "blind_gap_by_skill": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": [
+        0.0,
+        0.0
+      ],
+      "measure_along_flow": [
+        0.2,
+        0.3
+      ],
+      "order_along_flow": [
+        0.16666666666666666,
+        0.0
+      ],
+      "nature_based_filtering": [
+        0.4,
+        0.3
+      ],
+      "read_elevation": [
+        0.2,
+        0.2
+      ],
+      "read_flow_direction": [
+        0.1,
+        0.2
+      ],
+      "siting_downstream_impact": [
+        0.0,
+        0.1
+      ],
+      "trace_upstream_catchment": [
+        0.0,
+        0.0
+      ],
+      "read_colour_scale_threshold": [
+        0.0,
+        0.0
+      ],
+      "read_colour_scale_value": [
+        0.0,
+        0.2727272727272727
+      ]
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": [
         0.0,
@@ -205,28 +413,38 @@
     }
   },
   "tasks_guessable_without_image": [
-    "level1_seed13238_cf__Q8__thermal",
-    "level1_seed14111_cf__Q8__thermal",
-    "level1_seed14402__Q4__map",
     "level2_seed29709__Q10__satellite",
-    "level2_seed30000_cf__Q8__thermal",
     "level2_seed32522__Q10__map",
-    "level2_seed32910_cf__Q8__thermal",
-    "level2_seed45159__Q6__satellite",
-    "level3_seed49284__Q6__satellite",
-    "level4_seed45587_cf__Q8__thermal",
-    "level4_seed52827__Q3__satellite",
-    "level4_seed65367__Q10__satellite",
-    "level4_seed68374__Q6__satellite",
-    "level5_seed53169__Q3__map",
-    "level5_seed76053__Q3__satellite",
-    "level5_seed76732_cf__Q8__thermal",
-    "real_navi_mumbai_seed47344_cf__Q8__thermal",
-    "real_navi_mumbai_seed54778__Q9__thermal",
     "real_pune_seed40007_cf__Q9__thermal"
   ],
   "map_vs_satellite": {},
   "error_tags": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "missed_some": 8,
+      "trap:near_but_other_stream": 3,
+      "extra_unrelated": 2,
+      "underestimate": 2,
+      "unparseable_or_no_answer": 2
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trap:downstream_not_upstream": 29,
+      "trap:other_stream": 18,
+      "missed_some": 16,
+      "unparseable_or_no_answer": 15,
+      "overestimate": 13,
+      "trap:cooled_downstream": 13,
+      "trap:near_but_other_stream": 12,
+      "wrong_choice": 10,
+      "underestimate": 6,
+      "wrong_direction": 5,
+      "trap:later_village": 4,
+      "off_by_one_sector": 3,
+      "extra_unrelated": 3,
+      "trap:upstream_same_stream": 2,
+      "trap:too_late_after_village": 1,
+      "reversed_direction": 1,
+      "trap:upstream_of_O": 1
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "missed_some": 52,
       "extra_unrelated": 21,
@@ -245,6 +463,16 @@
     }
   },
   "trap_fall_rate": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "exposed": 10,
+      "fell": 3,
+      "rate": 0.3
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "exposed": 98,
+      "fell": 65,
+      "rate": 0.6632653061224489
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "exposed": 98,
       "fell": 26,
@@ -252,6 +480,32 @@
     }
   },
   "counterfactual_pairs": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "pairs": 30,
+      "single_task_accuracy": 0.05,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.8666666666666667,
+      "by_kind": {
+        "outfall": {
+          "pairs": 10,
+          "single_task_accuracy": 0.15,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.9
+        },
+        "intake": {
+          "pairs": 10,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.8
+        },
+        "thermal": {
+          "pairs": 10,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.9
+        }
+      }
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "pairs": 30,
       "single_task_accuracy": 0.18333333333333332,
@@ -281,6 +535,24 @@
   },
   "appearance_invariance": {},
   "perception_probes": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "P1:map": {
+        "n": 4,
+        "acc": 1.0
+      },
+      "P1:satellite": {
+        "n": 4,
+        "acc": 1.0
+      },
+      "P2:map": {
+        "n": 4,
+        "acc": 1.0
+      },
+      "P3:thermal": {
+        "n": 4,
+        "acc": 0.75
+      }
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "P1:map": {
         "n": 4,
@@ -301,6 +573,18 @@
     }
   },
   "cost": {
+    "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
+      "input_tokens": 17394,
+      "output_tokens": 550,
+      "usd": 0,
+      "mean_latency_s": 14.11
+    },
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "input_tokens": 168420,
+      "output_tokens": 5055,
+      "usd": 0,
+      "mean_latency_s": 6.05
+    },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "input_tokens": 168420,
       "output_tokens": 2857,

@@ -8,3 +8,5 @@ pytest>=8
 # optional, only for evaluating those providers:
 # openai
 # google-genai
+# needed by some open models (SmolVLM2) in run_open_models.sh:
+# num2words
