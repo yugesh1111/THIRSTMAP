@@ -74,6 +74,10 @@ def main():
     jobs += [(3, k, str(scenes_dir), loc, not a.no_twins) for loc in a.locations
              for k in range(a.real_per_location)]
     t0 = time.time()
+    if a.real_per_location:                  # fetch real-terrain inputs once, before the parallel workers
+        from thirstmap import realterrain
+        for loc in a.locations:
+            realterrain.load(loc)
     with ProcessPoolExecutor(a.workers) as ex:
         results = list(ex.map(one, jobs))
 

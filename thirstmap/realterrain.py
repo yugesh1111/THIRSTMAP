@@ -34,7 +34,9 @@ def _dem_tile(lat, lon):
     if not path.exists():
         CACHE.mkdir(parents=True, exist_ok=True)
         url = f"https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_{t}_DEM/{name}"
-        urllib.request.urlretrieve(url, path)
+        tmp = path.with_name(f"{name}.part{os.getpid()}")
+        urllib.request.urlretrieve(url, tmp)
+        os.replace(tmp, path)                       # atomic: a half-written file is never visible
     return path
 
 
@@ -66,5 +68,7 @@ def load(name):
         url = ("/vsicurl/https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/"
                f"ESA_WorldCover_10m_2021_v200_{tile}_Map.tif")
         lc = _window(url, lat, lon, half, Image.NEAREST).astype(np.uint8)
-        np.save(lc_cache, lc)
+        tmp = lc_cache.with_name(f"{lc_cache.stem}.part{os.getpid()}.npy")
+        np.save(tmp, lc)
+        os.replace(tmp, lc_cache)
     return dict(z=z, landcover=lc, name=name, desc=desc, credit=CREDIT)
