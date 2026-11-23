@@ -5,30 +5,35 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct",
     "hf:Qwen/Qwen2.5-VL-3B-Instruct"
   ],
-  "n_responses": 1200,
+  "n_responses": 1152,
+  "compared_on_tasks": 144,
+  "answers_outside_common_set": {
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": 24,
+    "hf:Qwen/Qwen2-VL-2B-Instruct": 24
+  },
   "chance_by_skill": {
     "nature_based_filtering": 0.25,
-    "trace_upstream_catchment": 0.04347336375355114,
-    "order_along_flow": 0.17610544217687077,
+    "trace_downstream": 0.024378506140625,
     "read_elevation": 0.07773524375,
-    "read_colour_scale_threshold": 0.11246282894736843,
-    "trace_downstream": 0.024750721622121708,
-    "siting_downstream_impact": 0.3333333333333333,
-    "read_colour_scale_value": 0.2,
     "read_flow_direction": 0.125,
-    "measure_along_flow": 0.10282857142857142
+    "trace_upstream_catchment": 0.04491108544270834,
+    "read_colour_scale_value": 0.2,
+    "measure_along_flow": 0.10500000000000001,
+    "order_along_flow": 0.17519841269841271,
+    "siting_downstream_impact": 0.3333333333333333,
+    "read_colour_scale_threshold": 0.11246282894736843
   },
   "tasks_by_skill_evaluated": {
-    "nature_based_filtering": 13,
-    "trace_upstream_catchment": 33,
-    "order_along_flow": 28,
+    "nature_based_filtering": 10,
+    "trace_downstream": 15,
     "read_elevation": 5,
-    "read_colour_scale_threshold": 19,
-    "trace_downstream": 19,
-    "siting_downstream_impact": 13,
+    "read_flow_direction": 10,
+    "trace_upstream_catchment": 30,
     "read_colour_scale_value": 11,
-    "read_flow_direction": 13,
-    "measure_along_flow": 14
+    "measure_along_flow": 10,
+    "order_along_flow": 24,
+    "siting_downstream_impact": 10,
+    "read_colour_scale_threshold": 19
   },
   "vs_chance": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
@@ -44,16 +49,16 @@
       "p_value": 0.9704389843022729
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "correct": 14,
-      "n": 168,
-      "chance": 0.13219785951025723,
-      "p_value": 0.9815600847223784
+      "correct": 12,
+      "n": 144,
+      "chance": 0.13039288445997127,
+      "p_value": 0.9704389843022729
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "correct": 25,
-      "n": 168,
-      "chance": 0.13219785951025723,
-      "p_value": 0.29392467145246404
+      "correct": 23,
+      "n": 144,
+      "chance": 0.13039288445997127,
+      "p_value": 0.17696825917110243
     }
   },
   "overall": {
@@ -70,12 +75,12 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "image": 0.08333333333333333,
       "blind": 0.09027777777777778,
-      "n": 168
+      "n": 144
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "image": 0.1488095238095238,
+      "image": 0.1597222222222222,
       "blind": 0.13194444444444445,
-      "n": 168
+      "n": 144
     }
   },
   "by_skill": {
@@ -105,11 +110,11 @@
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "trace_downstream": 0.0,
-      "measure_along_flow": 0.14285714285714285,
-      "order_along_flow": 0.14285714285714285,
-      "nature_based_filtering": 0.46153846153846156,
+      "measure_along_flow": 0.2,
+      "order_along_flow": 0.16666666666666666,
+      "nature_based_filtering": 0.4,
       "read_elevation": 0.2,
-      "read_flow_direction": 0.07692307692307693,
+      "read_flow_direction": 0.1,
       "siting_downstream_impact": 0.0,
       "trace_upstream_catchment": 0.0,
       "read_colour_scale_threshold": 0.0,
@@ -117,13 +122,13 @@
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": 0.0,
-      "measure_along_flow": 0.21428571428571427,
-      "order_along_flow": 0.14285714285714285,
-      "nature_based_filtering": 0.23076923076923078,
+      "measure_along_flow": 0.3,
+      "order_along_flow": 0.16666666666666666,
+      "nature_based_filtering": 0.3,
       "read_elevation": 0.2,
       "read_flow_direction": 0.0,
-      "siting_downstream_impact": 0.3076923076923077,
-      "trace_upstream_catchment": 0.12121212121212122,
+      "siting_downstream_impact": 0.3,
+      "trace_upstream_catchment": 0.1,
       "read_colour_scale_threshold": 0.2631578947368421,
       "read_colour_scale_value": 0.09090909090909091
     }
@@ -141,12 +146,12 @@
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "map": 0.1,
-      "satellite": 0.10227272727272728,
+      "satellite": 0.109375,
       "thermal": 0.0
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "map": 0.1,
-      "satellite": 0.1590909090909091,
+      "satellite": 0.1875,
       "thermal": 0.2
     }
   },
@@ -166,18 +171,18 @@
       "5": 0.04
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "1": 0.12903225806451613,
-      "2": 0.09375,
-      "3": 0.1111111111111111,
-      "4": 0.0625,
+      "1": 0.13793103448275862,
+      "2": 0.1111111111111111,
+      "3": 0.08333333333333333,
+      "4": 0.07407407407407407,
       "5": 0.0
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "1": 0.1935483870967742,
-      "2": 0.1875,
-      "3": 0.15555555555555556,
-      "4": 0.125,
-      "5": 0.07142857142857142
+      "1": 0.20689655172413793,
+      "2": 0.18518518518518517,
+      "3": 0.16666666666666666,
+      "4": 0.14814814814814814,
+      "5": 0.08
     }
   },
   "eye_exam_curves": {
@@ -335,22 +340,22 @@
       },
       "measure_along_flow": {
         "1": 0.0,
-        "2": 0.3333333333333333,
+        "2": 0.5,
         "3": 0.0,
-        "4": 0.3333333333333333,
+        "4": 0.5,
         "5": 0.0
       },
       "order_along_flow": {
-        "1": 0.4,
+        "1": 0.5,
         "2": 0.0,
-        "3": 0.2,
+        "3": 0.25,
         "4": 0.0,
         "5": 0.0
       },
       "nature_based_filtering": {
         "1": 0.5,
         "2": 0.5,
-        "3": 0.6,
+        "3": 0.5,
         "4": 0.5,
         "5": 0.0
       },
@@ -363,7 +368,7 @@
       },
       "read_flow_direction": {
         "1": 0.0,
-        "2": 0.3333333333333333,
+        "2": 0.5,
         "3": 0.0,
         "4": 0.0,
         "5": 0.0
@@ -407,15 +412,15 @@
       },
       "measure_along_flow": {
         "1": 0.0,
-        "2": 0.6666666666666666,
+        "2": 1.0,
         "3": 0.0,
-        "4": 0.3333333333333333,
+        "4": 0.5,
         "5": 0.0
       },
       "order_along_flow": {
-        "1": 0.4,
+        "1": 0.5,
         "2": 0.0,
-        "3": 0.2,
+        "3": 0.25,
         "4": 0.0,
         "5": 0.0
       },
@@ -442,16 +447,16 @@
       },
       "siting_downstream_impact": {
         "1": 0.0,
-        "2": 0.3333333333333333,
-        "3": 0.6666666666666666,
-        "4": 0.3333333333333333,
+        "2": 0.5,
+        "3": 0.5,
+        "4": 0.5,
         "5": 0.0
       },
       "trace_upstream_catchment": {
         "1": 0.16666666666666666,
-        "2": 0.14285714285714285,
+        "2": 0.0,
         "3": 0.125,
-        "4": 0.2,
+        "4": 0.25,
         "5": 0.0
       },
       "read_colour_scale_threshold": {
@@ -498,7 +503,7 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "trace_downstream": 1,
       "measure_along_flow": 1,
-      "order_along_flow": 1,
+      "order_along_flow": 2,
       "nature_based_filtering": 5,
       "read_elevation": 2,
       "read_flow_direction": 1,
@@ -510,7 +515,7 @@
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": 1,
       "measure_along_flow": 1,
-      "order_along_flow": 1,
+      "order_along_flow": 2,
       "nature_based_filtering": 1,
       "read_elevation": 2,
       "read_flow_direction": 1,
@@ -611,15 +616,15 @@
         0.0
       ],
       "measure_along_flow": [
-        0.14285714285714285,
+        0.2,
         0.3
       ],
       "order_along_flow": [
-        0.14285714285714285,
+        0.16666666666666666,
         0.0
       ],
       "nature_based_filtering": [
-        0.46153846153846156,
+        0.4,
         0.3
       ],
       "read_elevation": [
@@ -627,7 +632,7 @@
         0.2
       ],
       "read_flow_direction": [
-        0.07692307692307693,
+        0.1,
         0.2
       ],
       "siting_downstream_impact": [
@@ -653,15 +658,15 @@
         0.0
       ],
       "measure_along_flow": [
-        0.21428571428571427,
+        0.3,
         0.3
       ],
       "order_along_flow": [
-        0.14285714285714285,
+        0.16666666666666666,
         0.0
       ],
       "nature_based_filtering": [
-        0.23076923076923078,
+        0.3,
         0.3
       ],
       "read_elevation": [
@@ -673,11 +678,11 @@
         0.0
       ],
       "siting_downstream_impact": [
-        0.3076923076923077,
+        0.3,
         0.3
       ],
       "trace_upstream_catchment": [
-        0.12121212121212122,
+        0.1,
         0.0
       ],
       "read_colour_scale_threshold": [
@@ -741,40 +746,39 @@
       "trap:upstream_of_O": 1
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "trap:downstream_not_upstream": 32,
-      "missed_some": 18,
-      "unparseable_or_no_answer": 18,
+      "trap:downstream_not_upstream": 29,
       "trap:other_stream": 18,
-      "overestimate": 16,
-      "trap:near_but_other_stream": 15,
-      "wrong_choice": 13,
+      "missed_some": 16,
+      "unparseable_or_no_answer": 15,
+      "overestimate": 13,
       "trap:cooled_downstream": 13,
-      "wrong_direction": 8,
-      "underestimate": 7,
-      "trap:later_village": 5,
-      "extra_unrelated": 4,
+      "trap:near_but_other_stream": 12,
+      "wrong_choice": 10,
+      "underestimate": 6,
+      "wrong_direction": 5,
+      "trap:later_village": 4,
       "off_by_one_sector": 3,
+      "extra_unrelated": 3,
       "trap:upstream_same_stream": 2,
-      "trap:too_late_after_village": 2,
+      "trap:too_late_after_village": 1,
       "reversed_direction": 1,
       "trap:upstream_of_O": 1
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "missed_some": 58,
-      "wrong_choice": 25,
-      "extra_unrelated": 24,
-      "overestimate": 16,
-      "trap:near_but_other_stream": 12,
-      "wrong_direction": 8,
-      "underestimate": 5,
-      "trap:later_village": 5,
-      "trap:too_late_after_village": 5,
-      "off_by_one_sector": 5,
+      "missed_some": 52,
+      "extra_unrelated": 21,
+      "wrong_choice": 19,
+      "overestimate": 13,
+      "trap:near_but_other_stream": 10,
+      "wrong_direction": 6,
+      "underestimate": 4,
+      "trap:later_village": 4,
+      "trap:too_late_after_village": 4,
+      "off_by_one_sector": 4,
       "trap:downstream_not_upstream": 4,
       "trap:cooled_downstream": 2,
       "trap:upstream_same_stream": 1,
-      "trap:other_stream": 1,
-      "unparseable_or_no_answer": 1
+      "trap:other_stream": 1
     }
   },
   "trap_fall_rate": {
@@ -789,14 +793,14 @@
       "rate": 0.5102040816326531
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "exposed": 112,
-      "fell": 73,
-      "rate": 0.6517857142857143
+      "exposed": 98,
+      "fell": 65,
+      "rate": 0.6632653061224489
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "exposed": 112,
-      "fell": 30,
-      "rate": 0.26785714285714285
+      "exposed": 98,
+      "fell": 26,
+      "rate": 0.2653061224489796
     }
   },
   "counterfactual_pairs": {
@@ -1017,16 +1021,16 @@
       "mean_latency_s": 9.72
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "input_tokens": 192151,
-      "output_tokens": 5387,
+      "input_tokens": 168420,
+      "output_tokens": 5055,
       "usd": 0,
-      "mean_latency_s": 6.59
+      "mean_latency_s": 6.05
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "input_tokens": 192151,
-      "output_tokens": 3087,
+      "input_tokens": 168420,
+      "output_tokens": 2857,
       "usd": 0,
-      "mean_latency_s": 7.14
+      "mean_latency_s": 6.69
     }
   }
 }

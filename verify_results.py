@@ -181,9 +181,18 @@ def main():
               "verdict; disagreements are listed so they can be judged by eye.", "",
               "| Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |",
               "|---|---|---|---|---|---|---|"]
+        # same rule as the report: compare on the tasks every model answered with the image
+        answered = defaultdict(set)
+        for (m, mode, tid) in olatest:
+            if mode == "image":
+                answered[m].add(tid)
+        common = set.intersection(*answered.values()) if answered else set()
+        L.insert(len(L) - 2, f"Compared on the {len(common)} tasks that every model answered with the image.")
+        L.insert(len(L) - 2, "")
         obym = defaultdict(list)
         for (m, mode, tid), r in olatest.items():
-            obym[(m, mode)].append((alltasks[tid], r))
+            if tid in common:
+                obym[(m, mode)].append((alltasks[tid], r))
         disagree = []
         for (m, mode), v in sorted(obym.items()):
             first = [score(t, r["raw"])["correct"] for t, r in v]

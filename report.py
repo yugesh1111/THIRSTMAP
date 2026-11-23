@@ -64,13 +64,22 @@ def build_report(run_dir, dataset):
     probe_rows = [r for r in rows if tasks[r["task_id"]].get("probe")]
     var_rows = [r for r in rows if tasks[r["task_id"]].get("appearance")]
     rows = [r for r in rows if not tasks[r["task_id"]].get("probe") and not tasks[r["task_id"]].get("appearance")]
+    main_all = rows        # includes the original look of appearance groups, used in that section only
+    # Headline numbers compare every model on the SAME tasks: the ones every model answered with the image.
+    per_model = defaultdict(set)
+    for r in rows:
+        if r["mode"] == "image":
+            per_model[r["model"]].add(r["task_id"])
+    common = set.intersection(*per_model.values()) if per_model else set()
+    extra = {m: len(v - common) for m, v in per_model.items() if v - common}
+    rows = [r for r in rows if r["task_id"] in common]
     models = sorted({r["model"] for r in rows + probe_rows}, key=lambda m: (m.startswith("mock"), m))
     img = [r for r in rows if r["mode"] == "image"]
     blind = [r for r in rows if r["mode"] == "blind"]
 
     from scipy.stats import binomtest
     from thirstmap.scoring import chance
-    S = dict(models=models, n_responses=len(rows))
+    S = dict(models=models, n_responses=len(rows), compared_on_tasks=len(common), answers_outside_common_set=extra)
     img_tasks = {r["task_id"] for r in rows if r["mode"] == "image"}
     S["chance_by_skill"] = {sk: sum(chance(tasks[t]) for t in ids) / len(ids)
                             for sk, ids in _group([tasks[t] for t in img_tasks], ("skill",)).items()
@@ -163,7 +172,7 @@ def build_report(run_dir, dataset):
     # appearance invariance: same scene + answers, different look (monsoon / haze / coarse)
     S["appearance_invariance"] = {}
     for m in models:
-        base = {r["task_id"]: r for r in rows if r["model"] == m and r["mode"] == "image"}
+        base = {r["task_id"]: r for r in main_all if r["model"] == m and r["mode"] == "image"}
         groups = defaultdict(dict)
         for r in var_rows:
             if r["model"] == m and r["mode"] == "image":
@@ -286,6 +295,10 @@ def markdown(S, out):
     L += ["## Overall", "", "| Model | With image | Without image (blind) | Tasks |", "|---|---|---|---|"]
     for m, v in S["overall"].items():
         L.append(f"| {m} | {_pct(v['image'])} | {_pct(v['blind'])} | {v['n']} |")
+    if S.get("answers_outside_common_set"):
+        L += ["", f"All models are compared on the same {S['compared_on_tasks']} tasks. Answers to tasks that not every "
+              "model was given (" + ", ".join(f"{m}: {n}" for m, n in S["answers_outside_common_set"].items())
+              + ", e.g. the original look of an appearance group) are used only in their own section below."]
     if S.get("vs_chance"):
         L += ["", "## Better than guessing?", "",
               "Chance = expected accuracy of a random guesser on exactly these tasks (from each task's options). "

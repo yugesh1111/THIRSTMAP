@@ -4,17 +4,15 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 
 | Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
 |---|---|---|---|---|---|---|---|---|---|
-| Qwen2.5-VL-3B-Instruct | 3B | **15%** (25/168) | 13% | 13% | 0.29 | 0% | 87% | 75% (n=24) | 69% (n=16) |
+| Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | 75% (n=24) | 69% (n=16) |
 | SmolVLM2-2.2B-Instruct | 2.2B | **8%** (12/144) | 12% | 13% | 0.97 | 0% | 77% | – | 69% (n=16) |
-| Qwen2-VL-2B-Instruct | 2B | **8%** (14/168) | 9% | 13% | 0.98 | 0% | 87% | 88% (n=24) | 94% (n=16) |
+| Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | 88% (n=24) | 94% (n=16) |
 | SmolVLM-256M-Instruct | 0.26B | **8%** (11/144) | 10% | 13% | 0.99 | 0% | 73% | – | 0% (n=16) |
-
-*Interim: evaluation still running for SmolVLM2-2.2B-Instruct (144 of 168 tasks so far), SmolVLM-256M-Instruct (144 of 168 tasks so far); numbers for it will change and more models may be added.*
 
 ## What the numbers say
 
-- **No open model is significantly better than random guessing overall** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 15% against a chance level of 13% (p = 0.29).
-- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 15% vs 13%; SmolVLM2-2.2B-Instruct 8% vs 12%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
+- **No open model is significantly better than random guessing overall** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
+- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; SmolVLM2-2.2B-Instruct 8% vs 12%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
 - **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); SmolVLM2-2.2B-Instruct 77% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%).
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 88%.
 - **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; SmolVLM2-2.2B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
@@ -24,13 +22,13 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 
 | Skill | Tasks | Chance | Qwen2.5-VL-3B-Instruct | SmolVLM2-2.2B-Instruct | Qwen2-VL-2B-Instruct | SmolVLM-256M-Instruct |
 |---|---|---|---|---|---|---|
-| Trace downstream | 19 | 2% | 0% | 7% | 0% | 13% |
-| Order along flow | 28 | 18% | 14% | 4% | 14% | 0% |
-| Measure along flow | 14 | 10% | 21% | 0% | 14% | 0% |
-| Place wetland | 13 | 25% | 23% | 40% | 46% | 10% |
-| Site selection | 13 | 33% | 31% | 0% | 0% | 0% |
-| Trace upstream | 33 | 4% | 12% | 3% | 0% | 0% |
-| Flow direction | 13 | 12% | 0% | 0% | 8% | 20% |
+| Trace downstream | 15 | 2% | 0% | 7% | 0% | 13% |
+| Order along flow | 24 | 18% | 17% | 4% | 17% | 0% |
+| Measure along flow | 10 | 11% | 30% | 0% | 20% | 0% |
+| Place wetland | 10 | 25% | 30% | 40% | 40% | 10% |
+| Site selection | 10 | 33% | 30% | 0% | 0% | 0% |
+| Trace upstream | 30 | 4% | 10% | 3% | 0% | 0% |
+| Flow direction | 10 | 12% | 0% | 0% | 10% | 20% |
 | Read elevation | 5 | 8% | 20% | 20% | 20% | 20% |
 | Thermal threshold | 19 | 11% | 26% | 11% | 0% | 16% |
 | Thermal value | 11 | 20% | 9% | 18% | 0% | 18% |
