@@ -19,9 +19,9 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 |---|---|---|---|---|---|---|---|---|---|
 | Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | – | 69% (n=16) |
 | Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | – | 94% (n=16) |
-| SmolVLM-256M-Instruct | 0.26B | **7%** (10/136) | – | 13% | 0.99 | 0% | 77% | – | – |
+| SmolVLM-256M-Instruct | 0.26B | **7%** (10/137) | – | 13% | 0.99 | 0% | 77% | – | – |
 
-*Interim: evaluation still running for SmolVLM-256M-Instruct (136 of 144 tasks so far); numbers for it will change and more models may be added.*
+*Interim: evaluation still running for SmolVLM-256M-Instruct (137 of 144 tasks so far); numbers for it will change and more models may be added.*
 
 ### What the numbers say
 

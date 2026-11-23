@@ -6,9 +6,9 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 |---|---|---|---|---|---|---|---|---|---|
 | Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | – | 69% (n=16) |
 | Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | – | 94% (n=16) |
-| SmolVLM-256M-Instruct | 0.26B | **7%** (10/136) | – | 13% | 0.99 | 0% | 77% | – | – |
+| SmolVLM-256M-Instruct | 0.26B | **7%** (10/137) | – | 13% | 0.99 | 0% | 77% | – | – |
 
-*Interim: evaluation still running for SmolVLM-256M-Instruct (136 of 144 tasks so far); numbers for it will change and more models may be added.*
+*Interim: evaluation still running for SmolVLM-256M-Instruct (137 of 144 tasks so far); numbers for it will change and more models may be added.*
 
 ## What the numbers say
 
@@ -30,7 +30,7 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 | Trace upstream | 30 | 4% | 10% | 0% | 0% |
 | Flow direction | 10 | 12% | 0% | 10% | 20% |
 | Read elevation | 5 | 8% | 20% | 20% | 20% |
-| Thermal threshold | 19 | 11% | 26% | 0% | 13% |
+| Thermal threshold | 19 | 11% | 26% | 0% | 12% |
 | Thermal value | 11 | 20% | 9% | 0% | 18% |
 
 ## Caveats

@@ -4,37 +4,37 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct",
     "hf:Qwen/Qwen2.5-VL-3B-Instruct"
   ],
-  "n_responses": 712,
+  "n_responses": 713,
   "chance_by_skill": {
-    "order_along_flow": 0.17519841269841271,
-    "trace_upstream_catchment": 0.04491108544270834,
     "nature_based_filtering": 0.25,
+    "trace_downstream": 0.024378506140625,
     "measure_along_flow": 0.10500000000000001,
     "read_colour_scale_threshold": 0.11246282894736843,
+    "order_along_flow": 0.17519841269841271,
     "read_colour_scale_value": 0.2,
-    "trace_downstream": 0.024378506140625,
-    "read_elevation": 0.07773524375,
+    "trace_upstream_catchment": 0.04491108544270834,
+    "read_flow_direction": 0.125,
     "siting_downstream_impact": 0.3333333333333333,
-    "read_flow_direction": 0.125
+    "read_elevation": 0.07773524375
   },
   "tasks_by_skill_evaluated": {
-    "order_along_flow": 24,
-    "trace_upstream_catchment": 30,
     "nature_based_filtering": 10,
+    "trace_downstream": 15,
     "measure_along_flow": 10,
     "read_colour_scale_threshold": 19,
+    "order_along_flow": 24,
     "read_colour_scale_value": 11,
-    "trace_downstream": 15,
-    "read_elevation": 5,
+    "trace_upstream_catchment": 30,
+    "read_flow_direction": 10,
     "siting_downstream_impact": 10,
-    "read_flow_direction": 10
+    "read_elevation": 5
   },
   "vs_chance": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
       "correct": 10,
-      "n": 136,
-      "chance": 0.13170557292046897,
-      "p_value": 0.9886741160127909
+      "n": 137,
+      "chance": 0.1314458150889327,
+      "p_value": 0.9892949425060459
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "correct": 12,
@@ -51,9 +51,9 @@
   },
   "overall": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
-      "image": 0.07352941176470588,
+      "image": 0.072992700729927,
       "blind": null,
-      "n": 136
+      "n": 137
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "image": 0.08333333333333333,
@@ -76,7 +76,7 @@
       "read_flow_direction": 0.2,
       "siting_downstream_impact": 0.0,
       "trace_upstream_catchment": 0.0,
-      "read_colour_scale_threshold": 0.13333333333333333,
+      "read_colour_scale_threshold": 0.125,
       "read_colour_scale_value": 0.18181818181818182
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
@@ -108,7 +108,7 @@
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
       "map": 0.08,
       "satellite": 0.03333333333333333,
-      "thermal": 0.15384615384615385
+      "thermal": 0.14814814814814814
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "map": 0.1,
@@ -127,7 +127,7 @@
       "2": 0.08,
       "3": 0.058823529411764705,
       "4": 0.07407407407407407,
-      "5": 0.047619047619047616
+      "5": 0.045454545454545456
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "1": 0.13793103448275862,
@@ -494,7 +494,7 @@
   "map_vs_satellite": {},
   "error_tags": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
-      "missed_some": 52,
+      "missed_some": 53,
       "unparseable_or_no_answer": 34,
       "extra_unrelated": 10,
       "underestimate": 9,
@@ -505,10 +505,10 @@
       "trap:downstream_not_upstream": 4,
       "off_by_one_sector": 2,
       "trap:cooled_downstream": 2,
+      "trap:other_stream": 2,
       "trap:later_village": 1,
       "trap:too_late_after_village": 1,
-      "trap:upstream_of_outfall": 1,
-      "trap:other_stream": 1
+      "trap:upstream_of_outfall": 1
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "trap:downstream_not_upstream": 29,
@@ -548,9 +548,9 @@
   },
   "trap_fall_rate": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
-      "exposed": 90,
-      "fell": 16,
-      "rate": 0.17777777777777778
+      "exposed": 91,
+      "fell": 17,
+      "rate": 0.18681318681318682
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "exposed": 98,
@@ -684,10 +684,10 @@
   },
   "cost": {
     "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
-      "input_tokens": 169256,
-      "output_tokens": 3657,
+      "input_tokens": 170529,
+      "output_tokens": 3705,
       "usd": 0,
-      "mean_latency_s": 18.83
+      "mean_latency_s": 18.81
     },
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "input_tokens": 168420,
