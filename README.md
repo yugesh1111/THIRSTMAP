@@ -12,6 +12,28 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 ---
 
+<!-- FINDINGS:START -->
+## Findings (open models, real runs)
+
+| Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
+|---|---|---|---|---|---|---|---|---|---|
+| Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | – | 69% (n=16) |
+| SmolVLM-256M-Instruct | 0.26B | **10%** (9/91) | – | 14% | 0.92 | 0% | 100% | – | – |
+| Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | – | 94% (n=16) |
+
+*Interim: evaluation still running for SmolVLM-256M-Instruct (91 of 144 tasks so far); numbers for it will change and more models may be added.*
+
+### What the numbers say
+
+- **No open model is significantly better than random guessing overall** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
+- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; Qwen2-VL-2B-Instruct 8% vs 9%.
+- **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 100% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%).
+- **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; Qwen2-VL-2B-Instruct 94%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
+- **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
+
+Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · per-run report: [results/open_models/REPORT.md](results/open_models/REPORT.md)
+<!-- FINDINGS:END -->
+
 ## See it
 
 | One scene, three image styles, one answer key | Difficulty dial, level 1 → 5 |
@@ -49,7 +71,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 **Traps are built in:** a village on the *same* stream but *upstream*, a village *close* to the data centre but on *another* stream, a wetland placed *after* a village (too late), and monitoring points upstream or on other streams. When a model answers wrong, the scorer names the trap it fell for.
 
-**Counterfactual twins:** for almost every scene (106 of 107), the dataset also contains a **twin with one minimal, visible change that must flip the answer**. The twin is otherwise identical: same terrain, villages and labels (≈0.5% of pixels change). The change rotates between three kinds:
+**Counterfactual twins:** for almost every scene (306 of 308), the dataset also contains a **twin with one minimal, visible change that must flip the answer**. The twin is otherwise identical: same terrain, villages and labels (≈0.5% of pixels change). The change rotates between three kinds:
 
 | Twin kind | What changes in the image | Answers that flip |
 |---|---|---|
@@ -57,7 +79,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 | Intake moved | Intake I moves to a nearby point, often across a confluence | Q7 |
 | Thermal | The cooling water is hotter or cooler (colours only) | Q8, Q9 |
 
-**Pair accuracy** counts a pair only if both versions are answered correctly. It exposes models that answer from habit instead of looking. For example, the offline `mock:stubborn` baseline (it never notices a change) scores **85% on single tasks but 0% pair accuracy**.
+**Pair accuracy** counts a pair only if both versions are answered correctly. It exposes models that answer from habit instead of looking. For example, the offline `mock:stubborn` baseline (it never notices a change) scores **87% on single tasks but 0% pair accuracy**.
 
 **Eye-exam difficulty dial (levels 1–5):** rougher terrain, more ridges, more distractor streams, more villages and a finer contour interval. The report shows each model's **breaking level** per skill.
 
@@ -76,7 +98,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 |---|---|
 | **V1** independent recomputation | A third-party library (**pysheds**) re-derives flow directions and every answer. Disagreement means the question is dropped (≈99.9% cell agreement in practice). |
 | **V2** known-answer tests | Tilted plane, V-valley, ridge split, bowl-to-lake (`tests/test_hydrology.py`) |
-| **V3** counterfactual | Unit test: removing a ridge must change the answer. In the dataset: 263 linked twin pairs whose answers provably differ, each twin independently re-validated (V1–V11) |
+| **V3** counterfactual | Unit test: removing a ridge must change the answer. In the dataset: 740 linked twin pairs whose answers provably differ, each twin independently re-validated (V1–V11) |
 | **V4** determinism | Same seed gives byte-identical images and answers |
 | **V5/V7/V8** margins | No farm within 3 m of the pond's height, unaffected villages ≥ 5 cells from the path, exactly one correct wetland, no temperature within 0.8 °C of the threshold |
 | **V9** pixel evidence | The answer path is checked **in the rendered pixels** of each style |
@@ -104,13 +126,25 @@ Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 38 tests
+python3 -m pytest -q                                    # 41 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
 python3 evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
 python3 build_demo.py --dataset dataset --run results/offline_baselines --out demo   # open demo/index.html
 ```
+
+**Free open models, no keys (CPU or GPU):**
+
+```bash
+./run_open_models.sh                                           # 4 open models -> results/open_models/
+MODELS="Qwen/Qwen2.5-VL-3B-Instruct" ./run_open_models.sh      # just one
+python3 evaluate.py --dataset dataset --models hf:Qwen/Qwen2.5-VL-3B-Instruct --variants 24 --run open_models
+python3 finetune.py --test-run results/open_models --train-per-q 30 --epochs 2   # can the data teach the skill?
+python3 findings.py --run results/open_models                  # docs/FINDINGS.md + README findings, from the numbers
+```
+
+`hf:MODEL_ID[@NNNpx]` runs any Hugging Face image-text-to-text model through `transformers`. Probes (`--probes`) check whether a model can read the labels and colour scale at all, before blaming its reasoning. Variants (`--variants`) ask the same question about the same scene in dry season, monsoon, haze and coarse-sensor looks: the answer must not change.
 
 Evaluating real models (keys are read from the environment, **never stored in code**):
 
@@ -131,11 +165,15 @@ python3 staircase.py --dataset dataset --models claude:claude-opus-5-5 --trials 
 This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row make the next task harder, one wrong answer makes it easier. It converges where the model is right about 71% of the time, so lucky guesses can't climb. That's about 144 calls per model instead of about 2,000. Offline check: the oracle scores 5.5 (never fails) on every skill and the random guesser 0.5–1.5.
 
 ## Results status (read this first)
-No frontier AI model has been evaluated yet; that needs API access. Everything under `results/` so far comes from **offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`), which test the dataset and the scorer. They are not model findings. **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
-- every reported number recomputed independently from the raw responses (exact match);
-- the random baseline at its exact mathematical chance level (13.8% expected vs 13.7% observed, over 5,761 tasks);
-- 10 sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds (10/10);
-- spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
+- **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/open_models/REPORT.md`](results/open_models/REPORT.md). Every raw answer is in `results/open_models/responses.jsonl`.
+- **Frontier API models** (Claude, GPT, Gemini) have not been run yet; that needs API keys. The harness is the same: one command, below.
+- **Offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`) test the dataset and the scorer. They are **not model findings**.
+- **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
+  - every reported number recomputed independently from the raw responses (exact match);
+  - the random baseline at its exact mathematical chance level (13.8% expected vs 13.7% observed, over 5,761 tasks);
+  - 10 sampled dataset scenes regenerated **byte-for-byte** from the code and their seeds (10/10);
+  - spot-check sheets of random tasks (image, answer key and reveal) for checking by eye.
+- **Exact inputs:** `eval_set/` (published with the final run) holds exactly the tasks and images the open models saw, with SHA-256 checksums, so anyone can repeat the run on identical images.
 
 ## Outputs of an evaluation run (`results/<run>/`)
 - `REPORT.md`: overall accuracy (with vs. without image), accuracy by skill, **breaking level per skill**, **map vs satellite** consistency, **counterfactual pair accuracy** and "unchanged answer" rate, trap fall rate and error diagnosis, cost
@@ -148,14 +186,14 @@ No frontier AI model has been evaluated yet; that needs API access. Everything u
 thirstmap/terrain.py      fractal terrain, priority-flood, D8 routing, accumulation, tracing
 thirstmap/scene.py        scene script: data centre, outfall, villages (+traps), wetlands, sites, intake, heat plume
 thirstmap/realterrain.py  real Copernicus DEM + ESA WorldCover windows for Indian locations
-thirstmap/questions.py    9 question types -> answer key (options, traps, styles)
+thirstmap/questions.py    10 question types -> answer key (options, traps, styles)
 thirstmap/render_sat.py   satellite-style renderer
 thirstmap/render_map.py   topographic map renderer
 thirstmap/render_thermal.py thermal false-colour renderer
 thirstmap/validate.py     V1–V11 validators (pysheds cross-check, margins, pixel evidence, labels)
 thirstmap/counterfactual.py twins: one minimal change (outfall / intake / temperature) that must flip the answer
 thirstmap/dataset.py      tasks (question x style) with prompts and scoring rules
-thirstmap/models.py       Claude / OpenAI-compatible / Gemini adapters + offline oracle, random & stubborn baselines
+thirstmap/models.py       Claude / OpenAI-compatible / Gemini / Hugging Face adapters + offline oracle, random & stubborn baselines
 thirstmap/scoring.py      robust answer parsing, scoring (exact / set-F1 / tolerance), error diagnosis
 generate.py               scene -> render -> validate -> keep / drop / regenerate
 build_dataset.py          parallel batch build + manifest (counts, validation pass rates, answer balance)
@@ -164,6 +202,14 @@ build_demo.py             self-contained demo page: image -> question -> model a
 staircase.py              adaptive eye exam (2-down/1-up) per model x skill
 human_eval.py             human baseline page + scorer (same tasks, same scorer)
 validation_report.py      collects all validation evidence into docs/VALIDATION_REPORT.md
+probes.py                 perception probes: can the model read labels, heights and the colour scale at all?
+variants.py               appearance variants (monsoon / haze / coarse sensor) that must not change the answer
+run_open_models.sh        four free Hugging Face models, same tasks, no keys
+finetune.py               LoRA fine-tune of a small open model on held-out scenes; base vs tuned
+findings.py               writes docs/FINDINGS.md and the README findings from summary.json
+publish_eval_set.py       copies exactly the evaluated tasks + images to eval_set/ with checksums
+verify_results.py         independent recomputation, chance check, byte-for-byte regeneration
+make_gifs.py              the GIFs in this README
 ```
 
 ## Honest limitations
@@ -173,6 +219,8 @@ validation_report.py      collects all validation evidence into docs/VALIDATION_
 - Real-terrain scenes use hypothetical facilities and villages; we make no claims about real facilities.
 - Some impact statistics come from secondary reporting and are estimates (see the brief for sources).
 - The OpenAI-compatible and Gemini adapters follow the official SDKs but were not exercised in the build environment (no keys there).
+- Reproducibility is byte-for-byte on the same platform. A different machine can build a slightly different (equally valid) dataset because of floating-point and font-rendering details: GitHub's runners built 310 scenes / 5,779 tasks where our machine built 308 / 5,761. That is why the exact evaluated inputs are published in `eval_set/`.
+- The open models were small (0.26B–3B parameters) and ran on CPU with greedy decoding; larger models may do much better. The fine-tuning test used images reduced to 512 px.
 
 ## Data credits
 Copernicus DEM GLO-30 (© DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the European Union and ESA; all rights reserved), modified · ESA WorldCover 10 m 2021 v200 (CC BY 4.0).

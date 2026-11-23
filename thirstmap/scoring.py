@@ -19,6 +19,13 @@ def _extract_json(raw):
             return json.loads(m.group(0)), True
         except ValueError:
             continue
+    # cut-off or malformed JSON that still states its answer, e.g. '{"answer": "SW", "city": ...'
+    m = re.search(r'"answer"\s*:\s*(\[[^\]]*\]|"[^"]*"|-?\d+(?:\.\d+)?|null)', raw)
+    if m:
+        try:
+            return {"answer": json.loads(m.group(1))}, False
+        except ValueError:
+            pass
     return None, False
 
 
@@ -44,8 +51,9 @@ def _labels(value, options):
 
 def parse(raw, task):
     obj, ok = _extract_json(raw)
-    value = obj.get("answer") if isinstance(obj, dict) else None
-    if not ok or value is None and not (isinstance(obj, dict) and "answer" in obj):
+    if isinstance(obj, dict) and "answer" in obj:
+        value = obj["answer"]
+    else:
         value, ok = raw, False                         # fall back to the free text
     sc = task["scoring"]
     if sc == "set":

@@ -7,6 +7,8 @@ import json
 from collections import Counter, defaultdict
 from pathlib import Path
 
+from thirstmap.scoring import score
+
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -55,6 +57,7 @@ def build_report(run_dir, dataset):
         r = json.loads(line)
         if r.get("error") or r["task_id"] not in tasks:
             continue
+        r.update(score(tasks[r["task_id"]], r["raw"]))   # the raw reply is the source of truth: always re-score
         latest[(r["model"], r["mode"], r["task_id"])] = r
     rows = [dict(r, **{k: tasks[r["task_id"]][k] for k in ("skill", "style", "level", "qid", "scene_id")})
             for r in latest.values()]

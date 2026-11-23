@@ -41,3 +41,10 @@ def test_number_tolerance():
 def test_unparseable():
     r = score(T_CHOICE, "I cannot determine this from the image.")
     assert not r["correct"] and r["tags"]
+
+
+def test_cut_off_json_still_states_answer():
+    # a reply cut off by the token limit, as a real small model produced it
+    raw = ' {\n    "answer": "SE",\n    "city": "V3",\n    "country": "VILLAGE",\n    "sub_city'
+    assert score(T_DIR, raw)["correct"]
+    assert not score(T_DIR, ' {\n    "answer": "NW",\n    "note": "upstr')["correct"]

@@ -14,6 +14,7 @@ from pathlib import Path
 from PIL import Image
 
 from report import SKILL_LABEL, SKILL_ORDER
+from thirstmap.scoring import score
 
 
 def main():
@@ -33,9 +34,10 @@ def main():
     answers = defaultdict(dict)
     for line in open(run / "responses.jsonl"):
         r = json.loads(line)
-        if not r.get("error") and r["mode"] == "image":
-            answers[r["task_id"]][r["model"]] = dict(raw=r.get("raw", "")[:400], parsed=r.get("parsed"),
-                                                     correct=r["correct"], tags=r.get("tags", []))
+        if not r.get("error") and r["mode"] == "image" and r["task_id"] in tasks:
+            sc = score(tasks[r["task_id"]], r.get("raw", ""))       # re-score the raw reply, as the report does
+            answers[r["task_id"]][r["model"]] = dict(raw=r.get("raw", "")[:400], parsed=sc["parsed"],
+                                                     correct=sc["correct"], tags=sc["tags"])
     by_skill = defaultdict(list)
     for tid in answers:
         by_skill[tasks[tid]["skill"]].append(tid)
