@@ -18,7 +18,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
 | **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
-| **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 30 of the questions the models answered |
+| **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 32 questions Gemini and the open models also answered, including all 7 before-and-after pairs |
 | **Run it** | `./run_all.sh --quick` (about 2 minutes) | tests, a small dataset, baselines, reports, demo |
 
 | Judging criterion | Where ThirstMap answers it |
@@ -76,7 +76,7 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 
 ## See it
 
-**Live demo (no login): https://yugesh1111.github.io/THIRSTMAP/** · **Human test: https://yugesh1111.github.io/THIRSTMAP/human/** (30 of the questions the models answered; send the copied answers to the team, then `python3 human_eval.py score answers_*.txt`)
+**Live demo (no login): https://yugesh1111.github.io/THIRSTMAP/** · **Human test: https://yugesh1111.github.io/THIRSTMAP/human/** (32 questions Gemini and the open models also answered, all 7 pairs included; send the copied answers to the team, then `python3 human_eval.py score answers_*.txt`)
 
 **Demo:** [`docs/demo/index.html`](docs/demo/index.html) opens with the results, then walks one real scene through every pipeline step, then shows 64 tasks with each open model's real reply, an automatic ✓/✗ and an answer-key reveal, plus before-and-after pairs. It is also in the repo; open the file in a browser, no server needed.
 
@@ -170,7 +170,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 `dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.85% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
 
-**Human baseline (V15):** `python3 human_eval.py build --from-run results/models` writes `human_eval/index.html` (online at https://yugesh1111.github.io/THIRSTMAP/human/): 30 questions, 3 per skill, all of them questions every model answered, with no answers in the page. People press *Copy my answers* and send the text; `python3 human_eval.py score answers_*.txt` scores them with the models' scorer and puts humans next to each model on the same questions.
+**Human baseline (V15):** `python3 human_eval.py build --from-run results/frontier --pairs` writes `human_eval/index.html` (online at https://yugesh1111.github.io/THIRSTMAP/human/): 32 questions that Gemini and the open models also answered, including all 7 before-and-after pairs (kept far apart) and at least 2 per skill, with each question's context line exactly as the models saw it and no answers in the page. People press *Copy my answers* and send the text; `python3 human_eval.py score answers_*.txt --dataset eval_set --run results/frontier` scores them with the models' scorer and puts humans next to each model on the same questions and pairs.
 
 ---
 
