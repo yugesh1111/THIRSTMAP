@@ -335,14 +335,14 @@ def main():
             if x["qid"] in seen or len(cards) >= 3 or not (adir / x["file"]).exists():
                 continue
             seen.add(x["qid"])
-            shutil.copy(adir / x["file"], out / "analysis" / Path(x["file"]).name)
+            shutil.copy(adir / x["file"], out / "analysis" / ("pair__" + Path(x["file"]).name))
             twin_story = [st["text"] for st in A["stories"] if st["model"] == best
                           and st["task_id"] == x["pair_id"].replace("__", "_cf__", 1)]
             verdict = (f"Right on the original, wrong on the twin{' with the same answer' if x['same_answer'] else ''}."
                        if x["original_right"] and not x["twin_right"] else
                        "Wrong on the original, right on the twin." if x["twin_right"] and not x["original_right"]
                        else "Wrong on both.")
-            cards.append(f'<figure class="pairfig"><img src="analysis/{E(Path(x["file"]).name)}" alt="{E(display(best))} answers '
+            cards.append(f'<figure class="pairfig"><img src="analysis/pair__{E(Path(x["file"]).name)}" alt="{E(display(best))} answers '
                          f'on a scene and its twin, drawn on the images" loading="lazy" width="1304" height="840">'
                          f'<figcaption><b>{E(x["question"])}</b> {E(verdict)} Original key {E(fmt(x["original"]["answer"]))}, '
                          f'model said {E(fmt(x["original"]["model"]))}; twin key {E(fmt(x["twin"]["answer"]))}, '
