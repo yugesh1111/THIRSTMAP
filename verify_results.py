@@ -106,7 +106,7 @@ def main():
     ap.add_argument("--run", default="results/offline_baselines")
     ap.add_argument("--regen", type=int, default=6)
     ap.add_argument("--out", default="docs")
-    ap.add_argument("--open-run", default="results/models",
+    ap.add_argument("--open-run", nargs="+", default=["results/models", "results/frontier"],
                     help="run with real (open) model answers to re-check; skipped if missing")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)
@@ -117,7 +117,7 @@ def main():
          "> **Important:** the models named `mock:*` are offline *baselines* used to test the dataset and the",
          "> scorer: `oracle` returns the answer key, `random` picks random options, `stubborn` repeats the",
          "> original answer on counterfactual twins. They are **not** AI models. Real open-weight models are",
-         "> checked in section 1b. No frontier API model has been evaluated yet (that needs API keys).", ""]
+         "> checked in section 1b, open models and Gemini alike.", ""]
 
     # 1 + 2: recompute numbers, compare with summary and with exact chance
     rows = [json.loads(l) for l in open(run / "responses.jsonl")]
@@ -163,68 +163,68 @@ def main():
         L.append("")
 
     # 1b: real open-model answers: stored flags vs summary, and a second independent parser
-    orun = Path(a.open_run)
-    if (orun / "responses.jsonl").exists() and (orun / "summary.json").exists():
-        alltasks = dict(tasks)
-        for extra in ("probes.jsonl", "variants.jsonl"):
-            if (ds / extra).exists():
-                alltasks.update({json.loads(l)["task_id"]: json.loads(l) for l in open(ds / extra)})
-        osumm = json.loads((orun / "summary.json").read_text())
-        olatest = {}
-        for line in open(orun / "responses.jsonl"):
-            r = json.loads(line)
-            if not r.get("error") and r["task_id"] in tasks:     # main tasks only (as in "overall")
-                olatest[(r["model"], r["mode"], r["task_id"])] = r
-        L += [f"## 1b. Real open-model answers ({orun})", "",
-              "These are free-text replies from real models, so a second parser, written separately from the "
-              "project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same "
-              "verdict; disagreements are listed so they can be judged by eye.", "",
-              "| Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |",
-              "|---|---|---|---|---|---|---|"]
-        # same rule as the report: compare on the tasks every model answered with the image
-        answered = defaultdict(set)
-        for (m, mode, tid) in olatest:
-            if mode == "image":
-                answered[m].add(tid)
-        common = set.intersection(*answered.values()) if answered else set()
-        L.insert(len(L) - 2, f"Compared on the {len(common)} tasks that every model answered with the image.")
-        L.insert(len(L) - 2, "")
-        obym = defaultdict(list)
-        for (m, mode, tid), r in olatest.items():
-            if tid in common:
-                obym[(m, mode)].append((alltasks[tid], r))
-        disagree = []
-        for (m, mode), v in sorted(obym.items()):
-            first = [score(t, r["raw"])["correct"] for t, r in v]
-            stored = sum(first) / len(v)
-            theirs = osumm["overall"].get(m, {}).get(mode)
-            second = [lenient_correct(t, r["raw"]) for t, r in v]
-            agree = sum(s1 == s2 for s1, s2 in zip(first, second)) / len(v)
-            disagree += [(m, t, r, s1) for s1, s2, (t, r) in zip(first, second, v) if s1 != s2]
-            ok = theirs is not None and abs(stored - theirs) < 1e-9
-            L.append(f"| {m} | {mode} | {len(v)} | {100 * stored:.1f}% | "
-                     f"{'–' if theirs is None else f'{100 * theirs:.1f}%'} {'✅' if ok else '❌'} | "
-                     f"{100 * sum(second) / len(v):.1f}% | {100 * agree:.1f}% |")
-        L.append("")
-        if disagree:
-            L += [f"**{len(disagree)} replies where the two parsers disagree** (first 12):", "",
-                  "| Model | Task | Key | Raw reply | Project scorer |", "|---|---|---|---|---|"]
-            for m, t, r, s1 in disagree[:12]:
-                raw = " ".join(str(r["raw"]).split())[:90].replace("|", "\\|")
-                L.append(f"| {m.split('/')[-1]} | {t['task_id']} | {t['answer']} | `{raw}` | "
-                         f"{'right' if s1 else 'wrong'} |")
+    for orun in map(Path, a.open_run):
+        if (orun / "responses.jsonl").exists() and (orun / "summary.json").exists():
+            alltasks = dict(tasks)
+            for extra in ("probes.jsonl", "variants.jsonl"):
+                if (ds / extra).exists():
+                    alltasks.update({json.loads(l)["task_id"]: json.loads(l) for l in open(ds / extra)})
+            osumm = json.loads((orun / "summary.json").read_text())
+            olatest = {}
+            for line in open(orun / "responses.jsonl"):
+                r = json.loads(line)
+                if not r.get("error") and r["task_id"] in tasks:     # main tasks only (as in "overall")
+                    olatest[(r["model"], r["mode"], r["task_id"])] = r
+            L += [f"## 1b. Real model answers ({orun})", "",
+                  "These are free-text replies from real models, so a second parser, written separately from the "
+                  "project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same "
+                  "verdict; disagreements are listed so they can be judged by eye.", "",
+                  "| Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |",
+                  "|---|---|---|---|---|---|---|"]
+            # same rule as the report: compare on the tasks every model answered with the image
+            answered = defaultdict(set)
+            for (m, mode, tid) in olatest:
+                if mode == "image":
+                    answered[m].add(tid)
+            common = set.intersection(*answered.values()) if answered else set()
+            L.insert(len(L) - 2, f"Compared on the {len(common)} tasks that every model answered with the image.")
+            L.insert(len(L) - 2, "")
+            obym = defaultdict(list)
+            for (m, mode, tid), r in olatest.items():
+                if tid in common:
+                    obym[(m, mode)].append((alltasks[tid], r))
+            disagree = []
+            for (m, mode), v in sorted(obym.items()):
+                first = [score(t, r["raw"])["correct"] for t, r in v]
+                stored = sum(first) / len(v)
+                theirs = osumm["overall"].get(m, {}).get(mode)
+                second = [lenient_correct(t, r["raw"]) for t, r in v]
+                agree = sum(s1 == s2 for s1, s2 in zip(first, second)) / len(v)
+                disagree += [(m, t, r, s1) for s1, s2, (t, r) in zip(first, second, v) if s1 != s2]
+                ok = theirs is not None and abs(stored - theirs) < 1e-9
+                L.append(f"| {m} | {mode} | {len(v)} | {100 * stored:.1f}% | "
+                         f"{'–' if theirs is None else f'{100 * theirs:.1f}%'} {'✅' if ok else '❌'} | "
+                         f"{100 * sum(second) / len(v):.1f}% | {100 * agree:.1f}% |")
             L.append("")
-        rs = random.Random(7)
-        sample_rows = rs.sample([x for x in olatest.values() if x["mode"] == "image"],
-                                min(10, sum(1 for x in olatest.values() if x["mode"] == "image")))
-        L += ["Ten random raw replies, exactly as the models wrote them:", "",
-              "| Model | Task | Key | Raw reply | Scored |", "|---|---|---|---|---|"]
-        for r in sample_rows:
-            t = alltasks[r["task_id"]]
-            raw = " ".join(str(r["raw"]).split())[:90].replace("|", "\\|")
-            L.append(f"| {r['model'].split('/')[-1]} | {t['task_id']} | {t['answer']} | `{raw}` | "
-                     f"{'✅' if score(t, r['raw'])['correct'] else '❌'} |")
-        L.append("")
+            if disagree:
+                L += [f"**{len(disagree)} replies where the two parsers disagree** (first 12):", "",
+                      "| Model | Task | Key | Raw reply | Project scorer |", "|---|---|---|---|---|"]
+                for m, t, r, s1 in disagree[:12]:
+                    raw = " ".join(str(r["raw"]).split())[:90].replace("|", "\\|")
+                    L.append(f"| {m.split('/')[-1]} | {t['task_id']} | {t['answer']} | `{raw}` | "
+                             f"{'right' if s1 else 'wrong'} |")
+                L.append("")
+            rs = random.Random(7)
+            sample_rows = rs.sample([x for x in olatest.values() if x["mode"] == "image"],
+                                    min(10, sum(1 for x in olatest.values() if x["mode"] == "image")))
+            L += ["Ten random raw replies, exactly as the models wrote them:", "",
+                  "| Model | Task | Key | Raw reply | Scored |", "|---|---|---|---|---|"]
+            for r in sample_rows:
+                t = alltasks[r["task_id"]]
+                raw = " ".join(str(r["raw"]).split())[:90].replace("|", "\\|")
+                L.append(f"| {r['model'].split('/')[-1]} | {t['task_id']} | {t['answer']} | `{raw}` | "
+                         f"{'✅' if score(t, r['raw'])['correct'] else '❌'} |")
+            L.append("")
 
     # 3: regenerate scenes from seeds, byte-identical?
     from generate import generate

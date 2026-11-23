@@ -18,6 +18,7 @@ flowchart LR
   subgraph EVAL["3 · Evaluate"]
     E["evaluate.py<br/>Claude / OpenAI-compatible / Gemini<br/>Hugging Face open models (hf:)<br/>+ oracle / random / stubborn baselines<br/>with and without the image"]
     FT["finetune.py<br/>LoRA on held-out scenes:<br/>can the data teach the skill?"]
+    FR["frontier.py<br/>API models under a request budget:<br/>batched prompts, 768 px images"]
     ST["staircase.py<br/>adaptive eye exam"]
     H["human_eval.py<br/>human baseline"]
   end
@@ -38,6 +39,7 @@ flowchart LR
   B --> E --> REP --> FI
   E --> ES
   B --> FT --> REP
+  B --> FR --> REP
   B --> ST
   B --> H
   E --> D
@@ -64,6 +66,7 @@ A **scene script** (terrain + simulated water + placements) is the single source
 | Reading checks (probes) | Separates "cannot see the label" from "cannot reason about the water" |
 | Appearance variants | Season, haze and sensor resolution must not change a correct answer |
 | Raw replies are the source of truth | The report and demo re-score every raw reply; a second parser re-checks them |
+| Batch prompting for API models | A free tier allows ~20 requests a day; one request answers every question about an image (~5), and open models get the same prompts |
 | Publish the exact evaluated inputs | Dataset builds can differ slightly across machines; `eval_set/` removes the doubt |
 
 ## Repeatability

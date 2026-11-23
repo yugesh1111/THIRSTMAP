@@ -168,6 +168,15 @@ python3 findings.py --run results/models                  # docs/FINDINGS.md + R
 
 `hf:MODEL_ID[@NNNpx]` runs any Hugging Face image-text-to-text model through `transformers`. Probes (`--probes`) check whether a model can read the labels and colour scale at all, before blaming its reasoning. Variants (`--variants`) ask the same question about the same scene in dry season, monsoon, haze and coarse-sensor looks: the answer must not change.
 
+**Frontier models on a free API tier (request economy):** a free Gemini key allows about 20 requests per model per day, so `frontier.py` asks every question about an image in one request (batch prompting), resizes images to 768 px, keeps a hard request budget per model, stops on a daily-quota error and never re-sends an answered image. The open models get the identical batched prompts and images, so the comparison is like for like.
+
+```bash
+python3 frontier.py select --out results/frontier                  # 18 images (6 before-and-after pairs), 89 questions
+OPENAI_API_KEY=proxy-injected python3 frontier.py run --budget 20 \
+    --models "openai:gemini-3.1-flash-lite@https://generativelanguage.googleapis.com/v1beta/openai/"
+python3 frontier.py run --models hf:Qwen/Qwen2.5-VL-3B-Instruct      # same prompts, local
+```
+
 Evaluating real models (keys are read from the environment, **never stored in code**):
 
 ```bash
@@ -228,6 +237,7 @@ validation_report.py      collects all validation evidence into docs/VALIDATION_
 probes.py                 perception probes: can the model read labels, heights and the colour scale at all?
 variants.py               appearance variants (monsoon / haze / coarse sensor) that must not change the answer
 run_open_models.sh        four free Hugging Face models, same tasks, no keys
+frontier.py               frontier check under a request budget: batched prompts, one-tile images, resume
 finetune.py               LoRA fine-tune of a small open model on held-out scenes; base vs tuned
 findings.py               writes docs/FINDINGS.md and the README findings from summary.json
 publish_eval_set.py       copies exactly the evaluated tasks + images to eval_set/ with checksums
