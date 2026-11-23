@@ -72,6 +72,7 @@ def build_report(run_dir, dataset):
     S["chance_by_skill"] = {sk: sum(chance(tasks[t]) for t in ids) / len(ids)
                             for sk, ids in _group([tasks[t] for t in img_tasks], ("skill",)).items()
                             for ids in [[x["task_id"] for x in ids]]}
+    S["tasks_by_skill_evaluated"] = {sk: len(v) for sk, v in _group([tasks[t] for t in img_tasks], ("skill",)).items()}
     S["vs_chance"] = {}
     for m in models:
         mine = [r for r in rows if r["model"] == m and r["mode"] == "image"]
@@ -290,11 +291,14 @@ def markdown(S, out):
         for m, v in S["vs_chance"].items():
             L.append(f"| {m} | {v['correct']}/{v['n']} | {_pct(v['correct'] / v['n'])} | {_pct(v['chance'])} | "
                      f"{v['p_value']:.2g} |")
-    L += ["", "## Accuracy by visual skill", "", "| Skill | Chance | " + " | ".join(S["models"]) + " |",
-          "|---|---|" + "---|" * len(S["models"])]
+    L += ["", "## Accuracy by visual skill", "",
+          "Tasks = distinct tasks per skill (every model answers the same ones); with 10-30 tasks per skill, "
+          "differences of a few points are within noise.", "",
+          "| Skill | Tasks | Chance | " + " | ".join(S["models"]) + " |",
+          "|---|---|---|" + "---|" * len(S["models"])]
     for sk in SKILL_ORDER:
         if any(sk in S["by_skill"][m] for m in S["models"]):
-            L.append(f"| {SKILL_LABEL[sk]} | {_pct(S['chance_by_skill'].get(sk))} | "
+            L.append(f"| {SKILL_LABEL[sk]} | {S['tasks_by_skill_evaluated'].get(sk, 0)} | {_pct(S['chance_by_skill'].get(sk))} | "
                      + " | ".join(_pct(S["by_skill"][m].get(sk)) for m in S["models"]) + " |")
     L += ["", "## Eye exam: breaking level (first difficulty where accuracy < 50%)", "",
           "| Skill | " + " | ".join(S["models"]) + " |", "|---|" + "---|" * len(S["models"])]

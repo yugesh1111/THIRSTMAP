@@ -1,0 +1,14 @@
+{
+  "dataset": "dataset",
+  "models": [
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct"
+  ],
+  "run": "open_models",
+  "per_cell": 1,
+  "levels": null,
+  "styles": null,
+  "blind": true,
+  "workers": 1,
+  "pairs": 30,
+  "probes": 4
+}
