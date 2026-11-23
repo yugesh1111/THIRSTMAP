@@ -1,7 +1,7 @@
 {
   "dataset": "dataset",
   "models": [
-    "hf:HuggingFaceTB/SmolVLM-256M-Instruct"
+    "hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct"
   ],
   "run": "open_models",
   "per_cell": 1,

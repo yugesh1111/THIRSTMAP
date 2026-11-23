@@ -5,31 +5,32 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 | Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |
 |---|---|---|---|---|---|---|---|---|---|
 | Qwen2.5-VL-3B-Instruct | 3B | **16%** (23/144) | 13% | 13% | 0.18 | 0% | 87% | – | 69% (n=16) |
+| SmolVLM2-2.2B-Instruct | 2.2B | **8%** (12/144) | 12% | 13% | 0.97 | 0% | 77% | – | 69% (n=16) |
 | Qwen2-VL-2B-Instruct | 2B | **8%** (12/144) | 9% | 13% | 0.97 | 0% | 87% | – | 94% (n=16) |
 | SmolVLM-256M-Instruct | 0.26B | **8%** (11/144) | 10% | 13% | 0.99 | 0% | 73% | – | 0% (n=16) |
 
 ## What the numbers say
 
 - **No open model is significantly better than random guessing overall** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 16% against a chance level of 13% (p = 0.18).
-- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
-- **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%).
-- **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
+- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 16% vs 13%; SmolVLM2-2.2B-Instruct 8% vs 12%; Qwen2-VL-2B-Instruct 8% vs 9%; SmolVLM-256M-Instruct 8% vs 10%.
+- **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 87% (both right: 0%); SmolVLM2-2.2B-Instruct 77% (both right: 0%); Qwen2-VL-2B-Instruct 87% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%).
+- **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; SmolVLM2-2.2B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
 - **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
 
 ## Accuracy by skill (chance = random guessing on the same tasks)
 
-| Skill | Tasks | Chance | Qwen2.5-VL-3B-Instruct | Qwen2-VL-2B-Instruct | SmolVLM-256M-Instruct |
-|---|---|---|---|---|---|
-| Trace downstream | 15 | 2% | 0% | 0% | 13% |
-| Order along flow | 24 | 18% | 17% | 17% | 0% |
-| Measure along flow | 10 | 11% | 30% | 20% | 0% |
-| Place wetland | 10 | 25% | 30% | 40% | 10% |
-| Site selection | 10 | 33% | 30% | 0% | 0% |
-| Trace upstream | 30 | 4% | 10% | 0% | 0% |
-| Flow direction | 10 | 12% | 0% | 10% | 20% |
-| Read elevation | 5 | 8% | 20% | 20% | 20% |
-| Thermal threshold | 19 | 11% | 26% | 0% | 16% |
-| Thermal value | 11 | 20% | 9% | 0% | 18% |
+| Skill | Tasks | Chance | Qwen2.5-VL-3B-Instruct | SmolVLM2-2.2B-Instruct | Qwen2-VL-2B-Instruct | SmolVLM-256M-Instruct |
+|---|---|---|---|---|---|---|
+| Trace downstream | 15 | 2% | 0% | 7% | 0% | 13% |
+| Order along flow | 24 | 18% | 17% | 4% | 17% | 0% |
+| Measure along flow | 10 | 11% | 30% | 0% | 20% | 0% |
+| Place wetland | 10 | 25% | 30% | 40% | 40% | 10% |
+| Site selection | 10 | 33% | 30% | 0% | 0% | 0% |
+| Trace upstream | 30 | 4% | 10% | 3% | 0% | 0% |
+| Flow direction | 10 | 12% | 0% | 0% | 10% | 20% |
+| Read elevation | 5 | 8% | 20% | 20% | 20% | 20% |
+| Thermal threshold | 19 | 11% | 26% | 11% | 0% | 16% |
+| Thermal value | 11 | 20% | 9% | 18% | 0% | 18% |
 
 ## Caveats
 
