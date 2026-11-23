@@ -5,6 +5,11 @@ on:
   push:
     tags: ["dataset-v*"]
   workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to create"
+        default: "dataset-v1.0"
+        required: true
 
 permissions:
   contents: write
@@ -43,7 +48,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          TAG="${GITHUB_REF_NAME}"
-          [[ "$TAG" == dataset-v* ]] || TAG="dataset-run-${GITHUB_RUN_NUMBER}"
+          TAG="${{ github.event.inputs.tag || github.ref_name }}"
           gh release create "$TAG" release/* --repo "$GITHUB_REPOSITORY" --target "$GITHUB_SHA" \
             --title "ThirstMap dataset ($TAG)" --notes-file .github/dataset-release-notes.md
