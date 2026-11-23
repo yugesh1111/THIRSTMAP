@@ -23,6 +23,16 @@ from thirstmap.scoring import score
 def build(a):
     ds, out = Path(a.dataset), Path(a.out)
     tasks = [json.loads(l) for l in open(ds / "tasks.jsonl")]
+    if a.from_run:      # only questions every model in that run answered, so humans and models share items
+        ids = {t["task_id"] for t in tasks}
+        per = defaultdict(set)
+        for line in open(Path(a.from_run) / "responses.jsonl"):
+            r = json.loads(line)
+            if r["mode"] == "image" and not r.get("error") and not r["model"].startswith("mock:") and r["task_id"] in ids:
+                per[r["model"]].add(r["task_id"])
+        mx = max(len(v) for v in per.values())       # models still running are left out of the intersection
+        common = set.intersection(*[v for v in per.values() if len(v) >= 0.8 * mx])
+        tasks = [t for t in tasks if t["task_id"] in common]
     rng = random.Random(7)
     by = defaultdict(list)
     for t in tasks:
@@ -54,13 +64,14 @@ def score_files(a):
     tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(ds / "tasks.jsonl")}
     rows = []
     for f in a.files:
-        sub = json.loads(Path(f).read_text())
+        txt = Path(f).read_text().strip()
+        sub = json.loads(txt[txt.index("{"): txt.rindex("}") + 1])      # tolerate text around a pasted code
         for r in sub["answers"]:
             t = tasks.get(r["id"])
             if t:
                 s = score(t, json.dumps({"answer": r["answer"]}))
-                rows.append(dict(person=sub.get("name", Path(f).stem), skill=t["skill"], correct=s["correct"],
-                                 seconds=r.get("seconds")))
+                rows.append(dict(person=sub.get("name") or Path(f).stem, skill=t["skill"], correct=s["correct"],
+                                 seconds=r.get("seconds"), id=r["id"]))
     if not rows:
         sys.exit("no matching answers")
     by = defaultdict(list)
@@ -73,6 +84,19 @@ def score_files(a):
     for sk in SKILL_ORDER:
         if sk in by:
             L.append(f"| {SKILL_LABEL[sk]} | {100 * sum(by[sk]) / len(by[sk]):.0f}% | {len(by[sk])} |")
+    if a.run and (Path(a.run) / "responses.jsonl").exists():
+        ids = {r["id"] for r in rows}
+        got = defaultdict(dict)
+        for line in open(Path(a.run) / "responses.jsonl"):
+            r = json.loads(line)
+            if r["mode"] == "image" and r["task_id"] in ids and not r.get("error") and not r["model"].startswith("mock:"):
+                got[r["model"]][r["task_id"]] = score(tasks[r["task_id"]], r["raw"])["correct"]
+        human = sum(r["correct"] for r in rows) / len(rows)
+        L += ["", f"### Humans vs models on the same {len(ids)} questions", "",
+              "| Who | Accuracy |", "|---|---|", f"| **Humans ({len(people)})** | **{100 * human:.0f}%** |"]
+        for m, v in sorted(got.items(), key=lambda kv: -sum(kv[1].values()) / max(1, len(kv[1]))):
+            if len(v) == len(ids):
+                L.append(f"| {m.split(':', 1)[-1].split('@')[0].split('/')[-1]} | {100 * sum(v.values()) / len(v):.0f}% |")
     secs = [r["seconds"] for r in rows if r.get("seconds")]
     if secs:
         L += ["", f"Median time per task: {sorted(secs)[len(secs) // 2]:.0f} s"]
@@ -111,7 +135,14 @@ function show(){
   document.getElementById('prog').style.width = (100 * k / T.length) + '%';
   document.getElementById('count').textContent = `Task ${Math.min(k + 1, T.length)} of ${T.length}`;
   const st = document.getElementById('stage');
-  if (k >= T.length) { st.innerHTML = '<div class="card" style="display:block;padding:16px"><p><b>Done, thank you!</b></p><button id="dl">Download my answers</button></div>';
+  if (k >= T.length) { const code = JSON.stringify({name: document.getElementById('who').value, answers});
+    st.innerHTML = '<div class="card" style="display:block;padding:16px"><p><b>Done, thank you!</b> Send your answers to the ThirstMap team: press <b>Copy my answers</b> and paste them into a message (or download them as a file).</p>'
+      + '<p style="display:flex;gap:8px;flex-wrap:wrap"><button id="cp">Copy my answers</button><button id="dl">Download my answers</button></p>'
+      + '<p class="muted" id="cpmsg"></p><textarea id="code" readonly rows="5" style="width:100%;font:12px monospace"></textarea></div>';
+    document.getElementById('code').value = code;
+    document.getElementById('cp').onclick = () => { const ta = document.getElementById('code'), m = document.getElementById('cpmsg');
+      navigator.clipboard.writeText(code).then(() => { m.textContent = 'Copied. Paste it into a message to the team.'; },
+        () => { ta.focus(); ta.select(); m.textContent = 'Press Ctrl+C (or long-press and Copy) to copy the selected text.'; }); };
     document.getElementById('dl').onclick = () => { const b = new Blob([JSON.stringify({name: document.getElementById('who').value, answers}, null, 1)], {type: 'application/json'});
       const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'answers_' + (document.getElementById('who').value || 'anon').replace(/\W+/g, '_') + '.json'; a.click(); };
     return; }
@@ -137,7 +168,9 @@ if __name__ == "__main__":
     sub = ap.add_subparsers(dest="cmd", required=True)
     b = sub.add_parser("build"); b.add_argument("--dataset", default="dataset")
     b.add_argument("--per-skill", type=int, default=3); b.add_argument("--out", default="human_eval")
+    b.add_argument("--from-run", default=None, help="pick only tasks every model in this run answered")
     s = sub.add_parser("score"); s.add_argument("files", nargs="+"); s.add_argument("--dataset", default="dataset")
+    s.add_argument("--run", default="results/models", help="compare with the models' answers to the same tasks")
     s.add_argument("--out", default="human_eval")
     a = ap.parse_args()
     build(a) if a.cmd == "build" else score_files(a)

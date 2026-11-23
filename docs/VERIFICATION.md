@@ -37,7 +37,7 @@ Expected correct by pure chance (computed from each task's options): **796.4** o
 | Q9 | 278 | 20.0% | 21.9% |
 | Q10 | 616 | 12.3% | 11.2% |
 
-## 1b. Real open-model answers (results/open_models)
+## 1b. Real open-model answers (results/models)
 
 These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
 

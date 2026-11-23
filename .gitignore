@@ -9,5 +9,5 @@ data/real/*.tif
 ci_dataset/
 ci_docs/
 results/ci*/
-!results/open_models/responses.jsonl
+!results/models/responses.jsonl
 !results/finetune/responses.jsonl

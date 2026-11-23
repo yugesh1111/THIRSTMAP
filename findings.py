@@ -3,7 +3,7 @@
 Every number comes from results/<run>/summary.json (and results/finetune/ if present),
 so nothing is copied by hand.
 
-Usage: python3 findings.py --run results/open_models [--finetune results/finetune]
+Usage: python3 findings.py --run results/models [--finetune results/finetune]
 """
 import argparse
 import json
@@ -36,17 +36,22 @@ def pct(x):
 
 
 def short(m):
-    return m.split("/")[-1]
+    """'hf:Qwen/Qwen2.5-VL-3B-Instruct' -> 'Qwen2.5-VL-3B-Instruct'; 'openai:gemini-3.5-flash' -> 'gemini-3.5-flash'."""
+    return m.split(":", 1)[-1].split("@")[0].split("/")[-1]
+
+
+def kind(m):
+    return "open (local CPU)" if m.startswith("hf:") else "frontier (API)"
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--run", default="results/open_models")
+    ap.add_argument("--run", default="results/models")
     ap.add_argument("--finetune", default="results/finetune")
     ap.add_argument("--dataset", default="dataset")
     a = ap.parse_args()
     S = json.loads((Path(a.run) / "summary.json").read_text())
-    models = [m for m in S["models"] if m.startswith("hf:")]
+    models = [m for m in S["models"] if not m.startswith("mock:")]
     rows = []
     for m in models:
         vc = S["vs_chance"].get(m)
@@ -58,17 +63,19 @@ def main():
         lab = list(probes.values())
         read = sum(v["acc"] * v["n"] for v in lab) / sum(v["n"] for v in lab) if lab else None
         read_n = sum(v["n"] for v in lab)
-        rows.append(dict(m=m, name=short(m), size=SIZE.get(short(m), "?"), acc=vc["correct"] / vc["n"],
+        rows.append(dict(m=m, name=short(m), size=SIZE.get(short(m), "API"), acc=vc["correct"] / vc["n"],
                          n=vc["n"], chance=vc["chance"], p=vc["p_value"], blind=S["overall"][m]["blind"],
                          pair=pr.get("pair_accuracy"), same=pr.get("unchanged_answer_rate"),
                          inv=inv.get("same_answer_all_looks"), inv_n=inv.get("groups"), read=read,
                          read_n=read_n if lab else 0))
     rows.sort(key=lambda r: -r["acc"])
-    L = ["# Findings: how well do open vision-language models trace water through the landscape?", "",
-         "Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Every model answered the "
+    api = [short(r["m"]) for r in rows if not r["m"].startswith("hf:")]
+    L = ["# Findings: how well do vision-language models trace water through the landscape?", "",
+         "Four free, open-weight models from Hugging Face run locally on CPU"
+         + (f", and {', '.join(api)} through its API" if api else "") + ". Every model answered the "
          "**same tasks**: one per (question × image style × difficulty) cell, 30 counterfactual pairs, perception "
-         "probes, and every question again **without the image**. Frontier API models (Claude, GPT, Gemini) run with "
-         "the same harness once keys are available.", "",
+         "probes, and every question again **without the image**. Claude and GPT run with the same harness once "
+         "keys are available.", "",
          "| Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |",
          "|---|---|---|---|---|---|---|---|---|---|"]
     for r in rows:
@@ -85,12 +92,17 @@ def main():
     beats = [r for r in rows if r["p"] < 0.05]
     L += ["", "## What the numbers say", ""]
     if not beats:
-        L.append(f"- **No open model is significantly better than random guessing overall** (all p ≥ 0.05). "
+        L.append(f"- **No model is significantly better than random guessing overall** (all p ≥ 0.05). "
                  f"The best, {rows[0]['name']}, scores {pct(rows[0]['acc'])} against a chance level of "
                  f"{pct(rows[0]['chance'])} (p = {rows[0]['p']:.2g}).")
     else:
-        L.append("- Better than chance (p < 0.05): " + ", ".join(f"{r['name']} ({pct(r['acc'])} vs {pct(r['chance'])})"
-                                                              for r in beats) + ".")
+        L.append("- **Better than random guessing (p < 0.05):** "
+                 + ", ".join(f"{r['name']} ({pct(r['acc'])} vs {pct(r['chance'])}, p = {r['p']:.2g})" for r in beats)
+                 + ". " + (f"Still, the best model is wrong on {pct(1 - rows[0]['acc'])} of the questions."
+                           if rows[0]["acc"] < 0.75 else ""))
+        rest = [r for r in rows if r["p"] >= 0.05]
+        if rest:
+            L.append("- **Not better than guessing:** " + ", ".join(f"{r['name']} ({pct(r['acc'])})" for r in rest) + ".")
     withb = [r for r in rows if r["blind"] is not None]
     if withb:
         gap = max(r["acc"] - r["blind"] for r in withb)
@@ -207,7 +219,8 @@ def main():
             if v:
                 L.append(f"| {r['name']} | {pct(v['well_formed'])} | {pct(r['acc'])} | {pct(v['accuracy_well_formed_only'])} |")
     L += ["", "## Caveats", "",
-          "- These are small open models (0.26B–3B parameters) on CPU, not frontier systems.",
+          "- The open models are small (0.26B–3B parameters) and ran on CPU with greedy decoding"
+          + ("; the API model ran with its provider's default settings." if api else "."),
           "- About 10–30 tasks per skill per model: per-skill differences of a few points are noise; "
           "the overall test against chance uses all tasks.",
           "- Images are synthetic renders; the real-terrain subset uses real elevation and land cover with hypothetical facilities.",
@@ -216,12 +229,12 @@ def main():
     Path("docs/FINDINGS.md").write_text("\n".join(L) + "\n")
     readme = Path("README.md")
     s = readme.read_text()
-    block = "\n".join(["<!-- FINDINGS:START -->", "## Findings (open models, real runs)", ""] +
+    block = "\n".join(["<!-- FINDINGS:START -->", "## Findings (real runs)", ""] +
                       [x.replace("## ", "### ", 1) if x.startswith("## ") else x for x in L[L.index("| Model | Size | Accuracy | Without image | Chance | p (beats chance) | Pair accuracy | Same answer to original & twin | Same answer in 4 looks | Reading checks |"):
                         L.index("## Accuracy by skill (chance = random guessing on the same tasks)")]] +
-                      ["![accuracy by skill vs chance](results/open_models/chart_accuracy_by_skill.png)", "",
+                      ["![accuracy by skill vs chance](results/models/chart_accuracy_by_skill.png)", "",
                        "Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · "
-                       "per-run report: [results/open_models/REPORT.md](results/open_models/REPORT.md)",
+                       "per-run report: [results/models/REPORT.md](results/models/REPORT.md)",
                        "<!-- FINDINGS:END -->"])
     if "<!-- FINDINGS:START -->" in s:
         s = re.sub(r"<!-- FINDINGS:START -->.*?<!-- FINDINGS:END -->", lambda _: block, s, flags=re.S)

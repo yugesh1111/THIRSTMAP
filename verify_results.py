@@ -106,7 +106,7 @@ def main():
     ap.add_argument("--run", default="results/offline_baselines")
     ap.add_argument("--regen", type=int, default=6)
     ap.add_argument("--out", default="docs")
-    ap.add_argument("--open-run", default="results/open_models",
+    ap.add_argument("--open-run", default="results/models",
                     help="run with real (open) model answers to re-check; skipped if missing")
     a = ap.parse_args()
     ds, run, out = Path(a.dataset), Path(a.run), Path(a.out)

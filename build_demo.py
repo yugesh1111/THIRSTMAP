@@ -6,7 +6,7 @@ automatic ✓/✗ -> answer-key reveal, with counterfactual pairs.
 
 Usage:
   python3 pipeline_visuals.py --scene level4_seed48947 --out docs/pipeline
-  python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines \
+  python3 build_demo.py --dataset dataset --run results/models --baselines results/offline_baselines \
       --pipeline docs/pipeline --out docs/demo
 Open docs/demo/index.html in a browser (no server needed). --fragment writes the page body only
 (for hosts that add their own <html>/<head>/<body>).
@@ -201,6 +201,12 @@ def main():
             sc = score(tasks[r["task_id"]], r.get("raw", ""))       # re-score the raw reply, as the report does
             answers[r["task_id"]][display(r["model"])] = dict(raw=r.get("raw", "")[:400], parsed=sc["parsed"],
                                                               correct=sc["correct"], tags=sc["tags"])
+    count = defaultdict(int)                               # leave out models whose run is still incomplete
+    for v in answers.values():
+        for m in v:
+            count[m] += 1
+    keep = {m for m, c in count.items() if c >= 0.8 * max(count.values())}
+    answers = {tid: {m: x for m, x in v.items() if m in keep} for tid, v in answers.items()}
     most = max(len(v) for v in answers.values())          # only tasks that every model answered
     answers = {tid: v for tid, v in answers.items() if len(v) == most}
     if a.baselines:
@@ -302,6 +308,8 @@ code{font-family:var(--mono);font-size:.88em}
 .note{font-size:14px;max-width:75ch}
 header{padding-block:28px 8px}
 header .wrap{display:grid;gap:10px}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px}
+.links a{color:var(--water);font-weight:500;text-underline-offset:3px}
 .eyebrow{font:600 12px/1 var(--text);letter-spacing:.08em;text-transform:uppercase;color:var(--water)}
 .lede{color:var(--ink2);max-width:70ch}
 section{padding-block:22px}
@@ -371,6 +379,8 @@ BODY = r"""<header><div class="wrap">
 <p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
+<p class="links"><a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
+<a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (30 questions, about 10 minutes)</a></p>
 </div></header>
 <section><div class="wrap">
 <h2>Results</h2>

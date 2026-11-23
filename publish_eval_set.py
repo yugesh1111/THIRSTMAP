@@ -6,7 +6,7 @@ anyone can re-run the evaluation on identical images with
     python3 evaluate.py --dataset eval_set --all --models ... --run my_rerun
 (tasks.jsonl here contains only the evaluated tasks; probes.jsonl / variants.jsonl likewise).
 
-Usage: python3 publish_eval_set.py --dataset dataset --run results/open_models --out eval_set
+Usage: python3 publish_eval_set.py --dataset dataset --run results/models --out eval_set
 """
 import argparse
 import hashlib
@@ -18,7 +18,7 @@ from pathlib import Path
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="dataset")
-    ap.add_argument("--run", default="results/open_models")
+    ap.add_argument("--run", default="results/models")
     ap.add_argument("--out", default="eval_set")
     ap.add_argument("--extra-runs", nargs="*", default=["results/finetune"])
     a = ap.parse_args()

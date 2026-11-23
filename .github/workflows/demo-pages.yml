@@ -1,10 +1,10 @@
 name: demo-pages
-# Publishes docs/demo (built by build_demo.py) to the gh-pages branch, served by GitHub Pages:
-# https://yugesh1111.github.io/THIRSTMAP/
+# Publishes docs/demo (build_demo.py) and the human test (human_eval.py) to the gh-pages branch, served by
+# GitHub Pages: https://yugesh1111.github.io/THIRSTMAP/ and https://yugesh1111.github.io/THIRSTMAP/human/
 on:
   push:
     branches: [main]
-    paths: ["docs/demo/**"]
+    paths: ["docs/demo/**", "human_eval/**"]
   workflow_dispatch:
 
 permissions:
@@ -19,12 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Push docs/demo to gh-pages"
+      - name: "Push the demo and the human test to gh-pages"
         env:
           TOKEN: ${{ secrets.GITHUB_TOKEN }}
           REPO: ${{ github.repository }}
         run: |
           mkdir site && cp -r docs/demo/. site/ && touch site/.nojekyll
+          mkdir site/human && cp -r human_eval/index.html human_eval/img site/human/
           cd site
           git init -q -b gh-pages
           git config user.name "Amritha S"

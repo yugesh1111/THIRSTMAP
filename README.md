@@ -32,14 +32,14 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 - **Skill profile of the best model (Qwen2.5-VL-3B-Instruct):** clearly above chance on Measure along flow, Read elevation, Thermal threshold; **0% on Trace downstream, Flow direction**.
 - **The dataset can teach the skill, a little.** Fine-tuning the smallest model on 300 ThirstMap tasks raised it from 10% to 19% on held-out scenes (p = 0.0026), and the tuned model now does better with the image than without it (19% vs 11%, p = 0.0033).
 
-![accuracy by skill vs chance](results/open_models/chart_accuracy_by_skill.png)
+![accuracy by skill vs chance](results/models/chart_accuracy_by_skill.png)
 
-Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · per-run report: [results/open_models/REPORT.md](results/open_models/REPORT.md)
+Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · per-run report: [results/models/REPORT.md](results/models/REPORT.md)
 <!-- FINDINGS:END -->
 
 ## See it
 
-**Live demo (no login): https://yugesh1111.github.io/THIRSTMAP/**
+**Live demo (no login): https://yugesh1111.github.io/THIRSTMAP/** · **Human test: https://yugesh1111.github.io/THIRSTMAP/human/** (30 of the questions the models answered; send the copied answers to the team, then `python3 human_eval.py score answers_*.txt`)
 
 **Demo:** [`docs/demo/index.html`](docs/demo/index.html) opens with the results, then walks one real scene through every pipeline step, then shows 64 tasks with each open model's real reply, an automatic ✓/✗ and an answer-key reveal, plus before-and-after pairs. It is also in the repo; open the file in a browser, no server needed.
 
@@ -126,7 +126,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 `dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.85% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
 
-**Human baseline (V15):** `python3 human_eval.py build` writes `human_eval/index.html`, a page where a person answers 27 tasks spanning every skill (no answers shown). `python3 human_eval.py score answers_*.json` scores them with the same scorer the models get.
+**Human baseline (V15):** `python3 human_eval.py build --from-run results/models` writes `human_eval/index.html` (online at https://yugesh1111.github.io/THIRSTMAP/human/): 30 questions, 3 per skill, all of them questions every model answered, with no answers in the page. People press *Copy my answers* and send the text; `python3 human_eval.py score answers_*.txt` scores them with the models' scorer and puts humans next to each model on the same questions.
 
 ---
 
@@ -149,17 +149,17 @@ python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4
 python3 evaluate.py --dataset dataset --models mock:oracle mock:random mock:stubborn --blind --run offline_baselines
 python3 pipeline_visuals.py --scene level4_seed48947 --out docs/pipeline
-python3 build_demo.py --dataset dataset --run results/open_models --baselines results/offline_baselines --pipeline docs/pipeline --out docs/demo
+python3 build_demo.py --dataset dataset --run results/models --baselines results/offline_baselines --pipeline docs/pipeline --out docs/demo
 ```
 
 **Free open models, no keys (CPU or GPU):**
 
 ```bash
-./run_open_models.sh                                           # 4 open models -> results/open_models/
+./run_open_models.sh                                           # 4 open models -> results/models/
 MODELS="Qwen/Qwen2.5-VL-3B-Instruct" ./run_open_models.sh      # just one
-python3 evaluate.py --dataset dataset --models hf:Qwen/Qwen2.5-VL-3B-Instruct --variants 24 --run open_models
-python3 finetune.py --test-run results/open_models --train-per-q 30 --epochs 2   # can the data teach the skill?
-python3 findings.py --run results/open_models                  # docs/FINDINGS.md + README findings, from the numbers
+python3 evaluate.py --dataset dataset --models hf:Qwen/Qwen2.5-VL-3B-Instruct --variants 24 --run models
+python3 finetune.py --test-run results/models --train-per-q 30 --epochs 2   # can the data teach the skill?
+python3 findings.py --run results/models                  # docs/FINDINGS.md + README findings, from the numbers
 ```
 
 `hf:MODEL_ID[@NNNpx]` runs any Hugging Face image-text-to-text model through `transformers`. Probes (`--probes`) check whether a model can read the labels and colour scale at all, before blaming its reasoning. Variants (`--variants`) ask the same question about the same scene in dry season, monsoon, haze and coarse-sensor looks: the answer must not change.
@@ -183,7 +183,7 @@ python3 staircase.py --dataset dataset --models claude:claude-opus-5-5 --trials 
 This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row make the next task harder, one wrong answer makes it easier. It converges where the model is right about 71% of the time, so lucky guesses can't climb. That's about 144 calls per model instead of about 2,000. Offline check: the oracle scores 5.5 (never fails) on every skill and the random guesser 0.5–1.5.
 
 ## Results status (read this first)
-- **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/open_models/REPORT.md`](results/open_models/REPORT.md). Every raw answer is in `results/open_models/responses.jsonl`.
+- **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/models/REPORT.md`](results/models/REPORT.md). Every raw answer is in `results/models/responses.jsonl`.
 - **Frontier API models** (Claude, GPT, Gemini) have not been run yet; that needs API keys. The harness is the same: one command, below.
 - **Offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`) test the dataset and the scorer. They are **not model findings**.
 - **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:

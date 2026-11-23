@@ -1,0 +1,108 @@
+{
+  "date": "2026-11-23",
+  "reconstructed_from_logs": true,
+  "invocations": [
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": 1,
+      "blind": true,
+      "pairs": 30,
+      "probes": 4,
+      "variants": 0,
+      "models": [
+        "hf:Qwen/Qwen2.5-VL-3B-Instruct"
+      ],
+      "started_utc": "05:31",
+      "via": "run_open_models.sh"
+    },
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": 1,
+      "blind": true,
+      "pairs": 30,
+      "probes": 4,
+      "variants": 0,
+      "models": [
+        "hf:Qwen/Qwen2-VL-2B-Instruct"
+      ],
+      "started_utc": "06:08",
+      "via": "run_open_models.sh"
+    },
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": 1,
+      "blind": true,
+      "pairs": 30,
+      "probes": 4,
+      "variants": 0,
+      "models": [
+        "hf:HuggingFaceTB/SmolVLM-256M-Instruct"
+      ],
+      "started_utc": "06:48",
+      "via": "run_open_models.sh",
+      "note": "interrupted at 07:31 by a session time limit; resumed at 07:31 (already answered tasks are skipped)"
+    },
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": 1,
+      "blind": true,
+      "pairs": 30,
+      "probes": 4,
+      "variants": 0,
+      "models": [
+        "hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct"
+      ],
+      "started_utc": "07:39",
+      "via": "run_open_models.sh",
+      "note": "a first attempt at 06:43 stopped before any answer (missing num2words package)"
+    },
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": null,
+      "blind": false,
+      "pairs": 0,
+      "probes": 0,
+      "variants": 24,
+      "models": [
+        "hf:Qwen/Qwen2.5-VL-3B-Instruct"
+      ],
+      "started_utc": "08:34"
+    },
+    {
+      "dataset": "dataset",
+      "run": "models",
+      "levels": null,
+      "styles": null,
+      "workers": 1,
+      "per_cell": null,
+      "blind": false,
+      "pairs": 0,
+      "probes": 0,
+      "variants": 24,
+      "models": [
+        "hf:Qwen/Qwen2-VL-2B-Instruct"
+      ],
+      "started_utc": "08:52"
+    }
+  ]
+}

@@ -73,7 +73,9 @@ class OpenAICompatAdapter:
 
     def __init__(self, model, base_url=None, root="."):
         from openai import OpenAI
-        self.client = OpenAI(base_url=base_url) if base_url else OpenAI()
+        # busy public endpoints answer 429 / 503 under load: retry with backoff instead of recording an error
+        kw = dict(max_retries=8, timeout=600)
+        self.client = OpenAI(base_url=base_url, **kw) if base_url else OpenAI(**kw)
         self.model, self.root = model, Path(root)
         self.name = f"openai:{model}"
 

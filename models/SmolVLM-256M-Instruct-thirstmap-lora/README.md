@@ -33,7 +33,7 @@ processor = AutoProcessor.from_pretrained("HuggingFaceTB/SmolVLM-256M-Instruct")
 processor.image_processor.do_image_splitting = False   # as in training
 ```
 
-Reproduce: `python3 finetune.py --test-run results/open_models --train-per-q 30 --epochs 2 --blind`
+Reproduce: `python3 finetune.py --test-run results/models --train-per-q 30 --epochs 2 --blind`
 
 ## Limits
 

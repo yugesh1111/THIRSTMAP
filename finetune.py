@@ -5,8 +5,8 @@ Test : the same held-out tasks for the base model and the fine-tuned model, same
 Runs on CPU at small scale (a few hundred examples); results are reported honestly as such.
 
 Usage:
-  python3 finetune.py --test-run results/open_models --train-per-q 30 --epochs 2 --blind
-  python3 finetune.py --test-run results/open_models --eval-only --blind   # re-test the saved adapter
+  python3 finetune.py --test-run results/models --train-per-q 30 --epochs 2 --blind
+  python3 finetune.py --test-run results/models --eval-only --blind   # re-test the saved adapter
   -> models/<name>-thirstmap-lora/ (adapter), results/finetune/ (responses + REPORT.md)
 """
 import argparse
@@ -63,7 +63,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="dataset")
     ap.add_argument("--model", default="HuggingFaceTB/SmolVLM-256M-Instruct")
-    ap.add_argument("--test-run", default="results/open_models", help="run whose image tasks form the test set")
+    ap.add_argument("--test-run", default="results/models", help="run whose image tasks form the test set")
     ap.add_argument("--train-per-q", type=int, default=40)
     ap.add_argument("--epochs", type=int, default=1)
     ap.add_argument("--max-side", type=int, default=512)
