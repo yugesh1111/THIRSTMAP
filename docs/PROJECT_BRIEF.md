@@ -1,5 +1,5 @@
 # ThirstMap — Project Brief
-*Innodata AI Hackathon · Track 2: Visual Task Factory · draft 22 Nov 2026*
+*Innodata AI Hackathon · Track 2: Visual Task Factory · updated 23 Nov 2026*
 
 ---
 
@@ -8,8 +8,8 @@
 > **"AI is drinking India's water. We tested whether AI can even see where that water goes."**
 
 Alternative for the demo:
-> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed frontier AI a map and asked one question: where does the wastewater go? It sent it to the wrong village."*
-> (the last sentence gets filled in with our real results)
+> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed four open AI vision models a map and asked one question: where does the wastewater go? None of them did better than random guessing, and none got both halves of a single before-and-after pair right."*
+> (real results: [`FINDINGS.md`](FINDINGS.md); frontier API models still to be run)
 
 **Title:** *ThirstMap — can AI trace water through the landscape?*
 
@@ -26,19 +26,19 @@ Alternative for the demo:
 | Pick an image family and a real-world visual problem | Terrain imagery (satellite-style, topographic map, thermal) · where a data centre's water comes from and goes | ✅ |
 | Generate **synthetic** images and questions | Every image is rendered by our code from a scene script (real elevation can be an *input*, the image is still generated) | ✅ |
 | Reference answers checked **without the tested model** | Water-flow simulation + independent second implementation (pysheds) + unit tests | ✅ |
-| Evaluate advanced multimodal models; strengths & weaknesses | Harness scores models per skill / image style / difficulty / trap; blind baseline | ⏳ building |
-| *Stand out:* every question needs genuine visual understanding | Answers exist only in the picture; blind-baseline check discards text-guessable tasks | ✅ design, ⏳ check |
-| *Stand out:* each image holds enough evidence | Pixel-level path-visibility + label-legibility validators; questions only asked in styles that show the evidence | ✅ design, ⏳ validators |
+| Evaluate advanced multimodal models; strengths & weaknesses | Four open models evaluated for real (per skill, style, difficulty, trap, pairs, appearance, reading checks, vs exact chance); Claude / GPT / Gemini adapters ready for API keys | ✅ open models, ⏳ frontier |
+| *Stand out:* every question needs genuine visual understanding | Answers exist only in the picture; every question is also asked without the image (V13) | ✅ |
+| *Stand out:* each image holds enough evidence | Pixel-level path-visibility + label-legibility validators; questions only asked in styles that show the evidence | ✅ |
 | *Stand out:* vary visual relationships and reasoning, **not just count** | Trace, order, connectivity vs proximity, elevation comparison, direction, siting, catchment, colour-scale reading — no counting tasks at all | ✅ |
 | *Stand out:* explain why errors matter in the real application | Wrong village / wrong wetland / false "site is safe" (section 2) | ✅ |
-| *Submit:* reusable generation + evaluation pipeline | `generate` → `validate` → `evaluate` → `report`, seed + difficulty driven | ⏳ |
-| *Submit:* sample tasks with validation evidence | Dataset + validation report + test results | ⏳ |
-| *Submit:* findings on model strengths/weaknesses | Breaking-point curves, trap analysis, map-vs-satellite gap | ⏳ |
-| *Submit:* **a demo where scoring separates right from wrong** | HTML viewer: image → question → model answer → auto ✓/✗ → answer-reveal overlay | ⏳ |
+| *Submit:* reusable generation + evaluation pipeline | `generate` → `validate` → `evaluate` → `report`, seed + difficulty driven; `run_all.sh`; CI on every push | ✅ |
+| *Submit:* sample tasks with validation evidence | 5,761-task dataset (release), `dataset_sample/`, `eval_set/`, VALIDATION_REPORT.md, VERIFICATION.md | ✅ |
+| *Submit:* findings on model strengths/weaknesses | FINDINGS.md: accuracy vs chance with p-values, per-skill profile, pairs, appearance, reading checks, fine-tuning | ✅ |
+| *Submit:* **a demo where scoring separates right from wrong** | `docs/demo/index.html`: image → question → real model replies → auto ✓/✗ → answer reveal, beside answer-key and random baselines | ✅ |
 | *Their example:* "your code draws a bar chart, so it already knows which bar is tallest" | Same principle: our code builds the terrain, so it already knows where every drop of water goes | ✅ |
-| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | Planned deliverables (section 9) | ⏳ |
+| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | 41 tests, CI, ARCHITECTURE.md, demo, reports | ✅ |
 | FAQ: no API keys in code | Keys only via environment variables | ✅ |
-| FAQ: organiser-provided model API access | Harness supports multiple providers + offline mock | ⏳ |
+| FAQ: organiser-provided model API access | Harness supports Claude, OpenAI-compatible, Gemini and Hugging Face models + offline baselines | ✅ ready |
 
 **Verdict: the topic fits the brief well. No title change needed** — only the subtitle above, which states the visual capability in the brief's own terms.
 
@@ -132,11 +132,13 @@ All three share **one answer key**, which lets us ask: *does the AI understand t
 | Q3 | Nature-based filtering | Which wetland site (A–D) cleans ALL wastewater before ANY village? | map, satellite | ✅ built |
 | Q4 | Read elevation | Which farms lie lower than pond P (gravity-fed reuse)? | map only (needs contours) | ✅ built |
 | Q5 | Flow direction | Which way does the stream flow below O? | map, satellite | ✅ built |
-| Q6 | Siting | Of sites S1–S3, whose wastewater reaches no village? | map, satellite | ⏳ to build |
-| Q7 | Water competition | DC-1 draws from reservoir R — which villages depend on the same water (upstream catchment)? | map, satellite | ⏳ to build |
-| Q8 | Heat spread | How far downstream is the river still >3 °C warmer? | thermal | ⏳ to build |
+| Q6 | Siting | Of sites S1–S3, whose wastewater reaches no village? | map, satellite | ✅ built |
+| Q7 | Water competition | DC-1 draws from intake I — which villages share the same water (upstream catchment)? | map, satellite | ✅ built |
+| Q8 | Colour-scale threshold | At which monitoring points is the water > 3 °C warmer? | thermal | ✅ built |
+| Q9 | Colour-scale value | How many °C warmer is the water at M2? | thermal | ✅ built |
+| Q10 | Measure along a winding path | How far (m) does the wastewater travel along the stream to the first village? | map, satellite | ✅ built |
 
-**Built-in traps:** upstream village on the same stream · near-but-other-stream village · wetland after a village ("too late") · ridges that separate close points · (later) clouds where the correct answer is "cannot tell".
+**Built-in traps:** upstream village on the same stream · near-but-other-stream village · wetland after a village ("too late") · ridges that separate close points · monitoring points upstream or on other streams.
 
 ---
 
@@ -204,7 +206,7 @@ This is the core of the project (25% of the score is validity, and it is why we 
 |---|---|---|
 | **V1 Two independent implementations** | Compute flow paths/catchments with our code **and** with an independent library (pysheds) on the same elevation grid | Answers must agree, else discard |
 | **V2 Known-answer unit tests** | Hand-built terrains with obvious answers: tilted plane, V-shaped valley, two valleys split by a ridge, a closed bowl | Pipeline must return the known answer (pytest) |
-| **V3 Counterfactual pairs** ✅ built | Every scene gets a twin with one minimal change (outfall moved / intake moved / water temperature changed); 263 linked pairs in the dataset; twins are re-validated independently | The answer must change; models are scored on **pair accuracy** (both versions right) |
+| **V3 Counterfactual pairs** ✅ built | Every scene gets a twin with one minimal change (outfall moved / intake moved / water temperature changed); 740 linked pairs in the dataset; twins are re-validated independently | The answer must change; models are scored on **pair accuracy** (both versions right) |
 | **V4 Determinism** | Same seed + level → byte-identical scene and answers | Re-run check in CI |
 
 ### 7.2 Is the answer unambiguous? (no borderline cases)
