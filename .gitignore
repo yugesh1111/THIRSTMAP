@@ -11,3 +11,5 @@ ci_docs/
 results/ci*/
 !results/models/responses.jsonl
 !results/finetune/responses.jsonl
+!results/frontier/responses.jsonl
+!results/frontier_single/responses.jsonl

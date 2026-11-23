@@ -1,0 +1,42 @@
+"""Tools around the benchmark: batched frontier prompts, the human-test scorer, well-formed replies."""
+import json
+from argparse import Namespace
+
+from frontier import batch_prompt, parse_batch
+from human_eval import score_files
+
+HEAD = "This is a topographic map of a 4 km x 4 km area. North is up.\n\n"
+T1 = dict(task_id="s__Q1__map", qid="Q1", question="Which villages receive the water?", scoring="set",
+          options=["V1", "V2", "V3"], answer=["V2"], traps={}, skill="trace_downstream",
+          prompt=HEAD + 'Question: Which villages receive the water?\n\nReply with ONLY a JSON object of the form '
+                        '{"answer": ...} where the answer is a JSON list of labels, e.g. ["V1"].')
+T2 = dict(task_id="s__Q5__map", qid="Q5", question="Which way does the stream flow?", scoring="compass",
+          options=["N", "NE", "E", "SE", "S", "SW", "W", "NW"], answer="S", traps={}, skill="read_flow_direction",
+          prompt=HEAD + 'Question: Which way does the stream flow?\n\nReply with ONLY a JSON object of the form '
+                        '{"answer": ...} where the answer is one of N, NE, E, SE, S, SW, W, NW.')
+
+
+def test_batch_prompt_keeps_header_questions_and_formats_once():
+    p = batch_prompt([T1, T2])
+    assert p.count("North is up") == 1                       # shared header sent once
+    assert "Q1: Which villages receive the water?" in p and "Q5: Which way" in p
+    assert "a JSON list of labels" in p and "one of N, NE" in p
+    assert p.rstrip().endswith('{"Q1": ..., "Q5": ...}')
+
+
+def test_parse_batch_tolerates_fences_and_text():
+    assert parse_batch('```json\n{"Q1": ["V2"], "Q5": "S"}\n```') == {"Q1": ["V2"], "Q5": "S"}
+    assert parse_batch('Sure. {"Q1": []} Hope that helps') == {"Q1": []}
+    assert parse_batch("no json here") == {}
+
+
+def test_human_scorer_accepts_pasted_text(tmp_path):
+    ds = tmp_path / "ds"
+    ds.mkdir()
+    (ds / "tasks.jsonl").write_text("".join(json.dumps(t) + "\n" for t in (T1, T2)))
+    sheet = tmp_path / "answers_a.txt"
+    sheet.write_text('my answers: {"name": "A", "answers": [{"id": "s__Q1__map", "answer": ["V2"], "seconds": 9},'
+                     ' {"id": "s__Q5__map", "answer": "N", "seconds": 5}]} thanks')
+    score_files(Namespace(files=[str(sheet)], dataset=str(ds), run=str(tmp_path / "none"), out=str(tmp_path / "o")))
+    text = (tmp_path / "o" / "HUMAN_RESULTS.md").read_text()
+    assert "Overall human accuracy: 50%" in text

@@ -1,0 +1,274 @@
+{
+ "max_side": 768,
+ "images": [
+  {
+   "image": "level2_seed22760__map",
+   "file": "img/level2_seed22760__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level2_seed22760__Q1__map",
+    "level2_seed22760__Q2__map",
+    "level2_seed22760__Q3__map",
+    "level2_seed22760__Q4__map",
+    "level2_seed22760__Q5__map",
+    "level2_seed22760__Q6__map",
+    "level2_seed22760__Q7__map",
+    "level2_seed22760__Q10__map"
+   ]
+  },
+  {
+   "image": "level2_seed22760_cf__map",
+   "file": "img/level2_seed22760_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level2_seed22760_cf__Q7__map"
+   ]
+  },
+  {
+   "image": "real_navi_mumbai_seed31312__satellite",
+   "file": "img/real_navi_mumbai_seed31312__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "real_navi_mumbai_seed31312__Q1__satellite",
+    "real_navi_mumbai_seed31312__Q2__satellite",
+    "real_navi_mumbai_seed31312__Q3__satellite",
+    "real_navi_mumbai_seed31312__Q5__satellite",
+    "real_navi_mumbai_seed31312__Q6__satellite",
+    "real_navi_mumbai_seed31312__Q7__satellite",
+    "real_navi_mumbai_seed31312__Q10__satellite"
+   ]
+  },
+  {
+   "image": "real_navi_mumbai_seed31312_cf__satellite",
+   "file": "img/real_navi_mumbai_seed31312_cf__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "real_navi_mumbai_seed31312_cf__Q7__satellite"
+   ]
+  },
+  {
+   "image": "level4_seed58903__map",
+   "file": "img/level4_seed58903__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level4_seed58903__Q1__map",
+    "level4_seed58903__Q2__map",
+    "level4_seed58903__Q3__map",
+    "level4_seed58903__Q4__map",
+    "level4_seed58903__Q5__map",
+    "level4_seed58903__Q6__map",
+    "level4_seed58903__Q7__map",
+    "level4_seed58903__Q10__map"
+   ]
+  },
+  {
+   "image": "level4_seed58903_cf__map",
+   "file": "img/level4_seed58903_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level4_seed58903_cf__Q1__map",
+    "level4_seed58903_cf__Q2__map"
+   ]
+  },
+  {
+   "image": "level3_seed58561__satellite",
+   "file": "img/level3_seed58561__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed58561__Q1__satellite",
+    "level3_seed58561__Q2__satellite",
+    "level3_seed58561__Q3__satellite",
+    "level3_seed58561__Q5__satellite",
+    "level3_seed58561__Q6__satellite",
+    "level3_seed58561__Q7__satellite",
+    "level3_seed58561__Q10__satellite"
+   ]
+  },
+  {
+   "image": "level3_seed58561_cf__satellite",
+   "file": "img/level3_seed58561_cf__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed58561_cf__Q1__satellite",
+    "level3_seed58561_cf__Q2__satellite"
+   ]
+  },
+  {
+   "image": "level3_seed34416__thermal",
+   "file": "img/level3_seed34416__thermal.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed34416__Q8__thermal",
+    "level3_seed34416__Q9__thermal"
+   ]
+  },
+  {
+   "image": "level3_seed34416_cf__thermal",
+   "file": "img/level3_seed34416_cf__thermal.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed34416_cf__Q8__thermal",
+    "level3_seed34416_cf__Q9__thermal"
+   ]
+  },
+  {
+   "image": "level3_seed31409__map",
+   "file": "img/level3_seed31409__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level3_seed31409__Q1__map",
+    "level3_seed31409__Q2__map",
+    "level3_seed31409__Q3__map",
+    "level3_seed31409__Q4__map",
+    "level3_seed31409__Q5__map",
+    "level3_seed31409__Q6__map",
+    "level3_seed31409__Q7__map",
+    "level3_seed31409__Q10__map"
+   ]
+  },
+  {
+   "image": "level3_seed31409_cf__map",
+   "file": "img/level3_seed31409_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level3_seed31409_cf__Q7__map"
+   ]
+  },
+  {
+   "image": "level5_seed52684__satellite",
+   "file": "img/level5_seed52684__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level5_seed52684__Q1__satellite",
+    "level5_seed52684__Q2__satellite",
+    "level5_seed52684__Q3__satellite",
+    "level5_seed52684__Q5__satellite",
+    "level5_seed52684__Q6__satellite",
+    "level5_seed52684__Q7__satellite",
+    "level5_seed52684__Q10__satellite"
+   ]
+  },
+  {
+   "image": "level2_seed24506__map",
+   "file": "img/level2_seed24506__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level2_seed24506__Q1__map",
+    "level2_seed24506__Q2__map",
+    "level2_seed24506__Q3__map",
+    "level2_seed24506__Q4__map",
+    "level2_seed24506__Q5__map",
+    "level2_seed24506__Q6__map",
+    "level2_seed24506__Q7__map",
+    "level2_seed24506__Q10__map"
+   ]
+  },
+  {
+   "image": "real_chennai_seed31409__satellite",
+   "file": "img/real_chennai_seed31409__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "real_chennai_seed31409__Q1__satellite",
+    "real_chennai_seed31409__Q2__satellite",
+    "real_chennai_seed31409__Q3__satellite",
+    "real_chennai_seed31409__Q5__satellite",
+    "real_chennai_seed31409__Q6__satellite",
+    "real_chennai_seed31409__Q7__satellite",
+    "real_chennai_seed31409__Q10__satellite"
+   ]
+  },
+  {
+   "image": "real_chennai_seed39037__map",
+   "file": "img/real_chennai_seed39037__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "real_chennai_seed39037__Q1__map",
+    "real_chennai_seed39037__Q2__map",
+    "real_chennai_seed39037__Q3__map",
+    "real_chennai_seed39037__Q4__map",
+    "real_chennai_seed39037__Q5__map",
+    "real_chennai_seed39037__Q6__map",
+    "real_chennai_seed39037__Q7__map",
+    "real_chennai_seed39037__Q10__map"
+   ]
+  },
+  {
+   "image": "level2_seed45644__thermal",
+   "file": "img/level2_seed45644__thermal.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level2_seed45644__Q8__thermal",
+    "level2_seed45644__Q9__thermal"
+   ]
+  },
+  {
+   "image": "level4_seed48947__map",
+   "file": "img/level4_seed48947__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level4_seed48947__Q1__map",
+    "level4_seed48947__Q2__map",
+    "level4_seed48947__Q3__map",
+    "level4_seed48947__Q4__map",
+    "level4_seed48947__Q5__map",
+    "level4_seed48947__Q6__map",
+    "level4_seed48947__Q7__map",
+    "level4_seed48947__Q10__map"
+   ]
+  }
+ ]
+}

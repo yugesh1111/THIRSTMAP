@@ -1,6 +1,4 @@
 {
-  "date": "2026-11-23",
-  "reconstructed_from_logs": true,
   "invocations": [
     {
       "dataset": "dataset",
@@ -103,6 +101,24 @@
         "hf:Qwen/Qwen2-VL-2B-Instruct"
       ],
       "started_utc": "08:52"
+    },
+    {
+      "dataset": "dataset",
+      "models": [
+        "openai:gemini-3.5-flash@https://generativelanguage.googleapis.com/v1beta/openai/"
+      ],
+      "run": "models",
+      "per_cell": 1,
+      "levels": null,
+      "styles": null,
+      "blind": true,
+      "workers": 6,
+      "pairs": 30,
+      "probes": 4,
+      "variants": 0,
+      "all": false,
+      "finished_utc": "2026-11-23T12:19:15Z",
+      "calls": 305
     }
   ]
 }

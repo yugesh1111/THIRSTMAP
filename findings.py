@@ -8,6 +8,7 @@ Usage: python3 findings.py --run results/models [--finetune results/finetune]
 import argparse
 import json
 import re
+from collections import defaultdict
 from pathlib import Path
 
 from report import SKILL_LABEL, SKILL_ORDER
@@ -42,6 +43,83 @@ def short(m):
 
 def kind(m):
     return "open (local CPU)" if m.startswith("hf:") else "frontier (API)"
+
+
+def frontier_lines(dataset):
+    """Frontier check tables, built from results/frontier (batched) and results/frontier_single."""
+    from thirstmap.scoring import score
+    tasks = {json.loads(l)["task_id"]: json.loads(l) for l in open(Path(dataset) / "tasks.jsonl")}
+    rows, L = [], []
+    fdir = Path("results/frontier")
+    if (fdir / "summary.json").exists():
+        F = json.loads((fdir / "summary.json").read_text())
+        tok = defaultdict(lambda: [0, 0])
+        for r in map(json.loads, open(fdir / "requests.jsonl")):
+            if not r.get("error") and r.get("input_tokens"):
+                tok[r["model"]][0] += r["input_tokens"] + (r.get("output_tokens") or 0)
+                tok[r["model"]][1] += r["questions"]
+        for m in F["models"]:
+            vc = F["vs_chance"].get(m)
+            if not vc:
+                continue
+            pr = F["counterfactual_pairs"].get(m, {})
+            t = tok.get(m)
+            rows.append(dict(m=m, proto="batched", n=vc["n"], k=vc["correct"], acc=vc["correct"] / vc["n"],
+                             chance=vc["chance"], p=vc["p_value"], pair=pr.get("pair_accuracy"),
+                             same=pr.get("unchanged_answer_rate"), pairs=pr.get("pairs"),
+                             tpa=round(t[0] / t[1]) if t and t[1] else None))
+    sdir = Path("results/frontier_single")
+    if (sdir / "responses.jsonl").exists():
+        from scipy.stats import binomtest
+        from thirstmap.scoring import chance
+        single = [r for r in map(json.loads, open(sdir / "responses.jsonl")) if not r.get("error")]
+        ids = {r["task_id"] for r in single}
+        got = defaultdict(dict)
+        for r in single:
+            got[r["model"]][r["task_id"]] = r
+        for line in open("results/models/responses.jsonl"):
+            r = json.loads(line)
+            if r["mode"] == "image" and r["task_id"] in ids and not r.get("error"):
+                got[r["model"]][r["task_id"]] = r
+        for m, v in got.items():
+            if set(v) != ids:
+                continue
+            k = sum(score(tasks[t], v[t]["raw"])["correct"] for t in ids)
+            c = sum(chance(tasks[t]) for t in ids) / len(ids)
+            rows.append(dict(m=m, proto="single", n=len(ids), k=k, acc=k / len(ids), chance=c,
+                             p=binomtest(k, len(ids), c, alternative="greater").pvalue, pair=None, same=None,
+                             pairs=None, tpa=None))
+    if not rows:
+        return L, None
+    L += ["", "## Frontier check (Gemini, free API tier)", "",
+          "A free Gemini key allows 20 requests per model per day, so the frontier check uses request economy: "
+          "**batched** = every question about one image in one request (18 images, 6 of them before-and-after "
+          "pairs; images resized to 768 px), sent identically to Gemini and to the open models; **single** = one "
+          "question per request, the protocol of the main table, on the 20 questions Gemini 3.5 Flash answered "
+          "before its daily quota ran out.", "",
+          "| Model | Protocol | Questions | Accuracy | Chance | p (beats chance) | Both halves of a pair right | "
+          "Same answer to original & twin | Tokens per answer |", "|---|---|---|---|---|---|---|---|---|"]
+    for r in sorted(rows, key=lambda r: (r["proto"], -r["acc"])):
+        pairs = f" ({r['pairs']})" if r["pairs"] else ""
+        L.append(f"| {short(r['m'])} | {r['proto']} | {r['n']} | **{pct(r['acc'])}** ({r['k']}/{r['n']}) | "
+                 f"{pct(r['chance'])} | {r['p']:.2g} | {pct(r['pair'])}{pairs} | {pct(r['same'])} | "
+                 f"{r['tpa'] if r['tpa'] else '–'} |")
+    api = [r for r in rows if not r["m"].startswith("hf:")]
+    opn = [r for r in rows if r["m"].startswith("hf:")]
+    bullet = None
+    if api and opn:
+        b = max(api, key=lambda r: r["acc"])
+        o = max((r for r in opn if r["proto"] == b["proto"]), key=lambda r: r["acc"], default=None)
+        if o:
+            gap = b["acc"] - o["acc"]
+            head = ("A frontier model does much better, but is not reliable yet." if gap >= 0.15 and b["acc"] < 0.9
+                    else "A frontier model does better." if gap > 0 else "The frontier model does no better.")
+            bullet = (f"- **{head}** On the same {b['n']} questions ({b['proto']} protocol), {short(b['m'])} got "
+                      f"{pct(b['acc'])} right against {pct(o['acc'])} for the best open model, {short(o['m'])} "
+                      f"(chance {pct(b['chance'])}, p = {b['p']:.2g})"
+                      + (f"; it got both halves of {pct(b['pair'])} of the before-and-after pairs right"
+                         if b["pair"] is not None else "") + ".")
+    return L, bullet
 
 
 def main():
@@ -89,10 +167,13 @@ def main():
         L += ["", "*Interim: evaluation still running for " + ", ".join(
             f"{r['name']} ({r['n']} of {full} tasks so far)" for r in partial)
               + "; numbers for it will change and more models may be added.*"]
+    fl, fbullet = frontier_lines(a.dataset)
+    L += fl
     beats = [r for r in rows if r["p"] < 0.05]
     L += ["", "## What the numbers say", ""]
     if not beats:
-        L.append(f"- **No model is significantly better than random guessing overall** (all p ≥ 0.05). "
+        who = "open model" if all(r["m"].startswith("hf:") for r in rows) else "model"
+        L.append(f"- **No {who} in the main table is significantly better than random guessing** (all p ≥ 0.05). "
                  f"The best, {rows[0]['name']}, scores {pct(rows[0]['acc'])} against a chance level of "
                  f"{pct(rows[0]['chance'])} (p = {rows[0]['p']:.2g}).")
     else:
@@ -103,6 +184,8 @@ def main():
         rest = [r for r in rows if r["p"] >= 0.05]
         if rest:
             L.append("- **Not better than guessing:** " + ", ".join(f"{r['name']} ({pct(r['acc'])})" for r in rest) + ".")
+    if fbullet:
+        L.append(fbullet)
     withb = [r for r in rows if r["blind"] is not None]
     if withb:
         gap = max(r["acc"] - r["blind"] for r in withb)

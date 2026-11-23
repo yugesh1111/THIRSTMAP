@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use ThirstMap, please cite it as below."
+title: "ThirstMap: a visual task factory testing whether AI can trace water through the landscape"
+authors:
+  - family-names: "S"
+    given-names: "Amritha"
+type: software
+license: MIT
+repository-code: "https://github.com/yugesh1111/THIRSTMAP"
+url: "https://yugesh1111.github.io/THIRSTMAP/"
+date-released: "2026-11-23"
+keywords:
+  - benchmark
+  - vision-language models
+  - hydrology
+  - synthetic data
+  - counterfactual evaluation

@@ -5,6 +5,7 @@
   counterfactual.gif original -> twin (one small change flips the answer), with answer keys
   appearance.gif     one scene in dry season -> monsoon -> haze -> coarse sensor (answers unchanged)
   real_terrain.gif   real terrain in Navi Mumbai, Hyderabad, Pune and Chennai
+  pipeline.gif       one scene through every pipeline step (needs docs/pipeline from pipeline_visuals.py)
 
 Usage: python3 make_gifs.py --dataset dataset --out docs/gifs
 """
@@ -39,6 +40,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dataset", default="dataset")
     ap.add_argument("--out", default="docs/gifs")
+    ap.add_argument("--pipeline", default="docs/pipeline")
     a = ap.parse_args()
     ds, out = Path(a.dataset), Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -84,6 +86,20 @@ def main():
                             "Copernicus elevation + ESA land cover; facility is hypothetical"))
     if fr:
         save(fr, out / "real_terrain.gif", ms=1500)
+
+    pipe = Path(a.pipeline)
+    if (pipe / "steps.json").exists():
+        f = json.loads((pipe / "steps.json").read_text())
+        steps = [("1_terrain.png", "1  Terrain", f"fractal relief, {f['elev_min_m']}-{f['elev_max_m']} m, 25 m cells"),
+                 ("2_water.png", "2  Water simulation", "priority-flood + D8 routing: streams emerge"),
+                 ("3_scene.png", "3  Scene script + traps", "data centre, outfall O, villages, wetlands"),
+                 ("4_answer.png", "4  Answer key", f"traced downhill from O: {', '.join(f['answer'])}"),
+                 ("5_check.png", "5  Independent check", f"pysheds agrees on {f['pysheds_agree_pct']}% of cells"),
+                 ("6_satellite.jpg", "6  Rendered image", "what the model sees (also map and thermal)"),
+                 ("7_pixels.jpg", "7  Pixel evidence", f"{f['pixel_visible_pct']:.0f}% of the answer path visible"),
+                 ("8_twin.jpg", "8  Before-and-after twin",
+                  f"one change ({f['twin_pixels_changed_pct']}% of pixels): answer {', '.join(f['twin_answer'])}")]
+        save([frame(pipe / n, c, sub) for n, c, sub in steps if (pipe / n).exists()], out / "pipeline.gif", ms=1700)
 
 
 if __name__ == "__main__":

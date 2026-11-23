@@ -1,0 +1,218 @@
+{
+  "models": [
+    "openai:gemini-3.1-flash-lite"
+  ],
+  "n_responses": 89,
+  "compared_on_tasks": 89,
+  "answers_outside_common_set": {},
+  "chance_by_skill": {
+    "trace_upstream_catchment": 0.0349613930859375,
+    "order_along_flow": 0.16279761904761905,
+    "measure_along_flow": 0.12576,
+    "read_flow_direction": 0.125,
+    "read_elevation": 0.03748536458333333,
+    "nature_based_filtering": 0.25,
+    "read_colour_scale_value": 0.19999999999999998,
+    "siting_downstream_impact": 0.3333333333333333,
+    "trace_downstream": 0.02308557109049479,
+    "read_colour_scale_threshold": 0.09400625000000001
+  },
+  "tasks_by_skill_evaluated": {
+    "trace_upstream_catchment": 13,
+    "order_along_flow": 12,
+    "measure_along_flow": 10,
+    "read_flow_direction": 10,
+    "read_elevation": 6,
+    "nature_based_filtering": 10,
+    "read_colour_scale_value": 3,
+    "siting_downstream_impact": 10,
+    "trace_downstream": 12,
+    "read_colour_scale_threshold": 3
+  },
+  "vs_chance": {
+    "openai:gemini-3.1-flash-lite": {
+      "correct": 41,
+      "n": 89,
+      "chance": 0.13632540070345942,
+      "p_value": 1.4038377763811373e-13
+    }
+  },
+  "format": {
+    "openai:gemini-3.1-flash-lite": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.4606741573033708
+    }
+  },
+  "overall": {
+    "openai:gemini-3.1-flash-lite": {
+      "image": 0.4606741573033708,
+      "blind": null,
+      "n": 89
+    }
+  },
+  "by_skill": {
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": 0.4166666666666667,
+      "order_along_flow": 0.5833333333333334,
+      "nature_based_filtering": 0.9,
+      "read_elevation": 0.5,
+      "read_flow_direction": 0.7,
+      "siting_downstream_impact": 0.2,
+      "trace_upstream_catchment": 0.3076923076923077,
+      "measure_along_flow": 0.3,
+      "read_colour_scale_threshold": 0.3333333333333333,
+      "read_colour_scale_value": 0.0
+    }
+  },
+  "by_style": {
+    "openai:gemini-3.1-flash-lite": {
+      "map": 0.5192307692307693,
+      "satellite": 0.41935483870967744,
+      "thermal": 0.16666666666666666
+    }
+  },
+  "by_level": {
+    "openai:gemini-3.1-flash-lite": {
+      "2": 0.5789473684210527,
+      "3": 0.4888888888888889,
+      "4": 0.2777777777777778,
+      "5": 0.42857142857142855
+    }
+  },
+  "eye_exam_curves": {
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": {
+        "2": 1.0,
+        "3": 0.5,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "2": 1.0,
+        "3": 0.6666666666666666,
+        "4": 0.3333333333333333,
+        "5": 0.0
+      },
+      "nature_based_filtering": {
+        "2": 1.0,
+        "3": 0.8,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 0.5,
+        "3": 0.5,
+        "4": 0.5
+      },
+      "read_flow_direction": {
+        "2": 0.5,
+        "3": 0.8,
+        "4": 0.5,
+        "5": 1.0
+      },
+      "siting_downstream_impact": {
+        "2": 0.5,
+        "3": 0.2,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.6666666666666666,
+        "3": 0.2857142857142857,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "2": 0.0,
+        "3": 0.4,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "read_colour_scale_threshold": {
+        "2": 0.0,
+        "3": 0.5
+      },
+      "read_colour_scale_value": {
+        "2": 0.0,
+        "3": 0.0
+      }
+    }
+  },
+  "breaking_level": {
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": 4,
+      "order_along_flow": 4,
+      "nature_based_filtering": ">5",
+      "read_elevation": ">5",
+      "read_flow_direction": ">5",
+      "siting_downstream_impact": 3,
+      "trace_upstream_catchment": 3,
+      "measure_along_flow": 2,
+      "read_colour_scale_threshold": 2,
+      "read_colour_scale_value": 2
+    }
+  },
+  "blind_gap_by_skill": {},
+  "tasks_guessable_without_image": [],
+  "map_vs_satellite": {},
+  "error_tags": {
+    "openai:gemini-3.1-flash-lite": {
+      "missed_some": 13,
+      "extra_unrelated": 12,
+      "wrong_choice": 10,
+      "overestimate": 8,
+      "trap:near_but_other_stream": 4,
+      "underestimate": 2,
+      "off_by_one_sector": 2,
+      "trap:downstream_not_upstream": 1,
+      "trap:later_village": 1,
+      "trap:upstream_of_outfall": 1,
+      "wrong_direction": 1
+    }
+  },
+  "trap_fall_rate": {
+    "openai:gemini-3.1-flash-lite": {
+      "exposed": 50,
+      "fell": 7,
+      "rate": 0.14
+    }
+  },
+  "counterfactual_pairs": {
+    "openai:gemini-3.1-flash-lite": {
+      "pairs": 9,
+      "single_task_accuracy": 0.2222222222222222,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.3333333333333333,
+      "by_kind": {
+        "intake": {
+          "pairs": 3,
+          "single_task_accuracy": 0.3333333333333333,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.3333333333333333
+        },
+        "outfall": {
+          "pairs": 4,
+          "single_task_accuracy": 0.125,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.5
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.25,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.0
+        }
+      }
+    }
+  },
+  "appearance_invariance": {},
+  "perception_probes": {},
+  "cost": {
+    "openai:gemini-3.1-flash-lite": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 7.4
+    }
+  }
+}

@@ -53,6 +53,10 @@ Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · pe
 | ![check](docs/pipeline/5_check.png) | ![satellite](docs/pipeline/6_satellite.jpg) | ![pixels](docs/pipeline/7_pixels.jpg) | ![twin](docs/pipeline/8_twin.jpg) |
 | pysheds agrees on 99.73% of cells, same answer to 10/10 questions | Also rendered as topographic map and thermal | 137/137 path cells visible in the pixels | Outfall moved (0.64% of pixels): answer becomes **V4, V6** |
 
+![how a task is made](docs/gifs/pipeline.gif)
+
+*How a task is made: one real scene through every pipeline step.*
+
 | One scene, three image styles, one answer key | Difficulty dial, level 1 → 5 |
 |---|---|
 | ![styles](docs/gifs/styles.gif) | ![difficulty](docs/gifs/difficulty.gif) |
