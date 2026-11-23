@@ -54,7 +54,8 @@ def build(a):
     for t in chosen:
         name = t["image"].replace("/", "_").replace(".png", ".jpg")
         Image.open(ds / t["image"]).convert("RGB").save(out / "img" / name, quality=88)
-        items.append(dict(id=t["task_id"], img="img/" + name, q=t["question"], kind=t["scoring"],
+        ctx = t["prompt"].split("Question:")[0].strip()          # the same context line the models get
+        items.append(dict(id=t["task_id"], img="img/" + name, q=t["question"], ctx=ctx, kind=t["scoring"],
                           options=t["options"], skill=SKILL_LABEL[t["skill"]], style=t["style"],
                           unit="m" if t["qid"] == "Q10" else "°C"))
     (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False)))
@@ -128,8 +129,8 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:0;background:var(-
 .muted{color:var(--ink2);font-size:14px}.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
 </style></head><body><div class="wrap">
 <h1 style="font-size:22px;margin:4px 0">Can you trace the water?</h1>
-<p class="muted">You will see generated landscape images and questions. Answer as carefully as you can, without help. Your answers are compared with a water-flow simulation to check the tasks are solvable by people.</p>
-<p><label>Your name or initials: <input type="text" id="who"></label></p>
+<p class="muted">You will see 30 generated landscape images, each with one question about where water flows. Answer as carefully as you can, on your own: no help from other people, search engines or AI tools. There is no time limit; most people take 10 to 15 minutes. Your answers are compared with a water-flow simulation to check that people can solve these tasks; only your initials and your score are used, in a public hackathon project. Your progress is saved in this browser if you close the page.</p>
+<p><label>Your initials: <input type="text" id="who" autocomplete="off"></label></p>
 <div class="bar"><i id="prog" style="width:0"></i></div><p class="muted" id="count"></p>
 <div id="stage"></div></div>
 <script id="data" type="application/json">__DATA__</script>
@@ -157,7 +158,9 @@ function show(){
   if (d.kind === 'set') inp = '<div class="opts">' + d.options.map(o => `<label><input type="checkbox" value="${o}"> ${o}</label>`).join('') + '</div><p class="muted">Tick all that apply (none is allowed).</p>';
   else if (d.kind === 'number') inp = `<input type="number" step="0.1" id="num"> ${d.unit}`;
   else inp = '<div class="opts">' + d.options.map(o => `<label><input type="radio" name="r" value="${o}"> ${o}</label>`).join('') + '</div>';
-  st.innerHTML = `<div class="card"><img src="${d.img}" alt="task image"><div class="side"><span class="muted">${d.style} image</span>
+  st.innerHTML = `<div class="card"><a href="${d.img}" target="_blank" rel="noopener" title="Open the image full size">
+    <img src="${d.img}" alt="${d.style} image for this question"></a><div class="side">
+    <span class="muted">${d.ctx || (d.style + ' image')} Tap or click the image to open it full size.</span>
     <b>${d.q}</b>${inp}<button id="next">Next</button></div></div>`;
   t0 = Date.now();
   document.getElementById('next').onclick = () => {
