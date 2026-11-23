@@ -1,0 +1,410 @@
+{
+  "models": [
+    "hf:SmolVLM-256M-Instruct@512px (base)",
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)"
+  ],
+  "n_responses": 336,
+  "compared_on_tasks": 168,
+  "answers_outside_common_set": {},
+  "chance_by_skill": {
+    "nature_based_filtering": 0.25,
+    "trace_upstream_catchment": 0.04347336375355114,
+    "order_along_flow": 0.17610544217687077,
+    "siting_downstream_impact": 0.3333333333333333,
+    "read_flow_direction": 0.125,
+    "read_colour_scale_value": 0.2,
+    "trace_downstream": 0.024750721622121708,
+    "read_elevation": 0.07773524375,
+    "read_colour_scale_threshold": 0.11246282894736843,
+    "measure_along_flow": 0.10282857142857142
+  },
+  "tasks_by_skill_evaluated": {
+    "nature_based_filtering": 13,
+    "trace_upstream_catchment": 33,
+    "order_along_flow": 28,
+    "siting_downstream_impact": 13,
+    "read_flow_direction": 13,
+    "read_colour_scale_value": 11,
+    "trace_downstream": 19,
+    "read_elevation": 5,
+    "read_colour_scale_threshold": 19,
+    "measure_along_flow": 14
+  },
+  "vs_chance": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "correct": 16,
+      "n": 168,
+      "chance": 0.13219785951025723,
+      "p_value": 0.942208692554549
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "correct": 32,
+      "n": 168,
+      "chance": 0.13219785951025723,
+      "p_value": 0.020882616542324775
+    }
+  },
+  "format": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "well_formed": 0.005952380952380952,
+      "accuracy_well_formed_only": 0.0
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "well_formed": 0.9940476190476191,
+      "accuracy_well_formed_only": 0.19047619047619047
+    }
+  },
+  "overall": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "image": 0.09523809523809523,
+      "blind": null,
+      "n": 168
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "image": 0.19047619047619047,
+      "blind": null,
+      "n": 168
+    }
+  },
+  "by_skill": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "measure_along_flow": 0.07142857142857142,
+      "read_colour_scale_threshold": 0.3157894736842105,
+      "read_colour_scale_value": 0.18181818181818182,
+      "order_along_flow": 0.0,
+      "trace_downstream": 0.0,
+      "siting_downstream_impact": 0.0,
+      "read_elevation": 0.2,
+      "trace_upstream_catchment": 0.09090909090909091,
+      "nature_based_filtering": 0.23076923076923078,
+      "read_flow_direction": 0.0
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "measure_along_flow": 0.2857142857142857,
+      "read_colour_scale_threshold": 0.3684210526315789,
+      "read_colour_scale_value": 0.18181818181818182,
+      "order_along_flow": 0.25,
+      "trace_downstream": 0.0,
+      "siting_downstream_impact": 0.15384615384615385,
+      "read_elevation": 0.0,
+      "trace_upstream_catchment": 0.09090909090909091,
+      "nature_based_filtering": 0.38461538461538464,
+      "read_flow_direction": 0.15384615384615385
+    }
+  },
+  "by_style": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "map": 0.08,
+      "thermal": 0.26666666666666666,
+      "satellite": 0.045454545454545456
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "map": 0.08,
+      "thermal": 0.3,
+      "satellite": 0.2159090909090909
+    }
+  },
+  "by_level": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "1": 0.16129032258064516,
+      "2": 0.125,
+      "3": 0.1111111111111111,
+      "4": 0.03125,
+      "5": 0.03571428571428571
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "1": 0.12903225806451613,
+      "2": 0.3125,
+      "3": 0.15555555555555556,
+      "4": 0.15625,
+      "5": 0.21428571428571427
+    }
+  },
+  "eye_exam_curves": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "measure_along_flow": {
+        "1": 0.0,
+        "2": 0.3333333333333333,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "1": 0.4,
+        "2": 0.4,
+        "3": 0.3333333333333333,
+        "4": 0.0,
+        "5": 0.3333333333333333
+      },
+      "read_colour_scale_value": {
+        "1": 0.3333333333333333,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.3333333333333333,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_downstream": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_elevation": {
+        "1": 1.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "1": 0.16666666666666666,
+        "2": 0.14285714285714285,
+        "3": 0.125,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "nature_based_filtering": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.6,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      }
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "measure_along_flow": {
+        "1": 0.0,
+        "2": 0.6666666666666666,
+        "3": 0.0,
+        "4": 0.3333333333333333,
+        "5": 0.3333333333333333
+      },
+      "read_colour_scale_threshold": {
+        "1": 0.4,
+        "2": 0.4,
+        "3": 0.3333333333333333,
+        "4": 0.3333333333333333,
+        "5": 0.3333333333333333
+      },
+      "read_colour_scale_value": {
+        "1": 0.3333333333333333,
+        "2": 1.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "1": 0.2,
+        "2": 0.25,
+        "3": 0.2,
+        "4": 0.2,
+        "5": 0.5
+      },
+      "trace_downstream": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "1": 0.0,
+        "2": 0.3333333333333333,
+        "3": 0.0,
+        "4": 0.3333333333333333,
+        "5": 0.0
+      },
+      "read_elevation": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "1": 0.0,
+        "2": 0.14285714285714285,
+        "3": 0.125,
+        "4": 0.0,
+        "5": 0.14285714285714285
+      },
+      "nature_based_filtering": {
+        "1": 0.0,
+        "2": 0.0,
+        "3": 0.6,
+        "4": 0.5,
+        "5": 0.5
+      },
+      "read_flow_direction": {
+        "1": 0.0,
+        "2": 0.6666666666666666,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      }
+    }
+  },
+  "breaking_level": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "measure_along_flow": 1,
+      "read_colour_scale_threshold": 1,
+      "read_colour_scale_value": 1,
+      "order_along_flow": 1,
+      "trace_downstream": 1,
+      "siting_downstream_impact": 1,
+      "read_elevation": 2,
+      "trace_upstream_catchment": 1,
+      "nature_based_filtering": 1,
+      "read_flow_direction": 1
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "measure_along_flow": 1,
+      "read_colour_scale_threshold": 1,
+      "read_colour_scale_value": 1,
+      "order_along_flow": 1,
+      "trace_downstream": 1,
+      "siting_downstream_impact": 1,
+      "read_elevation": 1,
+      "trace_upstream_catchment": 1,
+      "nature_based_filtering": 1,
+      "read_flow_direction": 1
+    }
+  },
+  "blind_gap_by_skill": {},
+  "tasks_guessable_without_image": [],
+  "map_vs_satellite": {},
+  "error_tags": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "missed_some": 62,
+      "unparseable_or_no_answer": 52,
+      "extra_unrelated": 22,
+      "underestimate": 14,
+      "trap:downstream_not_upstream": 11,
+      "overestimate": 8,
+      "trap:near_but_other_stream": 7,
+      "wrong_choice": 7,
+      "trap:upstream_of_outfall": 2,
+      "wrong_direction": 2,
+      "trap:too_late_after_village": 1,
+      "trap:cooled_downstream": 1
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "missed_some": 54,
+      "extra_unrelated": 27,
+      "wrong_choice": 26,
+      "trap:downstream_not_upstream": 19,
+      "overestimate": 11,
+      "off_by_one_sector": 11,
+      "trap:near_but_other_stream": 10,
+      "underestimate": 8,
+      "trap:too_late_after_village": 4,
+      "trap:later_village": 3,
+      "trap:upstream_same_stream": 2,
+      "trap:upstream_of_outfall": 1
+    }
+  },
+  "trap_fall_rate": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "exposed": 112,
+      "fell": 22,
+      "rate": 0.19642857142857142
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "exposed": 112,
+      "fell": 39,
+      "rate": 0.3482142857142857
+    }
+  },
+  "counterfactual_pairs": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "pairs": 30,
+      "single_task_accuracy": 0.18333333333333332,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.7666666666666667,
+      "by_kind": {
+        "thermal": {
+          "pairs": 10,
+          "single_task_accuracy": 0.4,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.7
+        },
+        "outfall": {
+          "pairs": 10,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 1.0
+        },
+        "intake": {
+          "pairs": 10,
+          "single_task_accuracy": 0.15,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.6
+        }
+      }
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "pairs": 30,
+      "single_task_accuracy": 0.21666666666666667,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.9333333333333333,
+      "by_kind": {
+        "thermal": {
+          "pairs": 10,
+          "single_task_accuracy": 0.4,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.9
+        },
+        "outfall": {
+          "pairs": 10,
+          "single_task_accuracy": 0.15,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 1.0
+        },
+        "intake": {
+          "pairs": 10,
+          "single_task_accuracy": 0.1,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.9
+        }
+      }
+    }
+  },
+  "appearance_invariance": {},
+  "perception_probes": {},
+  "cost": {
+    "hf:SmolVLM-256M-Instruct@512px (base)": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 3.04
+    },
+    "hf:SmolVLM-256M-Instruct@512px (fine-tuned on ThirstMap)": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 1.31
+    }
+  }
+}

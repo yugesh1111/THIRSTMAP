@@ -33,6 +33,32 @@ Free, open-weight models from Hugging Face, run locally on CPU (no API keys). Ev
 | Thermal threshold | 19 | 11% | 26% | 11% | 0% | 16% |
 | Thermal value | 11 | 20% | 9% | 18% | 0% | 18% |
 
+## Can the dataset teach the skill? (fine-tuning)
+
+HuggingFaceTB/SmolVLM-256M-Instruct was fine-tuned with LoRA on 300 tasks for 2 epochs on CPU (27 min), using only scenes that never appear in the test set (108 held-out scene families, 168 test questions). Both versions answer the same test questions with the same image settings, and again without the image:
+
+| Model | Accuracy | Without image | Chance | p (beats chance) | Well-formed replies | Accuracy, well-formed only |
+|---|---|---|---|---|---|---|
+| base | **10%** (16/168) | – | 13% | 0.94 | 1% | 0% |
+| fine-tuned on ThirstMap | **19%** (32/168) | – | 13% | 0.021 | 99% | 19% |
+
+Fine-tuning changed accuracy by +10 points. (No without-image control was run for this fine-tune.)
+
+| Skill | Chance | base | fine-tuned |
+|---|---|---|---|
+| Trace downstream | 2% | 0% | 0% |
+| Order along flow | 18% | 0% | 25% |
+| Measure along flow | 10% | 7% | 29% |
+| Place wetland | 25% | 23% | 38% |
+| Site selection | 33% | 0% | 15% |
+| Trace upstream | 4% | 9% | 9% |
+| Flow direction | 12% | 0% | 15% |
+| Read elevation | 8% | 20% | 0% |
+| Thermal threshold | 11% | 32% | 37% |
+| Thermal value | 20% | 18% | 18% |
+
+The adapter is in `models/SmolVLM-256M-Instruct-thirstmap-lora/` (22 MB); load it with `peft.PeftModel.from_pretrained`.
+
 ## Strict check: well-formed replies only
 
 The scorer is lenient: a reply that names the right labels counts even if it is badly formatted (small models often write broken JSON). Counting only well-formed replies does not change the conclusion:

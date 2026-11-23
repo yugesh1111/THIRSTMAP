@@ -1,0 +1,14 @@
+{
+  "base_model": "HuggingFaceTB/SmolVLM-256M-Instruct",
+  "train_tasks": 300,
+  "epochs": 2,
+  "lr": 0.0002,
+  "max_side": 512,
+  "image_splitting": false,
+  "lora": {
+    "r": 16,
+    "alpha": 32
+  },
+  "held_out_scene_families": 108,
+  "train_seconds": 1636
+}

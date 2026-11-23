@@ -124,19 +124,41 @@ def main():
         info = json.loads(meta.read_text()) if meta else {}
         if base and tuned:
             vb, vt = F["vs_chance"][base], F["vs_chance"][tuned]
+            ob, ot = F["overall"][base], F["overall"][tuned]
+            fb, ft_ = F.get("format", {}).get(base, {}), F.get("format", {}).get(tuned, {})
             L += ["", "## Can the dataset teach the skill? (fine-tuning)", "",
                   f"{info.get('base_model', 'A small model')} was fine-tuned with LoRA on {info.get('train_tasks', '?')} "
-                  f"tasks for {info.get('epochs', '?')} epoch(s) on CPU, using only scenes that never appear in the "
-                  f"test set ({info.get('held_out_scene_families', '?')} held-out scene families). Same test tasks and image "
-                  f"settings for both:", "",
-                  "| Model | Accuracy | Chance | p (beats chance) |", "|---|---|---|---|",
-                  f"| base | {pct(vb['correct'] / vb['n'])} ({vb['correct']}/{vb['n']}) | {pct(vb['chance'])} | {vb['p_value']:.2g} |",
-                  f"| fine-tuned on ThirstMap | {pct(vt['correct'] / vt['n'])} ({vt['correct']}/{vt['n']}) | "
-                  f"{pct(vt['chance'])} | {vt['p_value']:.2g} |", "",
-                  "| Skill | base | fine-tuned |", "|---|---|---|"]
-            for s in SKILL_ORDER:
-                if s in F["by_skill"].get(base, {}):
-                    L.append(f"| {SKILL_LABEL[s]} | {pct(F['by_skill'][base].get(s))} | {pct(F['by_skill'][tuned].get(s))} |")
+                  f"tasks for {info.get('epochs', '?')} epochs on CPU ({round(info.get('train_seconds', 0) / 60)} min), "
+                  f"using only scenes that never appear in the test set ({info.get('held_out_scene_families', '?')} "
+                  f"held-out scene families, {vb['n']} test questions). Both versions answer the same test questions "
+                  "with the same image settings, and again without the image:", "",
+                  "| Model | Accuracy | Without image | Chance | p (beats chance) | Well-formed replies | Accuracy, well-formed only |",
+                  "|---|---|---|---|---|---|---|"]
+            for label, v, o, f in (("base", vb, ob, fb), ("fine-tuned on ThirstMap", vt, ot, ft_)):
+                L.append(f"| {label} | **{pct(v['correct'] / v['n'])}** ({v['correct']}/{v['n']}) | {pct(o.get('blind'))} | "
+                         f"{pct(v['chance'])} | {v['p_value']:.2g} | {pct(f.get('well_formed'))} | "
+                         f"{pct(f.get('accuracy_well_formed_only'))} |")
+            gain = vt["correct"] / vt["n"] - vb["correct"] / vb["n"]
+            if ot.get("blind") is not None:
+                gap = vt["correct"] / vt["n"] - ot["blind"]
+                if gap >= 0.05:
+                    verdict = (f"The tuned model scores {pct(gap)} points higher with the image than without it, so part "
+                               "of the gain comes from looking at the image, not only from learning the answer format "
+                               "and typical answers.")
+                else:
+                    verdict = (f"But the tuned model scores about as well without the image ({pct(ot['blind'])}), so the "
+                               "gain comes mostly from learning the answer format and typical answers, not from reading "
+                               "the image. Small models need more than a few hundred examples to learn to trace water.")
+            else:
+                verdict = "(No without-image control was run for this fine-tune.)"
+            L += ["", f"Fine-tuning changed accuracy by {gain * 100:+.0f} points. {verdict}", "",
+                  "| Skill | Chance | base | fine-tuned |", "|---|---|---|---|"]
+            for s_ in SKILL_ORDER:
+                if s_ in F["by_skill"].get(base, {}):
+                    L.append(f"| {SKILL_LABEL[s_]} | {pct(F['chance_by_skill'].get(s_))} | "
+                             f"{pct(F['by_skill'][base].get(s_))} | {pct(F['by_skill'][tuned].get(s_))} |")
+            L += ["", f"The adapter is in `{meta.parent}/` ({sum(f.stat().st_size for f in meta.parent.iterdir()) / 2**20:.0f} MB); "
+                  "load it with `peft.PeftModel.from_pretrained`."]
     fm = S.get("format", {})
     if fm:
         L += ["", "## Strict check: well-formed replies only", "",

@@ -5,7 +5,8 @@ Test : the same held-out tasks for the base model and the fine-tuned model, same
 Runs on CPU at small scale (a few hundred examples); results are reported honestly as such.
 
 Usage:
-  python3 finetune.py --test-run results/open_models --train-per-q 40 --epochs 1
+  python3 finetune.py --test-run results/open_models --train-per-q 30 --epochs 2 --blind
+  python3 finetune.py --test-run results/open_models --eval-only --blind   # re-test the saved adapter
   -> models/<name>-thirstmap-lora/ (adapter), results/finetune/ (responses + REPORT.md)
 """
 import argparse
@@ -19,7 +20,7 @@ import torch
 from PIL import Image
 
 from report import build_report
-from thirstmap.models import BLIND_NOTE  # noqa: F401  (same prompt format as evaluation)
+from thirstmap.models import BLIND_NOTE   # same no-image prompt as the evaluation harness
 from thirstmap.scoring import score
 
 
@@ -36,7 +37,8 @@ def load_image(path, max_side):
 
 
 def encode(processor, image, prompt, answer=None):
-    msgs = [{"role": "user", "content": [{"type": "image", "image": image}, {"type": "text", "text": prompt}]}]
+    content = ([{"type": "image", "image": image}] if image is not None else []) + [{"type": "text", "text": prompt}]
+    msgs = [{"role": "user", "content": content}]
     if answer is None:
         return processor.apply_chat_template(msgs, add_generation_prompt=True, tokenize=True,
                                              return_dict=True, return_tensors="pt")
@@ -69,6 +71,10 @@ def main():
     ap.add_argument("--out", default="results/finetune")
     ap.add_argument("--split-images", action="store_true",
                     help="let the processor tile each image (more tokens, much slower on CPU)")
+    ap.add_argument("--blind", action="store_true",
+                    help="also ask every test question WITHOUT the image (control: did it learn to look?)")
+    ap.add_argument("--eval-only", action="store_true",
+                    help="skip training: load the saved adapter and evaluate (fills in missing answers only)")
     a = ap.parse_args()
     from peft import LoraConfig, get_peft_model
     from transformers import AutoModelForImageTextToText, AutoProcessor
@@ -104,21 +110,33 @@ def main():
         model.eval()
         done = set()
         if resp.exists():
-            done = {json.loads(l)["task_id"] for l in open(resp) if json.loads(l)["model"] == name}
-        for k, t in enumerate(test):
-            if t["task_id"] in done:
-                continue
-            t0 = time.time()
-            raw = generate(model, processor, load_image(ds / t["image"], a.max_side), t["prompt"])
-            rec = dict(model=name, mode="image", task_id=t["task_id"], raw=raw, latency_s=round(time.time() - t0, 2),
-                       input_tokens=None, output_tokens=None, cost_usd=None, **score(t, raw))
-            with open(resp, "a") as f:
-                f.write(json.dumps(rec, default=str) + "\n")
-            if (k + 1) % 25 == 0:
-                print(f"  {name}: {k + 1}/{len(test)}", flush=True)
+            done = {(r["mode"], r["task_id"]) for r in map(json.loads, open(resp)) if r["model"] == name}
+        for mode in ["image", "blind"] if a.blind else ["image"]:
+            for k, t in enumerate(test):
+                if (mode, t["task_id"]) in done:
+                    continue
+                t0 = time.time()
+                if mode == "image":
+                    raw = generate(model, processor, load_image(ds / t["image"], a.max_side), t["prompt"])
+                else:
+                    raw = generate(model, processor, None, t["prompt"] + BLIND_NOTE)
+                rec = dict(model=name, mode=mode, task_id=t["task_id"], raw=raw,
+                           latency_s=round(time.time() - t0, 2), input_tokens=None, output_tokens=None,
+                           cost_usd=None, **score(t, raw))
+                with open(resp, "a") as f:
+                    f.write(json.dumps(rec, default=str) + "\n")
+                if (k + 1) % 25 == 0:
+                    print(f"  {name} [{mode}]: {k + 1}/{len(test)}", flush=True)
 
     base = AutoModelForImageTextToText.from_pretrained(a.model, dtype=torch.float32)
     evaluate(base, f"hf:{short}@{a.max_side}px (base)")
+    adapter_dir = Path("models") / f"{short}-thirstmap-lora"
+    if a.eval_only:
+        from peft import PeftModel
+        tuned = PeftModel.from_pretrained(base, adapter_dir)
+        evaluate(tuned, f"hf:{short}@{a.max_side}px (fine-tuned on ThirstMap)")
+        build_report(out, ds)
+        return
 
     cfg = LoraConfig(r=16, lora_alpha=32, lora_dropout=0.05,
                      target_modules=["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"])
@@ -137,7 +155,6 @@ def main():
                 if step % 5 == 0:
                     print(f"  epoch {ep + 1} step {step} loss {loss.item() * accum:.3f} "
                           f"({time.time() - t0:.0f}s)", flush=True)
-    adapter_dir = Path("models") / f"{short}-thirstmap-lora"
     model.save_pretrained(adapter_dir)
     (adapter_dir / "TRAINING.json").write_text(json.dumps(dict(
         base_model=a.model, train_tasks=len(train), epochs=a.epochs, lr=a.lr, max_side=a.max_side,
