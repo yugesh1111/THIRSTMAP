@@ -6,7 +6,7 @@
 |---|---|---|---|
 | hf:HuggingFaceTB/SmolVLM-256M-Instruct | 8% | 10% | 144 |
 | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | 8% | 12% | 144 |
-| hf:Qwen/Qwen2-VL-2B-Instruct | 8% | 9% | 144 |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 8% | 9% | 168 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 15% | 13% | 168 |
 
 ## Better than guessing?
@@ -17,7 +17,7 @@ Chance = expected accuracy of a random guesser on exactly these tasks (from each
 |---|---|---|---|---|
 | hf:HuggingFaceTB/SmolVLM-256M-Instruct | 11/144 | 8% | 13% | 0.99 |
 | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | 12/144 | 8% | 13% | 0.97 |
-| hf:Qwen/Qwen2-VL-2B-Instruct | 12/144 | 8% | 13% | 0.97 |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 14/168 | 8% | 13% | 0.98 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 25/168 | 15% | 13% | 0.29 |
 
 ## Accuracy by visual skill
@@ -27,12 +27,12 @@ Tasks = distinct tasks per skill (every model answers the same ones); with 10-30
 | Skill | Tasks | Chance | hf:HuggingFaceTB/SmolVLM-256M-Instruct | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | hf:Qwen/Qwen2-VL-2B-Instruct | hf:Qwen/Qwen2.5-VL-3B-Instruct |
 |---|---|---|---|---|---|---|
 | Trace downstream | 19 | 2% | 13% | 7% | 0% | 0% |
-| Order along flow | 28 | 18% | 0% | 4% | 17% | 14% |
-| Measure along flow | 14 | 10% | 0% | 0% | 20% | 21% |
-| Place wetland | 13 | 25% | 10% | 40% | 40% | 23% |
+| Order along flow | 28 | 18% | 0% | 4% | 14% | 14% |
+| Measure along flow | 14 | 10% | 0% | 0% | 14% | 21% |
+| Place wetland | 13 | 25% | 10% | 40% | 46% | 23% |
 | Site selection | 13 | 33% | 0% | 0% | 0% | 31% |
 | Trace upstream | 33 | 4% | 0% | 3% | 0% | 12% |
-| Flow direction | 13 | 12% | 20% | 0% | 10% | 0% |
+| Flow direction | 13 | 12% | 20% | 0% | 8% | 0% |
 | Read elevation | 5 | 8% | 20% | 20% | 20% | 20% |
 | Thermal threshold | 19 | 11% | 16% | 11% | 0% | 26% |
 | Thermal value | 11 | 20% | 18% | 18% | 0% | 9% |
@@ -42,7 +42,7 @@ Tasks = distinct tasks per skill (every model answers the same ones); with 10-30
 | Skill | hf:HuggingFaceTB/SmolVLM-256M-Instruct | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | hf:Qwen/Qwen2-VL-2B-Instruct | hf:Qwen/Qwen2.5-VL-3B-Instruct |
 |---|---|---|---|---|
 | Trace downstream | 3 | 1 | 1 | 1 |
-| Order along flow | 1 | 1 | 2 | 1 |
+| Order along flow | 1 | 1 | 1 | 1 |
 | Measure along flow | 1 | 1 | 1 | 1 |
 | Place wetland | 1 | 3 | 5 | 1 |
 | Site selection | 1 | 1 | 1 | 1 |
@@ -74,6 +74,7 @@ Each group is one satellite question shown four ways: dry season (original), mon
 
 | Model | Groups | Dry | Monsoon | Haze | Coarse | Same answer in all 4 | Right in all 4 |
 |---|---|---|---|---|---|---|---|
+| hf:Qwen/Qwen2-VL-2B-Instruct | 24 | 8% | 8% | 8% | 8% | 88% | 8% |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 24 | 8% | 8% | 8% | 4% | 75% | 4% |
 
 ## Perception probes: can the model even read the image?
@@ -93,7 +94,7 @@ No reasoning needed: these only ask the model to read what is printed on the ima
 |---|---|---|---|
 | hf:HuggingFaceTB/SmolVLM-256M-Instruct | 98 | 18% | missed_some (56), unparseable_or_no_answer (36), extra_unrelated (11), underestimate (9) |
 | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | 98 | 51% | missed_some (34), unparseable_or_no_answer (32), trap:downstream_not_upstream (21), underestimate (14) |
-| hf:Qwen/Qwen2-VL-2B-Instruct | 98 | 66% | trap:downstream_not_upstream (29), trap:other_stream (18), missed_some (16), unparseable_or_no_answer (15) |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 112 | 65% | trap:downstream_not_upstream (32), missed_some (18), unparseable_or_no_answer (18), trap:other_stream (18) |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 112 | 27% | missed_some (58), wrong_choice (25), extra_unrelated (24), overestimate (16) |
 
 Tasks a majority of real models answered correctly WITHOUT the image: 11
@@ -104,7 +105,7 @@ Tasks a majority of real models answered correctly WITHOUT the image: 11
 |---|---|---|---|---|
 | hf:HuggingFaceTB/SmolVLM-256M-Instruct | 199768 | 8185 | 0 | 9.73 |
 | hf:HuggingFaceTB/SmolVLM2-2.2B-Instruct | 241384 | 4109 | 0 | 9.72 |
-| hf:Qwen/Qwen2-VL-2B-Instruct | 168420 | 5055 | 0 | 6.05 |
+| hf:Qwen/Qwen2-VL-2B-Instruct | 192151 | 5387 | 0 | 6.59 |
 | hf:Qwen/Qwen2.5-VL-3B-Instruct | 192151 | 3087 | 0 | 7.14 |
 
 ![skills](chart_accuracy_by_skill.png)
