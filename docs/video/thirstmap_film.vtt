@@ -1,0 +1,121 @@
+WEBVTT
+
+00:00:00.550 --> 00:00:03.200
+AI is drinking India's water.
+
+00:00:03.320 --> 00:00:08.220
+We built ThirstMap to test whether AI can even see where that water goes.
+
+00:00:09.320 --> 00:00:18.470
+India's data centres use about 150 billion litres of water a year, heading for 358 billion by 2030.
+
+00:00:18.590 --> 00:00:23.815
+Seventy percent of the capacity sits in Mumbai and Chennai, both short of water.
+
+00:00:23.935 --> 00:00:30.985
+AI agents are being built to answer one question from maps and satellite images: where does the wastewater go?
+
+00:00:32.085 --> 00:00:35.135
+ThirstMap is a visual task factory.
+
+00:00:35.255 --> 00:00:44.655
+Code builds a landscape, simulates where every drop of water flows, places a data centre, villages and traps, and traces the answer downhill.
+
+00:00:44.775 --> 00:00:47.725
+So it knows every answer before it asks.
+
+00:00:47.845 --> 00:00:53.220
+Each scene becomes a satellite image, a topographic map and a thermal image.
+
+00:00:54.320 --> 00:00:57.695
+Ten reasoning skills, and none of them is counting.
+
+00:00:57.815 --> 00:01:07.590
+Five difficulty levels, real terrain for four Indian data-centre cities, and monsoon, haze and coarse-sensor versions whose answers must not change.
+
+00:01:07.710 --> 00:01:11.310
+Five thousand three hundred and thirty tasks in all.
+
+00:01:12.410 --> 00:01:15.035
+Every scene also gets a twin.
+
+00:01:15.155 --> 00:01:20.355
+One small change, like moving the outfall to another stream, flips the answer.
+
+00:01:20.475 --> 00:01:24.200
+A model that answers from habit gets one half wrong.
+
+00:01:25.300 --> 00:01:27.850
+Judges should not have to trust us.
+
+00:01:27.970 --> 00:01:35.795
+An independent hydrology library recomputes every answer, and a question it disagrees with is dropped, never edited.
+
+00:01:35.915 --> 00:01:39.690
+We check that the answer is visible in the actual pixels.
+
+00:01:39.810 --> 00:01:46.310
+We even audited ourselves: four hundred and thirty-one unfair tasks found, excluded and published.
+
+00:01:46.430 --> 00:01:50.580
+And every audited image rebuilds byte for byte from its seed.
+
+00:01:51.680 --> 00:01:53.655
+Anyone can run it.
+
+00:01:53.775 --> 00:01:59.600
+Install it with pip, and one command builds a scene and its twin, and runs every check.
+
+00:01:59.720 --> 00:02:03.870
+Every check you see here passed, or the question would have been dropped.
+
+00:02:04.970 --> 00:02:09.820
+We asked open models and Gemini the same seventy-five questions.
+
+00:02:09.940 --> 00:02:14.015
+Open models score at the guessing level of fourteen percent.
+
+00:02:14.135 --> 00:02:22.210
+Gemini Flash-Lite gets forty to forty-nine percent, and drops back to guessing when we hide the image, so it really reads the map.
+
+00:02:22.330 --> 00:02:26.455
+Gemini 3.5 Flash gets seventy-six percent.
+
+00:02:27.555 --> 00:02:30.430
+But the twins catch even the best model.
+
+00:02:30.550 --> 00:02:35.575
+Here the cooling water is cooler, so no point is above three degrees any more.
+
+00:02:35.695 --> 00:02:40.170
+Gemini gives exactly the same answer: two false heat alarms.
+
+00:02:40.290 --> 00:02:45.390
+It got both halves right in only three of seven pairs. Every other model, none.
+
+00:02:46.490 --> 00:02:53.390
+Our live demo scores every real reply automatically, right or wrong, and names the trap it fell into.
+
+00:02:53.510 --> 00:02:57.260
+Show the answer key, and see where the water really goes.
+
+00:02:57.380 --> 00:03:00.855
+Or answer the questions yourself, by the same rules.
+
+00:03:01.955 --> 00:03:10.805
+The data can also teach: fine-tuning a small model on unseen scenes lifted it from ten to nineteen percent, and only with the image.
+
+00:03:10.925 --> 00:03:13.900
+And people can take the same test online.
+
+00:03:15.000 --> 00:03:20.725
+There is a Colab notebook, forty-eight tests, and four automatic checks on every change.
+
+00:03:20.845 --> 00:03:27.370
+The frontier check fits a free tier: one request per image, about three hundred tokens per answer.
+
+00:03:28.470 --> 00:03:34.795
+ThirstMap: a factory of visual tasks with verified answers, and a hard test for AI.
+
+00:03:34.915 --> 00:03:38.890
+Before we trust AI with India's water, it should pass it.

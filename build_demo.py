@@ -572,7 +572,8 @@ BODY = r"""<header><div class="wrap">
 <p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
-<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">Watch the 90-second video</a>
+<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (3 min 40 s, narrated)</a>
+<a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">90-second walkthrough</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (32 questions, about 15 minutes)</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/ThirstMap_summary.pdf">One-page summary (PDF)</a>

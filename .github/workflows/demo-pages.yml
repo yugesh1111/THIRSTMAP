@@ -27,6 +27,8 @@ jobs:
           mkdir site && cp -r docs/demo/. site/ && touch site/.nojekyll
           mkdir site/human && cp -r human_eval/index.html human_eval/img site/human/
           cp docs/video/thirstmap_demo.mp4 site/thirstmap_demo.mp4
+          cp docs/video/thirstmap_film.mp4 docs/video/thirstmap_film_short.mp4 docs/video/*.vtt docs/video/*poster.jpg site/
+          cp docs/video/watch.html site/film.html
           cd site
           git init -q -b gh-pages
           git config user.name "Amritha S"

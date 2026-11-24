@@ -364,7 +364,7 @@ def build(N, out, figure):
     ct.drawOn(c, M, y - 6 - cth)
 
     lx = M + crit_w + 16
-    links = [("Live demo, no login", DEMO, DEMO), ("90-second video", DEMO + "thirstmap_demo.mp4", "…/THIRSTMAP/thirstmap_demo.mp4"),
+    links = [("Live demo, no login", DEMO, DEMO), ("The film, 3 min 40 s", DEMO + "film.html", "…/THIRSTMAP/film.html"),
              ("Take the test yourself", DEMO + "human/", "…/THIRSTMAP/human/"), ("Code, data, findings", REPO, REPO),
              ("Colab quickstart", COLAB, "ThirstMap_quickstart.ipynb (Colab)")]
     c.setFillColor(WATER)

@@ -1,0 +1,22 @@
+twin: scenes/level3_seed11_cf (thermal: the cooling water is cooler (x0.35 at the outfall)) questions ['Q8']
+scenes/level3_seed11
+  PASS  V1_independent_pysheds  {'receiver_agreement': 0.9988, 'mismatches': {}}
+  PASS  V5_elevation_margin  {'min_gap_m': np.float64(3.59)}
+  PASS  V7_spatial_margin  {'min_cells': 31.38}
+  PASS  V8_single_wetland  {'n_correct': 1}
+  PASS  V_temp_margin  {'min_margin_c': np.float64(1.47)}
+  PASS  V10b_labels_clear_satellite  {'hidden': []}
+  PASS  V9_path_visible_satellite  {'fraction': 1.0}
+  PASS  V10_labels_satellite  {'problems': []}
+  PASS  V10b_labels_clear_thermal  {'hidden': []}
+  PASS  V9_path_visible_thermal  {'fraction': 0.982}
+  PASS  V10_labels_thermal  {'problems': []}
+  PASS  V10b_labels_clear_map  {'hidden': []}
+  PASS  V9_path_visible_map  {'fraction': 0.964}
+  PASS  V10_labels_map  {'problems': []}
+  PASS  V11_style_applicability  {'wrong': []}
+  kept: ['Q1', 'Q2', 'Q3', 'Q4', 'Q10', 'Q6', 'Q7', 'Q8', 'Q9']  dropped: {}
+
+real	0m49.814s
+user	0m48.909s
+sys	0m0.940s

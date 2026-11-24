@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ThirstMap film</title>
+<style>
+:root{--bg:#f4f6f5;--card:#ffffff;--ink:#0f2230;--mute:#4c5d68;--line:#d9e1e5;--acc:#1f64b8}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1c27;--card:#102838;--ink:#eef4f6;--mute:#a3bac5;--line:#21465c;--acc:#5aaef8}}
+:root[data-theme="dark"]{--bg:#0b1c27;--card:#102838;--ink:#eef4f6;--mute:#a3bac5;--line:#21465c;--acc:#5aaef8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+.wrap{max-width:1100px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1{font-size:28px;margin:0 0 4px;text-wrap:balance}
+p{color:var(--mute);margin:0 0 18px;max-width:70ch}
+video{width:100%;height:auto;display:block;border-radius:12px;background:#000;border:1px solid var(--line)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:22px}
+.card h2{font-size:18px;margin:0 0 6px}
+a{color:var(--acc)}
+.links{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>ThirstMap: can AI trace water through the landscape?</h1>
+<p>A narrated walkthrough of every judging criterion and every Track 2 deliverable: the task factory, the validity checks, the variation, the before-and-after twins, the results, and a demo where scoring separates right from wrong. Subtitles are burned in and also available as a caption track.</p>
+<video controls preload="metadata" poster="film_poster.jpg">
+  <source src="thirstmap_film.mp4" type="video/mp4">
+  <track kind="captions" src="thirstmap_film.vtt" srclang="en" label="English">
+</video>
+<div class="card">
+  <h2>The one-minute cut</h2>
+  <video controls preload="metadata" poster="film_short_poster.jpg">
+    <source src="thirstmap_film_short.mp4" type="video/mp4">
+    <track kind="captions" src="thirstmap_film_short.vtt" srclang="en" label="English">
+  </video>
+</div>
+<div class="links">
+  <a href="./">Live demo</a>
+  <a href="thirstmap_demo.mp4">90-second demo walkthrough (silent)</a>
+  <a href="human/">Take the human test</a>
+  <a href="https://github.com/yugesh1111/THIRSTMAP">Code, data and findings</a>
+</div>
+</div>
+</body>
+</html>

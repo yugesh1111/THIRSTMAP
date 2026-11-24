@@ -1,0 +1,43 @@
+WEBVTT
+
+00:00:00.550 --> 00:00:03.200
+AI is drinking India's water.
+
+00:00:03.320 --> 00:00:07.370
+ThirstMap tests whether AI can see where that water goes.
+
+00:00:08.470 --> 00:00:14.370
+Code builds a landscape and simulates its water, so it knows every answer before it asks.
+
+00:00:14.490 --> 00:00:19.015
+Each scene becomes a satellite image, a map and a thermal image.
+
+00:00:20.115 --> 00:00:24.590
+Every scene gets a twin: one small change that flips the answer.
+
+00:00:25.690 --> 00:00:30.965
+An independent library re-checks every answer, and we published our own audit.
+
+00:00:32.065 --> 00:00:34.190
+Open models guess.
+
+00:00:34.310 --> 00:00:39.460
+Gemini Flash-Lite reads the map, and falls back to guessing without the image.
+
+00:00:39.580 --> 00:00:43.705
+Gemini 3.5 Flash gets seventy-six percent.
+
+00:00:44.805 --> 00:00:46.755
+But the twins catch it.
+
+00:00:46.875 --> 00:00:51.425
+Cool the water, and it gives the same answer: two false heat alarms.
+
+00:00:51.545 --> 00:00:54.770
+Both halves right in only three of seven pairs.
+
+00:00:55.870 --> 00:00:59.945
+Five thousand tasks, a live demo, and everything open.
+
+00:01:00.065 --> 00:01:04.440
+Before we trust AI with India's water, it should pass this test.
