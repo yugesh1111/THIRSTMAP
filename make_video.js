@@ -48,9 +48,9 @@ fs.mkdirSync(out_dir, { recursive: true });
   await step(8); await cap('8 · A twin moves one thing, so the answer must change', 'only a model that really looks gets both right'); await wait(4800);
 
   await to('#where', 20);
-  await cap('Gemini gets the original right…', 'blue: the true water path · green: right · red: wrong'); await wait(4500);
+  await cap('The best model, Gemini 3.5 Flash, gets the original right…', 'blue: the true water path · green: right · red: wrong'); await wait(4500);
   await page.evaluate(() => window.scrollBy({ top: 260, behavior: 'smooth' })); await wait(1200);
-  await cap('…then gets the twin wrong', 'one thing changed and the correct answer changed; Gemini’s answer did not follow'); await wait(5500);
+  await cap('…then gets the twin wrong', 'one thing changed, so the correct answer changed; the model’s answer did not follow'); await wait(5500);
 
   await to('#tasks', 20);
   await page.selectOption('#fr', 'frontier'); await wait(800);
@@ -62,7 +62,7 @@ fs.mkdirSync(out_dir, { recursive: true });
   if (bk) { await bk.click(); await cap('The answer key from the simulation', 'red: where the wastewater really goes'); await wait(4200); }
 
   await to('h2');
-  await cap('No model, Gemini included, got both halves of a before-and-after pair right',
+  await cap('Even the best model, Gemini 3.5 Flash, got both halves of only 3 of 7 before-and-after pairs right',
             'Live demo, code and 5,761 tasks: github.com/yugesh1111/THIRSTMAP');
   await wait(6000);
 

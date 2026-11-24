@@ -48,10 +48,11 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 | Model | Protocol | Questions | Accuracy | Without image | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
 |---|---|---|---|---|---|---|---|---|---|
-| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | – | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
-| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | – | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 229 |
-| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 229 |
+| gemini-3.5-flash | batched | 75 | **76%** (57/75) | – | 14% | 4.2e-33 | 43% (7) | 29% | 310 |
+| gemini-3.1-flash-lite | batched | 75 | **49%** (37/75) | 13% | 14% | 6.3e-13 | 0% (7) | 14% | 299 |
+| gemini-3.5-flash-lite | batched | 75 | **40%** (30/75) | 15% | 14% | 4.4e-08 | 0% (7) | 29% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 75 | **12%** (9/75) | 12% | 14% | 0.76 | 0% (7) | 43% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 75 | **5%** (4/75) | 11% | 14% | 1 | 0% (7) | 43% | 229 |
 | gemini-3.5-flash | single | 19 | **79%** (15/19) | – | 8% | 1.2e-13 | – | – | – |
 | Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | – | 8% | 0.2 | – | – | – |
 | Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |
@@ -61,9 +62,9 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 ### What the numbers say
 
 - **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 17% against a chance level of 13% (p = 0.15).
-- **A frontier model does much better, but is not reliable yet.** On the same 83 questions (batched protocol), gemini-3.1-flash-lite got 48% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 1.2e-13). One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
-- **No model passes the before-and-after test.** Each twin changes one thing so the correct answer flips; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got both halves of **0 of 7** pairs right: the frontier models often change their answer for the twin, but never get both the original scene and its changed twin right.
-- **The image barely helps.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 17% vs 14%; Qwen2-VL-2B-Instruct 9% vs 9%; SmolVLM-256M-Instruct 8% vs 10%; SmolVLM2-2.2B-Instruct 8% vs 12%.
+- **A frontier model does much better, but is not reliable yet.** On the same 75 questions (batched protocol), gemini-3.5-flash got 76% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 4.2e-33). Without the image, gemini-3.1-flash-lite drops from 49% to 13%; gemini-3.5-flash-lite drops from 40% to 15% (chance 14%): their scores come from looking at the image. One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
+- **The before-and-after test separates the strongest model, and still catches it.** Each twin changes one thing so the correct answer flips. gemini-3.5-flash got both halves of **3 of 7** pairs right (43%), well below its 76% on single questions; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got 0 of 7.
+- **The image barely helps the open models.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 17% vs 14%; Qwen2-VL-2B-Instruct 9% vs 9%; SmolVLM-256M-Instruct 8% vs 10%; SmolVLM2-2.2B-Instruct 8% vs 12%.
 - **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 92% (both right: 0%); Qwen2-VL-2B-Instruct 85% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%); SmolVLM2-2.2B-Instruct 81% (both right: 0%).
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 95%.
 - **Can they read the image at all?** Reading checks need no reasoning: list every village or monitoring-point label written on the image, or read the spot height printed next to pond P: Qwen2.5-VL-3B-Instruct 69%; Qwen2-VL-2B-Instruct 94%; SmolVLM-256M-Instruct 0%; SmolVLM2-2.2B-Instruct 69%. A model that reads labels but fails the water questions is failing the reasoning, not the eyesight.
@@ -173,7 +174,7 @@ For every scene, the **same answer key** is rendered as three image styles:
 
 `dataset/manifest.json` records pass rates and every dropped question with its reason. **[`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md)** collects all of the evidence in one place: test results, every validator's pass rate, pysheds agreement (99.85% of cells on average, never below 99.35%), dropped questions, answer balance, counterfactual pairs and baselines. Regenerate it with `python3 validation_report.py`.
 
-**Human baseline (V15):** `python3 human_eval.py build --from-run results/frontier --pairs` writes `human_eval/index.html` (online at https://yugesh1111.github.io/THIRSTMAP/human/): 32 questions that Gemini and the open models also answered, including all 7 before-and-after pairs (kept far apart) and at least 2 per skill, with each question's context line exactly as the models saw it and no answers in the page. People press *Copy my answers* and send the text; `python3 human_eval.py score answers_*.txt --dataset eval_set --run results/frontier` scores them with the models' scorer and puts humans next to each model on the same questions and pairs.
+**Human baseline (V15):** `python3 human_eval.py build --from-run results/frontier --pairs` writes `human_eval/index.html` (online at https://yugesh1111.github.io/THIRSTMAP/human/): 32 questions that Gemini and the open models also answered, including all 7 before-and-after pairs (kept far apart) and at least 2 per skill, with each question's context line exactly as the models saw it and no answers in the page. Answers are sent automatically to a form on Netlify (also at https://thirstmap-human-test.netlify.app; no sign-up, initials optional, people may stop early; copy and download stay as a backup). `python3 human_eval.py import submissions.json` (the form's API export or its CSV download) writes one answers file per person, keeping each person's most complete send, and `python3 human_eval.py score "human_eval/answers/*.json" --dataset eval_set --run results/frontier` scores them with the models' scorer and puts humans next to each model on the same questions and pairs.
 
 ---
 
@@ -251,7 +252,7 @@ This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row ma
 
 ## Results status (read this first)
 - **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/models/REPORT.md`](results/models/REPORT.md). Every raw answer is in `results/models/responses.jsonl`.
-- **Frontier models, real runs:** Gemini 3.1 Flash-Lite and 3.5 Flash-Lite answered the same 83 questions as two open models (`frontier.py`, within a free API key's 20 requests per model per day), and Gemini 3.5 Flash answered 19 single questions; see [`LEADERBOARD.md`](LEADERBOARD.md). Claude and GPT run with the same harness once keys are available.
+- **Frontier models, real runs:** Gemini 3.5 Flash, 3.1 Flash-Lite and 3.5 Flash-Lite answered the same questions as two open models (`frontier.py`, within a free API key's 20 requests per model per day; 75 shared questions after the audit), the Flash-Lite models also without the image, and Gemini 3.5 Flash answered 19 single questions; see [`LEADERBOARD.md`](LEADERBOARD.md). Claude and GPT run with the same harness once keys are available.
 - **Offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`) test the dataset and the scorer. They are **not model findings**.
 - **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
   - every reported number recomputed independently from the raw responses (exact match);

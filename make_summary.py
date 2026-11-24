@@ -225,8 +225,9 @@ def build(N, out, figure):
     c.setStrokeColor(LINE)
     c.rect(x_img, top - h_img, img_w, h_img, stroke=1, fill=0)
     y_right = flow(x_img, top - h_img - 4, img_w, [Paragraph(
-        "A before-and-after pair: the outfall moves to another stream, so the answer must change. "
-        "Gemini 3.1 Flash-Lite misses both halves (red: wrong pick, amber: missed; blue: the true water path).", small)])
+        "The best model, Gemini 3.5 Flash, on a before-and-after pair. The twin's cooling water is cooler, so no "
+        "monitoring point is above 3 °C any more; it gives the same answer to both: right before (green), wrong after (red).",
+        small)])
 
     # stat tiles
     y = min(y_left, y_right) - 8
@@ -259,7 +260,9 @@ def build(N, out, figure):
                      Paragraph(pval(r["p"]), cell),
                      Paragraph(f"<b>{r['pairs_right']} of {r['pairs']}</b>" if r["pairs"] else "–", cell),
                      Paragraph(pct(r["trap"]), cell)])
-    for r in N["single"]:
+    batched = {r["m"] for r in N["frontier"]}
+    singles = [r for r in N["single"] if r["m"] not in batched]
+    for r in singles:
         data.append([Paragraph(pretty(r["m"]) + " *", cellb), Paragraph("API", cell),
                      Paragraph(f"<b>{pct(r['acc'])}</b> ({r['correct']}/{r['n']})", cell), Paragraph(pct(r["chance"]), cell),
                      Paragraph(pval(r["p"]), cell), Paragraph("–", cell), Paragraph("–", cell)])
@@ -279,7 +282,7 @@ def build(N, out, figure):
     _, th_ = t.wrapOn(c, W - 2 * M, 300)
     t.drawOn(c, M, y - 5 - th_)
     notes = ["18 images, 6 before-and-after pairs; every question about an image in one request."]
-    if N["single"]:
+    if singles:
         notes.append("* one question per request on a 19-question subset (the free daily quota).")
     y = flow(M, y - 5 - th_ - 3, W - 2 * M, [Paragraph(" ".join(notes), small)]) - 7
 
@@ -287,12 +290,20 @@ def build(N, out, figure):
     best = fr[0]
     api = [r for r in fr if r["kind"] == "API"]
     opens = [r for r in fr if r["kind"] != "API"]
-    rights = {r["pairs_right"] for r in fr}
-    pairs_txt = (f"{rights.pop()} of {best['pairs']} for every model" if len(rights) == 1
-                 else ", ".join(f"{r['pairs_right']} of {r['pairs']}" for r in fr))
-    finds = [f"<b>The best model scores {best['acc'] / best['chance']:.0f}× chance</b> ({pct(best['acc'])} vs "
-             f"{pct(best['chance'])}), <b>yet no model got both halves of a before-and-after pair right</b> "
-             f"({pairs_txt}): models read the scene but do not follow the water."]
+    top = max(fr, key=lambda r: r["pairs_right"])
+    if top["pairs_right"] == 0:
+        finds = [f"<b>The best model scores {best['acc'] / best['chance']:.0f}× chance</b> ({pct(best['acc'])} vs "
+                 f"{pct(best['chance'])}), <b>yet no model got both halves of a before-and-after pair right</b> "
+                 f"(0 of {best['pairs']} for every model): models read the scene but do not follow the water."]
+    else:
+        finds = [f"<b>{pretty(best['m'])} scores {pct(best['acc'])}</b> ({best['acc'] / best['chance']:.0f}× chance), "
+                 f"<b>but gets both halves of only {top['pairs_right']} of {top['pairs']} before-and-after pairs right</b>; "
+                 f"every other model gets none. One small change to the scene is enough to trip up even the best model."]
+    nob = [r for r in api if r.get("blind") is not None]
+    if nob:
+        finds.append("<b>Without the image the Gemini models fall to chance</b> ("
+                     + ", ".join(f"{pretty(r['m'])} {pct(r['acc'])} → {pct(r['blind'])}" for r in nob)
+                     + f"; chance {pct(best['chance'])}): the questions need the image, not just the text.")
     if opens:
         finds.append(f"Open models up to 3B parameters score at chance ({', '.join(pct(r['acc']) for r in opens)} vs "
                      f"{pct(opens[0]['chance'])})"
@@ -304,7 +315,7 @@ def build(N, out, figure):
                      f"{pct(ft['base'])} to {pct(ft['tuned'])} on {ft['n']} questions"
                      + (f" (paired p = {pval(ft['p'])})" if ft.get("p") is not None else "")
                      + (f", and only with the image ({pct(ft['tuned_blind'])} without)." if ft.get("tuned_blind") is not None else "."))
-    if api and opens:
+    if api and opens and not nob:
         finds.append(f"Frontier models fall for a built-in trap {pct(min(r['trap'] for r in api))}–"
                      f"{pct(max(r['trap'] for r in api))} of the time, open models up to "
                      f"{pct(max(r['trap'] for r in opens))}: a village near the data centre but on another stream, "
@@ -384,6 +395,28 @@ def build(N, out, figure):
     c.save()
 
 
+def pairs_faq(N, fr, mp):
+    best = fr[0]
+    main = (f"; {', '.join(sorted({str(v[1]) for v in mp.values()}))} of {next(iter(mp.values()))[0]} for every open "
+            "model in the main run" if mp else "")
+    top = max(fr, key=lambda r: r["pairs_right"])
+    if top["pairs_right"] == 0:
+        return (f"On before-and-after pairs, precisely: no model got one right (0 of {best['pairs']} frontier pairs for "
+                f"every model{main}). Pair questions are also the hardest single questions: {pretty(best['m'])} gets "
+                f"{pct(best.get('halves'))} of the pair halves right, against {pct(best['acc'])} overall, so few pairs were "
+                "expected even if the halves were independent. The pair result confirms that weakness rather than proving "
+                f"a separate one. The full dataset has {N['pairs']} pairs for anyone with a larger budget.")
+    rest = [pretty(r["m"]) for r in fr if r["pairs_right"] == 0]
+    h = top.get("halves") or 0
+    return (f"On before-and-after pairs, precisely: {pretty(top['m'])} got both halves of {top['pairs_right']} of "
+            f"{top['pairs']} right; {', '.join(rest)} got 0 of {top['pairs']}{main}. With only {top['pairs']} pairs this is "
+            f"a coarse measure, and we say so: {pretty(top['m'])} gets {pct(h)} of the pair halves right, so about "
+            f"{pct(h * h)} of pairs would be right if it answered the halves independently, close to the "
+            f"{pct(top['pairs_right'] / top['pairs'])} observed. What the pairs show directly is habit: "
+            f"{pretty(top['m'])} gave the same answer to the original and its twin in {pct(top.get('unchanged'))} of pairs, "
+            f"although the right answer had changed. The full dataset has {N['pairs']} pairs for anyone with a larger budget.")
+
+
 def faq(N):
     """docs/FAQ.md: the hard questions a judge may ask, answered with the same numbers as the summary page."""
     fr, best = N["frontier"], N["frontier"][0]
@@ -429,22 +462,18 @@ def faq(N):
       f"is tested against the exact chance of guessing each question. {pretty(best['m'])} scores {pct(best['acc'])} "
       f"against {pct(best['chance'])} chance (p = {pval(best['p'])}); the open models in the main run answered "
       f"{N['open_best']['n'] if N.get('open_best') else '–'} questions each.",
-      f"On before-and-after pairs, precisely: no model got one right ("
-      + (f"0 of {best['pairs']} frontier pairs for every model" if all(r['pairs_right'] == 0 for r in fr)
-         else ", ".join(f"{pretty(r['m'])} {r['pairs_right']} of {r['pairs']}" for r in fr) + " frontier pairs")
-      + (f"; {', '.join(sorted({str(v[1]) for v in mp.values()}))} of {next(iter(mp.values()))[0]} for every open model "
-         "in the main run" if mp else "")
-      + f"). Pair questions are also the hardest single questions: {pretty(best['m'])} gets "
-      f"{pct(best.get('halves'))} of the pair halves right, against {pct(best['acc'])} overall, so few pairs were "
-      "expected even if the halves were independent. The pair result confirms that weakness rather than proving a "
-      f"separate one. The full dataset has {N['pairs']} pairs for anyone with a larger budget.")
+      pairs_faq(N, fr, mp))
     q("4. Could a model score by guessing, or from the question text alone?",
       "- **Chance is computed exactly** per question" + (f" (a random guess on a 'which villages' question is right "
                                                           f"{pct(N['set_chance'])} of the time)" if N.get("set_chance") else "") + ".",
       "- **No-image control.** The same questions are asked without the image. In the main run the open models score "
       "within a few points of each other with and without it ("
       + ", ".join(f"{short(m)} {pct(v['image'])} with, {pct(v['blind'])} without" for m, v in mo.items() if v.get("blind") is not None)
-      + "): they barely use the image." if mo else "- **No-image control.** The same questions are asked without the image.",
+      + "): they barely use the image."
+      + ((" The Gemini models, by contrast, fall to about chance without the image ("
+          + ", ".join(f"{pretty(r['m'])} {pct(r['acc'])} → {pct(r['blind'])}" for r in api if r.get("blind") is not None)
+          + f"; chance {pct(fr[0]['chance'])}).") if any(r.get("blind") is not None for r in api) else "")
+      if mo else "- **No-image control.** The same questions are asked without the image.",
       "- **Balanced answers.** Correct options are spread evenly"
       + (f" (the wetland question's right answer is A, B, C or D {', '.join(str(wb[k]) for k in sorted(wb))} times)" if wb else "")
       + ".",
@@ -453,14 +482,16 @@ def faq(N):
          if api else "") + ".")
     q("5. Are the questions even answerable from the image?",
       "Every kept question passed the pixel checks, and every image has a reveal that draws the true path."
-      + (f" The strongest model we could run, {pretty(single['m'])}, answers {pct(single['acc'])} of single questions "
+      + (f" The strongest model we could run, {pretty(best['m'])}, answers {pct(best['acc'])} of the frontier questions "
+         f"right ({best['correct']}/{best['n']}): hard, but answerable." if best["acc"] >= 0.5 else
+         f" The strongest model we could run, {pretty(single['m'])}, answers {pct(single['acc'])} of single questions "
          f"right ({single['correct']}/{single['n']}): hard, but answerable." if single else ""))
     q("6. Did you pick questions to make models fail?",
       "No. Questions are dropped only by automated validity checks, before any model sees them. The frontier set is "
       "chosen by a seeded round-robin over twin kinds (`frontier.py select`) before any model runs, and every model "
       "gets identical prompts and images. The audit removed tasks where a hidden label could have failed a model "
       "unfairly, which raised model scores.")
-    q("7. Why Flash-Lite and small open models, not the largest models?",
+    q("7. Why not the largest models?",
       "Budget: this was built without paid API credit. The harness already supports `claude:`, `openai:` (any "
       "OpenAI-compatible endpoint), `gemini:` and any Hugging Face vision model; adding one is a single command, and "
       "[`LEADERBOARD.md`](../LEADERBOARD.md) rebuilds from the raw replies. We report only what we ran.")
@@ -499,7 +530,8 @@ def main():
     ap.add_argument("--out", default="docs/ThirstMap_summary.pdf")
     ap.add_argument("--faq", default="docs/FAQ.md")
     a = ap.parse_args()
-    fig = Path(a.figure) if a.figure else next(iter(sorted(Path("docs/demo/analysis").glob("pair__*Q1__map*.jpg"))), None)
+    fig = Path(a.figure) if a.figure else next(iter(sorted(Path("docs/demo/analysis").glob("pair__*Q8__thermal*gemini-3.5-flash.jpg"))
+                                                    or sorted(Path("docs/demo/analysis").glob("pair__*.jpg"))), None)
     N = numbers(a.dataset)
     build(N, a.out, fig)
     Path(a.faq).write_text(faq(N))

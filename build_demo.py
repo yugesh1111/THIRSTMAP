@@ -82,6 +82,16 @@ def results_html(run, finetune):
                   f'{pct(vb["correct"] / vb["n"])} to {pct(vt["correct"] / vt["n"])} on {vt["n"]} questions from '
                   f'scenes it never saw, and now scores {pct(vt["correct"] / vt["n"])} with the image against '
                   f'{pct(F["overall"][tuned]["blind"])} without it. The dataset can teach the skill, a little.</p>')
+    def pair_note(F):
+        cp = {m: v for m, v in F.get("counterfactual_pairs", {}).items() if v.get("pairs")}
+        if not cp:
+            return ""
+        top_m, top = max(cp.items(), key=lambda kv: kv[1]["pair_accuracy"])
+        if top["pair_accuracy"] == 0:
+            return "Gemini answers far more questions correctly, yet no model got both the original and its changed twin right."
+        k = round(top["pair_accuracy"] * top["pairs"])
+        return (f"The best model, {E(display(top_m))}, got both the original and its changed twin right in only {k} of "
+                f"{top['pairs']} pairs; every other model got none.")
     fr = ""
     fs2 = Path("results/frontier/summary.json")
     if fs2.exists():
@@ -102,8 +112,7 @@ def results_html(run, finetune):
                   '<th scope="col">Both halves of a pair right</th></tr></thead><tbody>'
                   + "".join(r for _, r in sorted(frows, key=lambda x: -x[0])) + '</tbody></table></div>'
                   '<p class="note">A free Gemini key allows 20 requests per model per day, so every question about an image '
-                  'went in one request, identically for every model. Gemini answers far more '
-                  'questions correctly, yet no model got both the original and its changed twin right. Pick '
+                  'went in one request, identically for every model. ' + pair_note(F) + ' Pick '
                   '“Frontier check” in the task browser to see every reply.</p>')
     tc = ""
     if Path("docs/trap_chart.png").exists():

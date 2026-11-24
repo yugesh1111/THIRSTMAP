@@ -129,6 +129,11 @@ def frontier_lines(dataset):
                            + ("its score comes from looking at the image." if gap >= 0.15 else
                               "part of its score comes from the question text alone." if gap > 0.05 else
                               "its score does not come from the image."))
+            others = [r for r in api if r is not b and r.get("blind") is not None and r["proto"] == b["proto"]]
+            if others and b.get("blind") is None:
+                bullet += (" Without the image, " + "; ".join(f"{short(r['m'])} drops from {pct(r['acc'])} to {pct(r['blind'])}"
+                                                          for r in sorted(others, key=lambda r: -r["acc"]))
+                           + f" (chance {pct(b['chance'])}): their scores come from looking at the image.")
             single = [r for r in api if r["proto"] == "single"]
             if single:
                 sg = max(single, key=lambda r: r["acc"])
@@ -136,7 +141,15 @@ def frontier_lines(dataset):
                 bullet += (f" One question per request, {short(sg['m'])} got {pct(sg['acc'])} of {sg['n']} questions"
                            + (f" against {pct(so['acc'])} for {short(so['m'])}" if so else "") + ".")
         paired = [r for r in rows if r["pairs"]]
-        if paired and all(r["pair"] == 0 for r in paired):
+        if paired and any(r["pair"] > 0 for r in paired):
+            top = max(paired, key=lambda r: r["pair"])
+            zero = [short(r["m"]) for r in paired if r["pair"] == 0]
+            bullet += (f"\n- **The before-and-after test separates the strongest model, and still catches it.** Each twin "
+                       f"changes one thing so the correct answer flips. {short(top['m'])} got both halves of "
+                       f"**{round(top['pair'] * top['pairs'])} of {top['pairs']}** pairs right ({pct(top['pair'])}), well below its "
+                       f"{pct(top['acc'])} on single questions"
+                       + (f"; {', '.join(zero)} got 0 of {paired[0]['pairs']}." if zero else "."))
+        elif paired and all(r["pair"] == 0 for r in paired):
             bullet += ("\n- **No model passes the before-and-after test.** Each twin changes one thing so the "
                        "correct answer flips; " + ", ".join(short(r["m"]) for r in paired)
                        + f" got both halves of **0 of {paired[0]['pairs']}** pairs right: the frontier models often change their "
@@ -331,7 +344,7 @@ def main():
     withb = [r for r in rows if r["blind"] is not None]
     if withb:
         gap = max(r["acc"] - r["blind"] for r in withb)
-        head = ("The image barely helps." if gap < 0.10 else "The image helps some models.")
+        head = ("The image barely helps the open models." if gap < 0.10 else "The image helps some open models.")
         L.append(f"- **{head}** Accuracy with vs without the image: "
                  + "; ".join(f"{r['name']} {pct(r['acc'])} vs {pct(r['blind'])}" for r in withb) + ".")
     same = [r for r in rows if r["same"] is not None]

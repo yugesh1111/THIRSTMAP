@@ -22,29 +22,29 @@ Realism is covered three ways: real terrain for 4 Indian cities from Copernicus 
 
 ### 3. Aren't the samples small?
 
-They are sized to what is free: Gemini's free tier allows about 20 requests per model per day, so the frontier check is 83 questions on 18 images. Small samples become meaningful with exact statistics: every score is tested against the exact chance of guessing each question. Gemini 3.1 Flash-Lite scores 48% against 14% chance (p = 1e-13); the open models in the main run answered 130 questions each.
+They are sized to what is free: Gemini's free tier allows about 20 requests per model per day, so the frontier check is 75 questions on 18 images. Small samples become meaningful with exact statistics: every score is tested against the exact chance of guessing each question. Gemini 3.5 Flash scores 76% against 14% chance (p = 4e-33); the open models in the main run answered 130 questions each.
 
-On before-and-after pairs, precisely: no model got one right (0 of 7 frontier pairs for every model; 0 of 26 for every open model in the main run). Pair questions are also the hardest single questions: Gemini 3.1 Flash-Lite gets 21% of the pair halves right, against 48% overall, so few pairs were expected even if the halves were independent. The pair result confirms that weakness rather than proving a separate one. The full dataset has 740 pairs for anyone with a larger budget.
+On before-and-after pairs, precisely: Gemini 3.5 Flash got both halves of 3 of 7 right; Gemini 3.1 Flash-Lite, Gemini 3.5 Flash-Lite, Qwen2.5-VL-3B-Instruct, Qwen2-VL-2B-Instruct got 0 of 7; 0 of 26 for every open model in the main run. With only 7 pairs this is a coarse measure, and we say so: Gemini 3.5 Flash gets 71% of the pair halves right, so about 51% of pairs would be right if it answered the halves independently, close to the 43% observed. What the pairs show directly is habit: Gemini 3.5 Flash gave the same answer to the original and its twin in 29% of pairs, although the right answer had changed. The full dataset has 740 pairs for anyone with a larger budget.
 
 ### 4. Could a model score by guessing, or from the question text alone?
 
 - **Chance is computed exactly** per question (a random guess on a 'which villages' question is right 2% of the time).
 
-- **No-image control.** The same questions are asked without the image. In the main run the open models score within a few points of each other with and without it (SmolVLM-256M-Instruct 8% with, 10% without, SmolVLM2-2.2B-Instruct 8% with, 12% without, Qwen2-VL-2B-Instruct 9% with, 9% without, Qwen2.5-VL-3B-Instruct 17% with, 14% without): they barely use the image.
+- **No-image control.** The same questions are asked without the image. In the main run the open models score within a few points of each other with and without it (SmolVLM-256M-Instruct 8% with, 10% without, SmolVLM2-2.2B-Instruct 8% with, 12% without, Qwen2-VL-2B-Instruct 9% with, 9% without, Qwen2.5-VL-3B-Instruct 17% with, 14% without): they barely use the image. The Gemini models, by contrast, fall to about chance without the image (Gemini 3.1 Flash-Lite 49% → 13%, Gemini 3.5 Flash-Lite 40% → 15%; chance 14%).
 
 - **Balanced answers.** Correct options are spread evenly (the wetland question's right answer is A, B, C or D 146, 142, 162, 164 times).
 
-- **Traps.** Wrong answers that a shortcut produces are tagged; the Gemini models fall for one 16%–18% of the time.
+- **Traps.** Wrong answers that a shortcut produces are tagged; the Gemini models fall for one 8%–20% of the time.
 
 ### 5. Are the questions even answerable from the image?
 
-Every kept question passed the pixel checks, and every image has a reveal that draws the true path. The strongest model we could run, Gemini 3.5 Flash, answers 79% of single questions right (15/19): hard, but answerable.
+Every kept question passed the pixel checks, and every image has a reveal that draws the true path. The strongest model we could run, Gemini 3.5 Flash, answers 76% of the frontier questions right (57/75): hard, but answerable.
 
 ### 6. Did you pick questions to make models fail?
 
 No. Questions are dropped only by automated validity checks, before any model sees them. The frontier set is chosen by a seeded round-robin over twin kinds (`frontier.py select`) before any model runs, and every model gets identical prompts and images. The audit removed tasks where a hidden label could have failed a model unfairly, which raised model scores.
 
-### 7. Why Flash-Lite and small open models, not the largest models?
+### 7. Why not the largest models?
 
 Budget: this was built without paid API credit. The harness already supports `claude:`, `openai:` (any OpenAI-compatible endpoint), `gemini:` and any Hugging Face vision model; adding one is a single command, and [`LEADERBOARD.md`](../LEADERBOARD.md) rebuilds from the raw replies. We report only what we ran.
 

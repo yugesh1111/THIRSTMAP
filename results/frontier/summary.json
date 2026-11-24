@@ -3,110 +3,131 @@
     "hf:Qwen/Qwen2-VL-2B-Instruct",
     "hf:Qwen/Qwen2.5-VL-3B-Instruct",
     "openai:gemini-3.1-flash-lite",
+    "openai:gemini-3.5-flash",
     "openai:gemini-3.5-flash-lite"
   ],
-  "n_responses": 498,
-  "compared_on_tasks": 83,
-  "answers_outside_common_set": {},
+  "n_responses": 671,
+  "compared_on_tasks": 75,
+  "answers_outside_common_set": {
+    "openai:gemini-3.1-flash-lite": 8,
+    "openai:gemini-3.5-flash-lite": 8,
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": 8,
+    "hf:Qwen/Qwen2-VL-2B-Instruct": 8
+  },
   "excluded_by_audit": 6,
   "chance_by_skill": {
-    "nature_based_filtering": 0.25,
     "read_colour_scale_threshold": 0.11513125000000002,
+    "nature_based_filtering": 0.25,
+    "order_along_flow": 0.16415343915343916,
     "siting_downstream_impact": 0.3333333333333333,
-    "trace_upstream_catchment": 0.0360525912076823,
-    "measure_along_flow": 0.12576,
-    "trace_downstream": 0.02145496655859375,
+    "trace_upstream_catchment": 0.03693040752485796,
     "read_flow_direction": 0.125,
-    "order_along_flow": 0.16202380952380951,
-    "read_elevation": 0.03748536458333333,
+    "read_elevation": 0.040609034375,
+    "measure_along_flow": 0.13537777777777776,
+    "trace_downstream": 0.022259567269965277,
     "read_colour_scale_value": 0.19999999999999998
   },
   "tasks_by_skill_evaluated": {
-    "nature_based_filtering": 10,
     "read_colour_scale_threshold": 2,
-    "siting_downstream_impact": 10,
-    "trace_upstream_catchment": 12,
-    "measure_along_flow": 10,
-    "trace_downstream": 10,
-    "read_flow_direction": 10,
-    "order_along_flow": 10,
-    "read_elevation": 6,
+    "nature_based_filtering": 9,
+    "order_along_flow": 9,
+    "siting_downstream_impact": 9,
+    "trace_upstream_catchment": 11,
+    "read_flow_direction": 9,
+    "read_elevation": 5,
+    "measure_along_flow": 9,
+    "trace_downstream": 9,
     "read_colour_scale_value": 3
   },
   "vs_chance": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "correct": 4,
-      "n": 83,
-      "chance": 0.14052442019457292,
-      "p_value": 0.9982359867119315
+      "n": 75,
+      "chance": 0.14280878949945436,
+      "p_value": 0.9961463003321572
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "correct": 10,
-      "n": 83,
-      "chance": 0.14052442019457292,
-      "p_value": 0.7461487656144191
+      "correct": 9,
+      "n": 75,
+      "chance": 0.14280878949945436,
+      "p_value": 0.7613360650436689
     },
     "openai:gemini-3.1-flash-lite": {
-      "correct": 40,
-      "n": 83,
-      "chance": 0.14052442019457292,
-      "p_value": 1.1648880238445101e-13
+      "correct": 37,
+      "n": 75,
+      "chance": 0.14280878949945436,
+      "p_value": 6.288200799468693e-13
+    },
+    "openai:gemini-3.5-flash": {
+      "correct": 57,
+      "n": 75,
+      "chance": 0.14280878949945436,
+      "p_value": 4.1679433513667275e-33
     },
     "openai:gemini-3.5-flash-lite": {
-      "correct": 33,
-      "n": 83,
-      "chance": 0.14052442019457292,
-      "p_value": 7.573428664640178e-09
+      "correct": 30,
+      "n": 75,
+      "chance": 0.14280878949945436,
+      "p_value": 4.388627753322952e-08
     }
   },
   "format": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "well_formed": 1.0,
-      "accuracy_well_formed_only": 0.04819277108433735
+      "accuracy_well_formed_only": 0.05333333333333334
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "well_formed": 0.9036144578313253,
-      "accuracy_well_formed_only": 0.12048192771084337
+      "well_formed": 0.8933333333333333,
+      "accuracy_well_formed_only": 0.12
     },
     "openai:gemini-3.1-flash-lite": {
       "well_formed": 1.0,
-      "accuracy_well_formed_only": 0.4819277108433735
+      "accuracy_well_formed_only": 0.49333333333333335
+    },
+    "openai:gemini-3.5-flash": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.76
     },
     "openai:gemini-3.5-flash-lite": {
       "well_formed": 1.0,
-      "accuracy_well_formed_only": 0.39759036144578314
+      "accuracy_well_formed_only": 0.4
     }
   },
   "overall": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "image": 0.04819277108433735,
-      "blind": 0.0963855421686747,
-      "n": 83
+      "image": 0.05333333333333334,
+      "blind": 0.10666666666666667,
+      "n": 75
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "image": 0.12048192771084337,
-      "blind": 0.12048192771084337,
-      "n": 83
+      "image": 0.12,
+      "blind": 0.12,
+      "n": 75
     },
     "openai:gemini-3.1-flash-lite": {
-      "image": 0.4819277108433735,
+      "image": 0.49333333333333335,
+      "blind": 0.1267605633802817,
+      "n": 75
+    },
+    "openai:gemini-3.5-flash": {
+      "image": 0.76,
       "blind": null,
-      "n": 83
+      "n": 75
     },
     "openai:gemini-3.5-flash-lite": {
-      "image": 0.39759036144578314,
-      "blind": null,
-      "n": 83
+      "image": 0.4,
+      "blind": 0.14666666666666667,
+      "n": 75
     }
   },
   "by_skill": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
       "trace_downstream": 0.0,
       "order_along_flow": 0.0,
-      "nature_based_filtering": 0.2,
+      "nature_based_filtering": 0.2222222222222222,
       "read_elevation": 0.0,
-      "read_flow_direction": 0.1,
-      "siting_downstream_impact": 0.1,
+      "read_flow_direction": 0.1111111111111111,
+      "siting_downstream_impact": 0.1111111111111111,
       "trace_upstream_catchment": 0.0,
       "measure_along_flow": 0.0,
       "read_colour_scale_threshold": 0.0,
@@ -115,58 +136,75 @@
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": 0.0,
       "order_along_flow": 0.0,
-      "nature_based_filtering": 0.4,
+      "nature_based_filtering": 0.3333333333333333,
       "read_elevation": 0.0,
       "read_flow_direction": 0.0,
-      "siting_downstream_impact": 0.1,
+      "siting_downstream_impact": 0.1111111111111111,
       "trace_upstream_catchment": 0.0,
-      "measure_along_flow": 0.3,
+      "measure_along_flow": 0.3333333333333333,
       "read_colour_scale_threshold": 0.5,
       "read_colour_scale_value": 0.3333333333333333
     },
     "openai:gemini-3.1-flash-lite": {
-      "trace_downstream": 0.5,
-      "order_along_flow": 0.6,
-      "nature_based_filtering": 0.9,
-      "read_elevation": 0.5,
-      "read_flow_direction": 0.7,
-      "siting_downstream_impact": 0.2,
-      "trace_upstream_catchment": 0.3333333333333333,
-      "measure_along_flow": 0.3,
+      "trace_downstream": 0.5555555555555556,
+      "order_along_flow": 0.5555555555555556,
+      "nature_based_filtering": 0.8888888888888888,
+      "read_elevation": 0.6,
+      "read_flow_direction": 0.6666666666666666,
+      "siting_downstream_impact": 0.2222222222222222,
+      "trace_upstream_catchment": 0.36363636363636365,
+      "measure_along_flow": 0.3333333333333333,
       "read_colour_scale_threshold": 0.5,
       "read_colour_scale_value": 0.0
     },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": 0.7777777777777778,
+      "order_along_flow": 0.7777777777777778,
+      "nature_based_filtering": 1.0,
+      "read_elevation": 0.8,
+      "read_flow_direction": 0.6666666666666666,
+      "siting_downstream_impact": 0.7777777777777778,
+      "trace_upstream_catchment": 0.6363636363636364,
+      "measure_along_flow": 0.7777777777777778,
+      "read_colour_scale_threshold": 0.5,
+      "read_colour_scale_value": 0.6666666666666666
+    },
     "openai:gemini-3.5-flash-lite": {
-      "trace_downstream": 0.3,
-      "order_along_flow": 0.6,
-      "nature_based_filtering": 0.8,
-      "read_elevation": 0.16666666666666666,
-      "read_flow_direction": 0.6,
-      "siting_downstream_impact": 0.4,
-      "trace_upstream_catchment": 0.16666666666666666,
-      "measure_along_flow": 0.2,
+      "trace_downstream": 0.3333333333333333,
+      "order_along_flow": 0.5555555555555556,
+      "nature_based_filtering": 0.7777777777777778,
+      "read_elevation": 0.2,
+      "read_flow_direction": 0.5555555555555556,
+      "siting_downstream_impact": 0.4444444444444444,
+      "trace_upstream_catchment": 0.18181818181818182,
+      "measure_along_flow": 0.2222222222222222,
       "read_colour_scale_threshold": 0.0,
       "read_colour_scale_value": 0.3333333333333333
     }
   },
   "by_style": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "map": 0.019230769230769232,
+      "map": 0.022727272727272728,
       "satellite": 0.11538461538461539,
       "thermal": 0.0
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "map": 0.07692307692307693,
+      "map": 0.06818181818181818,
       "satellite": 0.15384615384615385,
       "thermal": 0.4
     },
     "openai:gemini-3.1-flash-lite": {
-      "map": 0.5192307692307693,
+      "map": 0.5454545454545454,
       "satellite": 0.46153846153846156,
       "thermal": 0.2
     },
+    "openai:gemini-3.5-flash": {
+      "map": 0.8181818181818182,
+      "satellite": 0.6923076923076923,
+      "thermal": 0.6
+    },
     "openai:gemini-3.5-flash-lite": {
-      "map": 0.40384615384615385,
+      "map": 0.4090909090909091,
       "satellite": 0.4230769230769231,
       "thermal": 0.2
     }
@@ -181,19 +219,25 @@
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "2": 0.05555555555555555,
       "3": 0.15,
-      "4": 0.1111111111111111,
+      "4": 0.1,
       "5": 0.14285714285714285
     },
     "openai:gemini-3.1-flash-lite": {
       "2": 0.6111111111111112,
       "3": 0.525,
-      "4": 0.2777777777777778,
+      "4": 0.2,
       "5": 0.42857142857142855
+    },
+    "openai:gemini-3.5-flash": {
+      "2": 0.9444444444444444,
+      "3": 0.7,
+      "4": 0.8,
+      "5": 0.5714285714285714
     },
     "openai:gemini-3.5-flash-lite": {
       "2": 0.5555555555555556,
       "3": 0.45,
-      "4": 0.16666666666666666,
+      "4": 0.0,
       "5": 0.2857142857142857
     }
   },
@@ -320,7 +364,7 @@
       "order_along_flow": {
         "2": 1.0,
         "3": 0.75,
-        "4": 0.3333333333333333,
+        "4": 0.0,
         "5": 0.0
       },
       "nature_based_filtering": {
@@ -332,12 +376,12 @@
       "read_elevation": {
         "2": 0.5,
         "3": 0.5,
-        "4": 0.5
+        "4": 1.0
       },
       "read_flow_direction": {
         "2": 0.5,
         "3": 0.8,
-        "4": 0.5,
+        "4": 0.0,
         "5": 1.0
       },
       "siting_downstream_impact": {
@@ -366,6 +410,62 @@
         "3": 0.0
       }
     },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": {
+        "2": 1.0,
+        "3": 0.75,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "2": 1.0,
+        "3": 0.75,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "nature_based_filtering": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 1.0,
+        "3": 0.5,
+        "4": 1.0
+      },
+      "read_flow_direction": {
+        "2": 0.5,
+        "3": 0.8,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "siting_downstream_impact": {
+        "2": 1.0,
+        "3": 0.6,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "trace_upstream_catchment": {
+        "2": 1.0,
+        "3": 0.5,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "measure_along_flow": {
+        "2": 1.0,
+        "3": 0.8,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "3": 0.5
+      },
+      "read_colour_scale_value": {
+        "2": 1.0,
+        "3": 0.5
+      }
+    },
     "openai:gemini-3.5-flash-lite": {
       "trace_downstream": {
         "2": 1.0,
@@ -376,13 +476,13 @@
       "order_along_flow": {
         "2": 1.0,
         "3": 0.75,
-        "4": 0.3333333333333333,
+        "4": 0.0,
         "5": 0.0
       },
       "nature_based_filtering": {
         "2": 0.5,
         "3": 1.0,
-        "4": 0.5,
+        "4": 0.0,
         "5": 1.0
       },
       "read_elevation": {
@@ -393,7 +493,7 @@
       "read_flow_direction": {
         "2": 0.5,
         "3": 0.8,
-        "4": 0.5,
+        "4": 0.0,
         "5": 0.0
       },
       "siting_downstream_impact": {
@@ -453,19 +553,31 @@
       "order_along_flow": 4,
       "nature_based_filtering": ">5",
       "read_elevation": ">5",
-      "read_flow_direction": ">5",
+      "read_flow_direction": 4,
       "siting_downstream_impact": 3,
       "trace_upstream_catchment": 3,
       "measure_along_flow": 2,
       "read_colour_scale_threshold": ">5",
       "read_colour_scale_value": 2
     },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": 5,
+      "order_along_flow": 5,
+      "nature_based_filtering": ">5",
+      "read_elevation": ">5",
+      "read_flow_direction": 4,
+      "siting_downstream_impact": ">5",
+      "trace_upstream_catchment": 4,
+      "measure_along_flow": 5,
+      "read_colour_scale_threshold": ">5",
+      "read_colour_scale_value": ">5"
+    },
     "openai:gemini-3.5-flash-lite": {
       "trace_downstream": 3,
       "order_along_flow": 4,
-      "nature_based_filtering": ">5",
+      "nature_based_filtering": 4,
       "read_elevation": 2,
-      "read_flow_direction": 5,
+      "read_flow_direction": 4,
       "siting_downstream_impact": 2,
       "trace_upstream_catchment": 3,
       "measure_along_flow": 3,
@@ -484,19 +596,19 @@
         0.0
       ],
       "nature_based_filtering": [
-        0.2,
-        0.2
+        0.2222222222222222,
+        0.2222222222222222
       ],
       "read_elevation": [
         0.0,
         0.0
       ],
       "read_flow_direction": [
-        0.1,
-        0.5
+        0.1111111111111111,
+        0.5555555555555556
       ],
       "siting_downstream_impact": [
-        0.1,
+        0.1111111111111111,
         0.0
       ],
       "trace_upstream_catchment": [
@@ -519,15 +631,15 @@
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "trace_downstream": [
         0.0,
-        0.1
+        0.1111111111111111
       ],
       "order_along_flow": [
         0.0,
         0.0
       ],
       "nature_based_filtering": [
-        0.4,
-        0.5
+        0.3333333333333333,
+        0.4444444444444444
       ],
       "read_elevation": [
         0.0,
@@ -538,16 +650,16 @@
         0.0
       ],
       "siting_downstream_impact": [
-        0.1,
+        0.1111111111111111,
         0.0
       ],
       "trace_upstream_catchment": [
         0.0,
-        0.08333333333333333
+        0.09090909090909091
       ],
       "measure_along_flow": [
-        0.3,
-        0.3
+        0.3333333333333333,
+        0.3333333333333333
       ],
       "read_colour_scale_threshold": [
         0.5,
@@ -557,19 +669,103 @@
         0.3333333333333333,
         0.0
       ]
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": [
+        0.5555555555555556,
+        0.0
+      ],
+      "order_along_flow": [
+        0.5555555555555556,
+        0.1111111111111111
+      ],
+      "nature_based_filtering": [
+        0.8888888888888888,
+        0.25
+      ],
+      "read_elevation": [
+        0.6,
+        0.0
+      ],
+      "read_flow_direction": [
+        0.6666666666666666,
+        0.125
+      ],
+      "siting_downstream_impact": [
+        0.2222222222222222,
+        0.5
+      ],
+      "trace_upstream_catchment": [
+        0.36363636363636365,
+        0.09090909090909091
+      ],
+      "measure_along_flow": [
+        0.3333333333333333,
+        0.0
+      ],
+      "read_colour_scale_threshold": [
+        0.5,
+        0.0
+      ],
+      "read_colour_scale_value": [
+        0.0,
+        0.0
+      ]
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "trace_downstream": [
+        0.3333333333333333,
+        0.0
+      ],
+      "order_along_flow": [
+        0.5555555555555556,
+        0.0
+      ],
+      "nature_based_filtering": [
+        0.7777777777777778,
+        0.1111111111111111
+      ],
+      "read_elevation": [
+        0.2,
+        0.0
+      ],
+      "read_flow_direction": [
+        0.5555555555555556,
+        0.4444444444444444
+      ],
+      "siting_downstream_impact": [
+        0.4444444444444444,
+        0.4444444444444444
+      ],
+      "trace_upstream_catchment": [
+        0.18181818181818182,
+        0.0
+      ],
+      "measure_along_flow": [
+        0.2222222222222222,
+        0.1111111111111111
+      ],
+      "read_colour_scale_threshold": [
+        0.0,
+        0.0
+      ],
+      "read_colour_scale_value": [
+        0.3333333333333333,
+        0.3333333333333333
+      ]
     }
   },
   "tasks_guessable_without_image": [],
   "map_vs_satellite": {},
   "error_tags": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "unparseable_or_no_answer": 24,
-      "missed_some": 16,
-      "underestimate": 11,
-      "trap:downstream_not_upstream": 10,
+      "unparseable_or_no_answer": 21,
+      "missed_some": 14,
+      "underestimate": 10,
+      "trap:downstream_not_upstream": 9,
       "trap:near_but_other_stream": 9,
-      "wrong_choice": 6,
-      "extra_unrelated": 4,
+      "wrong_choice": 5,
+      "extra_unrelated": 3,
       "trap:too_late_after_village": 2,
       "reversed_direction": 2,
       "trap:cooled_downstream": 2,
@@ -579,24 +775,23 @@
       "wrong_direction": 1
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "missed_some": 24,
-      "wrong_choice": 13,
+      "missed_some": 22,
       "unparseable_or_no_answer": 12,
-      "extra_unrelated": 10,
+      "wrong_choice": 11,
+      "extra_unrelated": 9,
       "wrong_direction": 8,
-      "trap:downstream_not_upstream": 7,
-      "overestimate": 5,
+      "trap:downstream_not_upstream": 6,
+      "overestimate": 4,
       "underestimate": 3,
       "trap:near_but_other_stream": 3,
       "trap:upstream_same_stream": 1,
-      "trap:later_village": 1,
-      "off_by_one_sector": 1
+      "trap:later_village": 1
     },
     "openai:gemini-3.1-flash-lite": {
-      "extra_unrelated": 11,
-      "missed_some": 9,
-      "wrong_choice": 9,
-      "overestimate": 8,
+      "extra_unrelated": 8,
+      "missed_some": 8,
+      "wrong_choice": 8,
+      "overestimate": 7,
       "trap:near_but_other_stream": 4,
       "underestimate": 2,
       "off_by_one_sector": 2,
@@ -605,12 +800,23 @@
       "trap:upstream_of_outfall": 1,
       "wrong_direction": 1
     },
+    "openai:gemini-3.5-flash": {
+      "extra_unrelated": 5,
+      "missed_some": 3,
+      "off_by_one_sector": 2,
+      "underestimate": 2,
+      "wrong_choice": 2,
+      "trap:near_but_other_stream": 2,
+      "trap:later_village": 1,
+      "overestimate": 1,
+      "wrong_direction": 1
+    },
     "openai:gemini-3.5-flash-lite": {
-      "extra_unrelated": 12,
-      "missed_some": 12,
-      "wrong_choice": 8,
-      "overestimate": 7,
+      "missed_some": 11,
+      "extra_unrelated": 10,
+      "wrong_choice": 7,
       "trap:near_but_other_stream": 6,
+      "overestimate": 6,
       "underestimate": 3,
       "wrong_direction": 3,
       "off_by_one_sector": 1,
@@ -620,24 +826,29 @@
   },
   "trap_fall_rate": {
     "hf:Qwen/Qwen2-VL-2B-Instruct": {
-      "exposed": 44,
-      "fell": 23,
-      "rate": 0.5227272727272727
+      "exposed": 40,
+      "fell": 22,
+      "rate": 0.55
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
-      "exposed": 44,
-      "fell": 12,
-      "rate": 0.2727272727272727
+      "exposed": 40,
+      "fell": 11,
+      "rate": 0.275
     },
     "openai:gemini-3.1-flash-lite": {
-      "exposed": 44,
+      "exposed": 40,
       "fell": 7,
-      "rate": 0.1590909090909091
+      "rate": 0.175
+    },
+    "openai:gemini-3.5-flash": {
+      "exposed": 40,
+      "fell": 3,
+      "rate": 0.075
     },
     "openai:gemini-3.5-flash-lite": {
-      "exposed": 44,
+      "exposed": 40,
       "fell": 8,
-      "rate": 0.18181818181818182
+      "rate": 0.2
     }
   },
   "counterfactual_pairs": {
@@ -719,6 +930,32 @@
         }
       }
     },
+    "openai:gemini-3.5-flash": {
+      "pairs": 7,
+      "single_task_accuracy": 0.7142857142857143,
+      "pair_accuracy": 0.42857142857142855,
+      "unchanged_answer_rate": 0.2857142857142857,
+      "by_kind": {
+        "intake": {
+          "pairs": 3,
+          "single_task_accuracy": 0.6666666666666666,
+          "pair_accuracy": 0.3333333333333333,
+          "unchanged_answer_rate": 0.3333333333333333
+        },
+        "outfall": {
+          "pairs": 2,
+          "single_task_accuracy": 1.0,
+          "pair_accuracy": 1.0,
+          "unchanged_answer_rate": 0.0
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.5,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.5
+        }
+      }
+    },
     "openai:gemini-3.5-flash-lite": {
       "pairs": 7,
       "single_task_accuracy": 0.07142857142857142,
@@ -753,25 +990,31 @@
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 29.56
+      "mean_latency_s": 31.08
     },
     "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 48.49
+      "mean_latency_s": 51.34
     },
     "openai:gemini-3.1-flash-lite": {
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 7.64
+      "mean_latency_s": 9.26
+    },
+    "openai:gemini-3.5-flash": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 93.22
     },
     "openai:gemini-3.5-flash-lite": {
       "input_tokens": 0,
       "output_tokens": 0,
       "usd": 0,
-      "mean_latency_s": 1.44
+      "mean_latency_s": 1.2
     }
   }
 }

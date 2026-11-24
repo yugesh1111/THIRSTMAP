@@ -8,7 +8,7 @@
 > **"AI is drinking India's water. We tested whether AI can even see where that water goes."**
 
 Alternative for the demo:
-> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed AI vision models a map and asked one question: where does the wastewater go? Gemini got far more right than the open models, yet no model, Gemini included, got both halves of a single before-and-after pair right."*
+> *"India's data centres may need ~358 billion litres of water a year by 2030. We showed AI vision models a map and asked one question: where does the wastewater go? The open models guessed. Gemini 3.5 Flash got three quarters right, yet when we changed one thing in the scene, it got both the before and the after right in only 3 of 7 cases."*
 > (real results: [`FINDINGS.md`](FINDINGS.md))
 
 **Title:** *ThirstMap — can AI trace water through the landscape?*

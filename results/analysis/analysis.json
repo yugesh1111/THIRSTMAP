@@ -1,186 +1,168 @@
 {
- "best_api": "openai:gemini-3.1-flash-lite",
+ "best_api": "openai:gemini-3.5-flash",
  "best_open": "hf:Qwen/Qwen2.5-VL-3B-Instruct",
  "overlays": {
   "level2_seed22760__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q1__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q2__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q3__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q3__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q4__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q4__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q6__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q6__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760__Q7__map__gemini-3.5-flash.jpg"
   },
   "level2_seed22760_cf__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed22760_cf__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed22760_cf__Q7__map__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312__Q1__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q1__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312__Q1__satellite__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312__Q2__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q2__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312__Q2__satellite__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312__Q3__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q3__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312__Q3__satellite__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312__Q6__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q6__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312__Q6__satellite__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312__Q7__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.5-flash.jpg"
   },
   "real_navi_mumbai_seed31312_cf__Q7__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_navi_mumbai_seed31312_cf__Q7__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_navi_mumbai_seed31312_cf__Q7__satellite__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q1__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q2__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q3__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q3__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q4__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q4__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q6__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q6__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903__Q7__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903_cf__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903_cf__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903_cf__Q1__map__gemini-3.5-flash.jpg"
   },
   "level4_seed58903_cf__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed58903_cf__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level4_seed58903_cf__Q2__map__gemini-3.5-flash.jpg"
   },
   "level3_seed58561__Q3__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed58561__Q3__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed58561__Q3__satellite__gemini-3.5-flash.jpg"
   },
   "level3_seed58561__Q6__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed58561__Q6__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed58561__Q6__satellite__gemini-3.5-flash.jpg"
   },
   "level3_seed34416__Q8__thermal": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed34416__Q8__thermal__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed34416__Q8__thermal__gemini-3.5-flash.jpg"
   },
   "level3_seed34416_cf__Q8__thermal": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed34416_cf__Q8__thermal__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed34416_cf__Q8__thermal__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q1__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q2__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q3__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q3__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q4__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q4__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q6__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q6__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409__Q7__map__gemini-3.5-flash.jpg"
   },
   "level3_seed31409_cf__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level3_seed31409_cf__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level3_seed31409_cf__Q7__map__gemini-3.5-flash.jpg"
   },
   "level5_seed52684__Q1__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q1__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level5_seed52684__Q1__satellite__gemini-3.5-flash.jpg"
   },
   "level5_seed52684__Q2__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q2__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level5_seed52684__Q2__satellite__gemini-3.5-flash.jpg"
   },
   "level5_seed52684__Q3__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q3__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level5_seed52684__Q3__satellite__gemini-3.5-flash.jpg"
   },
   "level5_seed52684__Q6__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q6__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level5_seed52684__Q6__satellite__gemini-3.5-flash.jpg"
   },
   "level5_seed52684__Q7__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/level5_seed52684__Q7__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level5_seed52684__Q7__satellite__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q1__map__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q2__map__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q3__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q3__map__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q4__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q4__map__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q6__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q6__map__gemini-3.5-flash.jpg"
   },
   "level2_seed24506__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level2_seed24506__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/level2_seed24506__Q7__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed31409__Q1__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q1__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed31409__Q1__satellite__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed31409__Q2__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q2__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed31409__Q2__satellite__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed31409__Q3__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q3__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed31409__Q3__satellite__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed31409__Q6__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q6__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed31409__Q6__satellite__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed31409__Q7__satellite": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed31409__Q7__satellite__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed31409__Q7__satellite__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q1__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q1__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q2__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q2__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q3__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q3__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q4__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q4__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q6__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q6__map__gemini-3.5-flash.jpg"
   },
   "real_chennai_seed39037__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/real_chennai_seed39037__Q7__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q1__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q1__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q2__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q2__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q3__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q3__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q4__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q4__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q6__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q6__map__gemini-3.1-flash-lite.jpg"
-  },
-  "level4_seed48947__Q7__map": {
-   "openai:gemini-3.1-flash-lite": "overlays/level4_seed48947__Q7__map__gemini-3.1-flash-lite.jpg"
+   "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q7__map__gemini-3.5-flash.jpg"
   }
  },
  "pairs": [
@@ -339,12 +321,12 @@
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "level2_seed22760__Q7__map",
    "qid": "Q7",
-   "file": "pairs/level2_seed22760__Q7__map__gemini-3.1-flash-lite.jpg",
+   "file": "pairs/level2_seed22760__Q7__map__gemini-3.5-flash.jpg",
    "original_right": true,
-   "twin_right": false,
+   "twin_right": true,
    "same_answer": false,
    "change": "intake I moves to a different point of the stream network",
    "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
@@ -361,18 +343,17 @@
      "V1"
     ],
     "model": [
-     "V3",
-     "V5"
+     "V1"
     ]
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "level3_seed31409__Q7__map",
    "qid": "Q7",
-   "file": "pairs/level3_seed31409__Q7__map__gemini-3.1-flash-lite.jpg",
-   "original_right": false,
-   "twin_right": true,
+   "file": "pairs/level3_seed31409__Q7__map__gemini-3.5-flash.jpg",
+   "original_right": true,
+   "twin_right": false,
    "same_answer": false,
    "change": "intake I moves to a different point of the stream network",
    "question": "DC-1 pumps its cooling water from intake I. Which villages draw water upstream of I, on streams that flow into I (and so share that water)? List all.",
@@ -382,6 +363,7 @@
      "V5"
     ],
     "model": [
+     "V4",
      "V5"
     ]
    },
@@ -390,18 +372,20 @@
      "V4"
     ],
     "model": [
-     "V4"
+     "V3",
+     "V4",
+     "V5"
     ]
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "level3_seed34416__Q8__thermal",
    "qid": "Q8",
-   "file": "pairs/level3_seed34416__Q8__thermal__gemini-3.1-flash-lite.jpg",
+   "file": "pairs/level3_seed34416__Q8__thermal__gemini-3.5-flash.jpg",
    "original_right": true,
    "twin_right": false,
-   "same_answer": false,
+   "same_answer": true,
    "change": "the cooling water is cooler (x0.3 at the outfall)",
    "question": "The thermal image shows how much warmer than normal the water is. At which monitoring points (M1-M4) is the water MORE than 3 °C warmer than normal? List all.",
    "original": {
@@ -417,17 +401,18 @@
    "twin": {
     "answer": [],
     "model": [
+     "M1",
      "M3"
     ]
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "level4_seed58903__Q1__map",
    "qid": "Q1",
-   "file": "pairs/level4_seed58903__Q1__map__gemini-3.1-flash-lite.jpg",
-   "original_right": false,
-   "twin_right": false,
+   "file": "pairs/level4_seed58903__Q1__map__gemini-3.5-flash.jpg",
+   "original_right": true,
+   "twin_right": true,
    "same_answer": false,
    "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
    "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
@@ -437,7 +422,8 @@
      "V7"
     ],
     "model": [
-     "V5"
+     "V4",
+     "V7"
     ]
    },
    "twin": {
@@ -445,35 +431,35 @@
      "V5"
     ],
     "model": [
-     "V1"
+     "V5"
     ]
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "level4_seed58903__Q2__map",
    "qid": "Q2",
-   "file": "pairs/level4_seed58903__Q2__map__gemini-3.1-flash-lite.jpg",
-   "original_right": false,
-   "twin_right": false,
+   "file": "pairs/level4_seed58903__Q2__map__gemini-3.5-flash.jpg",
+   "original_right": true,
+   "twin_right": true,
    "same_answer": false,
    "change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
    "question": "Which village would receive the wastewater first?",
    "original": {
     "answer": "V7",
-    "model": "V5"
+    "model": "V7"
    },
    "twin": {
     "answer": "V5",
-    "model": "V1"
+    "model": "V5"
    }
   },
   {
-   "model": "openai:gemini-3.1-flash-lite",
+   "model": "openai:gemini-3.5-flash",
    "pair_id": "real_navi_mumbai_seed31312__Q7__satellite",
    "qid": "Q7",
-   "file": "pairs/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.1-flash-lite.jpg",
-   "original_right": false,
+   "file": "pairs/real_navi_mumbai_seed31312__Q7__satellite__gemini-3.5-flash.jpg",
+   "original_right": true,
    "twin_right": false,
    "same_answer": true,
    "change": "intake I moves to a different point of the stream network",
@@ -484,7 +470,8 @@
      "V3"
     ],
     "model": [
-     "V2"
+     "V2",
+     "V3"
     ]
    },
    "twin": {
@@ -492,7 +479,8 @@
      "V3"
     ],
     "model": [
-     "V2"
+     "V2",
+     "V3"
     ]
    }
   }
@@ -2884,6 +2872,153 @@
    "qid": "Q10",
    "protocol": "batched",
    "text": "The wastewater travels about 390 m to the first village, not 128.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level2_seed22760__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not SE: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_navi_mumbai_seed31312__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V5 first; warning V4 first leaves V5 exposed."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_navi_mumbai_seed31312__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 2720 m to the first village, not 2000.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_navi_mumbai_seed31312_cf__Q7__satellite",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level4_seed58903__Q5__map",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows S, not SW: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level4_seed58903__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V2 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed58561__Q6__satellite",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S3 would be approved as safe, but its wastewater reaches V1, V5; the safe site is S1."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M1 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed34416_cf__Q8__thermal",
+   "qid": "Q8",
+   "protocol": "batched",
+   "text": "A heat warning at M3 would be a false alarm: it is not that warm."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed34416_cf__Q9__thermal",
+   "qid": "Q9",
+   "protocol": "batched",
+   "text": "The water at the point is 2.0 °C warmer than normal, not 4.0 °C."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V3 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level3_seed31409_cf__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V5 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level5_seed52684__Q1__satellite",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 would be alarmed for nothing: it is close to the data centre, but its water comes from another stream."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level5_seed52684__Q2__satellite",
+   "qid": "Q2",
+   "protocol": "batched",
+   "text": "The wastewater reaches V8 first; warning V4 first leaves V8 exposed (the model fell for a nearby village on another stream)."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level5_seed52684__Q10__satellite",
+   "qid": "Q10",
+   "protocol": "batched",
+   "text": "The wastewater travels about 670 m to the first village, not 500.0 m."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed31409__Q5__satellite",
+   "qid": "Q5",
+   "protocol": "batched",
+   "text": "The stream flows SW, not NW: the plume would be looked for in the wrong place."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed39037__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V4 receives the warm wastewater but would not be warned."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed39037__Q4__map",
+   "qid": "Q4",
+   "protocol": "batched",
+   "text": "Farm F1 lies higher than pond P: treated water cannot reach it by gravity."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed39037__Q6__map",
+   "qid": "Q6",
+   "protocol": "batched",
+   "text": "Site S1 would be approved as safe, but its wastewater reaches V4; the safe site is S2."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V1 shares the intake's water source but would be left out of water-sharing plans."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "real_chennai_seed39037__Q7__map",
+   "qid": "Q7",
+   "protocol": "batched",
+   "text": "V6 is downstream of the intake and does not share its source."
   }
  ],
  "mechanism": {
@@ -2937,6 +3072,19 @@
    "later": [
     22,
     29
+   ]
+  },
+  "openai:gemini-3.5-flash": {
+   "wrong": 1,
+   "nearest": 1,
+   "chance": 0.2,
+   "first": [
+    9,
+    9
+   ],
+   "later": [
+    8,
+    9
    ]
   },
   "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {
