@@ -77,8 +77,37 @@ def build(a):
                           options=t["options"], skill=SKILL_LABEL[t["skill"]], style=t["style"],
                           unit="m" if t["qid"] == "Q10" else "°C"))
     (out / "index.html").write_text(PAGE.replace("__DATA__", html.escape(json.dumps(items), quote=False))
-                                    .replace("__N__", str(len(items))))
+                                    .replace("__N__", str(len(items))).replace("__SUBMIT__", a.submit_url))
     print(f"{len(items)} tasks -> {out / 'index.html'}")
+
+
+def import_submissions(a):
+    """Netlify form submissions -> human_eval/answers/<person>.json, keeping each person's most complete send."""
+    import csv
+    best = {}
+    for f in a.files:
+        txt = Path(f).read_text()
+        if txt.lstrip().startswith(("[", "{")):
+            js = json.loads(txt)
+            rows = [r.get("data", r) for r in (js if isinstance(js, list) else js.get("submissions", [js]))]
+        else:
+            rows = list(csv.DictReader(txt.splitlines()))
+        for r in rows:
+            if r.get("bot-field") or not r.get("answers"):
+                continue
+            try:
+                ans = json.loads(r["answers"])
+            except ValueError:
+                continue
+            sid = r.get("sid") or r.get("name") or str(len(best))
+            if sid not in best or len(ans) > len(best[sid]["answers"]):
+                best[sid] = dict(name=(r.get("name") or "").strip() or f"anon-{sid[:6]}", answers=ans, done=r.get("done"))
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    for sid, v in best.items():
+        (out / f"{sid}.json").write_text(json.dumps(v))
+    print(f"{len(best)} people ({sum(v['done'] == 'yes' for v in best.values())} finished), "
+          f"{sum(len(v['answers']) for v in best.values())} answers -> {out}/")
 
 
 def score_files(a):
@@ -168,24 +197,47 @@ button{font:inherit;padding:8px 14px;border-radius:8px;border:0;background:var(-
 .muted{color:var(--ink2);font-size:14px}.bar{height:6px;background:var(--line);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--acc)}
 </style></head><body><div class="wrap">
 <h1 style="font-size:22px;margin:4px 0">Can you trace the water?</h1>
-<p class="muted">You will see __N__ questions about generated landscape images, each about where water flows. Answer as carefully as you can, on your own: no help from other people, search engines or AI tools. There is no time limit; most people take 10 to 15 minutes. Your answers are compared with a water-flow simulation to check that people can solve these tasks; only your initials and your score are used, in a public hackathon project. Your progress is saved in this browser if you close the page.</p>
-<p><label>Your initials: <input type="text" id="who" autocomplete="off"></label></p>
+<p class="muted">You will see __N__ questions about generated landscape images, each about where water flows. Answer as carefully as you can, on your own: no help from other people, search engines or AI tools. There is no time limit; most people take 10 to 15 minutes, and you can stop whenever you like. Your answers are compared with a water-flow simulation to check that people can solve these tasks; only your initials (optional) and your answers are collected, and only your score is published, in a public hackathon project. Answers are sent to us automatically as you go (stored with our form host, Netlify). Your progress is saved in this browser if you close the page.</p>
+<p><label>Your initials (optional): <input type="text" id="who" autocomplete="off" maxlength="12"></label></p>
 <div class="bar"><i id="prog" style="width:0"></i></div><p class="muted" id="count"></p>
-<div id="stage"></div></div>
+<div id="stage"></div>
+<p id="early" hidden><button id="stop" style="background:transparent;color:var(--acc);border:1px solid var(--acc)">Finish now and send what I have</button></p></div>
+<form name="thirstmap-answers" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+<input name="sid"><input name="name"><input name="done"><input name="count"><textarea name="answers"></textarea><input name="bot-field"></form>
 <script id="data" type="application/json">__DATA__</script>
 <script>
 const T = JSON.parse(document.getElementById('data').textContent);
-let k = 0, t0 = Date.now(); const answers = [];
-try { const saved = JSON.parse(localStorage.getItem('tm_human') || 'null'); if (saved) { answers.push(...saved.answers); k = answers.length; document.getElementById('who').value = saved.name || ''; } } catch (e) {}
-function save(){ try { localStorage.setItem('tm_human', JSON.stringify({name: document.getElementById('who').value, answers})); } catch (e) {} }
+const SUBMIT = '__SUBMIT__';
+let k = 0, t0 = Date.now(), finished = false; const answers = [];
+let sid = Math.random().toString(36).slice(2) + Date.now().toString(36);
+try { const saved = JSON.parse(localStorage.getItem('tm_human') || 'null'); if (saved) { answers.push(...saved.answers); k = answers.length; finished = !!saved.finished; sid = saved.sid || sid; document.getElementById('who').value = saved.name || ''; } } catch (e) {}
+const who = () => document.getElementById('who').value.trim().slice(0, 12);
+function save(){ try { localStorage.setItem('tm_human', JSON.stringify({name: who(), answers, finished, sid})); } catch (e) {} }
+async function send(done){            // to the Netlify form; a later send from the same person replaces an earlier one
+  const body = new URLSearchParams({'form-name': 'thirstmap-answers', sid, name: who(), done: done ? 'yes' : 'partial',
+                                    count: String(answers.length), answers: JSON.stringify(answers), 'bot-field': ''});
+  const same = location.origin === new URL(SUBMIT, location.href).origin;
+  try {
+    const r = await fetch(SUBMIT, {method: 'POST', mode: same ? 'same-origin' : 'no-cors',
+                                   headers: {'Content-Type': 'application/x-www-form-urlencoded'}, body: body.toString()});
+    return same ? r.ok : true;         // a send to another site cannot be read back; the backup below stays available
+  } catch (e) { return false; }
+}
+document.getElementById('stop').onclick = () => { finished = true; save(); show(); };
 function show(){
   document.getElementById('prog').style.width = (100 * k / T.length) + '%';
-  document.getElementById('count').textContent = `Task ${Math.min(k + 1, T.length)} of ${T.length}`;
+  document.getElementById('count').textContent = finished || k >= T.length ? `${answers.length} of ${T.length} answered` : `Task ${k + 1} of ${T.length}`;
+  document.getElementById('early').hidden = finished || k >= T.length || answers.length === 0;
   const st = document.getElementById('stage');
-  if (k >= T.length) { const code = JSON.stringify({name: document.getElementById('who').value, answers});
-    st.innerHTML = '<div class="card" style="display:block;padding:16px"><p><b>Done, thank you!</b> Send your answers to the ThirstMap team: press <b>Copy my answers</b> and paste them into a message (or download them as a file).</p>'
-      + '<p style="display:flex;gap:8px;flex-wrap:wrap"><button id="cp">Copy my answers</button><button id="dl">Download my answers</button></p>'
-      + '<p class="muted" id="cpmsg"></p><textarea id="code" readonly rows="5" style="width:100%;font:12px monospace"></textarea></div>';
+  if (finished || k >= T.length) { finished = true; save(); const code = JSON.stringify({name: who(), answers});
+    st.innerHTML = '<div class="card" style="display:block;padding:16px"><p id="sendmsg"><b>Sending your answers…</b></p>'
+      + `<p class="muted">You answered ${answers.length} of ${T.length} questions.</p>`
+      + '<details id="backup"><summary class="muted">Backup: copy or download your answers</summary>'
+      + '<p style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><button id="cp">Copy my answers</button><button id="dl">Download my answers</button></p>'
+      + '<p class="muted" id="cpmsg"></p><textarea id="code" readonly rows="5" style="width:100%;font:12px monospace"></textarea></details></div>';
+    send(true).then(ok => { const m = document.getElementById('sendmsg');
+      if (ok) m.innerHTML = '<b>Done, thank you! Your answers have been sent.</b>';
+      else { m.innerHTML = '<b>Done, thank you!</b> Your answers could not be sent automatically. Please open the backup below and send them to the ThirstMap team.'; document.getElementById('backup').open = true; } });
     document.getElementById('code').value = code;
     document.getElementById('cp').onclick = () => { const ta = document.getElementById('code'), m = document.getElementById('cpmsg');
       navigator.clipboard.writeText(code).then(() => { m.textContent = 'Copied. Paste it into a message to the team.'; },
@@ -207,7 +259,9 @@ function show(){
     if (d.kind === 'set') ans = [...st.querySelectorAll('input:checked')].map(e => e.value);
     else if (d.kind === 'number') { const v = document.getElementById('num').value; if (v === '') return; ans = parseFloat(v); }
     else { const e = st.querySelector('input:checked'); if (!e) return; ans = e.value; }
-    answers.push({id: d.id, answer: ans, seconds: (Date.now() - t0) / 1000}); k++; save(); show(); };
+    answers.push({id: d.id, answer: ans, seconds: (Date.now() - t0) / 1000}); k++; save();
+    if (answers.length === 12 && k < T.length) send(false);     // one progress send, so a person who stops still counts
+    show(); };
 }
 show();
 </script></body></html>"""
@@ -219,8 +273,12 @@ if __name__ == "__main__":
     b.add_argument("--per-skill", type=int, default=3); b.add_argument("--out", default="human_eval")
     b.add_argument("--from-run", default=None, help="pick only tasks every model in this run answered")
     b.add_argument("--pairs", action="store_true", help="include every complete before-and-after pair in the pool")
+    b.add_argument("--submit-url", default="https://thirstmap-human-test.netlify.app/",
+                   help="where the page sends answers (a Netlify site with form detection on)")
+    i = sub.add_parser("import", help="form submissions (Netlify API JSON or dashboard CSV) -> one answers file per person")
+    i.add_argument("files", nargs="+"); i.add_argument("--out", default="human_eval/answers")
     s = sub.add_parser("score"); s.add_argument("files", nargs="+"); s.add_argument("--dataset", default="dataset")
     s.add_argument("--run", default="results/models", help="compare with the models' answers to the same tasks")
     s.add_argument("--out", default="human_eval")
     a = ap.parse_args()
-    build(a) if a.cmd == "build" else score_files(a)
+    {"build": build, "score": score_files, "import": import_submissions}[a.cmd](a)
