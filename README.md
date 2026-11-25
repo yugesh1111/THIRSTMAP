@@ -16,22 +16,22 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 | Look at | Where | What it shows |
 |---|---|---|
-| **One page** | [`docs/ThirstMap_summary.pdf`](docs/ThirstMap_summary.pdf) · [`docs/FAQ.md`](docs/FAQ.md) | the whole project on one A4 page; tough questions (small samples, synthetic data, fine-tuning) answered with the numbers |
-| **The film** (4 min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [70-second cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
-| **90-second demo walkthrough** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
-| **Leaderboard: score your own model** | https://yugesh1111.github.io/THIRSTMAP/leaderboard/ | every model's report card (skills, pairs, traps, no-image check); download the question pack, run any model, drop its replies on the page and get the same card. Scored in the browser by a port of the Python scorer that agrees with it on every published reply |
 | **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
+| **The film** (4 min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [70-second cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
+| **Leaderboard: score your own model** | https://yugesh1111.github.io/THIRSTMAP/leaderboard/ | every model's report card (skills, pairs, traps, no-image check); download the question pack, run any model, drop its replies on the page and get the same card. Scored in the browser by a port of the Python scorer that agrees with it on every published reply |
+| **One page** | [`docs/ThirstMap_summary.pdf`](docs/ThirstMap_summary.pdf) · [`docs/FAQ.md`](docs/FAQ.md) | the whole project on one A4 page; tough questions (small samples, synthetic data, fine-tuning) answered with the numbers |
 | **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
 | **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 32 questions Gemini and the open models also answered, including all 7 before-and-after pairs |
 | **Run it** | [Colab notebook](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) (3 minutes, no key) · `pip install` → `thirstmap` command · `./run_all.sh --quick` | build a scene and its twin, answer a question yourself, score models; or the whole pipeline |
+| **90-second demo walkthrough** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
 
 | Judging criterion | Where ThirstMap answers it |
 |---|---|
-| Implementation (25%) | One-command pipeline from terrain to report; 48 tests and CI; `pip install` gives a `thirstmap` command; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
-| Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; exact inputs published with checksums |
+| Implementation (25%) | One-command pipeline from terrain to report; 49 tests and CI; `pip install` gives a `thirstmap` command; a public leaderboard where anyone scores their own model in the browser; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
+| Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; two independent scorer implementations (Python and the browser) agree on all 37,516 replies; exact inputs published with checksums |
 | Variation (20%) | 10 reasoning skills and no counting; satellite, map and thermal styles; 5 difficulty levels; real terrain for 4 cities; before-and-after twins; season, haze and sensor variants |
-| Originality (15%) | Twins with one minimal change that must flip the answer; consequence of every model error drawn on the image it saw |
+| Originality (15%) | Twins with one minimal change that must flip the answer (the best model gets both halves of only 6 of 19); the consequence of every model error drawn on the image it saw |
 | Impact (15%) | India's data-centre water problem; what each AI mistake would mean on the ground; [`docs/POLICY_NOTE.md`](docs/POLICY_NOTE.md) proposes a pass bar for AI water screening |
 
 ---
@@ -207,7 +207,7 @@ Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 48 tests
+python3 -m pytest -q                                    # 49 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4

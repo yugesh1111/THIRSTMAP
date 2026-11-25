@@ -36,7 +36,7 @@ Alternative for the demo:
 | *Submit:* findings on model strengths/weaknesses | FINDINGS.md: accuracy vs chance with p-values, per-skill profile, pairs, appearance, reading checks, fine-tuning | ✅ |
 | *Submit:* **a demo where scoring separates right from wrong** | `docs/demo/index.html`: image → question → real model replies → auto ✓/✗ → answer reveal, beside answer-key and random baselines | ✅ |
 | *Their example:* "your code draws a bar chart, so it already knows which bar is tallest" | Same principle: our code builds the terrain, so it already knows where every drop of water goes | ✅ |
-| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | 48 tests, CI, pip-installable CLI, Colab notebook, ARCHITECTURE.md, demo, reports, video, self-audit | ✅ |
+| FAQ: clean repo, sample outputs, automated tests/benchmarks/metrics, architecture + demo | 49 tests, CI, pip-installable CLI, Colab notebook, ARCHITECTURE.md, demo, reports, video, self-audit | ✅ |
 | FAQ: no API keys in code | Keys only via environment variables | ✅ |
 | FAQ: organiser-provided model API access | Harness supports Claude, OpenAI-compatible, Gemini and Hugging Face models + offline baselines | ✅ ready |
 
