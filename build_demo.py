@@ -30,9 +30,71 @@ E = html.escape
 
 
 def display(model):
-    """'hf:Qwen/Qwen2.5-VL-3B-Instruct' -> 'Qwen2.5-VL-3B'."""
+    """'hf:Qwen/Qwen2.5-VL-3B-Instruct' -> 'Qwen2.5-VL-3B'; 'openai:gemini-3.5-flash-lite' -> 'Gemini 3.5 Flash-Lite'."""
     name = model.split(":", 1)[-1].split("/")[-1].split("@")[0]
+    if name.startswith("gemini-"):
+        v = name.split("-")
+        return "Gemini " + v[1] + " " + "-".join(x.title() for x in v[2:])
     return name.replace("-Instruct", "")
+
+
+def pairs_all(m):
+    """Before-and-after pairs over the frontier set and its pair extension: (both halves right, pairs)."""
+    k = n = 0
+    for run in ("results/frontier", "results/frontier_pairs"):
+        f = Path(run) / "summary.json"
+        if f.exists():
+            v = json.loads(f.read_text()).get("counterfactual_pairs", {}).get(m, {})
+            k += round(v.get("pair_accuracy", 0) * v.get("pairs", 0))
+            n += v.get("pairs", 0)
+    return k, n
+
+
+def hero_html(out):
+    """The top of the page: what it is, three actions, key facts, and the findings in four cards (from the files)."""
+    F = json.loads(Path("results/frontier/summary.json").read_text())
+    man = json.loads(Path("eval_set/manifest_full_dataset.json").read_text())
+    errata = sum(1 for _ in open("dataset/errata.jsonl")) if Path("dataset/errata.jsonl").exists() else 0
+    vc = F["vs_chance"]
+    best = max(vc, key=lambda m: vc[m]["correct"] / vc[m]["n"])
+    acc = lambda m: vc[m]["correct"] / vc[m]["n"]
+    lite = sorted((m for m in vc if "flash-lite" in m and F["overall"][m].get("blind") is not None), key=acc, reverse=True)
+    opens = [m for m in vc if m.startswith("hf:")]
+    bk, bn = pairs_all(best)
+    others = [pairs_all(m)[0] for m in vc if m != best]
+    fig = next(iter(sorted((out / "analysis").glob("pair__*Q8__thermal*")) + sorted((out / "analysis").glob("pair__*.jpg"))), None)
+    cards = [(pct(acc(best)), f"{E(display(best))}, the best model, on {vc[best]['n']} shared questions. Guessing scores {pct(vc[best]['chance'])}.", "")]
+    if lite:
+        m = lite[0]
+        cards.append((f"{pct(acc(m))} → {pct(F['overall'][m]['blind'])}", f"{E(display(m))} with the image, then without it: back to "
+                      "guessing. The questions need the picture.", ""))
+    cards.append((f"{bk} of {bn}", "before-and-after pairs the best model gets right on both halves"
+                  + ("; every other model, none." if not any(others) else f"; the others at most {max(others)}."), "warn"))
+    if opens:
+        cards.append((f"{pct(min(map(acc, opens)))}–{pct(max(map(acc, opens)))}", "Open models up to 3B parameters: at or below "
+                      "guessing on the same questions.", ""))
+    figure = (f'<figure class="hero-fig"><img src="analysis/{E(fig.name)}" alt="Gemini 3.5 Flash answers drawn on a thermal scene '
+              'and its twin: right on the original, the same answer after the water was cooled" width="1304" height="840">'
+              '<figcaption>The best model, right on the scene (left) and wrong on its twin (right): the water was cooled, '
+              'the answer did not change.</figcaption></figure>') if fig else ""
+    facts = [(f"{man['n_tasks'] - errata:,}", "verified tasks"), (f"{man['counterfactual_pairs']['pairs']}", "before-and-after twins"),
+             (f"{len(man['tasks_by_skill'])}", "reasoning skills"), (f"{len([k for k in man['tasks_by_terrain'] if k != 'synthetic'])}", "real Indian cities")]
+    hero = f"""<header class="hero" id="top"><div class="wrap hero-in"><div class="hero-text">
+<span class="eyebrow">Innodata AI Hackathon 2026 · Track 2: Visual Task Factory</span>
+<h1>Can AI trace water through the landscape?</h1>
+<p class="lede big">AI is drinking India's water. ThirstMap generates landscapes, simulates where their water flows, and asks
+AI where a data centre's wastewater goes. The code builds the land, so it already knows every answer.</p>
+<div class="ctas"><a class="btn primary" href="https://yugesh1111.github.io/THIRSTMAP/film.html">▶ Watch the 4-minute film</a>
+<a class="btn" href="#try">Try it yourself</a><a class="btn" href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Score your model</a></div>
+<ul class="facts">{''.join(f'<li><b>{a}</b> {b}</li>' for a, b in facts)}</ul></div>{figure}</div></header>
+<section id="found"><div class="wrap"><h2>What we found</h2>
+<div class="finds">{''.join(f'<div class="find {c}"><b>{a}</b><p>{t}</p></div>' for a, t, c in cards)}</div>
+<p class="more">Go deeper: <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/ThirstMap_summary.pdf">one-page summary (PDF)</a> ·
+<a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/FAQ.md">tough questions, answered</a> ·
+<a href="https://yugesh1111.github.io/THIRSTMAP/human/">take the human test</a> ·
+<a href="https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb">run it in Colab</a> ·
+<a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">90-second walkthrough</a></p></div></section>"""
+    return hero
 
 
 def pct(x):
@@ -100,33 +162,40 @@ def results_html(run, finetune):
         for m in F["models"]:
             vc = F["vs_chance"].get(m)
             if vc:
-                pr = F["counterfactual_pairs"].get(m, {})
-                frows.append((vc["correct"] / vc["n"], f'<tr><th scope="row">{E(display(m))}</th>'
-                              f'<td class="num">{pct(vc["correct"] / vc["n"])} ({vc["correct"]}/{vc["n"]})</td>'
-                              f'<td class="num">{pct(vc["chance"])}</td><td class="num">{vc["p_value"]:.1g}</td>'
-                              f'<td class="num">{pr.get("pair_accuracy", 0) * 100:.0f}% of {pr.get("pairs", 0)}</td></tr>'))
+                pk, pn = pairs_all(m)
+                acc, ch = vc["correct"] / vc["n"], vc["chance"]
+                top_f = 1.0
+                frows.append((acc, f'<tr><th scope="row">{E(display(m))} <span class="muted">{"open" if m.startswith("hf:") else "API"}</span></th>'
+                              f'<td><div class="acc"><span class="num">{pct(acc)}</span><span class="bar" title="{pct(acc)} correct; '
+                              f'random guessing: {pct(ch)}"><i style="width:{100 * acc / top_f:.1f}%"></i><b style="left:{100 * ch / top_f:.1f}%"></b></span>'
+                              f'<span class="muted num">{vc["correct"]}/{vc["n"]}</span></div></td>'
+                              f'<td class="num">{pct(F["overall"].get(m, {}).get("blind"))}</td><td class="num">{vc["p_value"]:.1g}</td>'
+                              f'<td class="num"><b class="{"bad" if pk == 0 else ""}">{pk} of {pn}</b></td></tr>'))
         if frows:
             fr = (f'<h3>Frontier check: Gemini vs open models on the same {F.get("compared_on_tasks", "")} questions</h3>'
-                  '<div class="table"><table><thead><tr><th scope="col">Model</th><th scope="col">Correct</th>'
-                  '<th scope="col">Chance</th><th scope="col">p vs guessing</th>'
-                  '<th scope="col">Both halves of a pair right</th></tr></thead><tbody>'
+                  '<div class="table"><table><thead><tr><th scope="col">Model</th><th scope="col">Correct, with the image '
+                  f'<span class="key"><i></i>chance {pct(next(iter(F["vs_chance"].values()))["chance"])}</span></th>'
+                  '<th scope="col">Without the image</th><th scope="col">p vs guessing</th>'
+                  '<th scope="col">Pairs right, both halves</th></tr></thead><tbody>'
                   + "".join(r for _, r in sorted(frows, key=lambda x: -x[0])) + '</tbody></table></div>'
                   '<p class="note">A free Gemini key allows 20 requests per model per day, so every question about an image '
-                  'went in one request, identically for every model. ' + pair_note(F) + ' Pick '
-                  '“Frontier check” in the task browser to see every reply.</p>')
+                  'went in one request, identically for every model. Pairs count every before-and-after pair the model '
+                  'answered, in the frontier set and its pair extension on new scenes. Pick “Frontier check” in the '
+                  'task browser to see every reply, or open the <a href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">'
+                  'leaderboard</a> for each model\'s report card.</p>')
     tc = ""
     if Path("docs/trap_chart.png").exists():
         tc = ('<figure class="pairfig"><img src="trap_chart.png" alt="How often each model fell for a built-in trap, '
               'and which traps" loading="lazy" width="2210" height="884"><figcaption>Gemini falls for the built-in '
               'traps far less often than the open models, but still does.</figcaption></figure>')
-    return f"""<div class="table"><table>
+    return fr + f"""<h3>Open models, main run: {rows[0]["n"] if rows else 0} questions each, one per request</h3><div class="table"><table>
 <thead><tr><th scope="col">Model</th><th scope="col">Correct, with the image <span class="key"><i></i>chance {pct(chance)}</span></th>
 <th scope="col">Without the image</th><th scope="col">p vs guessing</th><th scope="col">Both halves of a pair right</th>
 <th scope="col">Reads the labels</th></tr></thead>
 <tbody>{''.join(body)}</tbody></table></div>
 <p class="note">{rows[0]["n"] if rows else 0} questions per model, the same for every model, plus 30 before-and-after pairs and
 16 reading checks. Free open-weight models from Hugging Face, run locally with greedy decoding. Every reply on this
-page is the model's real, unedited output.</p>{ft}{fr}{tc}"""
+page is the model's real, unedited output.</p>{ft}{tc}"""
 
 
 def pipeline_html(pdir, tasks, run):
@@ -450,10 +519,12 @@ def main():
         pipe = (f'<section class="band" id="how"><div class="wrap"><h2>How a task is made</h2>'
                 f'<p class="lede">One real scene from the dataset (<code>{E(scene)}</code>), followed through every '
                 f'step of the pipeline.</p>{steps}</div></section>')
-    page = (HEAD + BODY.replace("__RESULTS__", results_html(run, Path(a.finetune) if a.finetune else None))
+    page = (HEAD + BODY.replace("__HERO__", hero_html(out) if Path("results/frontier/summary.json").exists() else "")
+            .replace("__RESULTS__", results_html(run, Path(a.finetune) if a.finetune else None))
             .replace("__PIPELINE__", pipe + try_html + show)
             .replace("__TRY__", json.dumps(try_data, ensure_ascii=False).replace("</", "<\\/"))
             .replace("__DATA__", json.dumps(items, ensure_ascii=False).replace("</", "<\\/")))
+    page += SPY
     if not a.fragment:
         page = ('<!doctype html>\n<html lang="en"><head><meta charset="utf-8">'
                 '<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'
@@ -461,6 +532,17 @@ def main():
     (out / "index.html").write_text(page)
     print(f"demo with {len(items)} tasks{' + pipeline walkthrough' if pipe else ''} -> {out / 'index.html'}")
 
+
+SPY = """<script>
+(() => {               // the nav bar marks the section you are reading
+  const links = [...document.querySelectorAll('.anchors a')];
+  if (!('IntersectionObserver' in window) || !links.length) return;
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting)
+    links.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#' + e.target.id)); }), {rootMargin: '-40% 0px -55% 0px'});
+  links.forEach(a => { const t = document.querySelector(a.getAttribute('href')); if (t) obs.observe(t); });
+})();
+</script>
+"""
 
 HEAD = r"""<title>ThirstMap demo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -562,25 +644,66 @@ select:focus-visible,button:focus-visible{outline:2px solid var(--water);outline
 .row small{color:var(--ink2);display:block;font-family:var(--mono);font-size:12px;overflow-wrap:anywhere}
 .row.base{opacity:.65}
 footer{padding-block:24px 36px;color:var(--ink2);font-size:13px}
+html{scroll-behavior:smooth}section[id],header[id]{scroll-margin-top:64px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--bg)}
+nav.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);
+  backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;gap:20px;min-height:56px}
+.brand{font:700 20px var(--display);color:var(--ink);text-decoration:none;letter-spacing:-.01em}.brand span{color:var(--water)}
+.anchors{display:flex;gap:18px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}.anchors::-webkit-scrollbar{display:none}
+.anchors a,.ext a{color:var(--ink2);text-decoration:none;font-size:14px;font-weight:500;white-space:nowrap}
+.anchors a:hover,.ext a:hover,.anchors a.on{color:var(--water)}.anchors a.on{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.ext{display:flex;gap:16px;align-items:center}.ext .gh{border:1px solid var(--line);border-radius:8px;padding:5px 11px;color:var(--ink)}
+@media (max-width:820px){.ext a:not(.gh){display:none}.anchors{gap:14px;-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent);padding-right:24px}}
+.hero{padding-block:44px 34px}
+.hero .hero-in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:40px;align-items:center}
+.hero-text{display:grid;gap:0;align-content:start}
+.hero h1{font-size:clamp(34px,4.8vw,56px);line-height:1.04;letter-spacing:-.025em;margin-top:12px}
+.lede.big{font-size:17px;line-height:1.6;margin-top:16px}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--text);padding:10px 15px;border-radius:10px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);text-decoration:none;transition:border-color .15s,transform .15s}
+.btn:hover{border-color:var(--water);transform:translateY(-1px)}.btn.primary{background:var(--water);border-color:var(--water);color:#fff}
+.btn:focus-visible,.anchors a:focus-visible,.ext a:focus-visible,.brand:focus-visible{outline:2px solid var(--waste);outline-offset:2px}
+.facts{list-style:none;padding:0;margin:24px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.facts li{background:var(--chip);border-radius:99px;padding:6px 12px;font-size:13.5px;color:var(--ink2)}.facts b{color:var(--ink);font-variant-numeric:tabular-nums}
+.hero-fig img{border-radius:14px;border:1px solid var(--line);box-shadow:0 20px 50px rgba(15,34,48,.16)}
+.hero-fig figcaption{font-size:13.5px}
+@media (max-width:900px){.hero .hero-in{grid-template-columns:1fr;gap:28px}.hero{padding-block:28px 20px}}
+.finds{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.find{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:8px;align-content:start}
+.find b{font:700 32px/1.05 var(--display);font-variant-numeric:tabular-nums;letter-spacing:-.01em}.find.warn b{color:var(--bad)}
+.find p{color:var(--ink2);font-size:14px}
+@media (max-width:900px){.finds{grid-template-columns:1fr 1fr}}@media (max-width:520px){.finds{grid-template-columns:1fr}}
+.more{font-size:14px;color:var(--ink2);max-width:none}.more a{color:var(--water)}
+.acc .muted.num{width:auto;font-weight:400;font-size:13px}
+h3{margin-top:10px}
 @media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
 </style>
 """
 
-BODY = r"""<header><div class="wrap">
+BODY = r"""<nav class="top" aria-label="Sections"><div class="wrap nav-in"><a class="brand" href="#top">Thirst<span>Map</span></a>
+<div class="anchors"><a href="#found">Findings</a><a href="#results">Results</a><a href="#how">How it works</a><a href="#try">Try it</a>
+<a href="#where">Where models fail</a><a href="#tasks">Browse tasks</a></div>
+<div class="ext"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Film</a><a href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Leaderboard</a>
+<a class="gh" href="https://github.com/yugesh1111/THIRSTMAP">GitHub</a></div></div></nav>
+__HERO__
+<header class="oldhead" hidden><div class="wrap">
 <span class="eyebrow">Innodata AI Hackathon · Track 2: Visual Task Factory</span>
 <h1>ThirstMap: can AI trace water through the landscape?</h1>
 <p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
-<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (3 min 40 s, narrated)</a>
+<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (4 min, narrated)</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">90-second walkthrough</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
+<a href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Leaderboard: score your own model</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (32 questions, about 15 minutes)</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/ThirstMap_summary.pdf">One-page summary (PDF)</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/FAQ.md">Tough questions, answered</a>
 <a href="https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb">Run it in Colab</a></p>
 </div></header>
-<section><div class="wrap">
+<section id="results" class="band"><div class="wrap">
 <h2>Results</h2>
 __RESULTS__
 </div></section>

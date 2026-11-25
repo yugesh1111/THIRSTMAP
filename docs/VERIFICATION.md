@@ -79,19 +79,19 @@ Ten random raw replies, exactly as the models wrote them:
 
 These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
 
-Compared on the 75 tasks that every model answered with the image.
+Compared on the 83 tasks that every model answered with the image.
 
 | Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |
 |---|---|---|---|---|---|---|
-| hf:Qwen/Qwen2-VL-2B-Instruct | blind | 75 | 10.7% | 10.7% ✅ | 10.7% | 100.0% |
-| hf:Qwen/Qwen2-VL-2B-Instruct | image | 75 | 5.3% | 5.3% ✅ | 5.3% | 100.0% |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | blind | 75 | 12.0% | 12.0% ✅ | 12.0% | 100.0% |
-| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 75 | 12.0% | 12.0% ✅ | 12.0% | 100.0% |
-| openai:gemini-3.1-flash-lite | blind | 71 | 12.7% | 12.7% ✅ | 12.7% | 100.0% |
-| openai:gemini-3.1-flash-lite | image | 75 | 49.3% | 49.3% ✅ | 49.3% | 100.0% |
-| openai:gemini-3.5-flash | image | 75 | 76.0% | 76.0% ✅ | 76.0% | 100.0% |
-| openai:gemini-3.5-flash-lite | blind | 75 | 14.7% | 14.7% ✅ | 14.7% | 100.0% |
-| openai:gemini-3.5-flash-lite | image | 75 | 40.0% | 40.0% ✅ | 40.0% | 100.0% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | blind | 83 | 9.6% | 9.6% ✅ | 9.6% | 100.0% |
+| hf:Qwen/Qwen2-VL-2B-Instruct | image | 83 | 4.8% | 4.8% ✅ | 4.8% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | blind | 83 | 12.0% | 12.0% ✅ | 12.0% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 83 | 12.0% | 12.0% ✅ | 12.0% | 100.0% |
+| openai:gemini-3.1-flash-lite | blind | 79 | 15.2% | 15.2% ✅ | 15.2% | 100.0% |
+| openai:gemini-3.1-flash-lite | image | 83 | 48.2% | 48.2% ✅ | 48.2% | 100.0% |
+| openai:gemini-3.5-flash | image | 83 | 77.1% | 77.1% ✅ | 77.1% | 100.0% |
+| openai:gemini-3.5-flash-lite | blind | 83 | 13.3% | 13.3% ✅ | 13.3% | 100.0% |
+| openai:gemini-3.5-flash-lite | image | 83 | 39.8% | 39.8% ✅ | 39.8% | 100.0% |
 
 Ten random raw replies, exactly as the models wrote them:
 
@@ -107,6 +107,35 @@ Ten random raw replies, exactly as the models wrote them:
 | openai:gemini-3.1-flash-lite | level5_seed52684__Q6__satellite | S3 | `{"answer": "S2"}` | ❌ |
 | Qwen2.5-VL-3B-Instruct | level4_seed58903__Q5__map | S | `{"answer": "E"}` | ❌ |
 | Qwen2-VL-2B-Instruct | level5_seed52684__Q7__satellite | ['V1'] | `{"answer": ["V1", "V4"]}` | ❌ |
+
+## 1b. Real model answers (results/frontier_pairs)
+
+These are free-text replies from real models, so a second parser, written separately from the project's scorer, re-reads every raw reply. *Agreement* is how often the two parsers reach the same verdict; disagreements are listed so they can be judged by eye.
+
+Compared on the 67 tasks that every model answered with the image.
+
+| Model | Mode | Replies | Project scorer on raw replies | In summary.json | Second parser | Agreement |
+|---|---|---|---|---|---|---|
+| hf:Qwen/Qwen2-VL-2B-Instruct | image | 67 | 10.4% | 10.4% ✅ | 10.4% | 100.0% |
+| hf:Qwen/Qwen2.5-VL-3B-Instruct | image | 67 | 13.4% | 13.4% ✅ | 13.4% | 100.0% |
+| openai:gemini-3.1-flash-lite | image | 67 | 44.8% | 44.8% ✅ | 44.8% | 100.0% |
+| openai:gemini-3.5-flash | image | 67 | 68.7% | 68.7% ✅ | 68.7% | 100.0% |
+| openai:gemini-3.5-flash-lite | image | 67 | 50.7% | 50.7% ✅ | 50.7% | 100.0% |
+
+Ten random raw replies, exactly as the models wrote them:
+
+| Model | Task | Key | Raw reply | Scored |
+|---|---|---|---|---|
+| Qwen2-VL-2B-Instruct | level2_seed32231__Q1__satellite | ['V1', 'V4'] | `{"answer": ["V1", "V2", "V3", "V4", "V5"]}` | ❌ |
+| openai:gemini-3.5-flash | level3_seed42529__Q2__satellite | V2 | `{"answer": "V2"}` | ✅ |
+| openai:gemini-3.1-flash-lite | real_pune_seed55166__Q2__map | V6 | `{"answer": "V6"}` | ✅ |
+| openai:gemini-3.5-flash-lite | level5_seed63319_cf__Q1__map | ['V8'] | `{"answer": ["V8"]}` | ✅ |
+| Qwen2.5-VL-3B-Instruct | level4_seed51760__Q10__map | 430 | `{"answer": 1000}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level4_seed42095__Q9__thermal | 4.7 | `{"answer": 6}` | ✅ |
+| openai:gemini-3.5-flash-lite | real_pune_seed55166__Q7__map | ['V3', 'V4'] | `{"answer": []}` | ❌ |
+| Qwen2.5-VL-3B-Instruct | level2_seed38986_cf__Q7__map | ['V3'] | `{"answer": ["V1"]}` | ❌ |
+| Qwen2-VL-2B-Instruct | level5_seed63319__Q10__map | 510 | `{"answer": 1}` | ❌ |
+| openai:gemini-3.5-flash-lite | real_hyderabad_seed47441__Q5__satellite | S | `{"answer": "S"}` | ✅ |
 
 ## 3. Dataset regenerated from recorded seeds
 

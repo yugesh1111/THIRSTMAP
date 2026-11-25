@@ -118,7 +118,7 @@ md("""
 ## 7. The twin: one small change that must flip the answer
 
 A model that answers from habit (or from the question text) gives the same answer to both. Getting a before-and-after **pair**
-right needs both halves right: in our runs even the best model, Gemini 3.5 Flash, managed only 3 of 7 pairs, and the others none.
+right needs both halves right: in our runs even the best model, Gemini 3.5 Flash, managed only 6 of 19 pairs, and the others at most 2.
 """)
 code("""
 if twin:

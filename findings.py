@@ -154,6 +154,20 @@ def frontier_lines(dataset):
                        "correct answer flips; " + ", ".join(short(r["m"]) for r in paired)
                        + f" got both halves of **0 of {paired[0]['pairs']}** pairs right: the frontier models often change their "
                        "answer for the twin, but never get both the original scene and its changed twin right.")
+        X = Path("results/frontier_pairs/summary.json")
+        if X.exists() and paired:
+            P = json.loads(X.read_text()).get("counterfactual_pairs", {})
+            both = []
+            for r in paired:
+                e = P.get(r["m"], {})
+                if e.get("pairs"):
+                    k1, k2 = round(r["pair"] * r["pairs"]), round(e["pair_accuracy"] * e["pairs"])
+                    both.append((short(r["m"]), k2, e["pairs"], k1 + k2, r["pairs"] + e["pairs"]))
+            if both:
+                both.sort(key=lambda x: -x[3] / x[4])
+                bullet += (f"\n- **More pairs on new scenes** (`results/frontier_pairs`, {both[0][2]} more pairs, the same protocol): "
+                           + "; ".join(f"{n} {k2} of {m2}" for n, k2, m2, _, _ in both)
+                           + ". **Over all pairs: " + "; ".join(f"{n} {k} of {m}" for n, _, _, k, m in both) + ".**")
     return L, bullet
 
 

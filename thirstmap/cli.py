@@ -34,6 +34,7 @@ COMMANDS = {
     "eval-set": ("publish_eval_set", "copy exactly the evaluated tasks and images"),
     "demo": ("build_demo", "the self-contained demo page"),
     "summary": ("make_summary", "one-page summary PDF and the FAQ, from the result files"),
+    "leaderboard": ("build_leaderboard", "leaderboard page: report cards, question pack, score your model in the browser"),
     "pipeline": ("pipeline_visuals", "one scene through every pipeline step"),
     "gifs": ("make_gifs", "the README GIFs"),
 }

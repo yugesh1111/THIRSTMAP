@@ -2,6 +2,8 @@
 
 *Innodata AI Hackathon 2026 · Track 2: Visual Task Factory*
 
+[![CI](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml/badge.svg)](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml) [![Live demo](https://img.shields.io/badge/live%20demo-open-2a78d6)](https://yugesh1111.github.io/THIRSTMAP/) [![Leaderboard](https://img.shields.io/badge/leaderboard-score%20your%20model-d95926)](https://yugesh1111.github.io/THIRSTMAP/leaderboard/) [![Film](https://img.shields.io/badge/film-4%20min-0f2230)](https://yugesh1111.github.io/THIRSTMAP/film.html) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) [![Code: MIT](https://img.shields.io/badge/code-MIT-informational)](LICENSE) [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-informational)](LICENSE-DATA.md)
+
 > **AI is drinking India's water. We test whether AI can even see where that water goes.**
 
 India's data centres use an estimated ~150 billion litres of water a year, and that could reach ~358 billion by 2030 ([Down To Earth](https://www.downtoearth.org.in/water/india-is-using-water-to-build-the-machines-that-tell-us-we-are-running-out-of-it), citing a [CEEW study](https://www.ceew.in/sites/default/files/ceew-data-centre-study-web-ready-final.pdf)). About 70% of capacity sits in water-stressed Mumbai and Chennai, and none of India's 15 state data-centre policies require water-stress mapping ([Down To Earth](https://www.downtoearth.org.in/science-technology/thirsty-data-centres-thin-regulation-who-is-watching-indias-water)). 43% of data centres worldwide already sit in high water-stress areas ([S&P Global](https://www.spglobal.com/sustainable1/en/insights/special-editorial/beneath-the-surface-water-stress-in-data-centers)). AI geospatial agents are being built to answer exactly these questions from imagery ([Google Earth AI](https://research.google/blog/putting-earth-ai-to-work-geospatial-agents-for-our-planets-biggest-challenges/)): *Where does this facility's warm wastewater go? Which villages receive it? Where could a wetland clean it?* Figures are estimates from secondary reporting; all sources are listed in [`docs/PROJECT_BRIEF.md`](docs/PROJECT_BRIEF.md#sources).
@@ -15,8 +17,9 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | Look at | Where | What it shows |
 |---|---|---|
 | **One page** | [`docs/ThirstMap_summary.pdf`](docs/ThirstMap_summary.pdf) · [`docs/FAQ.md`](docs/FAQ.md) | the whole project on one A4 page; tough questions (small samples, synthetic data, fine-tuning) answered with the numbers |
-| **The film** (3 min 40 s, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [1-minute cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
+| **The film** (4 min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [70-second cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
 | **90-second demo walkthrough** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
+| **Leaderboard: score your own model** | https://yugesh1111.github.io/THIRSTMAP/leaderboard/ | every model's report card (skills, pairs, traps, no-image check); download the question pack, run any model, drop its replies on the page and get the same card. Scored in the browser by a port of the Python scorer that agrees with it on every published reply |
 | **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
 | **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
@@ -49,11 +52,11 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 | Model | Protocol | Questions | Accuracy | Without image | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
 |---|---|---|---|---|---|---|---|---|---|
-| gemini-3.5-flash | batched | 75 | **76%** (57/75) | – | 14% | 4.2e-33 | 43% (7) | 29% | 310 |
-| gemini-3.1-flash-lite | batched | 75 | **49%** (37/75) | 13% | 14% | 6.3e-13 | 0% (7) | 14% | 299 |
-| gemini-3.5-flash-lite | batched | 75 | **40%** (30/75) | 15% | 14% | 4.4e-08 | 0% (7) | 29% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 75 | **12%** (9/75) | 12% | 14% | 0.76 | 0% (7) | 43% | 229 |
-| Qwen2-VL-2B-Instruct | batched | 75 | **5%** (4/75) | 11% | 14% | 1 | 0% (7) | 43% | 229 |
+| gemini-3.5-flash | batched | 83 | **77%** (64/83) | – | 14% | 4.3e-38 | 43% (7) | 29% | 301 |
+| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | 15% | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
+| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | 13% | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 229 |
 | gemini-3.5-flash | single | 19 | **79%** (15/19) | – | 8% | 1.2e-13 | – | – | – |
 | Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | – | 8% | 0.2 | – | – | – |
 | Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |
@@ -63,8 +66,9 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 ### What the numbers say
 
 - **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 17% against a chance level of 13% (p = 0.15).
-- **A frontier model does much better, but is not reliable yet.** On the same 75 questions (batched protocol), gemini-3.5-flash got 76% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 4.2e-33). Without the image, gemini-3.1-flash-lite drops from 49% to 13%; gemini-3.5-flash-lite drops from 40% to 15% (chance 14%): their scores come from looking at the image. One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
-- **The before-and-after test separates the strongest model, and still catches it.** Each twin changes one thing so the correct answer flips. gemini-3.5-flash got both halves of **3 of 7** pairs right (43%), well below its 76% on single questions; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got 0 of 7.
+- **A frontier model does much better, but is not reliable yet.** On the same 83 questions (batched protocol), gemini-3.5-flash got 77% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 4.3e-38). Without the image, gemini-3.1-flash-lite drops from 48% to 15%; gemini-3.5-flash-lite drops from 40% to 13% (chance 14%): their scores come from looking at the image. One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
+- **The before-and-after test separates the strongest model, and still catches it.** Each twin changes one thing so the correct answer flips. gemini-3.5-flash got both halves of **3 of 7** pairs right (43%), well below its 77% on single questions; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got 0 of 7.
+- **More pairs on new scenes** (`results/frontier_pairs`, 12 more pairs, the same protocol): gemini-3.5-flash 3 of 12; gemini-3.5-flash-lite 2 of 12; gemini-3.1-flash-lite 1 of 12; Qwen2-VL-2B-Instruct 0 of 12; Qwen2.5-VL-3B-Instruct 0 of 12. **Over all pairs: gemini-3.5-flash 6 of 19; gemini-3.5-flash-lite 2 of 19; gemini-3.1-flash-lite 1 of 19; Qwen2-VL-2B-Instruct 0 of 19; Qwen2.5-VL-3B-Instruct 0 of 19.**
 - **The image barely helps the open models.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 17% vs 14%; Qwen2-VL-2B-Instruct 9% vs 9%; SmolVLM-256M-Instruct 8% vs 10%; SmolVLM2-2.2B-Instruct 8% vs 12%.
 - **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 92% (both right: 0%); Qwen2-VL-2B-Instruct 85% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%); SmolVLM2-2.2B-Instruct 81% (both right: 0%).
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 95%.
@@ -253,7 +257,7 @@ This uses a 2-down/1-up staircase (Levitt 1971): two correct answers in a row ma
 
 ## Results status (read this first)
 - **Open models, real runs:** four free open-weight models from Hugging Face (Qwen2.5-VL-3B, Qwen2-VL-2B, SmolVLM2-2.2B, SmolVLM-256M) were run locally on CPU on the same tasks. Their numbers are in **Findings** above, in [`docs/FINDINGS.md`](docs/FINDINGS.md) and in [`results/models/REPORT.md`](results/models/REPORT.md). Every raw answer is in `results/models/responses.jsonl`.
-- **Frontier models, real runs:** Gemini 3.5 Flash, 3.1 Flash-Lite and 3.5 Flash-Lite answered the same questions as two open models (`frontier.py`, within a free API key's 20 requests per model per day; 75 shared questions after the audit), the Flash-Lite models also without the image, and Gemini 3.5 Flash answered 19 single questions; see [`LEADERBOARD.md`](LEADERBOARD.md). Claude and GPT run with the same harness once keys are available.
+- **Frontier models, real runs:** Gemini 3.5 Flash, 3.1 Flash-Lite and 3.5 Flash-Lite answered the same questions as two open models (`frontier.py`, within a free API key's 20 requests per model per day; 83 shared questions after the audit), the Flash-Lite models also without the image, then 8 more before-and-after image pairs on new scenes (`results/frontier_pairs`), and Gemini 3.5 Flash answered 19 single questions; see [`LEADERBOARD.md`](LEADERBOARD.md). Claude and GPT run with the same harness once keys are available.
 - **Offline baselines** (`mock:oracle`, `mock:random`, `mock:stubborn`) test the dataset and the scorer. They are **not model findings**.
 - **[`docs/VERIFICATION.md`](docs/VERIFICATION.md)** (from `verify_results.py`, which shares no code with the report) shows:
   - every reported number recomputed independently from the raw responses (exact match);

@@ -54,7 +54,7 @@ tolerance for numbers, compass sectors for directions; wrong answers are tagged 
 
 See `docs/FINDINGS.md` and `LEADERBOARD.md` in the repository. In short: open models up to 3B parameters score
 at chance level; Gemini Flash-Lite models score about three times chance on the same questions (and fall to chance
-without the image); Gemini 3.5 Flash scores 76%, yet gets both halves of only 3 of 7 before-and-after pairs right.
+without the image); Gemini 3.5 Flash scores 77%, yet gets both halves of only 6 of 19 before-and-after pairs right.
 
 ## Licence and credits
 

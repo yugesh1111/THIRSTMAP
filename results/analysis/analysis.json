@@ -163,6 +163,24 @@
   },
   "real_chennai_seed39037__Q7__map": {
    "openai:gemini-3.5-flash": "overlays/real_chennai_seed39037__Q7__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q1__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q1__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q2__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q2__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q3__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q3__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q4__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q4__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q6__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q6__map__gemini-3.5-flash.jpg"
+  },
+  "level4_seed48947__Q7__map": {
+   "openai:gemini-3.5-flash": "overlays/level4_seed48947__Q7__map__gemini-3.5-flash.jpg"
   }
  },
  "pairs": [
@@ -3019,6 +3037,13 @@
    "qid": "Q7",
    "protocol": "batched",
    "text": "V6 is downstream of the intake and does not share its source."
+  },
+  {
+   "model": "openai:gemini-3.5-flash",
+   "task_id": "level4_seed48947__Q1__map",
+   "qid": "Q1",
+   "protocol": "batched",
+   "text": "V3 would be alarmed for nothing: the wastewater never reaches it."
   }
  ],
  "mechanism": {
@@ -3075,16 +3100,16 @@
    ]
   },
   "openai:gemini-3.5-flash": {
-   "wrong": 1,
+   "wrong": 2,
    "nearest": 1,
-   "chance": 0.2,
+   "chance": 0.4,
    "first": [
-    9,
-    9
+    10,
+    10
    ],
    "later": [
-    8,
-    9
+    9,
+    10
    ]
   },
   "hf:HuggingFaceTB/SmolVLM-256M-Instruct": {

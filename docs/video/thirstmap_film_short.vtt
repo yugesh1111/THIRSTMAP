@@ -24,20 +24,23 @@ Open models guess.
 00:00:34.310 --> 00:00:39.460
 Gemini Flash-Lite reads the map, and falls back to guessing without the image.
 
-00:00:39.580 --> 00:00:43.705
-Gemini 3.5 Flash gets seventy-six percent.
+00:00:39.580 --> 00:00:43.680
+Gemini 3.5 Flash gets seventy-seven percent.
 
-00:00:44.805 --> 00:00:46.755
+00:00:44.780 --> 00:00:46.730
 But the twins catch it.
 
-00:00:46.875 --> 00:00:51.425
+00:00:46.850 --> 00:00:51.400
 Cool the water, and it gives the same answer: two false heat alarms.
 
-00:00:51.545 --> 00:00:54.770
-Both halves right in only three of seven pairs.
+00:00:51.520 --> 00:00:54.895
+Both halves right in only six of nineteen pairs.
 
-00:00:55.870 --> 00:00:59.945
+00:00:55.995 --> 00:01:00.445
+Score your own model on the public leaderboard, right in the browser.
+
+00:01:01.545 --> 00:01:05.620
 Five thousand tasks, a live demo, and everything open.
 
-00:01:00.065 --> 00:01:04.440
+00:01:05.740 --> 00:01:10.115
 Before we trust AI with India's water, it should pass this test.

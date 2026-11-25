@@ -40,6 +40,18 @@ def pval(p):
     return f"{m}e{int(e)}"
 
 
+def combine_pairs(a, b):
+    """Pair statistics over two runs (the frontier set and its pair extension), weighted by the number of pairs."""
+    if not b.get("pairs"):
+        return a
+    if not a.get("pairs"):
+        return b
+    n = a["pairs"] + b["pairs"]
+    w = lambda k: (a[k] * a["pairs"] + b[k] * b["pairs"]) / n
+    return dict(pairs=n, pair_accuracy=w("pair_accuracy"), single_task_accuracy=w("single_task_accuracy"),
+                unchanged_answer_rate=w("unchanged_answer_rate"))
+
+
 def numbers(dataset):
     """Everything the page states, from the files."""
     N = {}
@@ -57,9 +69,11 @@ def numbers(dataset):
     N["wetland_balance"] = man.get("answer_balance", {}).get("Q3", {})
 
     F = load("results/frontier/summary.json")
+    X = load("results/frontier_pairs/summary.json")           # the pair extension: more before-and-after pairs
+    N["pair_sets"] = 1 + bool(X.get("counterfactual_pairs"))
     rows = []
     for m, v in F.get("vs_chance", {}).items():
-        pr = F.get("counterfactual_pairs", {}).get(m, {})
+        pr = combine_pairs(F.get("counterfactual_pairs", {}).get(m, {}), X.get("counterfactual_pairs", {}).get(m, {}))
         tr = F.get("trap_fall_rate", {}).get(m, {})
         rows.append(dict(m=m, acc=v["correct"] / v["n"], correct=v["correct"], n=v["n"], chance=v["chance"],
                          p=v["p_value"], pairs=pr.get("pairs"), pairs_right=round(pr.get("pair_accuracy", 0) * pr.get("pairs", 0)),
@@ -281,7 +295,9 @@ def build(N, out, figure):
                            ("BOTTOMPADDING", (0, 0), (-1, -1), 2.2), ("LEFTPADDING", (0, 0), (-1, -1), 3)]))
     _, th_ = t.wrapOn(c, W - 2 * M, 300)
     t.drawOn(c, M, y - 5 - th_)
-    notes = ["18 images, 6 before-and-after pairs; every question about an image in one request."]
+    notes = (["Correct, chance, p and traps: the frontier set (18 images, every question about an image in one request). "
+              "Pairs: the frontier set plus a pair extension on new scenes."] if N.get("pair_sets", 1) > 1 else
+             ["18 images, 6 before-and-after pairs; every question about an image in one request."])
     if singles:
         notes.append("* one question per request on a 19-question subset (the free daily quota).")
     y = flow(M, y - 5 - th_ - 3, W - 2 * M, [Paragraph(" ".join(notes), small)]) - 7
@@ -296,9 +312,11 @@ def build(N, out, figure):
                  f"{pct(best['chance'])}), <b>yet no model got both halves of a before-and-after pair right</b> "
                  f"(0 of {best['pairs']} for every model): models read the scene but do not follow the water."]
     else:
+        rest = max((r["pairs_right"] for r in fr if r is not top), default=0)
         finds = [f"<b>{pretty(best['m'])} scores {pct(best['acc'])}</b> ({best['acc'] / best['chance']:.0f}× chance), "
                  f"<b>but gets both halves of only {top['pairs_right']} of {top['pairs']} before-and-after pairs right</b>; "
-                 f"every other model gets none. One small change to the scene is enough to trip up even the best model."]
+                 + ("every other model gets none." if not rest else f"the others at most {rest}.")
+                 + " One small change to the scene is enough to trip up even the best model."]
     nob = [r for r in api if r.get("blind") is not None]
     if nob:
         finds.append("<b>Without the image the Gemini models fall to chance</b> ("
@@ -337,7 +355,7 @@ def build(N, out, figure):
     y1 = flow(M, y, col_w, [Paragraph(s, bullet, bulletText="•") for s in finds])
     y2 = flow(M + col_w + 16, y, col_w, [Paragraph("WHY TRUST THE ANSWERS  ·  validity", eyebrow)]
               + [Paragraph(s, bullet, bulletText="•") for s in valid])
-    y = min(y1, y2) - 8
+    y = min(y1, y2) - 5
 
     # judging criteria (left) and links (right)
     crit = [("Implementation 25%", f"One command from terrain to report; {N['tests']} tests and CI; <b>pip install</b> "
@@ -364,9 +382,9 @@ def build(N, out, figure):
     ct.drawOn(c, M, y - 6 - cth)
 
     lx = M + crit_w + 16
-    links = [("Live demo, no login", DEMO, DEMO), ("The film, 3 min 40 s", DEMO + "film.html", "…/THIRSTMAP/film.html"),
+    links = [("Live demo, no login", DEMO, DEMO), ("The film, 4 min", DEMO + "film.html", "…/THIRSTMAP/film.html"),
              ("Take the test yourself", DEMO + "human/", "…/THIRSTMAP/human/"), ("Code, data, findings", REPO, REPO),
-             ("Colab quickstart", COLAB, "ThirstMap_quickstart.ipynb (Colab)")]
+             ("Leaderboard: score your model", DEMO + "leaderboard/", "…/THIRSTMAP/leaderboard/")]
     c.setFillColor(WATER)
     c.setFont("Sans-Bold", 7.6)
     c.drawString(lx, y, "SEE IT  ·  RUN IT")
@@ -406,10 +424,10 @@ def pairs_faq(N, fr, mp):
                 f"{pct(best.get('halves'))} of the pair halves right, against {pct(best['acc'])} overall, so few pairs were "
                 "expected even if the halves were independent. The pair result confirms that weakness rather than proving "
                 f"a separate one. The full dataset has {N['pairs']} pairs for anyone with a larger budget.")
-    rest = [pretty(r["m"]) for r in fr if r["pairs_right"] == 0]
+    others = "; ".join(f"{pretty(r['m'])} {r['pairs_right']}" for r in sorted(fr, key=lambda r: -r["pairs_right"]) if r is not top)
     h = top.get("halves") or 0
     return (f"On before-and-after pairs, precisely: {pretty(top['m'])} got both halves of {top['pairs_right']} of "
-            f"{top['pairs']} right; {', '.join(rest)} got 0 of {top['pairs']}{main}. With only {top['pairs']} pairs this is "
+            f"{top['pairs']} right; the others: {others} (of {top['pairs']}){main}. With {top['pairs']} pairs this is still "
             f"a coarse measure, and we say so: {pretty(top['m'])} gets {pct(h)} of the pair halves right, so about "
             f"{pct(h * h)} of pairs would be right if it answered the halves independently, close to the "
             f"{pct(top['pairs_right'] / top['pairs'])} observed. What the pairs show directly is habit: "

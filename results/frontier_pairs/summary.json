@@ -1,0 +1,838 @@
+{
+  "models": [
+    "hf:Qwen/Qwen2-VL-2B-Instruct",
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct",
+    "openai:gemini-3.1-flash-lite",
+    "openai:gemini-3.5-flash",
+    "openai:gemini-3.5-flash-lite"
+  ],
+  "n_responses": 335,
+  "compared_on_tasks": 67,
+  "answers_outside_common_set": {},
+  "excluded_by_audit": 0,
+  "chance_by_skill": {
+    "order_along_flow": 0.16023809523809524,
+    "measure_along_flow": 0.05902857142857143,
+    "trace_upstream_catchment": 0.0417297914737216,
+    "trace_downstream": 0.023623705929687502,
+    "read_flow_direction": 0.125,
+    "nature_based_filtering": 0.25,
+    "read_elevation": 0.0589242265625,
+    "read_colour_scale_value": 0.2,
+    "read_colour_scale_threshold": 0.11513125000000002,
+    "siting_downstream_impact": 0.3333333333333333
+  },
+  "tasks_by_skill_evaluated": {
+    "order_along_flow": 10,
+    "measure_along_flow": 7,
+    "trace_upstream_catchment": 11,
+    "trace_downstream": 10,
+    "read_flow_direction": 7,
+    "nature_based_filtering": 7,
+    "read_elevation": 4,
+    "read_colour_scale_value": 2,
+    "read_colour_scale_threshold": 2,
+    "siting_downstream_impact": 7
+  },
+  "vs_chance": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "correct": 7,
+      "n": 67,
+      "chance": 0.12739012623092683,
+      "p_value": 0.7657306335995191
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "correct": 9,
+      "n": 67,
+      "chance": 0.12739012623092683,
+      "p_value": 0.4866909764532517
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "correct": 30,
+      "n": 67,
+      "chance": 0.12739012623092683,
+      "p_value": 1.1118622112216187e-10
+    },
+    "openai:gemini-3.5-flash": {
+      "correct": 46,
+      "n": 67,
+      "chance": 0.12739012623092683,
+      "p_value": 5.440727183971989e-26
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "correct": 34,
+      "n": 67,
+      "chance": 0.12739012623092683,
+      "p_value": 6.894102029367319e-14
+    }
+  },
+  "format": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.1044776119402985
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.13432835820895522
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.44776119402985076
+    },
+    "openai:gemini-3.5-flash": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.6865671641791045
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "well_formed": 1.0,
+      "accuracy_well_formed_only": 0.5074626865671642
+    }
+  },
+  "overall": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "image": 0.1044776119402985,
+      "blind": null,
+      "n": 67
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "image": 0.13432835820895522,
+      "blind": null,
+      "n": 67
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "image": 0.44776119402985076,
+      "blind": null,
+      "n": 67
+    },
+    "openai:gemini-3.5-flash": {
+      "image": 0.6865671641791045,
+      "blind": null,
+      "n": 67
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "image": 0.5074626865671642,
+      "blind": null,
+      "n": 67
+    }
+  },
+  "by_skill": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": 0.0,
+      "order_along_flow": 0.0,
+      "nature_based_filtering": 0.42857142857142855,
+      "read_elevation": 0.25,
+      "read_flow_direction": 0.0,
+      "siting_downstream_impact": 0.14285714285714285,
+      "trace_upstream_catchment": 0.0,
+      "measure_along_flow": 0.14285714285714285,
+      "read_colour_scale_threshold": 0.5,
+      "read_colour_scale_value": 0.0
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "trace_downstream": 0.1,
+      "order_along_flow": 0.1,
+      "nature_based_filtering": 0.2857142857142857,
+      "read_elevation": 0.0,
+      "read_flow_direction": 0.0,
+      "siting_downstream_impact": 0.0,
+      "trace_upstream_catchment": 0.18181818181818182,
+      "measure_along_flow": 0.14285714285714285,
+      "read_colour_scale_threshold": 0.5,
+      "read_colour_scale_value": 0.5
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": 0.5,
+      "order_along_flow": 0.7,
+      "nature_based_filtering": 0.8571428571428571,
+      "read_elevation": 0.5,
+      "read_flow_direction": 0.42857142857142855,
+      "siting_downstream_impact": 0.14285714285714285,
+      "trace_upstream_catchment": 0.36363636363636365,
+      "measure_along_flow": 0.2857142857142857,
+      "read_colour_scale_threshold": 0.0,
+      "read_colour_scale_value": 0.0
+    },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": 0.4,
+      "order_along_flow": 0.8,
+      "nature_based_filtering": 1.0,
+      "read_elevation": 0.25,
+      "read_flow_direction": 0.7142857142857143,
+      "siting_downstream_impact": 0.7142857142857143,
+      "trace_upstream_catchment": 0.6363636363636364,
+      "measure_along_flow": 0.8571428571428571,
+      "read_colour_scale_threshold": 0.5,
+      "read_colour_scale_value": 1.0
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "trace_downstream": 0.5,
+      "order_along_flow": 0.7,
+      "nature_based_filtering": 0.8571428571428571,
+      "read_elevation": 0.0,
+      "read_flow_direction": 0.7142857142857143,
+      "siting_downstream_impact": 0.42857142857142855,
+      "trace_upstream_catchment": 0.18181818181818182,
+      "measure_along_flow": 0.5714285714285714,
+      "read_colour_scale_threshold": 0.0,
+      "read_colour_scale_value": 1.0
+    }
+  },
+  "by_style": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "map": 0.07894736842105263,
+      "satellite": 0.12,
+      "thermal": 0.25
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "map": 0.07894736842105263,
+      "satellite": 0.16,
+      "thermal": 0.5
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "map": 0.42105263157894735,
+      "satellite": 0.56,
+      "thermal": 0.0
+    },
+    "openai:gemini-3.5-flash": {
+      "map": 0.6052631578947368,
+      "satellite": 0.8,
+      "thermal": 0.75
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "map": 0.47368421052631576,
+      "satellite": 0.56,
+      "thermal": 0.5
+    }
+  },
+  "by_level": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "2": 0.23529411764705882,
+      "3": 0.07692307692307693,
+      "4": 0.07142857142857142,
+      "5": 0.0
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "2": 0.17647058823529413,
+      "3": 0.07692307692307693,
+      "4": 0.14285714285714285,
+      "5": 0.2
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "2": 0.47058823529411764,
+      "3": 0.6538461538461539,
+      "4": 0.21428571428571427,
+      "5": 0.2
+    },
+    "openai:gemini-3.5-flash": {
+      "2": 0.8235294117647058,
+      "3": 0.6923076923076923,
+      "4": 0.5,
+      "5": 0.7
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "2": 0.5882352941176471,
+      "3": 0.46153846153846156,
+      "4": 0.42857142857142855,
+      "5": 0.6
+    }
+  },
+  "eye_exam_curves": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "nature_based_filtering": {
+        "2": 1.0,
+        "3": 0.3333333333333333,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_elevation": {
+        "2": 0.0,
+        "3": 1.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "4": 0.5
+      },
+      "read_colour_scale_value": {
+        "4": 0.0
+      }
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "trace_downstream": {
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.5
+      },
+      "nature_based_filtering": {
+        "2": 0.0,
+        "3": 0.3333333333333333,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.25,
+        "3": 0.2,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "4": 0.5
+      },
+      "read_colour_scale_value": {
+        "4": 0.5
+      }
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": {
+        "2": 1.0,
+        "3": 0.75,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "order_along_flow": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 0.0,
+        "5": 0.5
+      },
+      "nature_based_filtering": {
+        "2": 0.5,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 0.0,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "2": 0.5,
+        "3": 0.6666666666666666,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "siting_downstream_impact": {
+        "2": 0.5,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.0,
+        "3": 0.6,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "2": 0.5,
+        "3": 0.3333333333333333,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_colour_scale_threshold": {
+        "4": 0.0
+      },
+      "read_colour_scale_value": {
+        "4": 0.0
+      }
+    },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": {
+        "2": 1.0,
+        "3": 0.25,
+        "4": 0.0,
+        "5": 0.5
+      },
+      "order_along_flow": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "nature_based_filtering": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "2": 1.0,
+        "3": 0.6666666666666666,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "siting_downstream_impact": {
+        "2": 1.0,
+        "3": 0.6666666666666666,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.5,
+        "3": 0.6,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "measure_along_flow": {
+        "2": 1.0,
+        "3": 1.0,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "read_colour_scale_threshold": {
+        "4": 0.5
+      },
+      "read_colour_scale_value": {
+        "4": 1.0
+      }
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "trace_downstream": {
+        "2": 1.0,
+        "3": 0.5,
+        "4": 0.0,
+        "5": 0.5
+      },
+      "order_along_flow": {
+        "2": 1.0,
+        "3": 0.75,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "nature_based_filtering": {
+        "2": 1.0,
+        "3": 0.6666666666666666,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_elevation": {
+        "2": 0.0,
+        "3": 0.0,
+        "4": 0.0,
+        "5": 0.0
+      },
+      "read_flow_direction": {
+        "2": 0.5,
+        "3": 1.0,
+        "4": 0.0,
+        "5": 1.0
+      },
+      "siting_downstream_impact": {
+        "2": 1.0,
+        "3": 0.0,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "trace_upstream_catchment": {
+        "2": 0.0,
+        "3": 0.2,
+        "4": 1.0,
+        "5": 0.0
+      },
+      "measure_along_flow": {
+        "2": 0.5,
+        "3": 0.3333333333333333,
+        "4": 1.0,
+        "5": 1.0
+      },
+      "read_colour_scale_threshold": {
+        "4": 0.0
+      },
+      "read_colour_scale_value": {
+        "4": 1.0
+      }
+    }
+  },
+  "breaking_level": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "trace_downstream": 2,
+      "order_along_flow": 2,
+      "nature_based_filtering": 3,
+      "read_elevation": 2,
+      "read_flow_direction": 2,
+      "siting_downstream_impact": 3,
+      "trace_upstream_catchment": 2,
+      "measure_along_flow": 3,
+      "read_colour_scale_threshold": ">5",
+      "read_colour_scale_value": 4
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "trace_downstream": 3,
+      "order_along_flow": 2,
+      "nature_based_filtering": 2,
+      "read_elevation": 2,
+      "read_flow_direction": 2,
+      "siting_downstream_impact": 2,
+      "trace_upstream_catchment": 2,
+      "measure_along_flow": 3,
+      "read_colour_scale_threshold": ">5",
+      "read_colour_scale_value": ">5"
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "trace_downstream": 4,
+      "order_along_flow": 4,
+      "nature_based_filtering": ">5",
+      "read_elevation": 2,
+      "read_flow_direction": 4,
+      "siting_downstream_impact": 3,
+      "trace_upstream_catchment": 2,
+      "measure_along_flow": 3,
+      "read_colour_scale_threshold": 4,
+      "read_colour_scale_value": 4
+    },
+    "openai:gemini-3.5-flash": {
+      "trace_downstream": 3,
+      "order_along_flow": 4,
+      "nature_based_filtering": ">5",
+      "read_elevation": 2,
+      "read_flow_direction": 4,
+      "siting_downstream_impact": 5,
+      "trace_upstream_catchment": ">5",
+      "measure_along_flow": 4,
+      "read_colour_scale_threshold": ">5",
+      "read_colour_scale_value": ">5"
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "trace_downstream": 4,
+      "order_along_flow": 4,
+      "nature_based_filtering": ">5",
+      "read_elevation": 2,
+      "read_flow_direction": 4,
+      "siting_downstream_impact": 3,
+      "trace_upstream_catchment": 2,
+      "measure_along_flow": 3,
+      "read_colour_scale_threshold": 4,
+      "read_colour_scale_value": ">5"
+    }
+  },
+  "blind_gap_by_skill": {},
+  "tasks_guessable_without_image": [],
+  "map_vs_satellite": {},
+  "error_tags": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "unparseable_or_no_answer": 17,
+      "trap:downstream_not_upstream": 10,
+      "missed_some": 8,
+      "wrong_choice": 7,
+      "trap:near_but_other_stream": 6,
+      "underestimate": 6,
+      "extra_unrelated": 5,
+      "wrong_direction": 2,
+      "overestimate": 2,
+      "trap:too_late_after_village": 1
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "missed_some": 20,
+      "wrong_choice": 13,
+      "extra_unrelated": 11,
+      "overestimate": 6,
+      "wrong_direction": 5,
+      "trap:downstream_not_upstream": 5,
+      "unparseable_or_no_answer": 5,
+      "trap:near_but_other_stream": 4,
+      "reversed_direction": 2,
+      "trap:too_late_after_village": 1,
+      "trap:upstream_of_outfall": 1,
+      "underestimate": 1
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "extra_unrelated": 8,
+      "missed_some": 8,
+      "wrong_choice": 7,
+      "overestimate": 5,
+      "trap:near_but_other_stream": 5,
+      "off_by_one_sector": 4,
+      "underestimate": 2,
+      "trap:downstream_not_upstream": 2,
+      "trap:later_village": 1
+    },
+    "openai:gemini-3.5-flash": {
+      "extra_unrelated": 10,
+      "missed_some": 3,
+      "wrong_choice": 3,
+      "off_by_one_sector": 2,
+      "trap:near_but_other_stream": 2,
+      "trap:downstream_not_upstream": 2,
+      "underestimate": 1
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "extra_unrelated": 9,
+      "missed_some": 8,
+      "wrong_choice": 5,
+      "trap:near_but_other_stream": 4,
+      "overestimate": 3,
+      "trap:downstream_not_upstream": 2,
+      "trap:upstream_of_outfall": 1,
+      "wrong_direction": 1,
+      "off_by_one_sector": 1
+    }
+  },
+  "trap_fall_rate": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "exposed": 40,
+      "fell": 17,
+      "rate": 0.425
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "exposed": 40,
+      "fell": 11,
+      "rate": 0.275
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "exposed": 40,
+      "fell": 8,
+      "rate": 0.2
+    },
+    "openai:gemini-3.5-flash": {
+      "exposed": 40,
+      "fell": 4,
+      "rate": 0.1
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "exposed": 40,
+      "fell": 7,
+      "rate": 0.175
+    }
+  },
+  "counterfactual_pairs": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "pairs": 12,
+      "single_task_accuracy": 0.041666666666666664,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.5833333333333334,
+      "by_kind": {
+        "intake": {
+          "pairs": 4,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.25
+        },
+        "outfall": {
+          "pairs": 6,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.6666666666666666
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.25,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 1.0
+        }
+      }
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "pairs": 12,
+      "single_task_accuracy": 0.20833333333333334,
+      "pair_accuracy": 0.0,
+      "unchanged_answer_rate": 0.16666666666666666,
+      "by_kind": {
+        "intake": {
+          "pairs": 4,
+          "single_task_accuracy": 0.25,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.0
+        },
+        "outfall": {
+          "pairs": 6,
+          "single_task_accuracy": 0.08333333333333333,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.16666666666666666
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.5,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.5
+        }
+      }
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "pairs": 12,
+      "single_task_accuracy": 0.25,
+      "pair_accuracy": 0.08333333333333333,
+      "unchanged_answer_rate": 0.3333333333333333,
+      "by_kind": {
+        "intake": {
+          "pairs": 4,
+          "single_task_accuracy": 0.25,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.5
+        },
+        "outfall": {
+          "pairs": 6,
+          "single_task_accuracy": 0.3333333333333333,
+          "pair_accuracy": 0.16666666666666666,
+          "unchanged_answer_rate": 0.3333333333333333
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.0,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.0
+        }
+      }
+    },
+    "openai:gemini-3.5-flash": {
+      "pairs": 12,
+      "single_task_accuracy": 0.5,
+      "pair_accuracy": 0.25,
+      "unchanged_answer_rate": 0.16666666666666666,
+      "by_kind": {
+        "intake": {
+          "pairs": 4,
+          "single_task_accuracy": 0.5,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.25
+        },
+        "outfall": {
+          "pairs": 6,
+          "single_task_accuracy": 0.4166666666666667,
+          "pair_accuracy": 0.3333333333333333,
+          "unchanged_answer_rate": 0.0
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.75,
+          "pair_accuracy": 0.5,
+          "unchanged_answer_rate": 0.5
+        }
+      }
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "pairs": 12,
+      "single_task_accuracy": 0.2916666666666667,
+      "pair_accuracy": 0.16666666666666666,
+      "unchanged_answer_rate": 0.4166666666666667,
+      "by_kind": {
+        "intake": {
+          "pairs": 4,
+          "single_task_accuracy": 0.125,
+          "pair_accuracy": 0.0,
+          "unchanged_answer_rate": 0.25
+        },
+        "outfall": {
+          "pairs": 6,
+          "single_task_accuracy": 0.3333333333333333,
+          "pair_accuracy": 0.16666666666666666,
+          "unchanged_answer_rate": 0.5
+        },
+        "thermal": {
+          "pairs": 2,
+          "single_task_accuracy": 0.5,
+          "pair_accuracy": 0.5,
+          "unchanged_answer_rate": 0.5
+        }
+      }
+    }
+  },
+  "appearance_invariance": {},
+  "perception_probes": {},
+  "cost": {
+    "hf:Qwen/Qwen2-VL-2B-Instruct": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 50.52
+    },
+    "hf:Qwen/Qwen2.5-VL-3B-Instruct": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 80.94
+    },
+    "openai:gemini-3.1-flash-lite": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 13.79
+    },
+    "openai:gemini-3.5-flash": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 40.63
+    },
+    "openai:gemini-3.5-flash-lite": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "usd": 0,
+      "mean_latency_s": 4.42
+    }
+  }
+}

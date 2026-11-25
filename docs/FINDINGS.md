@@ -15,11 +15,11 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 | Model | Protocol | Questions | Accuracy | Without image | Chance | p (beats chance) | Both halves of a pair right | Same answer to original & twin | Tokens per answer |
 |---|---|---|---|---|---|---|---|---|---|
-| gemini-3.5-flash | batched | 75 | **76%** (57/75) | – | 14% | 4.2e-33 | 43% (7) | 29% | 310 |
-| gemini-3.1-flash-lite | batched | 75 | **49%** (37/75) | 13% | 14% | 6.3e-13 | 0% (7) | 14% | 299 |
-| gemini-3.5-flash-lite | batched | 75 | **40%** (30/75) | 15% | 14% | 4.4e-08 | 0% (7) | 29% | 302 |
-| Qwen2.5-VL-3B-Instruct | batched | 75 | **12%** (9/75) | 12% | 14% | 0.76 | 0% (7) | 43% | 229 |
-| Qwen2-VL-2B-Instruct | batched | 75 | **5%** (4/75) | 11% | 14% | 1 | 0% (7) | 43% | 229 |
+| gemini-3.5-flash | batched | 83 | **77%** (64/83) | – | 14% | 4.3e-38 | 43% (7) | 29% | 301 |
+| gemini-3.1-flash-lite | batched | 83 | **48%** (40/83) | 15% | 14% | 1.2e-13 | 0% (7) | 14% | 299 |
+| gemini-3.5-flash-lite | batched | 83 | **40%** (33/83) | 13% | 14% | 7.6e-09 | 0% (7) | 29% | 302 |
+| Qwen2.5-VL-3B-Instruct | batched | 83 | **12%** (10/83) | 12% | 14% | 0.75 | 0% (7) | 43% | 229 |
+| Qwen2-VL-2B-Instruct | batched | 83 | **5%** (4/83) | 10% | 14% | 1 | 0% (7) | 43% | 229 |
 | gemini-3.5-flash | single | 19 | **79%** (15/19) | – | 8% | 1.2e-13 | – | – | – |
 | Qwen2.5-VL-3B-Instruct | single | 19 | **16%** (3/19) | – | 8% | 0.2 | – | – | – |
 | Qwen2-VL-2B-Instruct | single | 19 | **11%** (2/19) | – | 8% | 0.46 | – | – | – |
@@ -29,8 +29,9 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 ## What the numbers say
 
 - **No open model in the main table is significantly better than random guessing** (all p ≥ 0.05). The best, Qwen2.5-VL-3B-Instruct, scores 17% against a chance level of 13% (p = 0.15).
-- **A frontier model does much better, but is not reliable yet.** On the same 75 questions (batched protocol), gemini-3.5-flash got 76% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 4.2e-33). Without the image, gemini-3.1-flash-lite drops from 49% to 13%; gemini-3.5-flash-lite drops from 40% to 15% (chance 14%): their scores come from looking at the image. One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
-- **The before-and-after test separates the strongest model, and still catches it.** Each twin changes one thing so the correct answer flips. gemini-3.5-flash got both halves of **3 of 7** pairs right (43%), well below its 76% on single questions; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got 0 of 7.
+- **A frontier model does much better, but is not reliable yet.** On the same 83 questions (batched protocol), gemini-3.5-flash got 77% right against 12% for the best open model, Qwen2.5-VL-3B-Instruct (chance 14%, p = 4.3e-38). Without the image, gemini-3.1-flash-lite drops from 48% to 15%; gemini-3.5-flash-lite drops from 40% to 13% (chance 14%): their scores come from looking at the image. One question per request, gemini-3.5-flash got 79% of 19 questions against 16% for Qwen2.5-VL-3B-Instruct.
+- **The before-and-after test separates the strongest model, and still catches it.** Each twin changes one thing so the correct answer flips. gemini-3.5-flash got both halves of **3 of 7** pairs right (43%), well below its 77% on single questions; Qwen2-VL-2B-Instruct, Qwen2.5-VL-3B-Instruct, gemini-3.1-flash-lite, gemini-3.5-flash-lite got 0 of 7.
+- **More pairs on new scenes** (`results/frontier_pairs`, 12 more pairs, the same protocol): gemini-3.5-flash 3 of 12; gemini-3.5-flash-lite 2 of 12; gemini-3.1-flash-lite 1 of 12; Qwen2-VL-2B-Instruct 0 of 12; Qwen2.5-VL-3B-Instruct 0 of 12. **Over all pairs: gemini-3.5-flash 6 of 19; gemini-3.5-flash-lite 2 of 19; gemini-3.1-flash-lite 1 of 19; Qwen2-VL-2B-Instruct 0 of 19; Qwen2.5-VL-3B-Instruct 0 of 19.**
 - **The image barely helps the open models.** Accuracy with vs without the image: Qwen2.5-VL-3B-Instruct 17% vs 14%; Qwen2-VL-2B-Instruct 9% vs 9%; SmolVLM-256M-Instruct 8% vs 10%; SmolVLM2-2.2B-Instruct 8% vs 12%.
 - **Counterfactual twins expose answering from habit.** Share of pairs where the model gave the same answer to the original and to its twin (whose correct answer is different): Qwen2.5-VL-3B-Instruct 92% (both right: 0%); Qwen2-VL-2B-Instruct 85% (both right: 0%); SmolVLM-256M-Instruct 73% (both right: 0%); SmolVLM2-2.2B-Instruct 81% (both right: 0%).
 - **Appearance changes move answers.** Share of question groups answered identically in the dry-season, monsoon, haze and coarse-sensor versions of the same scene (the correct answer is identical in all four): Qwen2.5-VL-3B-Instruct 75%; Qwen2-VL-2B-Instruct 95%.
@@ -96,8 +97,8 @@ Every wrong answer is drawn on the image the model saw (`overlays.py`, shown in 
 
 ![how often each model fell for a trap, and which traps](trap_chart.png)
 
-- **Built-in traps catch them.** Share of answers that picked a trap option (a village close to the data centre but on another stream, a village upstream of the outfall, a wetland after a village, a monitoring point on another stream): gemini-3.5-flash 8% (3/40); gemini-3.1-flash-lite 18% (7/40); gemini-3.5-flash-lite 20% (8/40); Qwen2.5-VL-3B-Instruct 28% (11/40); Qwen2-VL-2B-Instruct 55% (22/40).
-- **It is not simply distance.** We tested whether wrong villages are the ones nearest the outfall (answering by proximity instead of flow): 38 of 156 wrong picks were the nearest non-receiving village, against 38 expected by chance, so a simple proximity shortcut does not explain the errors.
+- **Built-in traps catch them.** Share of answers that picked a trap option (a village close to the data centre but on another stream, a village upstream of the outfall, a wetland after a village, a monitoring point on another stream): gemini-3.5-flash 7% (3/44); gemini-3.1-flash-lite 16% (7/44); gemini-3.5-flash-lite 18% (8/44); Qwen2.5-VL-3B-Instruct 27% (12/44); Qwen2-VL-2B-Instruct 52% (23/44).
+- **It is not simply distance.** We tested whether wrong villages are the ones nearest the outfall (answering by proximity instead of flow): 38 of 157 wrong picks were the nearest non-receiving village, against 38 expected by chance, so a simple proximity shortcut does not explain the errors.
 
 **Audit.** 431 of 5761 dataset tasks (7.5%) are excluded from every number on this page after a self-audit found labels hidden under the scale bar or legend and six malformed scenes ([`AUDIT.md`](AUDIT.md)); the conclusions are unchanged.
 

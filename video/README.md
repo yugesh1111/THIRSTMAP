@@ -1,13 +1,13 @@
 # The ThirstMap films
 
-`docs/video/thirstmap_film.mp4` (3 min 40 s) walks through every judging criterion and every Track 2 deliverable;
-`docs/video/thirstmap_film_short.mp4` is the one-minute cut. Both are watchable at
+`docs/video/thirstmap_film.mp4` (4 min) walks through every judging criterion and every Track 2 deliverable;
+`docs/video/thirstmap_film_short.mp4` is the 70-second cut. Both are watchable at
 https://yugesh1111.github.io/THIRSTMAP/film.html, with subtitles burned in and as caption tracks (`*.vtt`).
 
 How they are made, so they can be remade after any new result:
 
 1. `make_film.py` reads every number from the result files (`results/*/summary.json`, the dataset manifest, the
-   errata list, the audit) and **stops if the narration no longer matches them** (`check()`).
+   errata list, the audit) and **writes every spoken and shown number from them**, so a new result means a new film.
 2. It synthesises the narration line by line with Kokoro-82M, an open text-to-speech model that runs locally
    (Apache-2.0; `pip install kokoro soundfile`), and times every scene, caption and animation to the spoken lines.
 3. It writes one HTML page per film from real material only: pipeline images, dataset scenes, model answers drawn on

@@ -52,8 +52,11 @@ def select(a):
             if base in by_img and len(by_img[base]) >= 2:
                 pairs[(t["cf_kind"], t["style"])].append((base, image_key(t)))
     chosen, pools = [], {}
+    taken = set()                    # --exclude: scenes already in another set (an extension adds new scenes only)
+    for f in a.exclude or []:
+        taken |= {i["image"].split("__")[0].removesuffix("_cf") for i in json.loads(Path(f).read_text())["images"]}
     for k in sorted(pairs):
-        cand = sorted(set(pairs[k]))
+        cand = sorted(bc for bc in set(pairs[k]) if bc[0].split("__")[0] not in taken)
         rng.shuffle(cand)
         pools[k] = sorted(cand[:20], key=lambda bc: -(len(by_img[bc[0]]) + len(by_img[bc[1]])))
     while len(chosen) < 2 * a.pairs and any(pools.values()):          # round-robin over twin kinds and styles
@@ -61,7 +64,7 @@ def select(a):
             if pools[k] and len(chosen) < 2 * a.pairs:
                 chosen += list(pools[k].pop(0))
     # singles: images with many questions, spread across styles, levels and real terrain
-    used = {c.split("__")[0].removesuffix("_cf") for c in chosen}
+    used = {c.split("__")[0].removesuffix("_cf") for c in chosen} | taken
     singles = [k for k, v in by_img.items() if not v[0].get("variant") == "counterfactual"
                and v[0]["scene_id"] not in used and len(v) >= (2 if v[0]["style"] == "thermal" else 3)]
     rng.shuffle(singles)
@@ -179,6 +182,7 @@ def main():
     s.add_argument("--dataset", default="dataset"); s.add_argument("--out", default="results/frontier")
     s.add_argument("--pairs", type=int, default=6); s.add_argument("--singles", type=int, default=6)
     s.add_argument("--seed", type=int, default=0)
+    s.add_argument("--exclude", nargs="*", help="set.json files whose scenes must not be reused (to extend a check)")
     r = sub.add_parser("run")
     r.add_argument("--dataset", default="dataset"); r.add_argument("--out", default="results/frontier")
     r.add_argument("--models", nargs="+", required=True)

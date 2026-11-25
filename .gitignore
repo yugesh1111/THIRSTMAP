@@ -14,6 +14,7 @@ results/ci*/
 !results/finetune/responses.jsonl
 !results/frontier/responses.jsonl
 !results/frontier_single/responses.jsonl
+!results/frontier_pairs/responses.jsonl
 
 # packaging
 build/

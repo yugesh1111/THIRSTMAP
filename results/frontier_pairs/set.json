@@ -1,0 +1,232 @@
+{
+ "max_side": 768,
+ "images": [
+  {
+   "image": "real_pune_seed55166__map",
+   "file": "img/real_pune_seed55166__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "real_pune_seed55166__Q1__map",
+    "real_pune_seed55166__Q2__map",
+    "real_pune_seed55166__Q3__map",
+    "real_pune_seed55166__Q4__map",
+    "real_pune_seed55166__Q5__map",
+    "real_pune_seed55166__Q6__map",
+    "real_pune_seed55166__Q7__map",
+    "real_pune_seed55166__Q10__map"
+   ]
+  },
+  {
+   "image": "real_pune_seed55166_cf__map",
+   "file": "img/real_pune_seed55166_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "real_pune_seed55166_cf__Q7__map"
+   ]
+  },
+  {
+   "image": "level3_seed42529__satellite",
+   "file": "img/level3_seed42529__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed42529__Q1__satellite",
+    "level3_seed42529__Q2__satellite",
+    "level3_seed42529__Q3__satellite",
+    "level3_seed42529__Q5__satellite",
+    "level3_seed42529__Q6__satellite",
+    "level3_seed42529__Q7__satellite",
+    "level3_seed42529__Q10__satellite"
+   ]
+  },
+  {
+   "image": "level3_seed42529_cf__satellite",
+   "file": "img/level3_seed42529_cf__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level3_seed42529_cf__Q7__satellite"
+   ]
+  },
+  {
+   "image": "level4_seed51760__map",
+   "file": "img/level4_seed51760__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level4_seed51760__Q1__map",
+    "level4_seed51760__Q2__map",
+    "level4_seed51760__Q3__map",
+    "level4_seed51760__Q4__map",
+    "level4_seed51760__Q5__map",
+    "level4_seed51760__Q6__map",
+    "level4_seed51760__Q7__map",
+    "level4_seed51760__Q10__map"
+   ]
+  },
+  {
+   "image": "level4_seed51760_cf__map",
+   "file": "img/level4_seed51760_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level4_seed51760_cf__Q1__map",
+    "level4_seed51760_cf__Q2__map"
+   ]
+  },
+  {
+   "image": "real_hyderabad_seed47441__satellite",
+   "file": "img/real_hyderabad_seed47441__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "real_hyderabad_seed47441__Q1__satellite",
+    "real_hyderabad_seed47441__Q2__satellite",
+    "real_hyderabad_seed47441__Q3__satellite",
+    "real_hyderabad_seed47441__Q5__satellite",
+    "real_hyderabad_seed47441__Q6__satellite",
+    "real_hyderabad_seed47441__Q7__satellite",
+    "real_hyderabad_seed47441__Q10__satellite"
+   ]
+  },
+  {
+   "image": "real_hyderabad_seed47441_cf__satellite",
+   "file": "img/real_hyderabad_seed47441_cf__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "real_hyderabad_seed47441_cf__Q1__satellite",
+    "real_hyderabad_seed47441_cf__Q2__satellite"
+   ]
+  },
+  {
+   "image": "level4_seed42095__thermal",
+   "file": "img/level4_seed42095__thermal.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level4_seed42095__Q8__thermal",
+    "level4_seed42095__Q9__thermal"
+   ]
+  },
+  {
+   "image": "level4_seed42095_cf__thermal",
+   "file": "img/level4_seed42095_cf__thermal.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level4_seed42095_cf__Q8__thermal",
+    "level4_seed42095_cf__Q9__thermal"
+   ]
+  },
+  {
+   "image": "level2_seed38986__map",
+   "file": "img/level2_seed38986__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level2_seed38986__Q1__map",
+    "level2_seed38986__Q2__map",
+    "level2_seed38986__Q3__map",
+    "level2_seed38986__Q4__map",
+    "level2_seed38986__Q5__map",
+    "level2_seed38986__Q6__map",
+    "level2_seed38986__Q7__map",
+    "level2_seed38986__Q10__map"
+   ]
+  },
+  {
+   "image": "level2_seed38986_cf__map",
+   "file": "img/level2_seed38986_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level2_seed38986_cf__Q7__map"
+   ]
+  },
+  {
+   "image": "level2_seed32231__satellite",
+   "file": "img/level2_seed32231__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level2_seed32231__Q1__satellite",
+    "level2_seed32231__Q2__satellite",
+    "level2_seed32231__Q3__satellite",
+    "level2_seed32231__Q5__satellite",
+    "level2_seed32231__Q6__satellite",
+    "level2_seed32231__Q7__satellite",
+    "level2_seed32231__Q10__satellite"
+   ]
+  },
+  {
+   "image": "level2_seed32231_cf__satellite",
+   "file": "img/level2_seed32231_cf__satellite.png",
+   "size": [
+    740,
+    768
+   ],
+   "tasks": [
+    "level2_seed32231_cf__Q7__satellite"
+   ]
+  },
+  {
+   "image": "level5_seed63319__map",
+   "file": "img/level5_seed63319__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level5_seed63319__Q1__map",
+    "level5_seed63319__Q2__map",
+    "level5_seed63319__Q3__map",
+    "level5_seed63319__Q4__map",
+    "level5_seed63319__Q5__map",
+    "level5_seed63319__Q6__map",
+    "level5_seed63319__Q7__map",
+    "level5_seed63319__Q10__map"
+   ]
+  },
+  {
+   "image": "level5_seed63319_cf__map",
+   "file": "img/level5_seed63319_cf__map.png",
+   "size": [
+    768,
+    768
+   ],
+   "tasks": [
+    "level5_seed63319_cf__Q1__map",
+    "level5_seed63319_cf__Q2__map"
+   ]
+  }
+ ]
+}

@@ -9,12 +9,12 @@ AI geospatial assistants are being built and used to answer exactly the question
 does a facility's wastewater go, which villages share its water source, where could a wetland clean it.
 
 **What we measured.** ThirstMap generates landscapes whose water flow is simulated, so every answer is known and is
-re-checked by an independent library. On the same 75 questions, small open models scored at chance level, Gemini
-Flash-Lite models scored about three times chance (49% and 40% against 14%, falling to chance when the image was hidden),
-and Gemini 3.5 Flash scored 76%. But every scene also has a *twin* that changes one thing (for example, the outfall moves
-to another stream) so that the correct answer changes. **The best model got both the original and its twin right in only
-3 of 7 pairs; every other model in none.** A tool that misses one pair in two is not yet reliably tracing where the
-water flows.
+re-checked by an independent library. On the same 83 questions, small open models scored at chance level, Gemini
+Flash-Lite models scored about three times chance (48% and 40% against 14%, falling to chance when the image was hidden),
+and Gemini 3.5 Flash scored 77%. But every scene also has a *twin* that changes one thing (for example, the outfall moves
+to another stream) so that the correct answer changes. **Over 19 such pairs, the best model got both the original and its
+twin right in only 6; the others in at most 2.** A tool that misses two pairs in three is not yet reliably tracing where
+the water flows.
 
 **Why it matters.** Each wrong answer has a cost on the ground. In our runs, real model errors would have left
 villages that receive warm wastewater unwarned, raised false alarms for villages on other streams, approved

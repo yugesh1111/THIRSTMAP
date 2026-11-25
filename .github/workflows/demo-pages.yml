@@ -4,7 +4,7 @@ name: demo-pages
 on:
   push:
     branches: [main]
-    paths: ["docs/demo/**", "human_eval/**", "docs/video/**"]
+    paths: ["docs/demo/**", "human_eval/**", "docs/video/**", "docs/leaderboard/**"]
   workflow_dispatch:
 
 permissions:
@@ -29,6 +29,7 @@ jobs:
           cp docs/video/thirstmap_demo.mp4 site/thirstmap_demo.mp4
           cp docs/video/thirstmap_film.mp4 docs/video/thirstmap_film_short.mp4 docs/video/*.vtt docs/video/*poster.jpg site/
           cp docs/video/watch.html site/film.html
+          cp -r docs/leaderboard site/leaderboard
           cd site
           git init -q -b gh-pages
           git config user.name "Amritha S"

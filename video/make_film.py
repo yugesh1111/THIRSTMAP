@@ -55,108 +55,145 @@ def numbers():
              ft_base=round(100 * FT["vs_chance"][fb]["correct"] / FT["vs_chance"][fb]["n"]),
              ft_tuned=round(100 * FT["vs_chance"][ftu]["correct"] / FT["vs_chance"][ftu]["n"]),
              ft_blind=round(100 * FT["overall"][ftu]["blind"]), steps=steps)
-    best = rows["gemini-3.5-flash"]
-    N["best_pairs"] = (round(best["pairs"]["pair_accuracy"] * best["pairs"]["pairs"]), best["pairs"]["pairs"])
-    N["other_pairs"] = sorted({round(v["pairs"].get("pair_accuracy", 0) * v["pairs"].get("pairs", 0))
-                               for k, v in rows.items() if k != "gemini-3.5-flash"})
+    X = ROOT / "results/frontier_pairs/summary.json"
+    P = json.loads(X.read_text()).get("counterfactual_pairs", {}) if X.exists() else {}
+    def pairs(m):
+        a = F["counterfactual_pairs"].get(m, {})
+        e = P.get(m, {})
+        k = round(a.get("pair_accuracy", 0) * a.get("pairs", 0)) + round(e.get("pair_accuracy", 0) * e.get("pairs", 0))
+        return k, a.get("pairs", 0) + e.get("pairs", 0)
+    best = next(m for m in F["vs_chance"] if m.split(":", 1)[1].split("@")[0] == "gemini-3.5-flash")
+    N["best_pairs"] = pairs(best)
+    N["other_pairs"] = sorted({pairs(m)[0] for m in F["vs_chance"] if m != best})
     return N
 
 
 def check(N):
-    """The narration states these; stop if the results say otherwise."""
+    """Sanity checks on the result files the narration is built from."""
     r = N["rows"]
-    assert N["n"] == 75 and N["chance"] == 14, (N["n"], N["chance"])
-    assert r["gemini-3.5-flash"]["acc"] == 76 and r["gemini-3.1-flash-lite"]["acc"] == 49 and r["gemini-3.5-flash-lite"]["acc"] == 40
-    assert round(100 * r["gemini-3.1-flash-lite"]["blind"]) == 13 and round(100 * r["gemini-3.5-flash-lite"]["blind"]) == 15
-    assert max(r[k]["acc"] for k in r if not k.startswith("gemini")) <= 14
-    assert N["best_pairs"] == (3, 7) and N["other_pairs"] == [0]
-    assert N["tasks"] == 5330 and N["errata"] == 431 and N["rebuilt"] == 1398
-    assert (N["ft_base"], N["ft_tuned"], N["ft_blind"]) == (10, 19, 11)
-    assert N["steps"]["answer"] == ["V4", "V7"] and N["steps"]["twin_answer"] == ["V4", "V6"]
+    for k in ("gemini-3.5-flash", "gemini-3.1-flash-lite", "gemini-3.5-flash-lite"):
+        assert k in r, k
+    assert r["gemini-3.1-flash-lite"]["blind"] is not None and r["gemini-3.5-flash-lite"]["blind"] is not None
+    assert N["best_pairs"][1] >= 7 and N["steps"]["answer"] and N["steps"]["twin_answer"]
+    assert (N["ft_base"], N["ft_tuned"], N["ft_blind"]) == (10, 19, 11)     # the teach line says ten, nineteen, eleven
 
 
-# ---------------------------------------------------------------- narration
-FULL = [
-    ("hook", "THE PITCH", ["AI is drinking India's water.",
-                           "We built ThirstMap to test whether AI can even see where that water goes."], {"punch": 1}),
-    ("problem", "IMPACT · 15%", [
-        "India's data centres use about 150 billion litres of water a year, heading for 358 billion by 2030.",
-        "Seventy percent of the capacity sits in Mumbai and Chennai, both short of water.",
-        "AI agents are being built to answer one question from maps and satellite images: where does the wastewater go?"],
-     {"t2": 1, "q": 2}),
-    ("factory", "IMPLEMENTATION · 25%", [
-        "ThirstMap is a visual task factory.",
-        "Code builds a landscape, simulates where every drop of water flows, places a data centre, villages and traps, and traces the answer downhill.",
-        "So it knows every answer before it asks.",
-        "Each scene becomes a satellite image, a topographic map and a thermal image."],
-     {"row": 1, "key": 2, "styles": 3}),
-    ("variation", "VARIATION · 20%", [
-        "Ten reasoning skills, and none of them is counting.",
-        "Five difficulty levels, real terrain for four Indian data-centre cities, and monsoon, haze and coarse-sensor versions whose answers must not change.",
-        ("Five thousand three hundred and thirty tasks in all.", "Five thousand three hundred and thirty tasks in all.")],
-     {"grid": 1, "count": 2}),
-    ("twins", "ORIGINALITY · 15%", [
-        "Every scene also gets a twin.",
-        "One small change, like moving the outfall to another stream, flips the answer.",
-        "A model that answers from habit gets one half wrong."], {"twin": 1, "habit": 2}),
-    ("validity", "VALIDITY · 25%", [
-        "Judges should not have to trust us.",
-        "An independent hydrology library recomputes every answer, and a question it disagrees with is dropped, never edited.",
-        "We check that the answer is visible in the actual pixels.",
-        "We even audited ourselves: four hundred and thirty-one unfair tasks found, excluded and published.",
-        "And every audited image rebuilds byte for byte from its seed."],
-     {"a": 1, "b": 2, "c": 3, "d": 4}),
-    ("terminal", "IMPLEMENTATION · 25%", [
-        "Anyone can run it.",
-        "Install it with pip, and one command builds a scene and its twin, and runs every check.",
-        "Every check you see here passed, or the question would have been dropped."], {"run": 1}),
-    ("results", "FINDINGS", [
-        "We asked open models and Gemini the same seventy-five questions.",
-        "Open models score at the guessing level of fourteen percent.",
-        "Gemini Flash-Lite gets forty to forty-nine percent, and drops back to guessing when we hide the image, so it really reads the map.",
-        "Gemini 3.5 Flash gets seventy-six percent."], {"bars": 0, "open": 1, "ghost": 2, "best": 3}),
-    ("catch", "FINDINGS · ORIGINALITY", [
-        "But the twins catch even the best model.",
-        "Here the cooling water is cooler, so no point is above three degrees any more.",
-        "Gemini gives exactly the same answer: two false heat alarms.",
-        "It got both halves right in only three of seven pairs. Every other model, none."],
-     {"twinside": 1, "same": 2, "score": 3}),
-    ("demo", "DEMO · SCORING", [
-        "Our live demo scores every real reply automatically, right or wrong, and names the trap it fell into.",
-        "Show the answer key, and see where the water really goes.",
-        "Or answer the questions yourself, by the same rules."], {"key": 1, "try": 2}),
-    ("teach", "FINDINGS", [
-        "The data can also teach: fine-tuning a small model on unseen scenes lifted it from ten to nineteen percent, and only with the image.",
-        "And people can take the same test online."], {"human": 1}),
-    ("ship", "IMPLEMENTATION · 25%", [
-        "There is a Colab notebook, forty-eight tests, and four automatic checks on every change.",
-        "The frontier check fits a free tier: one request per image, about three hundred tokens per answer."],
-     {"economy": 1}),
-    ("close", "IMPACT · 15%", [
-        "ThirstMap: a factory of visual tasks with verified answers, and a hard test for AI.",
-        "Before we trust AI with India's water, it should pass it."], {"last": 1}),
-]
+# ---------------------------------------------------------------- narration (numbers from the result files)
+ONES = "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen".split()
+TENS = "_ _ twenty thirty forty fifty sixty seventy eighty ninety".split()
 
-SHORT = [
-    ("hook", "THE PITCH", ["AI is drinking India's water.",
-                           "ThirstMap tests whether AI can see where that water goes."], {"punch": 1}),
-    ("factory", "IMPLEMENTATION · 25%", [
-        "Code builds a landscape and simulates its water, so it knows every answer before it asks.",
-        "Each scene becomes a satellite image, a map and a thermal image."], {"row": 0, "key": 0, "styles": 1}),
-    ("twins", "ORIGINALITY · 15%", ["Every scene gets a twin: one small change that flips the answer."], {}),
-    ("validity", "VALIDITY · 25%", ["An independent library re-checks every answer, and we published our own audit."], {}),
-    ("results", "FINDINGS", [
-        "Open models guess.",
-        "Gemini Flash-Lite reads the map, and falls back to guessing without the image.",
-        "Gemini 3.5 Flash gets seventy-six percent."], {"bars": 0, "open": 0, "ghost": 1, "best": 2}),
-    ("catch", "FINDINGS · ORIGINALITY", [
-        "But the twins catch it.",
-        "Cool the water, and it gives the same answer: two false heat alarms.",
-        "Both halves right in only three of seven pairs."], {"twinside": 1, "same": 1, "score": 2}),
-    ("close", "IMPACT · 15%", [
-        "Five thousand tasks, a live demo, and everything open.",
-        "Before we trust AI with India's water, it should pass this test."], {"last": 1}),
-]
+
+def words(n):
+    n = int(n)
+    if n < 20:
+        return ONES[n]
+    if n < 100:
+        return TENS[n // 10] + ("-" + ONES[n % 10] if n % 10 else "")
+    if n < 1000:
+        return ONES[n // 100] + " hundred" + (" and " + words(n % 100) if n % 100 else "")
+    return words(n // 1000) + " thousand" + (" " + words(n % 1000) if n % 1000 >= 100 else " and " + words(n % 1000) if n % 1000 else "")
+
+
+def cap(x):
+    return x[:1].upper() + x[1:]
+
+
+def full_script(N):
+    r, best = N["rows"], N["rows"]["gemini-3.5-flash"]
+    fl = sorted(r[k]["acc"] for k in ("gemini-3.1-flash-lite", "gemini-3.5-flash-lite"))
+    k, n = N["best_pairs"]
+    others = "Every other model, none." if N["other_pairs"] == [0] else f"The others, at most {words(max(N['other_pairs']))}."
+    return [
+        ("hook", "THE PITCH", ["AI is drinking India's water.",
+                               "We built ThirstMap to test whether AI can even see where that water goes."], {"punch": 1}),
+        ("problem", "IMPACT · 15%", [
+            "India's data centres use about 150 billion litres of water a year, heading for 358 billion by 2030.",
+            "Seventy percent of the capacity sits in Mumbai and Chennai, both short of water.",
+            "AI agents are being built to answer one question from maps and satellite images: where does the wastewater go?"],
+         {"t2": 1, "q": 2}),
+        ("factory", "IMPLEMENTATION · 25%", [
+            "ThirstMap is a visual task factory.",
+            "Code builds a landscape, simulates where every drop of water flows, places a data centre, villages and traps, and traces the answer downhill.",
+            "So it knows every answer before it asks.",
+            "Each scene becomes a satellite image, a topographic map and a thermal image."],
+         {"row": 1, "key": 2, "styles": 3}),
+        ("variation", "VARIATION · 20%", [
+            "Ten reasoning skills, and none of them is counting.",
+            "Five difficulty levels, real terrain for four Indian data-centre cities, and monsoon, haze and coarse-sensor versions whose answers must not change.",
+            cap(words(N["tasks"])) + " tasks in all."],
+         {"grid": 1, "count": 2}),
+        ("twins", "ORIGINALITY · 15%", [
+            "Every scene also gets a twin.",
+            "One small change, like moving the outfall to another stream, flips the answer.",
+            "A model that answers from habit gets one half wrong."], {"twin": 1, "habit": 2}),
+        ("validity", "VALIDITY · 25%", [
+            "Judges should not have to trust us.",
+            "An independent hydrology library recomputes every answer, and a question it disagrees with is dropped, never edited.",
+            "We check that the answer is visible in the actual pixels.",
+            f"We even audited ourselves: {words(N['errata'])} unfair tasks found, excluded and published.",
+            "And every audited image rebuilds byte for byte from its seed."],
+         {"a": 1, "b": 2, "c": 3, "d": 4}),
+        ("terminal", "IMPLEMENTATION · 25%", [
+            "Anyone can run it.",
+            "Install it with pip, and one command builds a scene and its twin, and runs every check.",
+            "Every check you see here passed, or the question would have been dropped."], {"run": 1}),
+        ("results", "FINDINGS", [
+            f"We asked open models and Gemini the same {words(N['n'])} questions.",
+            f"Open models score at the guessing level of {words(N['chance'])} percent.",
+            f"Gemini Flash-Lite gets {words(fl[0])} to {words(fl[1])} percent, and drops back to guessing when we hide the image, so it really reads the map.",
+            f"Gemini 3.5 Flash gets {words(best['acc'])} percent."], {"bars": 0, "open": 1, "ghost": 2, "best": 3}),
+        ("catch", "FINDINGS · ORIGINALITY", [
+            "But the twins catch even the best model.",
+            "Here the cooling water is cooler, so no point is above three degrees any more.",
+            "Gemini gives exactly the same answer: two false heat alarms.",
+            f"Over {words(n)} pairs, it got both halves right in only {words(k)}. {others}"],
+         {"twinside": 1, "same": 2, "score": 3}),
+        ("demo", "DEMO · SCORING", [
+            "Our live demo scores every real reply automatically, right or wrong, and names the trap it fell into.",
+            "Show the answer key, and see where the water really goes.",
+            "Or answer the questions yourself, by the same rules."], {"key": 1, "try": 2}),
+        ("board", "THE PRODUCT", [
+            "And ThirstMap is a benchmark anyone can use.",
+            "The public leaderboard has a report card for every model: skills, pairs, traps, and the no-image check.",
+            "Download the question pack, run any model, drop its replies on the page, and get the same report card, scored in your browser."],
+         {"card": 1, "drop": 2}),
+        ("teach", "FINDINGS", [
+            "The data can also teach: fine-tuning a small model on unseen scenes lifted it from ten to nineteen percent, and only with the image.",
+            "And people can take the same test online."], {"human": 1}),
+        ("ship", "IMPLEMENTATION · 25%", [
+            "There is a Colab notebook, a pip-installable command, and automatic checks on every change.",
+            "The frontier check fits a free tier: one request per image, about three hundred tokens per answer."],
+         {"economy": 1}),
+        ("close", "IMPACT · 15%", [
+            "ThirstMap: a factory of visual tasks with verified answers, and a hard test for AI.",
+            "Before we trust AI with India's water, it should pass it."], {"last": 1}),
+    ]
+
+
+def short_script(N):
+    best = N["rows"]["gemini-3.5-flash"]
+    k, n = N["best_pairs"]
+    return [
+        ("hook", "THE PITCH", ["AI is drinking India's water.",
+                               "ThirstMap tests whether AI can see where that water goes."], {"punch": 1}),
+        ("factory", "IMPLEMENTATION · 25%", [
+            "Code builds a landscape and simulates its water, so it knows every answer before it asks.",
+            "Each scene becomes a satellite image, a map and a thermal image."], {"row": 0, "key": 0, "styles": 1}),
+        ("twins", "ORIGINALITY · 15%", ["Every scene gets a twin: one small change that flips the answer."], {}),
+        ("validity", "VALIDITY · 25%", ["An independent library re-checks every answer, and we published our own audit."], {}),
+        ("results", "FINDINGS", [
+            "Open models guess.",
+            "Gemini Flash-Lite reads the map, and falls back to guessing without the image.",
+            f"Gemini 3.5 Flash gets {words(best['acc'])} percent."], {"bars": 0, "open": 0, "ghost": 1, "best": 2}),
+        ("catch", "FINDINGS · ORIGINALITY", [
+            "But the twins catch it.",
+            "Cool the water, and it gives the same answer: two false heat alarms.",
+            f"Both halves right in only {words(k)} of {words(n)} pairs."], {"twinside": 1, "same": 1, "score": 2}),
+        ("board", "THE PRODUCT", ["Score your own model on the public leaderboard, right in the browser."], {"card": 0, "drop": 0}),
+        ("close", "IMPACT · 15%", [
+            "Five thousand tasks, a live demo, and everything open.",
+            "Before we trust AI with India's water, it should pass this test."], {"last": 1}),
+    ]
 
 
 # ---------------------------------------------------------------- text to speech (cached per sentence)
@@ -244,7 +281,7 @@ def prep_assets(out):
         put(ROOT / "dataset/variants/level1_seed14596" / f"{v}.png", f"look_{v}.jpg", 420)
     put(ROOT / "docs/demo/analysis/pair__level3_seed34416__Q8__thermal__gemini-3.5-flash.jpg", "catch.jpg", 1600)
     for f, cb in [("demo_task.jpg", 0), ("demo_task_key.jpg", 0), ("demo_try.jpg", 0), ("human_test.jpg", 0),
-                  ("nb_styles.jpg", 0), ("gen_map.jpg", 0)]:
+                  ("nb_styles.jpg", 0), ("gen_map.jpg", 0), ("lb_board.jpg", 0), ("lb_card.jpg", 0)]:
         put(cap / f, f, 1900, cb)
     import qrcode
     q = qrcode.QRCode(border=2, box_size=10)
@@ -411,7 +448,7 @@ def scene_html(sid, N):
   <div class="sl" data-at="0.6"><span class="ok">✓</span> Original: water above 3 °C at M1, M3. Gemini 3.5 Flash says <b>M1, M3</b>.</div>
   <div class="sl" data-at="@twinside"><span class="no">✗</span> Twin: cooling water is cooler, so <b>no point</b> is above 3 °C.</div>
   <div class="sl" data-at="@same">Gemini says <b>M1, M3</b> again: two false heat alarms.</div>
-  <div class="score" data-at="@score"><b>{N['best_pairs'][0]} of {N['best_pairs'][1]}</b><span>pairs right on both halves by the best model; every other model: 0</span></div>
+  <div class="score" data-at="@score"><b>{N['best_pairs'][0]} of {N['best_pairs'][1]}</b><span>pairs right on both halves by the best model; {'every other model: 0' if N['other_pairs'] == [0] else f'the others: at most {max(N["other_pairs"])}'}</span></div>
 </div>'''
     if sid == "demo":
         return f'''
@@ -429,6 +466,15 @@ def scene_html(sid, N):
   <div class="co" data-at="@key+0.3" data-out="@try">answer key traced by the simulation</div>
   <div class="co" data-at="@try+0.3">your answer, scored by the same rules, beside the best model</div>
 </div>'''
+    if sid == "board":
+        return f'''
+<div class="box" style="left:120px;top:140px;width:1680px">
+  <div class="eyebrow" data-at="0.1">The product · yugesh1111.github.io/THIRSTMAP/leaderboard</div>
+  <div class="h" data-at="0.2">A leaderboard anyone can join</div>
+</div>
+<img class="lb1" src="assets/lb_board.jpg" data-at="0.4" alt="">
+<img class="lb2" src="assets/lb_card.jpg" data-at="@card" alt="">
+<div class="lb3 panel" data-at="@drop"><b>Score your own model</b><span>download the question pack → run any model → drop its replies on the page</span></div>'''
     if sid == "teach":
         return f'''
 <div class="box" style="left:120px;top:140px;width:1680px">
@@ -555,6 +601,10 @@ CSS = r"""
 .shot{position:absolute;inset:0;width:1500px;height:auto;max-height:610px;object-fit:contain;object-position:top;border-radius:14px;background:#fff}
 .callouts{position:absolute;left:0;right:0;top:248px}
 .co{position:absolute;right:120px;font:600 24px Inter;color:var(--bg);background:var(--waste);padding:8px 18px;border-radius:10px}
+.lb1{position:absolute;left:120px;top:268px;width:890px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.45)}
+.lb2{position:absolute;left:1040px;top:268px;width:760px;border-radius:14px;box-shadow:0 20px 60px rgba(0,0,0,.55)}
+.lb3{position:absolute;left:120px;top:818px;width:1680px;display:flex;align-items:center;gap:22px;padding:14px 22px}
+.lb3 b{font:700 27px Grotesk;color:var(--water);white-space:nowrap}.lb3 span{font:500 24px Inter}
 .teach{position:absolute;left:120px;top:300px;width:1680px;display:grid;grid-template-columns:640px 1fr;gap:40px;align-items:start}
 .panel{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:26px;margin:0}
 .tp span,.tp figcaption{font:400 24px/1.45 Inter;color:var(--mute)}
@@ -648,7 +698,7 @@ def main():
     check(N)
     out = Path(a.out or ROOT / "video/build" / a.film)
     out.mkdir(parents=True, exist_ok=True)
-    spec = FULL if a.film == "full" else SHORT
+    spec = full_script(N) if a.film == "full" else short_script(N)
     voice = Voice(ROOT / "video/build/tts_cache", a.voice, a.speed)
     scenes, clips, total = timeline(spec, voice)
     prep_assets(out)
