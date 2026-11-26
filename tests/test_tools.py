@@ -71,3 +71,12 @@ def test_cli_lists_and_dispatches(capsys, tmp_path, monkeypatch):
     with pytest.raises(SystemExit) as e:                 # argparse --help exits 0 after printing the options
         cli.main(["generate", "--help"])
     assert e.value.code == 0 and "--level" in capsys.readouterr().out
+
+
+def test_demo_results_without_open_models(tmp_path):
+    """run_all.sh passes results/offline_baselines (mock models only) to build_demo.py; that must not crash."""
+    from build_demo import results_html
+    vc = {"correct": 5, "n": 10, "chance": 0.1, "p_value": 0.01}
+    (tmp_path / "summary.json").write_text(json.dumps({"models": ["mock:oracle", "mock:random"],
+                                                       "vs_chance": {"mock:oracle": vc, "mock:random": vc}}))
+    assert "Open models, main run: 0 questions" in results_html(tmp_path, None)

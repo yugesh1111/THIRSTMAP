@@ -120,7 +120,7 @@ def results_html(run, finetune):
                          p=vc["p_value"], blind=S["overall"][m]["blind"],
                          pair=S["counterfactual_pairs"].get(m, {}).get("pair_accuracy"), read=read))
     rows.sort(key=lambda r: -r["acc"])
-    top = max(0.25, max(r["acc"] for r in rows) * 1.25)
+    top = max([0.25] + [r["acc"] * 1.25 for r in rows])     # a run with no hf: models (run_all.sh --quick) has no rows
     body = []
     for r in rows:
         w, c = 100 * r["acc"] / top, 100 * r["chance"] / top
