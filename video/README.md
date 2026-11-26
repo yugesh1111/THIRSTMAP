@@ -16,10 +16,29 @@ How they are made, so they can be remade after any new result:
 4. `render_film.js` draws every frame at an exact time (no screen recording, so no dropped frames) and encodes it with
    the narration (H.264, 1080p, 30 fps, loudness-normalised AAC).
 
+## Remaking the films from a fresh clone
+
+The narration needs its own Python 3.12 environment (PyTorch and spaCy, about 1 GB), kept apart from the project's.
+Versions are pinned in `requirements-video.txt` (Python) and `package.json` (Playwright 1.49.1, Chromium 131).
+
 ```bash
-python video/make_film.py --film full      # or --film short
-node video/render_film.js video/build/full docs/video/thirstmap_film.mp4
-node video/render_film.js video/build/full --preview 10,60,120 /tmp/frames   # still frames to check
+uv venv --python 3.12 ../.venv-video
+VIRTUAL_ENV=../.venv-video uv pip install -r video/requirements-video.txt
+(cd video && npm ci && npx playwright install chromium)        # ffmpeg must be on PATH too
+python video/film_scenes.py                                     # the 11 dataset scenes the films show (~3 min)
+../.venv-video/bin/python video/make_film.py --film full --test-python python   # or --film short
+node video/render_film.js video/build/full docs/video/thirstmap_film.mp4         # ~15 min on a laptop
+node video/render_film.js video/build/full --preview 10,60,120 /tmp/frames      # still frames to check first
 ```
+
+- `film_scenes.py` and `make_film.py --test-python` run with the project's own environment (the one with
+  `requirements-lock.txt` installed). `--test-python` names that interpreter, so the film can say how many tests pytest
+  collects instead of a typed-in number.
+- `film_scenes.py` rebuilds dataset v1.0 scenes from their seeds into `video/build/dataset/`, so the 2.1 GB release is
+  not needed. It needs the DejaVu fonts (Debian: `fonts-dejavu-core`; macOS: `brew install --cask font-dejavu`). On macOS
+  about 1% of pixels differ from the release (text anti-aliasing); the scenes and answers are the same.
+- The first `make_film.py` run downloads Kokoro-82M (about 330 MB) from Hugging Face; every sentence is then cached in
+  `video/build/tts_cache/`. With the same versions, the narration and subtitle timings come out identical to the published film.
+- Change the words in `full_script()` / `short_script()`, or the scenes in `page()`; numbers come from the result files.
 
 Fonts: Inter, Space Grotesk, JetBrains Mono (SIL Open Font License, `fonts/`).

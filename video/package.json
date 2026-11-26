@@ -1,0 +1,8 @@
+{
+  "name": "thirstmap-video",
+  "private": true,
+  "description": "Renders the ThirstMap films frame by frame (see README.md)",
+  "dependencies": {
+    "playwright": "1.49.1"
+  }
+}

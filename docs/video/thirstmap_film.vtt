@@ -33,98 +33,98 @@ Ten reasoning skills, and none of them is counting.
 00:00:57.815 --> 00:01:07.590
 Five difficulty levels, real terrain for four Indian data-centre cities, and monsoon, haze and coarse-sensor versions whose answers must not change.
 
-00:01:07.710 --> 00:01:11.310
-Five thousand three hundred and thirty tasks in all.
+00:01:07.710 --> 00:01:11.635
+Five thousand seven hundred and sixty-one tasks in all.
 
-00:01:12.410 --> 00:01:15.035
+00:01:12.735 --> 00:01:15.360
 Every scene also gets a twin.
 
-00:01:15.155 --> 00:01:20.355
+00:01:15.480 --> 00:01:20.680
 One small change, like moving the outfall to another stream, flips the answer.
 
-00:01:20.475 --> 00:01:24.200
+00:01:20.800 --> 00:01:24.525
 A model that answers from habit gets one half wrong.
 
-00:01:25.300 --> 00:01:27.850
+00:01:25.625 --> 00:01:28.175
 Judges should not have to trust us.
 
-00:01:27.970 --> 00:01:35.795
+00:01:28.295 --> 00:01:36.120
 An independent hydrology library recomputes every answer, and a question it disagrees with is dropped, never edited.
 
-00:01:35.915 --> 00:01:39.690
+00:01:36.240 --> 00:01:40.015
 We check that the answer is visible in the actual pixels.
 
-00:01:39.810 --> 00:01:46.310
+00:01:40.135 --> 00:01:46.635
 We even audited ourselves: four hundred and thirty-one unfair tasks found, excluded and published.
 
-00:01:46.430 --> 00:01:50.580
+00:01:46.755 --> 00:01:50.905
 And every audited image rebuilds byte for byte from its seed.
 
-00:01:51.680 --> 00:01:53.655
+00:01:52.005 --> 00:01:53.980
 Anyone can run it.
 
-00:01:53.775 --> 00:01:59.600
+00:01:54.100 --> 00:01:59.925
 Install it with pip, and one command builds a scene and its twin, and runs every check.
 
-00:01:59.720 --> 00:02:03.870
+00:02:00.045 --> 00:02:04.195
 Every check you see here passed, or the question would have been dropped.
 
-00:02:04.970 --> 00:02:09.545
+00:02:05.295 --> 00:02:09.870
 We asked open models and Gemini the same eighty-three questions.
 
-00:02:09.665 --> 00:02:13.740
+00:02:09.990 --> 00:02:14.065
 Open models score at the guessing level of fourteen percent.
 
-00:02:13.860 --> 00:02:21.910
+00:02:14.185 --> 00:02:22.235
 Gemini Flash-Lite gets forty to forty-eight percent, and drops back to guessing when we hide the image, so it really reads the map.
 
-00:02:22.030 --> 00:02:26.130
+00:02:22.355 --> 00:02:26.455
 Gemini 3.5 Flash gets seventy-seven percent.
 
-00:02:27.230 --> 00:02:30.105
+00:02:27.555 --> 00:02:30.430
 But the twins catch even the best model.
 
-00:02:30.225 --> 00:02:35.250
+00:02:30.550 --> 00:02:35.575
 Here the cooling water is cooler, so no point is above three degrees any more.
 
-00:02:35.370 --> 00:02:39.845
+00:02:35.695 --> 00:02:40.170
 Gemini gives exactly the same answer: two false heat alarms.
 
-00:02:39.965 --> 00:02:45.465
+00:02:40.290 --> 00:02:45.790
 Over nineteen pairs, it got both halves right in only six. The others, at most two.
 
-00:02:46.565 --> 00:02:53.465
+00:02:46.890 --> 00:02:53.790
 Our live demo scores every real reply automatically, right or wrong, and names the trap it fell into.
 
-00:02:53.585 --> 00:02:57.335
+00:02:53.910 --> 00:02:57.660
 Show the answer key, and see where the water really goes.
 
-00:02:57.455 --> 00:03:00.930
+00:02:57.780 --> 00:03:01.255
 Or answer the questions yourself, by the same rules.
 
-00:03:02.030 --> 00:03:05.480
+00:03:02.355 --> 00:03:05.805
 And ThirstMap is a benchmark anyone can use.
 
-00:03:05.600 --> 00:03:12.575
+00:03:05.925 --> 00:03:12.900
 The public leaderboard has a report card for every model: skills, pairs, traps, and the no-image check.
 
-00:03:12.695 --> 00:03:20.620
+00:03:13.020 --> 00:03:20.945
 Download the question pack, run any model, drop its replies on the page, and get the same report card, scored in your browser.
 
-00:03:21.720 --> 00:03:30.570
+00:03:22.045 --> 00:03:30.895
 The data can also teach: fine-tuning a small model on unseen scenes lifted it from ten to nineteen percent, and only with the image.
 
-00:03:30.690 --> 00:03:33.665
+00:03:31.015 --> 00:03:33.990
 And people can take the same test online.
 
-00:03:34.765 --> 00:03:40.865
+00:03:35.090 --> 00:03:41.190
 There is a Colab notebook, a pip-installable command, and automatic checks on every change.
 
-00:03:40.985 --> 00:03:47.510
+00:03:41.310 --> 00:03:47.835
 The frontier check fits a free tier: one request per image, about three hundred tokens per answer.
 
-00:03:48.610 --> 00:03:54.935
+00:03:48.935 --> 00:03:55.260
 ThirstMap: a factory of visual tasks with verified answers, and a hard test for AI.
 
-00:03:55.055 --> 00:03:59.030
+00:03:55.380 --> 00:03:59.355
 Before we trust AI with India's water, it should pass it.

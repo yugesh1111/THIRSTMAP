@@ -19,3 +19,4 @@ results/ci*/
 # packaging
 build/
 *.egg-info/
+video/node_modules/

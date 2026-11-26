@@ -25,11 +25,10 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
 | **Try it yourself** | https://yugesh1111.github.io/THIRSTMAP/human/ | the human test: 32 questions Gemini and the open models also answered, including all 7 before-and-after pairs |
 | **Run it** | [Colab notebook](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) (3 minutes, no key) · `pip install` → `thirstmap` command · `./run_all.sh --quick` | build a scene and its twin, answer a question yourself, score models; or the whole pipeline |
-| **90-second demo walkthrough** | https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4 · [`docs/video/thirstmap_demo.mp4`](docs/video/thirstmap_demo.mp4) | the whole story, captioned |
 
 | Judging criterion | Where ThirstMap answers it |
 |---|---|
-| Implementation (25%) | One-command pipeline from terrain to report; 49 tests and CI; `pip install` gives a `thirstmap` command; a public leaderboard where anyone scores their own model in the browser; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
+| Implementation (25%) | One-command pipeline from terrain to report; 50 tests and CI; `pip install` gives a `thirstmap` command; a public leaderboard where anyone scores their own model in the browser; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
 | Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; two independent scorer implementations (Python and the browser) agree on all 37,516 replies; exact inputs published with checksums |
 | Variation (20%) | 10 reasoning skills and no counting; satellite, map and thermal styles; 5 difficulty levels; real terrain for 4 cities; before-and-after twins; season, haze and sensor variants |
 | Originality (15%) | Twins with one minimal change that must flip the answer (the best model gets both halves of only 6 of 19); the consequence of every model error drawn on the image it saw |
@@ -208,7 +207,7 @@ Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 49 tests
+python3 -m pytest -q                                    # 50 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4

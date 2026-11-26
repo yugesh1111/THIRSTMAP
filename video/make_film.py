@@ -34,6 +34,16 @@ def say(text):
 
 
 # ---------------------------------------------------------------- numbers, read from the result files
+def count_tests(python):
+    """Number of tests pytest collects (the film shows it), run with the project's own interpreter."""
+    import subprocess
+    r = subprocess.run([python, "-m", "pytest", "--collect-only", "-q"], cwd=ROOT, capture_output=True, text=True)
+    m = re.search(r"(\d+) tests? collected", r.stdout)
+    if not m:
+        raise SystemExit(f"could not count the tests with {python} (pass --test-python): {r.stdout[-300:]}{r.stderr[-300:]}")
+    return int(m.group(1))
+
+
 def numbers():
     F = json.loads((ROOT / "results/frontier/summary.json").read_text())
     rows = {m.split(":", 1)[1].split("@")[0]: dict(acc=round(100 * v["correct"] / v["n"]), n=v["n"],
@@ -49,7 +59,7 @@ def numbers():
     steps = json.loads((ROOT / "docs/pipeline/steps.json").read_text())
     audit = (ROOT / "docs/AUDIT.md").read_text()
     rebuilt = re.search(r"pixel-identical to the published image: \*\*(\d+)\*\*", audit).group(1)
-    N = dict(rows=rows, chance=chance, n=next(iter(rows.values()))["n"], tasks=man["n_tasks"] - errata,
+    N = dict(rows=rows, chance=chance, n=next(iter(rows.values()))["n"], tasks=man["n_tasks"], scored=man["n_tasks"] - errata,
              scenes=man["n_scenes"], pairs=man["counterfactual_pairs"]["pairs"], errata=errata,
              errata_pct=round(100 * errata / man["n_tasks"], 1), rebuilt=int(rebuilt),
              ft_base=round(100 * FT["vs_chance"][fb]["correct"] / FT["vs_chance"][fb]["n"]),
@@ -191,7 +201,7 @@ def short_script(N):
             f"Both halves right in only {words(k)} of {words(n)} pairs."], {"twinside": 1, "same": 1, "score": 2}),
         ("board", "THE PRODUCT", ["Score your own model on the public leaderboard, right in the browser."], {"card": 0, "drop": 0}),
         ("close", "IMPACT · 15%", [
-            "Five thousand tasks, a live demo, and everything open.",
+            f"Over {words(N['tasks'] // 100 * 100)} tasks, a live demo, and everything open.",
             "Before we trust AI with India's water, it should pass this test."], {"last": 1}),
     ]
 
@@ -265,7 +275,9 @@ def prep_assets(out):
             im = im.crop((0, 0, im.width, im.height - crop_bottom))
         im.thumbnail((size, size))
         im.save(a / name, quality=90)
-    ds = ROOT / "dataset/scenes"
+    dsr = ROOT / "video/build/dataset"          # scenes rebuilt by video/film_scenes.py, else the full dataset release
+    dsr = dsr if (dsr / "scenes").exists() else ROOT / "dataset"
+    ds = dsr / "scenes"
     put(ds / "level4_seed48947/satellite_reveal.png", "hero.jpg", 1200)
     for f in ["1_terrain.png", "2_water.png", "3_scene.png", "4_answer.png", "5_check.png"]:
         put(ROOT / "docs/pipeline" / f, f.replace(".png", ".jpg"), 640)
@@ -278,7 +290,7 @@ def prep_assets(out):
         put(ds / f"real_{c}" / "satellite.png", f"real_{c.split('_seed')[0]}.jpg", 420)
     put(ds / "level1_seed14596/satellite.png", "look_dry.jpg", 420)
     for v in ["monsoon", "haze", "coarse"]:
-        put(ROOT / "dataset/variants/level1_seed14596" / f"{v}.png", f"look_{v}.jpg", 420)
+        put(dsr / "variants/level1_seed14596" / f"{v}.png", f"look_{v}.jpg", 420)
     put(ROOT / "docs/demo/analysis/pair__level3_seed34416__Q8__thermal__gemini-3.5-flash.jpg", "catch.jpg", 1600)
     for f, cb in [("demo_task.jpg", 0), ("demo_task_key.jpg", 0), ("demo_try.jpg", 0), ("human_test.jpg", 0),
                   ("nb_styles.jpg", 0), ("gen_map.jpg", 0), ("lb_board.jpg", 0), ("lb_card.jpg", 0)]:
@@ -385,7 +397,7 @@ def scene_html(sid, N):
 <div class="cards4">
   <div class="vc" data-at="@a"><img src="assets/5_check.jpg" alt=""><b>{st['pysheds_agree_pct']}% agree</b><span>an independent library (pysheds) recomputes the flow: same answer to {st['answers_identical']} questions</span></div>
   <div class="vc" data-at="@b"><img src="assets/7_pixels.jpg" alt=""><b>{st['pixel_cells']} of {st['pixel_cells']} visible</b><span>the answer path is checked in the pixels the model sees; labels must be readable</span></div>
-  <div class="vc num" data-at="@c"><div class="n" data-anim-n="count" data-to="{N['errata']}" data-at2="@c">{N['errata']}</div><b>unfair tasks excluded</b><span>{N['errata_pct']}% found by our own audit, listed in errata.jsonl, left out of every score</span></div>
+  <div class="vc num" data-at="@c"><div class="n" data-anim-n="count" data-to="{N['errata']}" data-at2="@c">{N['errata']}</div><b>unfair tasks excluded</b><span>{N['errata_pct']}% found by our own audit, listed in errata.jsonl, left out of every score: {N['scored']:,} tasks are scored</span></div>
   <div class="vc num" data-at="@d"><div class="n">{N['rebuilt']:,}</div><b>images rebuilt byte for byte</b><span>from their seeds; evaluated inputs published with SHA-256. Real drainage matches real water 1.3–4.2× chance.</span></div>
 </div>'''
     if sid == "terminal":
@@ -393,7 +405,8 @@ def scene_html(sid, N):
         gen = [g for g in gen if g.strip() and not g.startswith(("real", "user", "sys"))]
         def short(line):
             line = re.sub(r"np\.float64\(([\d.]+)\)", r"\1", line)
-            return line if len(line) < 92 else line[:89] + "…"
+            line = re.sub(r"\{'(.*)\}$", r"\1", line).replace("'", "")   # PASS  V5_elevation_margin  min_gap_m: 3.59
+            return line if len(line) < 66 else line[:63] + "…"
         out_lines = "".join(f'<div class="{"ok" if "PASS" in g else "dim"}">{E(short(g))}</div>' for g in gen)
         cmd1 = "git clone --depth 1 --filter=blob:none --sparse …/THIRSTMAP && git -C THIRSTMAP sparse-checkout set thirstmap"
         return f'''
@@ -496,7 +509,7 @@ def scene_html(sid, N):
 </div>
 <div class="ship">
   <figure class="panel" data-at="0.3"><img src="assets/nb_styles.jpg" alt=""><figcaption>Colab quickstart: builds a scene in ~3 minutes, no key</figcaption></figure>
-  <div class="panel cip" data-at="0.5"><div class="cih">GitHub Actions, on every push</div>{ci}<div class="cin">48 tests · CI green</div></div>
+  <div class="panel cip" data-at="0.5"><div class="cih">GitHub Actions, on every push</div>{ci}<div class="cin">{N['n_tests']} tests · CI green</div></div>
   <div class="panel econ" data-at="@economy"><b>1</b><span>request per image</span><b>~300</b><span>tokens per answer</span><b>18</b><span>requests per model: fits a free daily tier</span></div>
 </div>'''
     if sid == "close":
@@ -573,10 +586,11 @@ CSS = r"""
 .vc img{width:100%;height:330px;object-fit:cover;border-radius:12px}
 .vc b{font:700 32px Grotesk}.vc span{font:400 22px/1.4 Inter;color:var(--mute)}
 .vc.num{justify-content:center}.vc .n{font:700 140px/1 Grotesk;color:var(--water);font-variant-numeric:tabular-nums}
-.term{position:absolute;left:120px;top:280px;width:1140px;height:612px;background:#07131B;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.term{position:absolute;left:120px;top:268px;width:1140px;height:664px;background:#07131B;border:1px solid var(--line);border-radius:16px;overflow:hidden}
 .term .bar{height:44px;background:#0E2230;display:flex;align-items:center;gap:10px;padding:0 18px}
 .term .bar i{width:14px;height:14px;border-radius:50%;background:#2C4B5E;display:block}.term .bar span{margin-left:12px;color:var(--mute);font:500 18px Inter}
-.tbody{position:absolute;top:44px;left:0;right:0;bottom:0;overflow:hidden;font:400 15.5px/1.4 Mono;color:#D9E7EE;white-space:pre-wrap;word-break:break-all}
+.tbody{position:absolute;top:44px;left:0;right:0;bottom:0;overflow:hidden;font:400 21px/1.42 Mono;color:#D9E7EE;overflow-wrap:break-word}
+.tin div{white-space:pre-wrap}
 .tin{padding:16px 24px}
 .ps{color:var(--good)}.ok{color:var(--good)}.dim{color:#7F98A4}.no{color:var(--bad)}
 .genmap{position:absolute;left:1300px;top:290px;width:500px;margin:0}.genmap img{width:500px;height:500px;object-fit:cover;border-radius:14px;display:block}
@@ -693,8 +707,10 @@ def main():
     ap.add_argument("--out", default=None)
     ap.add_argument("--voice", default="af_heart")
     ap.add_argument("--speed", type=float, default=1.06)
+    ap.add_argument("--test-python", default="python3", help="interpreter with the project installed, to count tests")
     a = ap.parse_args()
     N = numbers()
+    N["n_tests"] = count_tests(a.test_python)
     check(N)
     out = Path(a.out or ROOT / "video/build" / a.film)
     out.mkdir(parents=True, exist_ok=True)

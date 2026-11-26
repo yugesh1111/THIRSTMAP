@@ -93,7 +93,7 @@ AI where a data centre's wastewater goes. The code builds the land, so it alread
 <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/FAQ.md">tough questions, answered</a> ·
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">take the human test</a> ·
 <a href="https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb">run it in Colab</a> ·
-<a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">90-second walkthrough</a></p></div></section>"""
+<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">70-second film</a></p></div></section>"""
     return hero
 
 
@@ -695,7 +695,7 @@ __HERO__
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
 <p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (4 min, narrated)</a>
-<a href="https://yugesh1111.github.io/THIRSTMAP/thirstmap_demo.mp4">90-second walkthrough</a>
+<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">70-second film</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Leaderboard: score your own model</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (32 questions, about 15 minutes)</a>
