@@ -34,6 +34,44 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | Originality (15%) | Twins with one minimal change that must flip the answer (the best model gets both halves of only 6 of 19); the consequence of every model error drawn on the image it saw |
 | Impact (15%) | India's data-centre water problem; what each AI mistake would mean on the ground; [`docs/POLICY_NOTE.md`](docs/POLICY_NOTE.md) proposes a pass bar for AI water screening |
 
+## How it works, step by step
+
+Each GIF below is a recording of the real thing: a real terminal run, then the [live demo](https://yugesh1111.github.io/THIRSTMAP/), the [leaderboard](https://yugesh1111.github.io/THIRSTMAP/leaderboard/), the [human test](https://yugesh1111.github.io/THIRSTMAP/human/) and this repository. The clicks are real and so is what they bring up.
+
+**Step 0: run the whole pipeline with one command.** `./run_all.sh --quick` runs the tests, builds a small dataset, scores the offline baselines, runs the eye exam, writes the validation report, rebuilds scenes from their seeds and makes the demo pages. It takes about 2 minutes on a laptop with no API key. The GIF is sped up, and the clock in its corner shows real time.
+
+![run_all.sh --quick in a terminal](docs/gifs/walkthrough/0_run_all_quick.gif)
+
+**Step 1: build a task.** The code makes the terrain, simulates where every drop of water flows, then places a data centre, its outfall, villages and traps. Because the code built the scene, it already knows the answer. Here the wastewater from outfall O reaches **V7 and V4**.
+
+![how a task is made: terrain, water, scene, answer](docs/gifs/walkthrough/1_how_a_task_is_made.gif)
+
+**Step 2: vary it.** Every scene is drawn in three styles (satellite, topographic map, thermal), with five difficulty levels and real terrain for four Indian data-centre hubs.
+
+![three styles, five difficulty levels, four real cities](docs/gifs/walkthrough/2_variation.gif)
+
+**Step 3: check every answer independently.** A second hydrology library (pysheds) recomputes the flow, and the answer path must be visible in the image's own pixels. A question that fails any check is dropped, never edited. The full record is [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md).
+
+![independent check, pixel evidence, validation report](docs/gifs/walkthrough/3_validation.gif)
+
+**Step 4: test the models.** The open models score at chance level. Gemini 3.5 Flash gets **77%**. With the image hidden, Gemini 3.1 Flash-Lite drops from **48% to 15%**, which shows the questions need the picture.
+
+![results on the demo and the leaderboard](docs/gifs/walkthrough/4_results.gif)
+
+**Step 5: catch answers given from habit.** Each scene has a twin with one small change, so the right answer has to change too. Gemini answered M1, M3 on the original (right), then gave exactly the same answer on the twin, where the right answer is none (wrong). Across 19 pairs, the best model got both halves right only 6 times.
+
+![Gemini right on the original, wrong on its twin](docs/gifs/walkthrough/5_twins.gif)
+
+**Step 6: score your own model.** Download the question pack, run any model, then drop its replies on the leaderboard. Your browser scores them with the same rules and builds the same report card. The file never leaves your computer.
+
+![leaderboard: try a sample file, get a report card](docs/gifs/walkthrough/6_score_your_model.gif)
+
+**Step 7: take the test yourself.** The human test asks the same 32 questions the models answered, including every before-and-after pair.
+
+![human test: tick an answer, next question](docs/gifs/walkthrough/7_human_test.gif)
+
+*The GIFs show screen captures of the live site and a real terminal run. Nothing in them is mocked up.*
+
 ---
 
 <!-- FINDINGS:START -->
