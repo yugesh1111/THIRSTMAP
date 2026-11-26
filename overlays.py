@@ -20,7 +20,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
-from PIL import Image, ImageDraw, ImageFont  # noqa: E402
+from PIL import Image, ImageDraw  # noqa: E402
+from thirstmap.render_sat import dejavu  # noqa: E402
 
 from thirstmap import realterrain, render_map  # noqa: E402
 from thirstmap.rebuild import label_cells, rebuild  # noqa: E402
@@ -33,7 +34,7 @@ LABEL_Q = {"Q1", "Q2", "Q3", "Q4", "Q6", "Q7", "Q8"}          # answers that are
 
 
 def font(size, bold=True):
-    return ImageFont.truetype("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf", size)
+    return dejavu(size, bold)
 
 
 def short(m):

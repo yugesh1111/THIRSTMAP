@@ -9,7 +9,8 @@ simulated drainage follows real water more than chance.
 Writes docs/REALISM.md and docs/realism.png.   Usage: python3 realism_check.py
 """
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+from thirstmap.render_sat import dejavu
 
 from thirstmap import realterrain
 from thirstmap.terrain import CELL_M, N, accumulate, d8_receivers, params, priority_flood
@@ -48,7 +49,7 @@ def main():
         rgb[sim & ~water] = (217, 89, 38)
         rgb[sim & water] = (20, 60, 120)
         panels.append((name, Image.fromarray(rgb).resize((320, 320), Image.NEAREST)))
-    f = ImageFont.truetype("DejaVuSans-Bold.ttf", 16)
+    f = dejavu(16)
     sheet = Image.new("RGB", (len(panels) * 332 + 12, 372), (243, 245, 242))
     for k, (name, im) in enumerate(panels):
         sheet.paste(im, (12 + k * 332, 40))

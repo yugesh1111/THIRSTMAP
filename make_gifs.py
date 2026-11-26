@@ -13,7 +13,8 @@ import argparse
 import json
 from pathlib import Path
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+from thirstmap.render_sat import dejavu
 
 SIDE = 520
 
@@ -25,8 +26,8 @@ def frame(path, caption, sub=""):
     canvas = Image.new("RGB", (SIDE, SIDE + 62), (22, 24, 28))
     canvas.paste(im, ((SIDE - im.width) // 2, 62))
     d = ImageDraw.Draw(canvas)
-    d.text((12, 8), caption, font=ImageFont.truetype("DejaVuSans-Bold.ttf", 19), fill=(245, 245, 245))
-    d.text((12, 36), sub, font=ImageFont.truetype("DejaVuSans.ttf", 14), fill=(200, 200, 200))
+    d.text((12, 8), caption, font=dejavu(19), fill=(245, 245, 245))
+    d.text((12, 36), sub, font=dejavu(14, bold=False), fill=(200, 200, 200))
     return canvas
 
 

@@ -38,15 +38,21 @@ def hillshade(z, azimuth=315.0, altitude=42.0, exag=2.5):
     return np.clip(hs, 0, 1)
 
 
-def _font(size):
+def dejavu(size, bold=True):
+    """DejaVu Sans from the system, else the copy matplotlib ships (macOS and Colab have no system DejaVu)."""
+    name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
     try:
-        return ImageFont.truetype("DejaVuSans-Bold.ttf", size)
-    except OSError:                       # no system DejaVu (e.g. Colab): matplotlib ships the same font
+        return ImageFont.truetype(name, size)
+    except OSError:
         try:
             import matplotlib
-            return ImageFont.truetype(str(Path(matplotlib.get_data_path()) / "fonts/ttf/DejaVuSans-Bold.ttf"), size)
+            return ImageFont.truetype(str(Path(matplotlib.get_data_path()) / "fonts/ttf" / name), size)
         except OSError:
             return ImageFont.load_default(size=size)
+
+
+def _font(size):
+    return dejavu(size, bold=True)
 
 
 def _chaikin(pts, widths, rounds=2):

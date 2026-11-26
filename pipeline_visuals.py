@@ -13,7 +13,8 @@ import json
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw
+from thirstmap.render_sat import dejavu
 
 from thirstmap import render_sat
 from thirstmap.questions import answer_key
@@ -34,7 +35,7 @@ AQUA, VIOLET = (27, 175, 122), (98, 80, 214)
 
 
 def font(size, bold=False):
-    return ImageFont.truetype("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf", size)
+    return dejavu(size, bold)
 
 
 def ramp(t, stops):
