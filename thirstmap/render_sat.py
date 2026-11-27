@@ -113,9 +113,11 @@ def _parcels(rng, shape):
     return col, bund
 
 
-def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze=0.0, coarse=1, reserve=False):
+def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze=0.0, coarse=1, reserve=False,
+           clouds=None):
     """season: "dry" | "monsoon"; haze: 0-1 extra atmospheric haze; coarse: ground-resolution
-    divisor (2 = half the resolution). Appearance only: the scene and its answers are unchanged."""
+    divisor (2 = half the resolution). Appearance only: the scene and its answers are unchanged.
+    clouds: [dict(center=cell, R=cells, seed=int)] drawn over the ground, under the labels (thirstmap/clouds.py)."""
     rng = np.random.default_rng(s["seed"] + 77)
     disp = s["disp"]
     z_hi = _up(disp, Image.BICUBIC)
@@ -276,6 +278,9 @@ def render(s, p, nm, P, reveal=False, truth=None, title=None, season="dry", haze
     base = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
     if coarse > 1:                           # coarser sensor: fewer ground pixels (labels stay crisp)
         base = base.resize((W // coarse, W // coarse), Image.BILINEAR).resize((W, W), Image.BILINEAR)
+    if clouds:                               # over the ground, under the annotation layer
+        from .clouds import draw as draw_clouds
+        base = draw_clouds(base, clouds, W, S)
     base = base.convert("RGBA")
 
     # ---- annotation layer (labels an analyst would add)

@@ -1,0 +1,259 @@
+{
+ "models": {
+  "openai:gemini-3-flash-preview": {
+   "n": 10,
+   "passed": 1,
+   "parsed": 10,
+   "mean_precision": 0.533,
+   "mean_recall": 0.509,
+   "villages_ok": 3,
+   "consistent": 6,
+   "quadrants": {
+    "right route, right villages": 1,
+    "right route, wrong villages": 0,
+    "wrong route, right villages": 2,
+    "wrong route, wrong villages": 7
+   },
+   "failures": {
+    "strayed from the stream": 4,
+    "cut across dry land": 5
+   },
+   "pairs": 5,
+   "pairs_both_routes": 0,
+   "curve": {
+    "1": {
+     "precision": 0.234,
+     "recall": 0.179
+    },
+    "2": {
+     "precision": 0.378,
+     "recall": 0.33
+    },
+    "3": {
+     "precision": 0.469,
+     "recall": 0.433
+    },
+    "4": {
+     "precision": 0.533,
+     "recall": 0.509
+    },
+    "6": {
+     "precision": 0.61,
+     "recall": 0.605
+    },
+    "8": {
+     "precision": 0.679,
+     "recall": 0.683
+    }
+   }
+  },
+  "openai:gemini-3.1-flash-lite": {
+   "n": 10,
+   "passed": 0,
+   "parsed": 10,
+   "mean_precision": 0.273,
+   "mean_recall": 0.234,
+   "villages_ok": 3,
+   "consistent": 1,
+   "quadrants": {
+    "right route, right villages": 0,
+    "right route, wrong villages": 0,
+    "wrong route, right villages": 3,
+    "wrong route, wrong villages": 7
+   },
+   "failures": {
+    "cut across dry land": 9,
+    "strayed from the stream": 1
+   },
+   "pairs": 5,
+   "pairs_both_routes": 0,
+   "curve": {
+    "1": {
+     "precision": 0.118,
+     "recall": 0.073
+    },
+    "2": {
+     "precision": 0.168,
+     "recall": 0.125
+    },
+    "3": {
+     "precision": 0.224,
+     "recall": 0.178
+    },
+    "4": {
+     "precision": 0.273,
+     "recall": 0.234
+    },
+    "6": {
+     "precision": 0.358,
+     "recall": 0.335
+    },
+    "8": {
+     "precision": 0.448,
+     "recall": 0.411
+    }
+   }
+  },
+  "openai:gemini-3.5-flash": {
+   "n": 8,
+   "passed": 3,
+   "parsed": 8,
+   "mean_precision": 0.691,
+   "mean_recall": 0.624,
+   "villages_ok": 1,
+   "consistent": 5,
+   "quadrants": {
+    "right route, right villages": 0,
+    "right route, wrong villages": 3,
+    "wrong route, right villages": 1,
+    "wrong route, wrong villages": 4
+   },
+   "failures": {
+    "strayed from the stream": 2,
+    "jumped to another stream": 2,
+    "stopped before the water leaves the area": 1
+   },
+   "pairs": 4,
+   "pairs_both_routes": 0,
+   "curve": {
+    "1": {
+     "precision": 0.329,
+     "recall": 0.246
+    },
+    "2": {
+     "precision": 0.52,
+     "recall": 0.439
+    },
+    "3": {
+     "precision": 0.627,
+     "recall": 0.552
+    },
+    "4": {
+     "precision": 0.691,
+     "recall": 0.624
+    },
+    "6": {
+     "precision": 0.747,
+     "recall": 0.698
+    },
+    "8": {
+     "precision": 0.797,
+     "recall": 0.739
+    }
+   }
+  },
+  "openai:gemini-3.5-flash-lite": {
+   "n": 10,
+   "passed": 1,
+   "parsed": 10,
+   "mean_precision": 0.358,
+   "mean_recall": 0.435,
+   "villages_ok": 0,
+   "consistent": 2,
+   "quadrants": {
+    "right route, right villages": 0,
+    "right route, wrong villages": 1,
+    "wrong route, right villages": 0,
+    "wrong route, wrong villages": 9
+   },
+   "failures": {
+    "cut across dry land": 9
+   },
+   "pairs": 5,
+   "pairs_both_routes": 0,
+   "curve": {
+    "1": {
+     "precision": 0.152,
+     "recall": 0.156
+    },
+    "2": {
+     "precision": 0.241,
+     "recall": 0.277
+    },
+    "3": {
+     "precision": 0.309,
+     "recall": 0.373
+    },
+    "4": {
+     "precision": 0.358,
+     "recall": 0.435
+    },
+    "6": {
+     "precision": 0.455,
+     "recall": 0.566
+    },
+    "8": {
+     "precision": 0.507,
+     "recall": 0.669
+    }
+   }
+  },
+  "openai:gemini-3.6-flash": {
+   "n": 7,
+   "passed": 4,
+   "parsed": 7,
+   "mean_precision": 0.795,
+   "mean_recall": 0.784,
+   "villages_ok": 1,
+   "consistent": 2,
+   "quadrants": {
+    "right route, right villages": 0,
+    "right route, wrong villages": 4,
+    "wrong route, right villages": 1,
+    "wrong route, wrong villages": 2
+   },
+   "failures": {
+    "cut across dry land": 1,
+    "strayed from the stream": 2
+   },
+   "pairs": 3,
+   "pairs_both_routes": 1,
+   "curve": {
+    "1": {
+     "precision": 0.36,
+     "recall": 0.31
+    },
+    "2": {
+     "precision": 0.568,
+     "recall": 0.524
+    },
+    "3": {
+     "precision": 0.723,
+     "recall": 0.688
+    },
+    "4": {
+     "precision": 0.795,
+     "recall": 0.784
+    },
+    "6": {
+     "precision": 0.865,
+     "recall": 0.862
+    },
+    "8": {
+     "precision": 0.926,
+     "recall": 0.903
+    }
+   }
+  }
+ },
+ "baselines": {
+  "oracle (the true path)": {
+   "n": 22,
+   "passed": 22,
+   "mean_precision": 1.0,
+   "mean_recall": 0.999
+  },
+  "straight line south": {
+   "n": 22,
+   "passed": 0,
+   "mean_precision": 0.26,
+   "mean_recall": 0.198
+  },
+  "straight line to the true exit": {
+   "n": 22,
+   "passed": 1,
+   "mean_precision": 0.452,
+   "mean_recall": 0.354
+  }
+ }
+}

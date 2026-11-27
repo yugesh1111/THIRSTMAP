@@ -20,6 +20,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | **The film** (4½ min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [70-second cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
 | **Leaderboard: score your own model** | https://yugesh1111.github.io/THIRSTMAP/leaderboard/ | every model's report card (skills, pairs, traps, no-image check); download the question pack, run any model, drop its replies on the page and get the same card. Scored in the browser by a port of the Python scorer that agrees with it on every published reply |
 | **Full report (PDF)** | [`docs/ThirstMap_full_report.pdf`](docs/ThirstMap_full_report.pdf) | everything built, the dataset, how answers are checked, every result, the product, a tour of the repository and the commands to clone, pull, install, test and run it |
+| **Beyond right answers** (new) | https://yugesh1111.github.io/THIRSTMAP/beyond.html · [`docs/BEYOND_ANSWERS.md`](docs/BEYOND_ANSWERS.md) | every model's drawn route over the true route (right answer, wrong route); clouds that make the answer unknowable, each with a proof, and which models make one up anyway |
 | **One page** | [`docs/ThirstMap_summary.pdf`](docs/ThirstMap_summary.pdf) · [`docs/FAQ.md`](docs/FAQ.md) | the whole project on one A4 page; tough questions (small samples, synthetic data, fine-tuning) answered with the numbers |
 | **Findings** | [`docs/FINDINGS.md`](docs/FINDINGS.md) · [`LEADERBOARD.md`](LEADERBOARD.md) | accuracy against exact chance with p-values, before-and-after pairs, fine-tuning |
 | **Validity evidence** | [`docs/VALIDATION_REPORT.md`](docs/VALIDATION_REPORT.md) · [`docs/VERIFICATION.md`](docs/VERIFICATION.md) · [`docs/AUDIT.md`](docs/AUDIT.md) · [`docs/REALISM.md`](docs/REALISM.md) | independent recomputation, pixel checks, byte-for-byte rebuilds, a self-audit, real-water check |
@@ -28,10 +29,10 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 | Judging criterion | Where ThirstMap answers it |
 |---|---|
-| Implementation (25%) | One-command pipeline from terrain to report; 50 tests and CI; `pip install` gives a `thirstmap` command; a public leaderboard where anyone scores their own model in the browser; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
-| Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; two independent scorer implementations (Python and the browser) agree on all 37,516 replies; exact inputs published with checksums |
+| Implementation (25%) | One-command pipeline from terrain to report; 101 tests and CI; `pip install` gives a `thirstmap` command; a public leaderboard where anyone scores their own model in the browser; frontier evaluation that fits a 20-request free tier; live site redeployed on every change |
+| Validity (25%) | Answers from a simulation, re-derived by an independent library; evidence checked in the pixels; questions dropped, never edited; a self-audit that found and excluded 7.5% unfair tasks; two independent scorer implementations (Python and the browser) agree on all 37,516 replies; exact inputs published with checksums; questions made unanswerable by a cloud, each with a machine proof that two hidden landscapes fit every visible pixel |
 | Variation (20%) | 10 reasoning skills and no counting; satellite, map and thermal styles; 5 difficulty levels; real terrain for 4 cities; before-and-after twins; season, haze and sensor variants |
-| Originality (15%) | Twins with one minimal change that must flip the answer (the best model gets both halves of only 6 of 19); the consequence of every model error drawn on the image it saw |
+| Originality (15%) | Twins with one minimal change that must flip the answer (the best model gets both halves of only 6 of 19); the consequence of every model error drawn on the image it saw; the route each model draws scored cell by cell against the simulation (right answer, wrong route); a decoy cloud that separates honesty from cloud-shyness |
 | Impact (15%) | India's data-centre water problem; what each AI mistake would mean on the ground; [`docs/POLICY_NOTE.md`](docs/POLICY_NOTE.md) proposes a pass bar for AI water screening |
 
 ## How it works, step by step
@@ -120,6 +121,43 @@ A free Gemini key allows 20 requests per model per day, so the frontier check us
 
 Full tables, fine-tuning and caveats: [docs/FINDINGS.md](docs/FINDINGS.md) · per-run report: [results/models/REPORT.md](results/models/REPORT.md)
 <!-- FINDINGS:END -->
+
+<!-- BEYOND:START -->
+## Beyond right answers: is the reasoning right, and does the model know when it cannot see?
+
+Two newer checks look past the final answer. **Draw the water's path**: the model traces the route as points on the image and lists the villages, and the route is scored against the simulated path cell by cell. **Can't tell**: a cloud covers the stretch where the route could leave by more than one channel; for every item the code proves that two hidden landscapes fit every visible pixel and give different answers, so the only right answer is "cannot be determined", while the same cloud elsewhere (a decoy) must not stop the model answering. Page: [`/beyond.html`](https://yugesh1111.github.io/THIRSTMAP/beyond.html) · method and results: [`docs/BEYOND_ANSWERS.md`](docs/BEYOND_ANSWERS.md).
+
+- **Route check.** The best model, Gemini 3.6 Flash, drew the right route on 4 of 7 images; Gemini 3.5 Flash 3 of 8; Gemini 3 Flash Preview 1 of 10; Gemini 3.5 Flash-Lite 1 of 10; Gemini 3.1 Flash-Lite 0 of 10. No reference line that ignores the streams passes: a straight line south passes 0 of 22.
+- **Answer and reasoning come apart.** 8 replies drew the right route but named the wrong villages; 7 named the right villages along a wrong route. Scoring only the final answer would have called 7 of these right and missed that 8 of them followed the water correctly.
+- **When only the outfall moves, does the route move?** Both routes of a before-and-after pair right: Gemini 3.6 Flash 1 of 3; Gemini 3.5 Flash 0 of 4; Gemini 3 Flash Preview 0 of 5; Gemini 3.5 Flash-Lite 0 of 5; Gemini 3.1 Flash-Lite 0 of 5.
+- **Honesty check.** Under a cloud that provably hides the answer, models gave a confident list of villages 21 times out of 29. Per model, said it cannot tell under the hidden cloud: Gemini 3.5 Flash 3 of 3; Gemini 3.6 Flash 4 of 4; Gemini 3 Flash Preview 1 of 5; Qwen2.5-VL-3B 0 of 7; Gemini 3.1 Flash-Lite 0 of 5; Gemini 3.5 Flash-Lite 0 of 5.
+- **The decoy keeps it fair.** The same cloud over streams that do not matter: models abstained there 0 times out of 28, so the abstentions under the hidden cloud are about what is hidden, not about clouds.
+- **Right by luck still counts as wrong.** 7 of the made-up lists happened to match the hidden truth: a guess the image cannot support, scored as one.
+
+| Model | Images | Route right | On the path | Route covered | Villages right | Right route, wrong villages | Wrong route, right villages |
+|---|---|---|---|---|---|---|---|
+| Gemini 3.6 Flash | 7 | **4** | 80% | 78% | 1 | 4 | 1 |
+| Gemini 3.5 Flash | 8 | **3** | 69% | 62% | 1 | 3 | 1 |
+| Gemini 3 Flash Preview | 10 | **1** | 53% | 51% | 3 | 0 | 2 |
+| Gemini 3.5 Flash-Lite | 10 | **1** | 36% | 44% | 0 | 1 | 0 |
+| Gemini 3.1 Flash-Lite | 10 | **0** | 27% | 23% | 3 | 0 | 3 |
+
+Reference lines (no model, all images): oracle (the true path): passes 22 of 22; straight line south: passes 0 of 22; straight line to the true exit: passes 1 of 22.
+
+| Model | Hidden cloud: said it cannot tell | Hidden cloud: made up a list | Decoy cloud: abstained | Decoy cloud: right villages | Abstains only where the cloud hides the answer |
+|---|---|---|---|---|---|
+| Gemini 3.5 Flash | **3 of 3** | 0 | 0 of 3 | 1 of 3 | **3 of 3** |
+| Gemini 3.6 Flash | **4 of 4** | 0 | 0 of 3 | 1 of 3 | **3 of 3** |
+| Gemini 3 Flash Preview | **1 of 5** | 4 | 0 of 5 | 3 of 5 | **1 of 5** |
+| Qwen2.5-VL-3B | **0 of 7** | 7 | 0 of 7 | 0 of 7 | **0 of 7** |
+| Gemini 3.1 Flash-Lite | **0 of 5** | 5 | 0 of 5 | 2 of 5 | **0 of 5** |
+| Gemini 3.5 Flash-Lite | **0 of 5** | 5 | 0 of 5 | 2 of 5 | **0 of 5** |
+
+![route check and honesty check](docs/beyond/hero.jpg)
+
+*Top: the same image, two models; the true route in red, each model's drawn route in yellow. Bottom: what the model saw; the same area without the cloud, with the route (red) and an exit the hidden landscape could equally have sent it through (orange); the decoy.*
+
+<!-- BEYOND:END -->
 
 ## See it
 
@@ -245,7 +283,7 @@ Or run each stage yourself:
 
 ```bash
 pip install -r requirements.txt
-python3 -m pytest -q                                    # 50 tests
+python3 -m pytest -q                                    # 101 tests
 python3 generate.py --level 3 --seed 11 --twin          # one scene + its counterfactual twin -> out/
 python3 generate.py --level 3 --seed 5 --real navi_mumbai
 python3 build_dataset.py --per-level 18 --real-per-location 9 --out dataset --workers 4

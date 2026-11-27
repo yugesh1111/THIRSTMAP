@@ -20,3 +20,8 @@ results/ci*/
 build/
 *.egg-info/
 video/node_modules/
+
+# new task sets: keep the models' exact inputs (img/) and answer keys; full-size renders rebuild from seeds
+eval_set/cloud/scenes/*/*.png
+!results/trace/responses.jsonl
+!results/cloud/responses.jsonl

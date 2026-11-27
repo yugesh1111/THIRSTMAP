@@ -13,6 +13,7 @@ from pathlib import Path
 from xml.sax.saxutils import escape
 
 from make_summary import numbers, pct, pval, pretty
+from thirstmap import paths
 
 REPO = "https://github.com/yugesh1111/THIRSTMAP"
 GITLAB = "https://gitlab.com/Amritha902/thirstmap"
@@ -126,11 +127,10 @@ class Doc:
         H = W * h / w
         if H > 520:
             W, H = W * 520 / H, 520
-        self.story.append(Image(str(path), width=W, height=H))
-        if caption:
-            self.p(caption, "small")
-        else:
-            self.space(6)
+        from reportlab.platypus import KeepTogether, Paragraph, Spacer
+        parts = [Image(str(path), width=W, height=H)]
+        parts.append(Paragraph(caption, self.s["small"]) if caption else Spacer(1, 6))
+        self.story.append(KeepTogether(parts))
 
     def images(self, paths, caption=None):
         """A row of images, same height."""
@@ -164,6 +164,30 @@ class Doc:
                 canvas.line(44, doc.pagesize[1] - 34, doc.pagesize[0] - 44, doc.pagesize[1] - 34)
             canvas.restoreState()
         self.doc.build(self.story, onFirstPage=deco, onLaterPages=deco)
+
+
+def beyond_numbers():
+    """The route check and the honesty check, from results/trace and results/cloud (None if not run)."""
+    if not (Path("results/trace/summary.json").exists() and Path("results/cloud/summary.json").exists()):
+        return None
+    import beyond_answers as BA
+    titems, trows, ctasks, crows, citems, TS, CS = BA.load()
+    T, C = BA.trace_table(TS), BA.cloud_table(CS)
+    return dict(trace=T, cloud=C, base=TS["baselines"], pass_=None, tol=paths.TOL, **{"pass": paths.PASS},
+                findings=BA.findings(T, C, TS, None, None, crows, ctasks))
+
+
+def beyond_cover():
+    B = beyond_numbers()
+    if not B:
+        return []
+    rr = sum(r["right_route_wrong_villages"] for r in B["trace"])
+    wr = sum(r["wrong_route_right_villages"] for r in B["trace"])
+    made = sum(r["hidden_made_up"] for r in B["cloud"])
+    hid = sum(r["hidden_n"] for r in B["cloud"])
+    return [["New checks", f"route traced as points and scored cell by cell: {rr} replies followed the water but named the wrong "
+                           f"villages, {wr} named the right villages along a wrong route · under a cloud that provably hides the "
+                           f"answer, models made up a list {made} times out of {hid}"]]
 
 
 def link(url, text=None):
@@ -206,7 +230,7 @@ def report(N, out):
                             f"but both halves of only {best['pairs_right']} of {best['pairs']} before-and-after pairs"],
              ["Open models", f"best of {ob['models']}: {pretty(ob['m'])} {pct(ob['acc'])} vs chance {pct(ob['chance'])}: none beats guessing"],
              ["Engineering", f"{N['tests']} automated tests and CI · pip-installable <font name='Mono'>thirstmap</font> command · browser scorer "
-                             "that matches the Python scorer on all 37,516 replies"]], [0.16, 0.84])
+                             "that matches the Python scorer on all 37,516 replies"]] + beyond_cover(), [0.16, 0.84])
     d.page_break()
 
     # ---- 1 problem
@@ -322,8 +346,36 @@ def report(N, out):
     d.image("results/models/chart_accuracy_by_skill.png", 0.8, "Accuracy by skill against chance (open models, main evaluation).")
     d.image("docs/trap_chart.png", 0.95, "How often each model fell for a built-in trap, and which traps catch them.")
 
+
+    # ---- 6 beyond right answers (route check and honesty check)
+    B = beyond_numbers()
+    if B:
+        d.h1("6 · Beyond right answers: the route check and the honesty check")
+        d.p("Two newer checks look past the final answer. <b>Draw the water's path</b>: the model traces the wastewater's route "
+            "as points on the image and lists the villages; the route is scored against the simulated path cell by cell "
+            f"(a pass needs {B['pass']:.0%} of the line within {B['tol']} cells, {B['tol'] * 25} m, of the path and {B['pass']:.0%} of "
+            "the path covered). <b>Can't tell</b>: a cloud covers the stretch where the route could leave by more than one channel. "
+            "For every item the code proves that a second hidden landscape fits every visible pixel (no crossing rivers, every "
+            "channel keeps its width, water runs downhill) and sends the water to other villages, so the only right answer is "
+            "\"cannot be determined\"; the same cloud elsewhere (a decoy) must not stop the model answering.")
+        d.table([["Model", "Route right", "Villages right", "Right route, wrong villages", "Wrong route, right villages"]] +
+                [[r["model"], f"<b>{r['passed']}</b> of {r['n']}", f"{r['villages']} of {r['n']}", str(r["right_route_wrong_villages"]),
+                  str(r["wrong_route_right_villages"])] for r in B["trace"]], [0.3, 0.16, 0.16, 0.19, 0.19])
+        d.p(f"Reference lines: the true path passes on all {B['base']['oracle (the true path)']['n']} images; a straight line south "
+            f"passes {B['base']['straight line south']['passed']}; a straight line to the true exit passes "
+            f"{B['base']['straight line to the true exit']['passed']}.", "small")
+        d.table([["Model", "Hidden cloud: said it cannot tell", "Hidden cloud: made up a list", "Decoy cloud: abstained",
+                  "Abstains only where hidden"]] +
+                [[r["model"], f"<b>{r['hidden_abstained']}</b> of {r['hidden_n']}", str(r["hidden_made_up"]),
+                  f"{r['decoy_abstained']} of {r['decoy_n']}", f"{r['honest']} of {r['pairs']}"] for r in B["cloud"]],
+                [0.3, 0.19, 0.17, 0.16, 0.18])
+        d.bullets([x.replace("**", "") for x in B["findings"]])
+        d.image("docs/beyond/hero.jpg", 1.0, "Top: one image, two models (true route red, each model's line yellow). Bottom: what "
+                "the model saw; the same area without the cloud, with the route (red) and another exit the hidden landscape allows "
+                "(orange); the decoy. Page: yugesh1111.github.io/THIRSTMAP/beyond.html")
+
     # ---- 6 product
-    d.h1("6 · The product: what people can open and use")
+    d.h1("7 · The product: what people can open and use")
     d.table([["Piece", "What it is", "Where"],
              ["Live demo", "Results first, then one scene through every pipeline step, then 64 tasks with each model's reply scored ✓/✗ and "
               "an answer reveal, before-and-after pairs, sticky navigation", link(SITE)],
@@ -339,7 +391,7 @@ def report(N, out):
     d.image("docs/video/film_poster.jpg", 0.62, "The film's poster frame (docs/video/).")
 
     # ---- 7 repo tour
-    d.h1("7 · Tour of the repository")
+    d.h1("8 · Tour of the repository")
     d.table([["Path", "What is there"],
              ["thirstmap/", "The package: terrain, scene, questions, renderers, validators, scoring, errata, CLI"],
              ["generate.py · build_dataset.py · variants.py", "Make one scene (and twin), the whole dataset, appearance variants"],
@@ -348,6 +400,8 @@ def report(N, out):
              ["audit_labels.py · validation_report.py · realism_check.py", "Self-audit, validation evidence, real-water check"],
              ["build_demo.py · build_leaderboard.py · human_eval.py", "The live demo, the leaderboard, the human test"],
              ["make_summary.py · make_full_report.py · video/", "The one-page PDF and FAQ, this report, the films"],
+             ["trace_task.py · cloud_task.py · beyond_answers.py", "The route check and the honesty check: build, run, report, page"],
+             ["thirstmap/paths.py · thirstmap/clouds.py", "Route scoring; cloud placement and the proof that a hidden route has two answers"],
              ["dataset_sample/ · eval_set/", "A ready slice of the dataset; the exact inputs the models saw"],
              ["results/", "Every run: raw replies (responses.jsonl), summary.json, REPORT.md, charts"],
              ["docs/", "Demo, leaderboard, films, PDFs, findings, FAQ, validation, verification, audit, policy note, pitch"],
@@ -356,7 +410,7 @@ def report(N, out):
              ["run_all.sh · run_open_models.sh", "One command for everything; the open models"]], [0.42, 0.58])
 
     # ---- 8 commands
-    d.h1("8 · Commands: clone, pull, install, test, run")
+    d.h1("9 · Commands: clone, pull, install, test, run")
     d.p("<b>Get the code</b> (public repository; the GitLab mirror has the same history):")
     d.code("git clone https://github.com/yugesh1111/THIRSTMAP.git\ncd THIRSTMAP\n"
            "# later, to get the newest version:\ngit pull origin main\n\n"
@@ -382,14 +436,17 @@ def report(N, out):
            "python3 frontier.py select --out results/frontier\n"
            "OPENAI_API_KEY=... python3 frontier.py run --budget 20 \\\n"
            "    --models \"openai:gemini-3.1-flash-lite@https://generativelanguage.googleapis.com/v1beta/openai/\"\n"
-           "python3 findings.py --run results/models                # findings text from the numbers")
+           "python3 findings.py --run results/models                # findings text from the numbers\n"
+           "python3 trace_task.py build && python3 trace_task.py run --models hf:Qwen/Qwen2.5-VL-3B-Instruct\n"
+           "python3 cloud_task.py build && python3 cloud_task.py run --models hf:Qwen/Qwen2.5-VL-3B-Instruct\n"
+           "python3 beyond_answers.py                                # the beyond-answers page, README block, figure")
     d.p("<b>Rebuild the documents and the product</b>:")
     d.code("python3 make_summary.py && python3 make_full_report.py    # the one-page PDF, FAQ and this report\n"
            "python3 build_demo.py --dataset dataset --run results/models --baselines results/offline_baselines \\\n"
            "    --pipeline docs/pipeline --out docs/demo\npython3 build_leaderboard.py\npython3 verify_results.py")
 
     # ---- 9 criteria
-    d.h1("9 · Against the judging criteria")
+    d.h1("10 · Against the judging criteria")
     d.table([["Criterion", "Where ThirstMap answers it"],
              ["Implementation (25%)", f"One-command pipeline from terrain to report; {N['tests']} tests and CI; pip-installable command; a public "
               "leaderboard where anyone scores their own model in the browser; live site redeployed on every change"],
@@ -403,13 +460,16 @@ def report(N, out):
               "pass bar for AI water screening"]], [0.22, 0.78])
 
     # ---- 10 honest limits
-    d.h1("10 · Limits, stated plainly")
+    d.h1("11 · Limits, stated plainly")
     d.bullets(["Frontier runs used free API tiers (about 20 requests per model per day), so they use batched prompts and samples of "
                f"{best['n']} questions and {best['pairs']} pairs; p-values are exact, but the samples are small.",
                "Claude and GPT have not been run yet; the harness supports them once keys are available.",
                "The human test is online, but no human answers had been received when this report was built, so there is no human "
                "baseline number." if not N.get("human") else "Human answers are scored with the models' scorer.",
-               "Landscapes are synthetic (plus real terrain with hypothetical facilities); the realism check measures how close they are."])
+               "Landscapes are synthetic (plus real terrain with hypothetical facilities); the realism check measures how close they are.",
+               "The route and honesty checks also ran within free daily quotas (about 10 route images and 5 cloud items, each "
+               "with its decoy, per Gemini model; Gemini 3.7 and 3.8 Flash had no quota or capacity that day), so their counts "
+               "are small; every reply, image and proof is in the repository."])
     d.p(f"Built by make_full_report.py from the repository at commit {head}.", "small")
     d.build()
 

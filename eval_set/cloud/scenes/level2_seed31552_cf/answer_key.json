@@ -1,0 +1,76 @@
+{
+  "scene_id": "level2_seed31552_cf",
+  "pair_of": "level2_seed31552",
+  "cf_kind": "outfall",
+  "cf_change": "the wastewater pipe is rerouted: outfall O moves to a different stream",
+  "seed": 31552,
+  "level": 2,
+  "params": {
+    "level": 2,
+    "beta": 3.5,
+    "relief_m": 30,
+    "contour_m": 10,
+    "stream_cells": 220,
+    "main_cells": 2500,
+    "n_villages": 5,
+    "n_farms": 4
+  },
+  "questions": [
+    {
+      "id": "Q1",
+      "skill": "trace_downstream",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Cooling-tower wastewater from DC-1 enters the stream at outfall O. Which villages would receive this water downstream? List all.",
+      "answer": [
+        "V3"
+      ],
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ],
+      "traps": {
+        "upstream_same_stream": [
+          "V5"
+        ],
+        "near_but_other_stream": [
+          "V1"
+        ]
+      }
+    },
+    {
+      "id": "Q2",
+      "skill": "order_along_flow",
+      "styles": [
+        "map",
+        "satellite"
+      ],
+      "question": "Which village would receive the wastewater first?",
+      "answer": "V3",
+      "options": [
+        "V1",
+        "V2",
+        "V3",
+        "V4",
+        "V5"
+      ],
+      "traps": {
+        "upstream_same_stream": [
+          "V5"
+        ],
+        "near_but_other_stream": [
+          "V1"
+        ],
+        "later_village": []
+      }
+    }
+  ],
+  "terrain": "synthetic",
+  "drain_note": "Streams drain off the southern edge.",
+  "credit": null
+}

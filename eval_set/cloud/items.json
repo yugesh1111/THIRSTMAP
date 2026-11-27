@@ -1,0 +1,2081 @@
+{
+ "n": 20,
+ "failures": {
+  "level1_seed21545_cf": "no unanswerable cloud",
+  "level2_seed21305_cf": "no unanswerable cloud",
+  "level3_seed42917": "no unanswerable cloud",
+  "level4_seed51954": "no unanswerable cloud",
+  "level5_seed60409": "no unanswerable cloud",
+  "real_hyderabad_seed39134": "no unanswerable cloud",
+  "level2_seed65071": "no unanswerable cloud",
+  "level3_seed32088": "no unanswerable cloud",
+  "level4_seed66919": "no unanswerable cloud",
+  "level5_seed54721": "no unanswerable cloud",
+  "real_hyderabad_seed40201": "no unanswerable cloud",
+  "level1_seed28494": "no unanswerable cloud",
+  "level3_seed49187": "no unanswerable cloud",
+  "level4_seed41513": "no unanswerable cloud",
+  "level5_seed59342": "no unanswerable cloud",
+  "real_chennai_seed31797": "no unanswerable cloud",
+  "level1_seed14111": "no unanswerable cloud",
+  "level2_seed48554": "no unanswerable cloud",
+  "level3_seed35483": "no unanswerable cloud",
+  "level4_seed65367": "no unanswerable cloud",
+  "level5_seed66873": "no unanswerable cloud",
+  "real_pune_seed31797_cf": "no unanswerable cloud",
+  "level1_seed14014": "no unanswerable cloud",
+  "level2_seed46614": "no unanswerable cloud",
+  "level3_seed41171": "no unanswerable cloud",
+  "level4_seed48947": "no unanswerable cloud",
+  "level5_seed93152_cf": "no unanswerable cloud",
+  "real_hyderabad_seed48217": "no unanswerable cloud",
+  "level1_seed21545": "no unanswerable cloud",
+  "level2_seed47487": "no unanswerable cloud",
+  "level3_seed32379": "no unanswerable cloud",
+  "level4_seed49626": "no unanswerable cloud",
+  "level1_seed12171": "no unanswerable cloud",
+  "level2_seed24506": "no unanswerable cloud",
+  "level3_seed33155": "no unanswerable cloud",
+  "level4_seed43453": "no unanswerable cloud",
+  "level5_seed62834": "no unanswerable cloud",
+  "real_hyderabad_seed31312_cf": "no unanswerable cloud",
+  "level1_seed12074": "no unanswerable cloud",
+  "level2_seed24215": "no unanswerable cloud",
+  "level3_seed42529": "no unanswerable cloud",
+  "level4_seed57739_cf": "no unanswerable cloud",
+  "level5_seed54139_cf": "no unanswerable cloud",
+  "real_navi_mumbai_seed48023_cf": "no unanswerable cloud",
+  "level1_seed38256": "no unanswerable cloud",
+  "level2_seed29418": "no unanswerable cloud",
+  "level3_seed47150": "no unanswerable cloud",
+  "level4_seed42871": "no unanswerable cloud",
+  "level5_seed53848_cf": "no unanswerable cloud",
+  "real_pune_seed31991": "no unanswerable cloud",
+  "level1_seed13723": "no unanswerable cloud",
+  "level2_seed64683_cf": "no unanswerable cloud",
+  "level3_seed39134_cf": "no unanswerable cloud",
+  "level4_seed65367_cf": "no unanswerable cloud",
+  "level5_seed63319_cf": "no unanswerable cloud",
+  "real_pune_seed47732_cf": "no unanswerable cloud",
+  "level1_seed22224": "no unanswerable cloud",
+  "level3_seed31894_cf": "no unanswerable cloud",
+  "level4_seed41416": "no unanswerable cloud",
+  "level5_seed51132": "no unanswerable cloud",
+  "real_chennai_seed31312": "no unanswerable cloud",
+  "level1_seed20963": "no unanswerable cloud",
+  "level2_seed29515": "no unanswerable cloud",
+  "level3_seed33058": "no unanswerable cloud",
+  "level4_seed69441": "no unanswerable cloud",
+  "level5_seed60409_cf": "no unanswerable cloud",
+  "real_chennai_seed31215": "no unanswerable cloud",
+  "level1_seed29367": "no unanswerable cloud",
+  "level2_seed21208": "no unanswerable cloud",
+  "level3_seed32476_cf": "no unanswerable cloud",
+  "level5_seed76053": "no unanswerable cloud",
+  "real_hyderabad_seed47926": "no unanswerable cloud",
+  "level1_seed28785": "no unanswerable cloud",
+  "level2_seed30000": "no unanswerable cloud",
+  "level3_seed55263_cf": "no unanswerable cloud",
+  "level4_seed58127": "no unanswerable cloud",
+  "level5_seed61312": "no unanswerable cloud",
+  "real_navi_mumbai_seed31603_cf": "no unanswerable cloud",
+  "level1_seed35443": "no unanswerable cloud",
+  "level3_seed43499": "no unanswerable cloud",
+  "level5_seed75568_cf": "no unanswerable cloud",
+  "real_hyderabad_seed32185_cf": "no unanswerable cloud",
+  "level1_seed15566": "no unanswerable cloud",
+  "level2_seed31746": "no unanswerable cloud",
+  "level3_seed47829": "no unanswerable cloud",
+  "level4_seed58418": "no unanswerable cloud",
+  "level5_seed90824": "no unanswerable cloud",
+  "real_navi_mumbai_seed48023": "no unanswerable cloud",
+  "level1_seed38256_cf": "no unanswerable cloud",
+  "level2_seed39374": "no unanswerable cloud",
+  "level3_seed31603": "no unanswerable cloud",
+  "level4_seed64979": "no unanswerable cloud",
+  "level5_seed54139": "no unanswerable cloud",
+  "real_pune_seed31312": "no unanswerable cloud",
+  "level1_seed30628_cf": "no unanswerable cloud",
+  "level2_seed30291": "no unanswerable cloud",
+  "level3_seed31603_cf": "no unanswerable cloud",
+  "level4_seed52730_cf": "no unanswerable cloud",
+  "level5_seed111221": "no unanswerable cloud",
+  "real_hyderabad_seed47829": "no unanswerable cloud",
+  "level1_seed11783": "no unanswerable cloud",
+  "level2_seed22566": "no unanswerable cloud",
+  "level3_seed38940_cf": "no unanswerable cloud",
+  "level4_seed52730": "no unanswerable cloud",
+  "level5_seed53654_cf": "no unanswerable cloud",
+  "real_hyderabad_seed32185": "no unanswerable cloud",
+  "level1_seed34958": "no unanswerable cloud",
+  "level2_seed21305": "no unanswerable cloud",
+  "level3_seed32767_cf": "no unanswerable cloud",
+  "level4_seed56963": "no unanswerable cloud",
+  "level5_seed61282": "no unanswerable cloud",
+  "real_pune_seed31021_cf": "no unanswerable cloud",
+  "level1_seed14402": "no unanswerable cloud",
+  "level2_seed39762_cf": "no unanswerable cloud",
+  "level3_seed31409": "no unanswerable cloud",
+  "level4_seed57739": "no unanswerable cloud",
+  "level5_seed54818": "no unanswerable cloud",
+  "real_hyderabad_seed31312": "no unanswerable cloud",
+  "level1_seed78239": "no unanswerable cloud",
+  "level2_seed32522": "no unanswerable cloud",
+  "level3_seed32670": "no unanswerable cloud",
+  "level4_seed48947_cf": "no unanswerable cloud",
+  "level5_seed51326": "no unanswerable cloud",
+  "real_chennai_seed31894": "no unanswerable cloud",
+  "level1_seed13917": "no unanswerable cloud",
+  "level2_seed23245": "no unanswerable cloud",
+  "level3_seed57494": "no unanswerable cloud",
+  "level4_seed65076": "no unanswerable cloud",
+  "level5_seed93152": "no unanswerable cloud",
+  "real_chennai_seed47441": "no unanswerable cloud",
+  "level1_seed91555": "no unanswerable cloud",
+  "level2_seed22954": "no unanswerable cloud",
+  "level3_seed83191": "no unanswerable cloud",
+  "level4_seed67889": "no unanswerable cloud",
+  "level5_seed70462": "no unanswerable cloud",
+  "real_pune_seed47441_cf": "no unanswerable cloud",
+  "level1_seed45884_cf": "no unanswerable cloud",
+  "level2_seed39762": "no unanswerable cloud",
+  "level3_seed47150_cf": "no unanswerable cloud",
+  "level4_seed51469": "no unanswerable cloud",
+  "real_chennai_seed48023": "no unanswerable cloud",
+  "level1_seed13238": "no unanswerable cloud",
+  "level2_seed41411": "no unanswerable cloud",
+  "level3_seed40783": "no unanswerable cloud",
+  "level4_seed58903_cf": "no unanswerable cloud",
+  "level5_seed52684": "no unanswerable cloud",
+  "real_chennai_seed31894_cf": "no unanswerable cloud",
+  "level1_seed20381": "no unanswerable cloud",
+  "level2_seed30194": "no unanswerable cloud",
+  "level3_seed34222": "no unanswerable cloud",
+  "level5_seed59827": "no unanswerable cloud",
+  "real_navi_mumbai_seed32282": "no unanswerable cloud",
+  "level1_seed23679": "no unanswerable cloud",
+  "level2_seed21111": "no unanswerable cloud",
+  "level3_seed63473": "no unanswerable cloud",
+  "level4_seed68277": "no unanswerable cloud",
+  "level5_seed93928": "no unanswerable cloud",
+  "real_chennai_seed31021_cf": "no unanswerable cloud",
+  "level1_seed13335": "no unanswerable cloud",
+  "level2_seed24700": "no unanswerable cloud",
+  "level3_seed34125": "no unanswerable cloud",
+  "level4_seed76390": "no unanswerable cloud",
+  "level5_seed59827_cf": "no unanswerable cloud",
+  "real_navi_mumbai_seed95246": "no unanswerable cloud",
+  "level1_seed15469": "no unanswerable cloud",
+  "level2_seed22663": "no unanswerable cloud",
+  "level3_seed32185": "no unanswerable cloud",
+  "level4_seed52827": "no unanswerable cloud",
+  "level5_seed75956": "no unanswerable cloud",
+  "real_navi_mumbai_seed47829": "no unanswerable cloud",
+  "level1_seed13917_cf": "no unanswerable cloud",
+  "level2_seed38986": "no unanswerable cloud",
+  "level3_seed43014_cf": "no unanswerable cloud",
+  "level4_seed68374": "no unanswerable cloud",
+  "level5_seed57303": "no unanswerable cloud",
+  "real_pune_seed31797": "no unanswerable cloud",
+  "level1_seed20963_cf": "no unanswerable cloud",
+  "level2_seed32231": "no unanswerable cloud",
+  "level3_seed42820": "no unanswerable cloud",
+  "level5_seed54236": "no unanswerable cloud",
+  "real_hyderabad_seed47441": "no unanswerable cloud",
+  "level1_seed14596": "no unanswerable cloud",
+  "level2_seed47099": "no unanswerable cloud",
+  "level3_seed49187_cf": "no unanswerable cloud",
+  "level4_seed51275": "no unanswerable cloud",
+  "level5_seed75568": "no unanswerable cloud",
+  "real_hyderabad_seed39328": "no unanswerable cloud",
+  "level1_seed36316": "no unanswerable cloud",
+  "level2_seed21984": "no unanswerable cloud",
+  "level3_seed32185_cf": "no unanswerable cloud",
+  "level4_seed45587": "no unanswerable cloud",
+  "level5_seed61185": "no unanswerable cloud",
+  "real_navi_mumbai_seed31603": "no unanswerable cloud",
+  "level1_seed12850": "no unanswerable cloud",
+  "level2_seed24894": "no unanswerable cloud",
+  "level3_seed38940": "no unanswerable cloud",
+  "level4_seed51178": "no unanswerable cloud",
+  "level5_seed55594": "no unanswerable cloud",
+  "level2_seed73184": "no unanswerable cloud",
+  "level5_seed77508": "no unanswerable cloud",
+  "level1_seed19411": "no unanswerable cloud",
+  "level2_seed23439": "no unanswerable cloud",
+  "level3_seed32088_cf": "no unanswerable cloud",
+  "level4_seed45296": "no unanswerable cloud",
+  "level5_seed51326_cf": "no unanswerable cloud",
+  "real_pune_seed40007": "no unanswerable cloud",
+  "level1_seed13820": "no unanswerable cloud",
+  "level3_seed55263": "no unanswerable cloud",
+  "level4_seed43938": "no unanswerable cloud",
+  "level5_seed66873_cf": "no unanswerable cloud",
+  "real_hyderabad_seed47441_cf": "no unanswerable cloud",
+  "level1_seed30628": "no unanswerable cloud",
+  "level2_seed61773": "no unanswerable cloud",
+  "level3_seed42238": "no unanswerable cloud",
+  "level4_seed42095": "no unanswerable cloud",
+  "level5_seed53848": "no unanswerable cloud",
+  "real_chennai_seed31409": "no unanswerable cloud",
+  "level1_seed26942": "no unanswerable cloud",
+  "level2_seed53369": "no unanswerable cloud",
+  "level3_seed43014": "no unanswerable cloud",
+  "level4_seed42192": "no unanswerable cloud",
+  "level5_seed52684_cf": "no unanswerable cloud",
+  "real_pune_seed47732": "no unanswerable cloud",
+  "level2_seed22760": "no unanswerable cloud",
+  "level3_seed34222_cf": "no unanswerable cloud",
+  "level4_seed42968": "no unanswerable cloud",
+  "level5_seed52102": "no unanswerable cloud",
+  "real_navi_mumbai_seed40007": "no unanswerable cloud",
+  "level1_seed15372_cf": "no unanswerable cloud",
+  "level2_seed25767": "no unanswerable cloud",
+  "level3_seed73526": "no unanswerable cloud",
+  "level4_seed44326": "no unanswerable cloud",
+  "level5_seed62349_cf": "no unanswerable cloud",
+  "real_pune_seed31021": "no unanswerable cloud",
+  "level1_seed15372": "no unanswerable cloud",
+  "level2_seed64683": "no unanswerable cloud",
+  "level3_seed51127": "no unanswerable cloud",
+  "level5_seed60991": "no unanswerable cloud",
+  "real_navi_mumbai_seed31312": "no unanswerable cloud",
+  "level2_seed29709": "no unanswerable cloud",
+  "level3_seed34513": "no unanswerable cloud",
+  "level4_seed41513_cf": "no unanswerable cloud",
+  "level5_seed54721_cf": "no unanswerable cloud",
+  "real_hyderabad_seed31506": "no unanswerable cloud",
+  "level1_seed35055": "no unanswerable cloud",
+  "level2_seed25379": "no unanswerable cloud",
+  "level3_seed49284": "no unanswerable cloud",
+  "level4_seed51275_cf": "no unanswerable cloud",
+  "level5_seed75374": "no unanswerable cloud",
+  "real_navi_mumbai_seed39619": "no unanswerable cloud",
+  "level1_seed38838": "no unanswerable cloud",
+  "level3_seed51612": "no unanswerable cloud",
+  "level5_seed55497": "no unanswerable cloud",
+  "real_chennai_seed31506": "no unanswerable cloud",
+  "level1_seed26845_cf": "no unanswerable cloud",
+  "level3_seed67062": "no unanswerable cloud",
+  "level4_seed51663": "no unanswerable cloud",
+  "level5_seed70850": "no unanswerable cloud",
+  "real_pune_seed47441": "no unanswerable cloud",
+  "level1_seed100250": "no unanswerable cloud",
+  "level3_seed34416": "no unanswerable cloud",
+  "level4_seed76390_cf": "no unanswerable cloud",
+  "level5_seed78963": "no unanswerable cloud",
+  "real_hyderabad_seed47635": "no unanswerable cloud",
+  "level1_seed39420": "no unanswerable cloud",
+  "level3_seed32573": "no unanswerable cloud",
+  "level4_seed65076_cf": "no unanswerable cloud",
+  "level5_seed55594_cf": "no unanswerable cloud",
+  "real_chennai_seed39037": "no unanswerable cloud",
+  "level1_seed13432": "no unanswerable cloud",
+  "level3_seed34707": "no unanswerable cloud",
+  "level5_seed75374_cf": "no unanswerable cloud",
+  "real_pune_seed55166": "no unanswerable cloud",
+  "level1_seed26845": "no unanswerable cloud",
+  "level3_seed41947": "no unanswerable cloud",
+  "level5_seed55109": "no unanswerable cloud",
+  "real_pune_seed63861": "no unanswerable cloud",
+  "level1_seed51863": "no unanswerable cloud",
+  "level3_seed31894": "no unanswerable cloud",
+  "level5_seed54527": "no unanswerable cloud",
+  "real_pune_seed63861_cf": "no unanswerable cloud",
+  "level1_seed30531": "no unanswerable cloud",
+  "level3_seed83191_cf": "no unanswerable cloud",
+  "level5_seed62349": "no unanswerable cloud",
+  "real_chennai_seed32088": "no unanswerable cloud",
+  "level1_seed46854": "no unanswerable cloud",
+  "level3_seed39134": "no unanswerable cloud",
+  "level5_seed76732": "no unanswerable cloud",
+  "real_hyderabad_seed86454": "no unanswerable cloud",
+  "level3_seed48799": "no unanswerable cloud",
+  "level5_seed63319": "no unanswerable cloud",
+  "level1_seed19314": "no unanswerable cloud",
+  "level3_seed32476": "no unanswerable cloud",
+  "level5_seed68425": "no unanswerable cloud",
+  "real_chennai_seed39910": "no unanswerable cloud",
+  "level3_seed67062_cf": "no unanswerable cloud",
+  "level5_seed83681": "no unanswerable cloud",
+  "real_chennai_seed47441_cf": "no unanswerable cloud",
+  "level3_seed41462": "no unanswerable cloud",
+  "level5_seed53654": "no unanswerable cloud",
+  "real_chennai_seed31021": "no unanswerable cloud",
+  "real_pune_seed39425": "no unanswerable cloud",
+  "real_chennai_seed48217": "no unanswerable cloud",
+  "real_hyderabad_seed31700": "no unanswerable cloud",
+  "real_navi_mumbai_seed47344": "no unanswerable cloud",
+  "real_chennai_seed31700": "no unanswerable cloud",
+  "real_pune_seed31312_cf": "no unanswerable cloud",
+  "real_hyderabad_seed54875": "no unanswerable cloud"
+ },
+ "items": [
+  {
+   "scene_id": "level1_seed91943",
+   "level": 1,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V4"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+   ],
+   "hidden": {
+    "center": 16673,
+    "R": 10,
+    "seed": 119132104,
+    "after": 18277,
+    "before": 15883,
+    "acc_in": 1790,
+    "elev_in_m": 76.7,
+    "entries": [
+     15883
+    ],
+    "exits": [
+     16823,
+     18271,
+     18277
+    ],
+    "inflow": {
+     "15883": 1790
+    },
+    "outflow": {
+     "16823": 1867,
+     "18271": 302,
+     "18277": 1937
+    },
+    "alternatives": [
+     {
+      "exit": 16823,
+      "villages": [
+       "V4"
+      ],
+      "acc": 1867,
+      "drop_m": 4.5,
+      "world": {
+       "15883": 16823
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 18271,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     16042,
+     16201,
+     16360,
+     16520,
+     16680,
+     16840,
+     17000,
+     17160,
+     17320,
+     17480,
+     17640,
+     17799,
+     17958,
+     18117
+    ]
+   },
+   "decoy": {
+    "center": 7168,
+    "R": 10,
+    "seed": 119132104,
+    "streams_hidden": 15
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level2_seed31552_cf",
+   "level": 2,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5"
+   ],
+   "hidden": {
+    "center": 12873,
+    "R": 8,
+    "seed": 2635492888,
+    "after": 13042,
+    "before": 11757,
+    "acc_in": 389,
+    "elev_in_m": 87.7,
+    "entries": [
+     11757
+    ],
+    "exits": [
+     12385,
+     13042,
+     13345
+    ],
+    "inflow": {
+     "11757": 389
+    },
+    "outflow": {
+     "12385": 431,
+     "13042": 500,
+     "13345": 596
+    },
+    "alternatives": [
+     {
+      "exit": 12385,
+      "villages": [],
+      "acc": 431,
+      "drop_m": 0.2,
+      "world": {
+       "11757": 12385
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 13345,
+      "why": "no non-crossing hidden landscape sends the route there"
+     }
+    ],
+    "hidden_route": [
+     11756,
+     11916,
+     12077,
+     12237,
+     12398,
+     12558,
+     12719,
+     12880,
+     12881
+    ]
+   },
+   "decoy": {
+    "center": 19490,
+    "R": 8,
+    "seed": 2635492888,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level5_seed61961",
+   "level": 5,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V4",
+    "V5"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8"
+   ],
+   "hidden": {
+    "center": 16523,
+    "R": 4,
+    "seed": 393803787,
+    "after": 16688,
+    "before": 16207,
+    "acc_in": 290,
+    "elev_in_m": 85.1,
+    "entries": [
+     16207
+    ],
+    "exits": [
+     16688,
+     17161
+    ],
+    "inflow": {
+     "16207": 290
+    },
+    "outflow": {
+     "16688": 303,
+     "17161": 897
+    },
+    "alternatives": [
+     {
+      "exit": 17161,
+      "villages": [],
+      "acc": 897,
+      "drop_m": 2.2,
+      "world": {
+       "16207": 17161
+      }
+     }
+    ],
+    "rejected": [],
+    "hidden_route": [
+     16366,
+     16527
+    ]
+   },
+   "decoy": {
+    "center": 13230,
+    "R": 4,
+    "seed": 393803787,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "real_navi_mumbai_seed55166",
+   "level": 3,
+   "terrain": "navi_mumbai",
+   "drain": "Water can leave the area across any edge.",
+   "truth": [
+    "V1",
+    "V3"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "hidden": {
+    "center": 17352,
+    "R": 12,
+    "seed": 1714218327,
+    "after": 18482,
+    "before": 17205,
+    "acc_in": 1769,
+    "elev_in_m": 41.8,
+    "entries": [
+     17205
+    ],
+    "exits": [
+     17179,
+     18482,
+     18641,
+     18642
+    ],
+    "inflow": {
+     "17205": 1769
+    },
+    "outflow": {
+     "17179": 2330,
+     "18482": 1924,
+     "18641": 236,
+     "18642": 2185
+    },
+    "alternatives": [
+     {
+      "exit": 17179,
+      "villages": [
+       "V3"
+      ],
+      "acc": 2330,
+      "drop_m": 7.8,
+      "world": {
+       "17205": 17179
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 18641,
+      "why": "narrower than the route going in"
+     },
+     {
+      "exit": 18642,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     17364,
+     17523,
+     17683,
+     17843,
+     18003,
+     18162,
+     18322
+    ]
+   },
+   "decoy": {
+    "center": 13498,
+    "R": 12,
+    "seed": 1714218327,
+    "streams_hidden": 24
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level2_seed31940",
+   "level": 2,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V4",
+    "V5"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5"
+   ],
+   "hidden": {
+    "center": 21021,
+    "R": 4,
+    "seed": 3438773729,
+    "after": 21660,
+    "before": 20220,
+    "acc_in": 5790,
+    "elev_in_m": 56.2,
+    "entries": [
+     20220
+    ],
+    "exits": [
+     21504,
+     21660,
+     21663
+    ],
+    "inflow": {
+     "20220": 5790
+    },
+    "outflow": {
+     "21504": 8539,
+     "21660": 5819,
+     "21663": 8551
+    },
+    "alternatives": [
+     {
+      "exit": 21504,
+      "villages": [
+       "V5"
+      ],
+      "acc": 8539,
+      "drop_m": 2.1,
+      "world": {
+       "20220": 21504
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 21663,
+      "why": "no non-crossing hidden landscape sends the route there"
+     }
+    ],
+    "hidden_route": [
+     20381,
+     20540,
+     20700,
+     20860,
+     21020,
+     21180,
+     21340,
+     21500
+    ]
+   },
+   "decoy": {
+    "center": 16138,
+    "R": 4,
+    "seed": 3438773729,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed45005_cf",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V4"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 18755,
+    "R": 8,
+    "seed": 2964133947,
+    "after": 18427,
+    "before": 18107,
+    "acc_in": 323,
+    "elev_in_m": 92.0,
+    "entries": [
+     18107,
+     18122,
+     18603
+    ],
+    "exits": [
+     18427,
+     18924
+    ],
+    "inflow": {
+     "18107": 323,
+     "18122": 8,
+     "18603": 12
+    },
+    "outflow": {
+     "18427": 426,
+     "18924": 469
+    },
+    "alternatives": [
+     {
+      "exit": 18924,
+      "villages": [],
+      "acc": 469,
+      "drop_m": 2.3,
+      "world": {
+       "18107": 18924,
+       "18122": 18924,
+       "18603": 18924
+      }
+     }
+    ],
+    "rejected": [],
+    "hidden_route": [
+     18268
+    ]
+   },
+   "decoy": {
+    "center": 17570,
+    "R": 8,
+    "seed": 2964133947,
+    "streams_hidden": 12
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level5_seed75471",
+   "level": 5,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V2",
+    "V3",
+    "V6"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7",
+    "V8"
+   ],
+   "hidden": {
+    "center": 16456,
+    "R": 10,
+    "seed": 3390882589,
+    "after": 16766,
+    "before": 15328,
+    "acc_in": 758,
+    "elev_in_m": 91.7,
+    "entries": [
+     15169,
+     15328
+    ],
+    "exits": [
+     15665,
+     15826,
+     15986,
+     16146,
+     16467,
+     16766
+    ],
+    "inflow": {
+     "15169": 12,
+     "15328": 758
+    },
+    "outflow": {
+     "15665": 6207,
+     "15826": 6515,
+     "15986": 6518,
+     "16146": 11,
+     "16467": 47,
+     "16766": 1001
+    },
+    "alternatives": [
+     {
+      "exit": 15665,
+      "villages": [
+       "V6"
+      ],
+      "acc": 6207,
+      "drop_m": 3.3,
+      "world": {
+       "15328": 15665,
+       "15169": 15665
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 15826,
+      "why": "no non-crossing hidden landscape sends the route there"
+     },
+     {
+      "exit": 15986,
+      "why": "no non-crossing hidden landscape sends the route there"
+     },
+     {
+      "exit": 16146,
+      "why": "narrower than the route going in"
+     },
+     {
+      "exit": 16467,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     15489,
+     15649,
+     15810,
+     15970,
+     16130,
+     16289,
+     16449,
+     16448,
+     16607
+    ]
+   },
+   "decoy": {
+    "center": 10276,
+    "R": 10,
+    "seed": 3390882589,
+    "streams_hidden": 22
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed49917",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V1",
+    "V7"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 9017,
+    "R": 5,
+    "seed": 1331520970,
+    "after": 9818,
+    "before": 9183,
+    "acc_in": 580,
+    "elev_in_m": 105.5,
+    "entries": [
+     9183
+    ],
+    "exits": [
+     8692,
+     9818,
+     9977
+    ],
+    "inflow": {
+     "9183": 580
+    },
+    "outflow": {
+     "8692": 6604,
+     "9818": 636,
+     "9977": 4
+    },
+    "alternatives": [
+     {
+      "exit": 8692,
+      "villages": [
+       "V1"
+      ],
+      "acc": 6604,
+      "drop_m": 1.4,
+      "world": {
+       "9183": 8692
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 9977,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     9022,
+     9021,
+     9181,
+     9341,
+     9500,
+     9659
+    ]
+   },
+   "decoy": {
+    "center": 18622,
+    "R": 5,
+    "seed": 1331520970,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed42386",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V2",
+    "V7"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 12877,
+    "R": 12,
+    "seed": 1246163878,
+    "after": 13689,
+    "before": 12730,
+    "acc_in": 497,
+    "elev_in_m": 101.0,
+    "entries": [
+     12730
+    ],
+    "exits": [
+     11906,
+     12065,
+     13689,
+     14469
+    ],
+    "inflow": {
+     "12730": 497
+    },
+    "outflow": {
+     "11906": 3410,
+     "12065": 3418,
+     "13689": 648,
+     "14469": 297
+    },
+    "alternatives": [
+     {
+      "exit": 11906,
+      "villages": [
+       "V3"
+      ],
+      "acc": 3410,
+      "drop_m": 1.8,
+      "world": {
+       "12730": 11906
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 12065,
+      "why": "no non-crossing hidden landscape sends the route there"
+     },
+     {
+      "exit": 14469,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     12889,
+     12888,
+     13048,
+     13208,
+     13368,
+     13528
+    ]
+   },
+   "decoy": {
+    "center": 6586,
+    "R": 12,
+    "seed": 1246163878,
+    "streams_hidden": 21
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "real_navi_mumbai_seed39037",
+   "level": 3,
+   "terrain": "navi_mumbai",
+   "drain": "Water can leave the area across any edge.",
+   "truth": [
+    "V2",
+    "V3"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "hidden": {
+    "center": 17352,
+    "R": 12,
+    "seed": 1680772570,
+    "after": 18482,
+    "before": 17205,
+    "acc_in": 1769,
+    "elev_in_m": 41.8,
+    "entries": [
+     17205
+    ],
+    "exits": [
+     17179,
+     18482,
+     18641,
+     18642
+    ],
+    "inflow": {
+     "17205": 1769
+    },
+    "outflow": {
+     "17179": 2330,
+     "18482": 1924,
+     "18641": 236,
+     "18642": 2185
+    },
+    "alternatives": [
+     {
+      "exit": 17179,
+      "villages": [
+       "V2"
+      ],
+      "acc": 2330,
+      "drop_m": 7.8,
+      "world": {
+       "17205": 17179
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 18641,
+      "why": "narrower than the route going in"
+     },
+     {
+      "exit": 18642,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     17364,
+     17523,
+     17683,
+     17843,
+     18003,
+     18162,
+     18322
+    ]
+   },
+   "decoy": {
+    "center": 8992,
+    "R": 12,
+    "seed": 1680772570,
+    "streams_hidden": 8
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level1_seed23194",
+   "level": 1,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V4"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+   ],
+   "hidden": {
+    "center": 15880,
+    "R": 4,
+    "seed": 3749412495,
+    "after": 16364,
+    "before": 15564,
+    "acc_in": 1967,
+    "elev_in_m": 79.8,
+    "entries": [
+     15564
+    ],
+    "exits": [
+     16036,
+     16357,
+     16364,
+     16517
+    ],
+    "inflow": {
+     "15564": 1967
+    },
+    "outflow": {
+     "16036": 2964,
+     "16357": 2968,
+     "16364": 1981,
+     "16517": 2978
+    },
+    "alternatives": [
+     {
+      "exit": 16036,
+      "villages": [
+       "V3"
+      ],
+      "acc": 2964,
+      "drop_m": 1.9,
+      "world": {
+       "15564": 16036
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 16357,
+      "why": "no non-crossing hidden landscape sends the route there"
+     },
+     {
+      "exit": 16517,
+      "why": "no non-crossing hidden landscape sends the route there"
+     }
+    ],
+    "hidden_route": [
+     15723,
+     15883,
+     16043,
+     16203
+    ]
+   },
+   "decoy": {
+    "center": 21692,
+    "R": 4,
+    "seed": 3749412495,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level3_seed32767",
+   "level": 3,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V6"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "hidden": {
+    "center": 10779,
+    "R": 5,
+    "seed": 1471611475,
+    "after": 11423,
+    "before": 10625,
+    "acc_in": 464,
+    "elev_in_m": 102.6,
+    "entries": [
+     10625
+    ],
+    "exits": [
+     9975,
+     11423,
+     11582
+    ],
+    "inflow": {
+     "10625": 464
+    },
+    "outflow": {
+     "9975": 1076,
+     "11423": 495,
+     "11582": 497
+    },
+    "alternatives": [
+     {
+      "exit": 9975,
+      "villages": [],
+      "acc": 1076,
+      "drop_m": 2.8,
+      "world": {
+       "10625": 9975
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 11582,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     10784,
+     10943,
+     10942,
+     11102,
+     11262
+    ]
+   },
+   "decoy": {
+    "center": 13688,
+    "R": 5,
+    "seed": 1471611475,
+    "streams_hidden": 7
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed58903",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V4",
+    "V7"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 13351,
+    "R": 5,
+    "seed": 1601970881,
+    "after": 13517,
+    "before": 12876,
+    "acc_in": 1942,
+    "elev_in_m": 101.3,
+    "entries": [
+     12876
+    ],
+    "exits": [
+     13517,
+     13987,
+     14147
+    ],
+    "inflow": {
+     "12876": 1942
+    },
+    "outflow": {
+     "13517": 1996,
+     "13987": 3766,
+     "14147": 3769
+    },
+    "alternatives": [
+     {
+      "exit": 13987,
+      "villages": [],
+      "acc": 3766,
+      "drop_m": 2.8,
+      "world": {
+       "12876": 13987
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 14147,
+      "why": "no non-crossing hidden landscape sends the route there"
+     }
+    ],
+    "hidden_route": [
+     13035,
+     13194,
+     13355,
+     13356
+    ]
+   },
+   "decoy": {
+    "center": 11710,
+    "R": 5,
+    "seed": 1601970881,
+    "streams_hidden": 16
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "real_pune_seed31700",
+   "level": 3,
+   "terrain": "pune",
+   "drain": "Water can leave the area across any edge.",
+   "truth": [
+    "V2",
+    "V6"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "hidden": {
+    "center": 9166,
+    "R": 7,
+    "seed": 3444215954,
+    "after": 8210,
+    "before": 7885,
+    "acc_in": 310,
+    "elev_in_m": 646.8,
+    "entries": [
+     7885
+    ],
+    "exits": [
+     8210,
+     8211,
+     9319,
+     9639
+    ],
+    "inflow": {
+     "7885": 310
+    },
+    "outflow": {
+     "8210": 333,
+     "8211": 336,
+     "9319": 460,
+     "9639": 503
+    },
+    "alternatives": [
+     {
+      "exit": 9319,
+      "villages": [],
+      "acc": 460,
+      "drop_m": 11.4,
+      "world": {
+       "7885": 9319
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 8211,
+      "why": "same channel as the true continuation"
+     },
+     {
+      "exit": 9639,
+      "why": "no non-crossing hidden landscape sends the route there"
+     }
+    ],
+    "hidden_route": [
+     8046,
+     8207,
+     8208,
+     8209
+    ]
+   },
+   "decoy": {
+    "center": 11242,
+    "R": 7,
+    "seed": 3444215954,
+    "streams_hidden": 14
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level2_seed55794",
+   "level": 2,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V5"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5"
+   ],
+   "hidden": {
+    "center": 11748,
+    "R": 7,
+    "seed": 2501534966,
+    "after": 12869,
+    "before": 11756,
+    "acc_in": 344,
+    "elev_in_m": 95.1,
+    "entries": [
+     10954,
+     11756
+    ],
+    "exits": [
+     11900,
+     12869,
+     13028
+    ],
+    "inflow": {
+     "10954": 236,
+     "11756": 344
+    },
+    "outflow": {
+     "11900": 2647,
+     "12869": 995,
+     "13028": 998
+    },
+    "alternatives": [
+     {
+      "exit": 11900,
+      "villages": [
+       "V3",
+       "V4"
+      ],
+      "acc": 2647,
+      "drop_m": 2.0,
+      "world": {
+       "10954": 11900,
+       "11756": 11900
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 13028,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     11755,
+     11914,
+     12073,
+     12232,
+     12392,
+     12391,
+     12550,
+     12710
+    ]
+   },
+   "decoy": {
+    "center": 14102,
+    "R": 7,
+    "seed": 2501534966,
+    "streams_hidden": 17
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level1_seed19896",
+   "level": 1,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V2",
+    "V3"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+   ],
+   "hidden": {
+    "center": 12583,
+    "R": 10,
+    "seed": 3149480786,
+    "after": 12754,
+    "before": 12433,
+    "acc_in": 1037,
+    "elev_in_m": 87.5,
+    "entries": [
+     12433
+    ],
+    "exits": [
+     12754,
+     14016
+    ],
+    "inflow": {
+     "12433": 1037
+    },
+    "outflow": {
+     "12754": 1039,
+     "14016": 2168
+    },
+    "alternatives": [
+     {
+      "exit": 14016,
+      "villages": [
+       "V2"
+      ],
+      "acc": 2168,
+      "drop_m": 8.5,
+      "world": {
+       "12433": 14016
+      }
+     }
+    ],
+    "rejected": [],
+    "hidden_route": [
+     12593
+    ]
+   },
+   "decoy": {
+    "center": 9940,
+    "R": 10,
+    "seed": 3149480786,
+    "streams_hidden": 8
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed69150",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V3",
+    "V5"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 9546,
+    "R": 10,
+    "seed": 3693776196,
+    "after": 9717,
+    "before": 7786,
+    "acc_in": 435,
+    "elev_in_m": 114.0,
+    "entries": [
+     7786,
+     7948
+    ],
+    "exits": [
+     9717,
+     10176,
+     10834
+    ],
+    "inflow": {
+     "7786": 435,
+     "7948": 7
+    },
+    "outflow": {
+     "9717": 671,
+     "10176": 940,
+     "10834": 30
+    },
+    "alternatives": [
+     {
+      "exit": 10176,
+      "villages": [],
+      "acc": 940,
+      "drop_m": 6.8,
+      "world": {
+       "7786": 10176,
+       "7948": 9717
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 10834,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     7946,
+     8107,
+     8268,
+     8429,
+     8590,
+     8591,
+     8752,
+     8913,
+     9074,
+     9234,
+     9395,
+     9556
+    ]
+   },
+   "decoy": {
+    "center": 14282,
+    "R": 10,
+    "seed": 3693776196,
+    "streams_hidden": 23
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level4_seed44229",
+   "level": 4,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V1",
+    "V2"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6",
+    "V7"
+   ],
+   "hidden": {
+    "center": 16019,
+    "R": 12,
+    "seed": 4107976998,
+    "after": 16830,
+    "before": 16511,
+    "acc_in": 2303,
+    "elev_in_m": 83.2,
+    "entries": [
+     16511
+    ],
+    "exits": [
+     15847,
+     16006,
+     16830,
+     17308,
+     17467
+    ],
+    "inflow": {
+     "16511": 2303
+    },
+    "outflow": {
+     "15847": 3253,
+     "16006": 3276,
+     "16830": 2305,
+     "17308": 272,
+     "17467": 80
+    },
+    "alternatives": [
+     {
+      "exit": 15847,
+      "villages": [
+       "V1"
+      ],
+      "acc": 3253,
+      "drop_m": 3.5,
+      "world": {
+       "16511": 15847
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 16006,
+      "why": "no non-crossing hidden landscape sends the route there"
+     },
+     {
+      "exit": 17308,
+      "why": "narrower than the route going in"
+     },
+     {
+      "exit": 17467,
+      "why": "narrower than the route going in"
+     }
+    ],
+    "hidden_route": [
+     16670
+    ]
+   },
+   "decoy": {
+    "center": 6630,
+    "R": 12,
+    "seed": 4107976998,
+    "streams_hidden": 40
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "level1_seed45884",
+   "level": 1,
+   "terrain": "synthetic",
+   "drain": "Streams drain off the southern edge.",
+   "truth": [
+    "V1",
+    "V4"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4"
+   ],
+   "hidden": {
+    "center": 10131,
+    "R": 5,
+    "seed": 4215281298,
+    "after": 10286,
+    "before": 9966,
+    "acc_in": 390,
+    "elev_in_m": 91.7,
+    "entries": [
+     9966
+    ],
+    "exits": [
+     10286,
+     10297,
+     10446,
+     10606
+    ],
+    "inflow": {
+     "9966": 390
+    },
+    "outflow": {
+     "10286": 399,
+     "10297": 614,
+     "10446": 656,
+     "10606": 658
+    },
+    "alternatives": [
+     {
+      "exit": 10297,
+      "villages": [],
+      "acc": 614,
+      "drop_m": 2.9,
+      "world": {
+       "9966": 10297
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 10446,
+      "why": "same channel as the true continuation"
+     },
+     {
+      "exit": 10606,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     10126
+    ]
+   },
+   "decoy": {
+    "center": 17090,
+    "R": 5,
+    "seed": 4215281298,
+    "streams_hidden": 6
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  },
+  {
+   "scene_id": "real_navi_mumbai_seed32379",
+   "level": 3,
+   "terrain": "navi_mumbai",
+   "drain": "Water can leave the area across any edge.",
+   "truth": [
+    "V2",
+    "V6"
+   ],
+   "options": [
+    "V1",
+    "V2",
+    "V3",
+    "V4",
+    "V5",
+    "V6"
+   ],
+   "hidden": {
+    "center": 17352,
+    "R": 12,
+    "seed": 1852057980,
+    "after": 18482,
+    "before": 17205,
+    "acc_in": 1769,
+    "elev_in_m": 41.8,
+    "entries": [
+     17205
+    ],
+    "exits": [
+     17179,
+     18482,
+     18641,
+     18642
+    ],
+    "inflow": {
+     "17205": 1769
+    },
+    "outflow": {
+     "17179": 2330,
+     "18482": 1924,
+     "18641": 236,
+     "18642": 2185
+    },
+    "alternatives": [
+     {
+      "exit": 17179,
+      "villages": [
+       "V2"
+      ],
+      "acc": 2330,
+      "drop_m": 7.8,
+      "world": {
+       "17205": 17179
+      }
+     }
+    ],
+    "rejected": [
+     {
+      "exit": 18641,
+      "why": "narrower than the route going in"
+     },
+     {
+      "exit": 18642,
+      "why": "same channel as the true continuation"
+     }
+    ],
+    "hidden_route": [
+     17364,
+     17523,
+     17683,
+     17843,
+     18003,
+     18162,
+     18322
+    ]
+   },
+   "decoy": {
+    "center": 13816,
+    "R": 12,
+    "seed": 1852057980,
+    "streams_hidden": 23
+   },
+   "checks": {
+    "published_pixel_identical": true,
+    "hidden_changes_only_under_cloud": true,
+    "hidden_core_independent_of_ground": true,
+    "hidden_protected_symbols_clear": true,
+    "decoy_changes_only_under_cloud": true,
+    "decoy_core_independent_of_ground": true,
+    "decoy_protected_symbols_clear": true,
+    "hidden_has_alternative": true
+   }
+  }
+ ]
+}
