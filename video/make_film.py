@@ -112,71 +112,82 @@ def full_script(N):
     r, best = N["rows"], N["rows"]["gemini-3.5-flash"]
     fl = sorted(r[k]["acc"] for k in ("gemini-3.1-flash-lite", "gemini-3.5-flash-lite"))
     k, n = N["best_pairs"]
-    others = "Every other model, none." if N["other_pairs"] == [0] else f"The others, at most {words(max(N['other_pairs']))}."
+    others = "Every other model, none." if N["other_pairs"] == [0] else \
+        f"Every other model, {words(max(N['other_pairs']))} at most."
     return [
+        ("coldopen", "", [], {"dur": COLD_DUR}),
         ("hook", "THE PITCH", ["AI is drinking India's water.",
-                               "We built ThirstMap to test whether AI can even see where that water goes."], {"punch": 1}),
+                               "So here's the question nobody was asking: can AI even see where that water goes?"],
+         {"punch": 1}),
         ("problem", "IMPACT · 15%", [
-            "India's data centres use about 150 billion litres of water a year, heading for 358 billion by 2030.",
-            "Seventy percent of the capacity sits in Mumbai and Chennai, both short of water.",
-            "AI agents are being built to answer one question from maps and satellite images: where does the wastewater go?"],
+            "India's data centres drink about 150 billion litres of water a year. By 2030? 358 billion.",
+            "And seventy percent of that capacity sits in two cities already short of water: Mumbai and Chennai.",
+            "Now we're building AI agents to watch over it, from maps and satellite images. "
+            "And it all comes down to one question: where does the wastewater go?"],
          {"t2": 1, "q": 2}),
         ("factory", "IMPLEMENTATION · 25%", [
-            "ThirstMap is a visual task factory.",
-            "Code builds a landscape, simulates where every drop of water flows, places a data centre, villages and traps, and traces the answer downhill.",
-            "So it knows every answer before it asks.",
-            "Each scene becomes a satellite image, a topographic map and a thermal image."],
+            "So we built a factory.",
+            "Code raises a landscape, makes it rain, and follows every drop downhill. "
+            "Past a data centre. Past villages. Past traps we hid on purpose.",
+            "Which means it knows the answer before it ever asks the question.",
+            "Then it paints the same scene three ways: satellite, map, and thermal."],
          {"row": 1, "key": 2, "styles": 3}),
         ("variation", "VARIATION · 20%", [
-            "Ten reasoning skills, and none of them is counting.",
-            "Five difficulty levels, real terrain for four Indian data-centre cities, and monsoon, haze and coarse-sensor versions whose answers must not change.",
-            cap(words(N["tasks"])) + " tasks in all."],
+            "Ten reasoning skills. Not one of them is counting.",
+            "Five levels of difficulty. Real terrain from four Indian data-centre cities. "
+            "Monsoon, haze, a blurry sensor. And the answer never moves.",
+            cap(words(N["tasks"])) + " tasks. Every one with a known answer."],
          {"grid": 1, "count": 2}),
         ("twins", "ORIGINALITY · 15%", [
-            "Every scene also gets a twin.",
-            "One small change, like moving the outfall to another stream, flips the answer.",
-            "A model that answers from habit gets one half wrong."], {"twin": 1, "habit": 2}),
+            "Then we did something sneaky. Every scene gets a twin.",
+            "Change one small thing, move the outfall to another stream, and the right answer flips.",
+            "A model that's really looking gets both. A model running on habit? Caught."], {"twin": 1, "habit": 2}),
         ("validity", "VALIDITY · 25%", [
-            "Judges should not have to trust us.",
-            "An independent hydrology library recomputes every answer, and a question it disagrees with is dropped, never edited.",
-            "We check that the answer is visible in the actual pixels.",
-            f"We even audited ourselves: {words(N['errata'])} unfair tasks found, excluded and published.",
-            "And every audited image rebuilds byte for byte from its seed."],
+            "Now, you shouldn't have to trust us. So we don't ask you to.",
+            "A completely separate hydrology library re-derives every answer. "
+            "If it disagrees, the question is gone. Dropped. Never edited.",
+            "The answer has to be visible in the actual pixels, or it doesn't ship.",
+            f"We even turned the audit on ourselves: {words(N['errata'])} unfair tasks. Found, excluded, published.",
+            "And every audited image rebuilds from its seed, byte for byte."],
          {"a": 1, "b": 2, "c": 3, "d": 4}),
         ("terminal", "IMPLEMENTATION · 25%", [
-            "Anyone can run it.",
-            "Install it with pip, and one command builds a scene and its twin, and runs every check.",
-            "Every check you see here passed, or the question would have been dropped."], {"run": 1}),
+            "And you don't need us to run it.",
+            "One pip install. One command. It builds a scene and its twin, and runs every check.",
+            "Every check you see passing here really passed. If it hadn't, the question would be gone."], {"run": 1}),
         ("results", "FINDINGS", [
-            f"We asked open models and Gemini the same {words(N['n'])} questions.",
-            f"Open models score at the guessing level of {words(N['chance'])} percent.",
-            f"Gemini Flash-Lite gets {words(fl[0])} to {words(fl[1])} percent, and drops back to guessing when we hide the image, so it really reads the map.",
-            f"Gemini 3.5 Flash gets {words(best['acc'])} percent."], {"bars": 0, "open": 1, "ghost": 2, "best": 3}),
+            f"So we put the models to the test. The same {words(N['n'])} questions, for everyone.",
+            f"The open models? No better than guessing, and guessing gets you {words(N['chance'])} percent.",
+            f"Gemini Flash-Lite gets {words(fl[0])} to {words(fl[1])} percent. Hide the image, and it falls straight "
+            "back to guessing. It's really reading the map.",
+            f"And Gemini 3.5 Flash? {cap(words(best['acc']))} percent. Impressive."],
+         {"bars": 0, "open": 1, "ghost": 2, "best": 3}),
         ("catch", "FINDINGS · ORIGINALITY", [
-            "But the twins catch even the best model.",
-            "Here the cooling water is cooler, so no point is above three degrees any more.",
-            "Gemini gives exactly the same answer: two false heat alarms.",
-            f"Over {words(n)} pairs, it got both halves right in only {words(k)}. {others}"],
+            "But then, the twins.",
+            "Same river. We just cooled the water, so no point is above three degrees any more.",
+            "Gemini gives the exact same answer. Two false heat alarms.",
+            f"Across {words(n)} pairs, it got both halves right only {words(k)} times. {others}"],
          {"twinside": 1, "same": 2, "score": 3}),
         ("demo", "DEMO · SCORING", [
-            "Our live demo scores every real reply automatically, right or wrong, and names the trap it fell into.",
-            "Show the answer key, and see where the water really goes.",
-            "Or answer the questions yourself, by the same rules."], {"key": 1, "try": 2}),
+            "Every real reply is scored live. Right or wrong. And we tell you which trap it fell into.",
+            "Flip on the answer key, and watch where the water really goes.",
+            "Or skip the models, and take the test yourself."], {"key": 1, "try": 2}),
         ("board", "THE PRODUCT", [
-            "And ThirstMap is a benchmark anyone can use.",
-            "The public leaderboard has a report card for every model: skills, pairs, traps, and the no-image check.",
-            "Download the question pack, run any model, drop its replies on the page, and get the same report card, scored in your browser."],
+            "And this isn't a one-off study. It's a benchmark anyone can use.",
+            "Every model gets a report card: skills, pairs, traps, and what happens without the image.",
+            "Got your own model? Download the pack, run it, drop the replies on the page. "
+            "Same report card. Scored right in your browser."],
          {"card": 1, "drop": 2}),
         ("teach", "FINDINGS", [
-            "The data can also teach: fine-tuning a small model on unseen scenes lifted it from ten to nineteen percent, and only with the image.",
-            "And people can take the same test online."], {"human": 1}),
+            "And here's the hopeful part. Train a small model on these scenes, and on scenes it has never seen, "
+            "it climbs from ten to nineteen percent. Only with the image. It learns to look.",
+            "And people? They can take the very same test, online."], {"human": 1}),
         ("ship", "IMPLEMENTATION · 25%", [
-            "There is a Colab notebook, a pip-installable command, and automatic checks on every change.",
-            "The frontier check fits a free tier: one request per image, about three hundred tokens per answer."],
+            "There's a Colab notebook, a pip-installable command, and automatic checks on every change.",
+            "And the frontier test runs on a free tier: one request per image, about three hundred tokens an answer."],
          {"economy": 1}),
         ("close", "IMPACT · 15%", [
-            "ThirstMap: a factory of visual tasks with verified answers, and a hard test for AI.",
-            "Before we trust AI with India's water, it should pass it."], {"last": 1}),
+            "ThirstMap. A factory of visual tasks with verified answers, and a test AI can't bluff its way through.",
+            "Because before we trust AI with India's water, it should have to pass it."], {"last": 1}),
     ]
 
 
@@ -185,24 +196,25 @@ def short_script(N):
     k, n = N["best_pairs"]
     return [
         ("hook", "THE PITCH", ["AI is drinking India's water.",
-                               "ThirstMap tests whether AI can see where that water goes."], {"punch": 1}),
+                               "But can it even see where that water goes?"], {"punch": 1}),
         ("factory", "IMPLEMENTATION · 25%", [
-            "Code builds a landscape and simulates its water, so it knows every answer before it asks.",
-            "Each scene becomes a satellite image, a map and a thermal image."], {"row": 0, "key": 0, "styles": 1}),
-        ("twins", "ORIGINALITY · 15%", ["Every scene gets a twin: one small change that flips the answer."], {}),
-        ("validity", "VALIDITY · 25%", ["An independent library re-checks every answer, and we published our own audit."], {}),
+            "Code builds a landscape and makes it rain, so it knows every answer before it asks.",
+            "Then it paints each scene three ways: satellite, map and thermal."], {"row": 0, "key": 0, "styles": 1}),
+        ("twins", "ORIGINALITY · 15%", ["Every scene has a twin. One tiny change, and the answer flips."], {}),
+        ("validity", "VALIDITY · 25%", ["A separate library re-checks every answer. And we published our own audit."], {}),
         ("results", "FINDINGS", [
-            "Open models guess.",
-            "Gemini Flash-Lite reads the map, and falls back to guessing without the image.",
-            f"Gemini 3.5 Flash gets {words(best['acc'])} percent."], {"bars": 0, "open": 0, "ghost": 1, "best": 2}),
+            "Open models? Guessing.",
+            "Gemini Flash-Lite reads the map. Hide it, and it's guessing again.",
+            f"Gemini 3.5 Flash? {cap(words(best['acc']))} percent."], {"bars": 0, "open": 0, "ghost": 1, "best": 2}),
         ("catch", "FINDINGS · ORIGINALITY", [
-            "But the twins catch it.",
-            "Cool the water, and it gives the same answer: two false heat alarms.",
-            f"Both halves right in only {words(k)} of {words(n)} pairs."], {"twinside": 1, "same": 1, "score": 2}),
-        ("board", "THE PRODUCT", ["Score your own model on the public leaderboard, right in the browser."], {"card": 0, "drop": 0}),
+            "Then the twins catch it.",
+            "Cool the water, and it gives the exact same answer. Two false heat alarms.",
+            f"Both halves right in just {words(k)} of {words(n)} pairs."], {"twinside": 1, "same": 1, "score": 2}),
+        ("board", "THE PRODUCT", ["Got a model? Score it on the public leaderboard, right in your browser."],
+         {"card": 0, "drop": 0}),
         ("close", "IMPACT · 15%", [
-            f"Over {words(N['tasks'] // 100 * 100)} tasks, a live demo, and everything open.",
-            "Before we trust AI with India's water, it should pass this test."], {"last": 1}),
+            f"Over {words(N['tasks'] // 100 * 100)} tasks. A live demo. Everything open.",
+            "Before we trust AI with India's water, it should have to pass this test."], {"last": 1}),
     ]
 
 
@@ -237,10 +249,129 @@ def timeline(spec, voice):
             sent.append(dict(s=round(cur, 3), e=round(cur + len(a) / SR, 3), text=show))
             clips.append((cur, a))
             cur += len(a) / SR + GAP
-        end = cur - GAP + TAIL
+        end = cur - GAP + TAIL if lines else start + marks["dur"]
         scenes.append(dict(id=sid, crit=crit, start=round(start, 3), end=round(end, 3), sent=sent, marks=marks))
         t = end
     return scenes, clips, t
+
+
+COLD_DUR = 9.0                                  # cold open: the question typed, sent, answered, then a whip-zoom
+COLD_Q = "How much water do you consume every day?"
+COLD_TYPE = (0.7, 1.8)                          # typing starts, lasts (s, from the scene start)
+COLD_SEND, COLD_REPLY, COLD_WHIP, COLD_CUT = 2.6, 4.4, 7.4, 9.0
+
+
+def coldopen_sfx(t0, ref):
+    """Synthesized sound design for the cold open (no samples): key clicks, send whoosh, reply chime, riser, boom.
+    ref = the narration's peak, so the effects sit under the voice."""
+    rng = np.random.default_rng(7)
+    tt = lambda d: np.arange(int(d * SR)) / SR                                     # noqa: E731
+
+    def band(x, lo, hi):
+        f = np.fft.rfft(x)
+        fr = np.fft.rfftfreq(len(x), 1 / SR)
+        f[(fr < lo) | (fr > hi)] = 0
+        return np.fft.irfft(f, len(x)).astype(np.float32)
+
+    def norm(x, peak):
+        return (x / (np.max(np.abs(x)) or 1) * peak * ref).astype(np.float32)
+
+    out = []
+    start, dur = COLD_TYPE
+    n = len(COLD_Q)
+    xs = np.linspace(0, 1, 2001)
+    ez = np.where(xs < .5, 2 * xs * xs, 1 - (-2 * xs + 2) ** 2 / 2)                 # the page's ease()
+    for i in range(1, n + 1):                                                        # one click per character shown
+        if COLD_Q[i - 1] == " ":
+            continue
+        x = xs[np.searchsorted(ez, i / n - 1e-6)]
+        t = tt(0.018)
+        click = band(rng.standard_normal(len(t)), 1800, 9000) * np.exp(-t / 0.003)
+        out.append((t0 + start + x * dur, norm(click, 0.22 * rng.uniform(0.7, 1.0))))
+    t = tt(0.45)                                                                     # send: short airy whoosh + pop
+    wh = band(rng.standard_normal(len(t)), 500, 5000) * np.sin(np.pi * t / t[-1]) ** 2
+    pop = np.sin(2 * np.pi * (500 * t + 1300 * t * t)) * np.exp(-t / 0.035)
+    out.append((t0 + COLD_SEND - 0.2, norm(wh, 0.18)))
+    out.append((t0 + COLD_SEND, norm(pop, 0.35)))
+    t = tt(1.2)                                                                      # reply: two-note chime
+    chime = sum(np.sin(2 * np.pi * f * t) * np.exp(-t / 0.35) * (t >= d) for f, d in ((1046.5, 0), (1568.0, 0.09)))
+    out.append((t0 + COLD_REPLY, norm(chime, 0.3)))
+    d = COLD_CUT - COLD_WHIP                                                         # riser into the cut
+    t = tt(d)
+    riser = band(rng.standard_normal(len(t)), 800, 7000) * (t / d) ** 2.2 + \
+        0.6 * np.sin(2 * np.pi * (180 * t + 380 * t * t / d)) * (t / d) ** 2
+    out.append((t0 + COLD_WHIP, norm(riser, 0.32)))
+    t = tt(1.6)                                                                      # the cut: sub boom + hit
+    boom = np.sin(2 * np.pi * (75 * t - 12 * t * t)) * np.exp(-t / 0.5) + \
+        band(rng.standard_normal(len(t)), 60, 2500) * np.exp(-t / 0.05)
+    out.append((t0 + COLD_CUT - 0.02, norm(boom, 0.75)))
+    t = tt(COLD_WHIP + 0.3)                                                          # a low bed under the chat
+    bed = (np.sin(2 * np.pi * 55 * t) + 0.5 * np.sin(2 * np.pi * 82.5 * t)) * np.minimum(1, t / 1.5) * \
+        np.minimum(1, (t[-1] - t) / 0.6)
+    out.append((t0, norm(bed, 0.07)))
+    return out
+
+
+TRANSITIONS = ["zoom", "glitch", "push", "flash"]
+
+
+def assign_transitions(scenes):
+    """How each scene enters: the title after the cold open crashes in; later scenes rotate through the set."""
+    k = 0
+    for i, sc in enumerate(scenes):
+        if i == 0:
+            sc["tr"] = "none"
+        elif scenes[i - 1]["id"] == "coldopen":
+            sc["tr"] = "impact"
+        else:
+            sc["tr"] = TRANSITIONS[k % len(TRANSITIONS)]
+            k += 1
+
+
+def transition_sfx(scenes, ref):
+    """A synthesized sound for every scene change, matched to its look (whoosh, glitch, swish, hit)."""
+    rng = np.random.default_rng(11)
+    tt = lambda d: np.arange(int(d * SR)) / SR                                     # noqa: E731
+
+    def band(x, lo, hi):
+        f = np.fft.rfft(x)
+        fr = np.fft.rfftfreq(len(x), 1 / SR)
+        f[(fr < lo) | (fr > hi)] = 0
+        return np.fft.irfft(f, len(x)).astype(np.float32)
+
+    def norm(x, peak):
+        return (x / (np.max(np.abs(x)) or 1) * peak * ref).astype(np.float32)
+
+    out = []
+    for sc in scenes:
+        b, kind = sc["start"], sc.get("tr")
+        if kind == "zoom":                                   # whoosh that peaks on the cut, then a soft thump
+            t = tt(0.9)
+            env = np.exp(-((t - 0.55) / 0.2) ** 2)
+            w = band(rng.standard_normal(len(t)), 300, 6000) * env
+            th = np.sin(2 * np.pi * (90 * t - 30 * t * t)) * np.exp(-np.maximum(t - 0.55, 0) / 0.18) * (t >= 0.55)
+            out.append((b - 0.55, norm(w + 0.8 * th, 0.34)))
+        elif kind == "push":                                 # fast bright swish
+            t = tt(0.5)
+            env = np.exp(-((t - 0.3) / 0.09) ** 2)
+            out.append((b - 0.3, norm(band(rng.standard_normal(len(t)), 1500, 9000) * env, 0.3)))
+        elif kind == "glitch":                               # stuttering digital bursts around the cut
+            t = tt(0.7)
+            x = np.zeros(len(t), np.float32)
+            for c in (0.18, 0.27, 0.33, 0.42, 0.46, 0.55):
+                i0, n = int(c * SR), int(rng.uniform(0.02, 0.05) * SR)
+                f = rng.uniform(300, 1800)
+                burst = np.sign(np.sin(2 * np.pi * f * t[:n])) * 0.6 + rng.standard_normal(n) * 0.5
+                x[i0:i0 + n] += np.round(burst * 4) / 4            # crushed
+            out.append((b - 0.35, norm(band(x, 150, 8000), 0.26)))
+        elif kind in ("flash", "impact"):                     # reverse swell into a hit
+            t = tt(1.3)
+            swell = band(rng.standard_normal(len(t)), 2000, 9000) * (t / 0.5) ** 3 * (t < 0.5)
+            hit = (np.sin(2 * np.pi * (70 * t - 15 * t * t)) * np.exp(-np.maximum(t - 0.5, 0) / 0.35)
+                   + band(rng.standard_normal(len(t)), 80, 4000) * np.exp(-np.maximum(t - 0.5, 0) / 0.06)) * (t >= 0.5)
+            if kind == "flash":
+                out.append((b - 0.5, norm(swell + hit, 0.36)))
+    return out
 
 
 def write_audio(clips, total, path):
@@ -313,6 +444,28 @@ def E(x):
 
 def scene_html(sid, N):
     r, st = N["rows"], N["steps"]
+    if sid == "coldopen":
+        kf = lambda *k: "data-kf='" + json.dumps([[a, b] for a, b in k]) + "'"           # noqa: E731
+        ts, td = COLD_TYPE
+        return f'''
+<div class="cobg"></div>
+<div class="chatcam" {kf((0, {"s": 0.9, "o": 0, "b": 6}), (0.7, {"s": 1, "o": 1, "b": 0}), (COLD_SEND - 0.1, {"s": 1}),
+                         (COLD_SEND + 0.6, {"s": 1.14}), (COLD_WHIP, {"s": 1.2, "b": 0, "o": 1}),
+                         (COLD_CUT - 0.35, {"s": 3.2, "b": 22, "o": 0.0}))}>
+  <div class="chat">
+    <div class="chathead"><i></i><b>AI assistant</b><span>online</span></div>
+    <div class="thread">
+      <div class="msg me" data-at="{COLD_SEND}" data-anim="pop" data-d="0.3">{E(COLD_Q)}</div>
+      <div class="slot">
+        <div class="msg ai dots" {kf((0, {"o": 0}), (COLD_SEND + 0.5, {"o": 0}), (COLD_SEND + 0.7, {"o": 1}),
+                                     (COLD_REPLY - 0.1, {"o": 1}), (COLD_REPLY, {"o": 0}))}><i data-pulse="0"></i><i data-pulse="1"></i><i data-pulse="2"></i></div>
+        <div class="msg ai" data-at="{COLD_REPLY}" data-anim="pop" data-d="0.35">Me? Not a drop.<br>But the data centres that run AI are cooled with water.<br><b>A lot of it.</b></div>
+      </div>
+    </div>
+    <div class="input"><span data-anim-n="chars" data-text="{E(COLD_Q)}" data-at2="{ts}" data-d2="{td}" data-out="{COLD_SEND}"></span><i class="caret" data-out="{COLD_SEND}"></i><em>➤</em></div>
+  </div>
+</div>
+<div class="flash" {kf((0, {"o": 0}), (COLD_CUT - 0.75, {"o": 0}), (COLD_CUT - 0.42, {"o": 0.95}), (COLD_CUT, {"o": 0.4}))}></div>'''
     if sid == "hook":
         return f'''
 <img class="hero" src="assets/hero.jpg" data-kb="0.07" alt="">
@@ -636,6 +789,25 @@ CSS = r"""
 .qr{position:absolute;right:150px;top:600px;background:#fff;border-radius:18px;padding:16px;text-align:center}
 .qr img{width:230px;height:230px;display:block}.qr span{font:600 20px Inter;color:var(--bg)}
 #mark{position:absolute;left:64px;top:40px;font:700 30px Grotesk;letter-spacing:-.01em}#mark span{color:var(--water)}
+.cobg{position:absolute;inset:0;background:radial-gradient(1200px 700px at 30% 20%,#123A55 0,transparent 60%),radial-gradient(900px 600px at 80% 90%,#0E3B33 0,transparent 60%),#06121A}
+.chatcam{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-origin:50% 46%}
+.chat{width:1180px;background:rgba(12,30,42,.92);border:1px solid #2A5670;border-radius:28px;box-shadow:0 40px 120px rgba(0,0,0,.6),0 0 0 1px rgba(90,174,248,.08);overflow:hidden}
+.chathead{display:flex;align-items:center;gap:16px;padding:24px 34px;border-bottom:1px solid #1E4357;font:600 26px Inter}
+.chathead i{width:18px;height:18px;border-radius:50%;background:var(--good);box-shadow:0 0 14px var(--good)}.chathead span{margin-left:auto;font:400 22px Inter;color:var(--mute)}
+.thread{padding:36px 34px 20px;display:flex;flex-direction:column;gap:26px;min-height:430px}
+.msg{max-width:860px;font:400 38px/1.4 Inter;padding:20px 30px;border-radius:26px}
+.msg.me{align-self:flex-end;background:var(--water);color:#04131C;font-weight:600;border-bottom-right-radius:8px;transform-origin:100% 100%}
+.slot{position:relative;min-height:230px}
+.msg.ai{position:absolute;left:0;top:0;background:#16384C;border:1px solid #2A5670;border-bottom-left-radius:8px;transform-origin:0 0}
+.msg.ai b{color:#8FD0FF;font-weight:800}
+.dots{display:flex;gap:12px;padding:26px 30px}.dots i{width:16px;height:16px;border-radius:50%;background:#A3BAC5;display:block}
+.input{display:flex;align-items:center;margin:10px 26px 26px;padding:20px 26px;border:1px solid #2A5670;border-radius:20px;background:#081A24;font:400 34px Inter;color:var(--ink);min-height:84px}
+.input .caret{display:inline-block;width:3px;height:40px;background:var(--water);margin-left:4px}.input em{margin-left:auto;font-style:normal;color:var(--water);font-size:34px}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#chip:empty{display:none}
+#fxflash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5}
+#fxleak{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:4;mix-blend-mode:screen;
+  background:radial-gradient(900px 600px at 15% 20%,rgba(255,150,60,.85),transparent 60%),radial-gradient(800px 700px at 90% 85%,rgba(90,174,248,.7),transparent 60%)}
 #chip{position:absolute;right:64px;top:40px;font:700 19px Inter;letter-spacing:.13em;color:var(--bg);background:var(--water);padding:9px 18px;border-radius:999px}
 #sub{position:absolute;left:50%;bottom:54px;transform:translateX(-50%);width:max-content;max-width:1560px;text-align:center;
   font:500 33px/1.38 Inter;color:#fff;background:rgba(3,10,15,.78);padding:12px 28px;border-radius:12px}
@@ -660,12 +832,45 @@ const A = [...document.querySelectorAll('[data-at]')].map(el => ({el, t0: at(el.
 const Nn = [...document.querySelectorAll('[data-anim-n]')].map(el => ({el, t0: at(el.dataset.at2 || '0', el), d: parseFloat(el.dataset.d2 || 1.2)}));
 const O = [...document.querySelectorAll('[data-out]:not([data-at])')].map(el => ({el, out: at(el.dataset.out, el)}));
 const KB = [...document.querySelectorAll('[data-kb]')].map(el => ({el, sc: TL.scenes[scEl.indexOf(el.closest('.scene'))], z: parseFloat(el.dataset.kb)}));
+const KF = [...document.querySelectorAll('[data-kf]')].map(el => ({el, sc: TL.scenes[scEl.indexOf(el.closest('.scene'))], k: JSON.parse(el.dataset.kf)}));
+const PU = [...document.querySelectorAll('[data-pulse]')];
+function kfv(k, key, t, def) { const p = k.filter(x => key in x[1]).map(x => [x[0], x[1][key]]); if (!p.length) return def;
+  if (t <= p[0][0]) return p[0][1];
+  for (let i = 1; i < p.length; i++) if (t <= p[i][0]) { const [a, va] = p[i - 1], [b, vb] = p[i]; return va + (vb - va) * ease(clamp((t - a) / (b - a))); }
+  return p[p.length - 1][1]; }
+function FX(kind, e, t, entering) {            // e: 0 = settled, 1 = at the cut; returns [transform, filter, opacity gamma]
+  const j = (a, b) => Math.sin(t * a) * b;
+  switch (kind) {
+    case 'zoom': return entering ? [`scale(${1 + .32 * e})`, `blur(${16 * e}px)`, 1]
+                                 : [`scale(${1 + .5 * e})`, `blur(${20 * e}px)`, 1];
+    case 'push': return [`translateX(${(entering ? 1 : -1) * 380 * e}px) scale(${1 - .06 * e})`, `blur(${12 * e}px)`, .8];
+    case 'glitch': { const k = e > .02 ? 1 : 0;
+      return [`translate(${j(97, 30 * e) * k}px,${j(61, 10 * e) * k}px) skewX(${j(43, 6 * e) * k}deg)`,
+              `drop-shadow(${16 * e}px 0 0 rgba(255,40,100,.85)) drop-shadow(${-16 * e}px 0 0 rgba(40,220,255,.85)) contrast(${1 + .7 * e}) saturate(${1 + e})`,
+              .35]; }
+    case 'flash': return [`scale(${1 + .1 * e})`, `brightness(${1 + 2.2 * e})`, .5];
+    case 'impact': return entering ? [`scale(${1 + .28 * e})`, `blur(${12 * e}px) brightness(${1 + 1.5 * e})`, .6] : ['', '', 1];
+    default: return ['', '', 1];
+  }
+}
+const FXL = {flash: document.getElementById('fxflash'), leak: document.getElementById('fxleak')};
 const sub = document.getElementById('sub'), chip = document.getElementById('chip'), bar = document.querySelector('#prog i');
 document.querySelector('#prog').insertAdjacentHTML('beforeend', TL.scenes.slice(1).map(s => `<b style="left:${100 * s.start / TL.T}%"></b>`).join(''));
 const fmt = (x, el) => (el.dataset.to >= 1000 ? Math.round(x).toLocaleString('en-US') : Math.round(x)) + (el.dataset.suf || '');
 function renderAt(t) {
-  TL.scenes.forEach((sc, i) => { const o = Math.min(clamp((t - sc.start) / .45), clamp((sc.end - t) / .45));
-    scEl[i].style.opacity = o; scEl[i].style.visibility = o > 0 ? 'visible' : 'hidden'; });
+  let fx = 0, leak = 0;
+  TL.scenes.forEach((sc, i) => {
+    const D = .4, last = i === TL.scenes.length - 1, nx = TL.scenes[i + 1] || {};
+    const pin = i === 0 ? 1 : clamp((t - sc.start) / D), pout = last ? 1 : clamp((sc.end - t) / D);
+    let tr = '', f = '', o = Math.min(pin, pout);
+    if (pin < 1) { let g; [tr, f, g] = FX(sc.tr, 1 - ease(pin), t, true); o = Math.pow(o, g); }
+    else if (pout < 1) { let g; [tr, f, g] = FX(nx.tr, 1 - ease(pout), t, false); o = Math.pow(o, g); }
+    const el = scEl[i]; el.style.opacity = o; el.style.visibility = o > 0 ? 'visible' : 'hidden';
+    el.style.transform = tr; el.style.filter = f;
+    if (i > 0) { const d = Math.abs(t - sc.start);
+      if (sc.tr === 'flash' || sc.tr === 'impact') fx = Math.max(fx, .9 * clamp(1 - d / .32));
+      if (sc.tr === 'zoom') leak = Math.max(leak, clamp(1 - d / .5)); } });
+  FXL.flash.style.opacity = fx; FXL.leak.style.opacity = leak * .85;
   for (const a of A) {
     const p = ease(clamp((t - a.t0) / a.d)); const q = a.out == null ? 1 : 1 - ease(clamp((t - a.out) / .45)); const s = a.el.style;
     if (a.kind === 'grow') s.width = (p * parseFloat(a.el.dataset.w)) + '%';
@@ -681,6 +886,9 @@ function renderAt(t) {
     else el.textContent = fmt(parseFloat(el.dataset.to) * p, el); }
   for (const tb of document.querySelectorAll('.tbody')) { const tin = tb.firstElementChild;
     tin.style.transform = `translateY(${-Math.max(0, tin.offsetHeight - tb.clientHeight)}px)`; }
+  for (const f of KF) { const lt = t - f.sc.start, s = kfv(f.k, 's', lt, 1), o = kfv(f.k, 'o', lt, 1), b = kfv(f.k, 'b', lt, 0);
+    f.el.style.transform = `scale(${s})`; f.el.style.opacity = o; f.el.style.filter = b > 0.05 ? `blur(${b}px)` : ''; }
+  PU.forEach(el => { el.style.opacity = .3 + .7 * (.5 + .5 * Math.sin(t * 7 - el.dataset.pulse * 1.1)); });
   for (const k of KB) k.el.style.transform = `scale(${1 + k.z * clamp((t - k.sc.start) / (k.sc.end - k.sc.start))})`;
   let s = ''; let cur = TL.scenes[0];
   for (const sc of TL.scenes) { if (t >= sc.start) cur = sc; for (const c of sc.sent) if (t >= c.s - .05 && t < c.e + .25) s = c.text; }
@@ -697,7 +905,7 @@ def page(scenes, total, N, title):
     body = "".join(f'<section class="scene" id="s-{sc["id"]}">{scene_html(sc["id"], N)}</section>' for sc in scenes)
     tl = json.dumps(dict(T=round(total, 3), scenes=scenes)).replace("<", "\\u003c")
     return (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><title>{E(title)}</title><style>{CSS}</style></head><body>'
-            f'<div id="stage">{body}<div id="mark">Thirst<span>Map</span></div><div id="chip"></div><div id="sub"></div>'
+            f'<div id="stage">{body}<div id="fxleak"></div><div id="fxflash"></div><div id="mark">Thirst<span>Map</span></div><div id="chip"></div><div id="sub"></div>'
             f'<div id="prog"><i></i></div></div><script>{JS.replace("__TL__", tl)}</script></body></html>')
 
 
@@ -717,8 +925,13 @@ def main():
     spec = full_script(N) if a.film == "full" else short_script(N)
     voice = Voice(ROOT / "video/build/tts_cache", a.voice, a.speed)
     scenes, clips, total = timeline(spec, voice)
+    assign_transitions(scenes)
     prep_assets(out)
     (out / "film.html").write_text(page(scenes, total, N, "ThirstMap film" if a.film == "full" else "ThirstMap in a minute"))
+    ref = max(float(np.max(np.abs(a))) for _, a in clips)
+    if scenes[0]["id"] == "coldopen":
+        clips += coldopen_sfx(scenes[0]["start"], ref)
+    clips += transition_sfx(scenes, ref)
     write_audio(clips, total, out / "narration.wav")
     subtitles(scenes, out / "subtitles.vtt", out / "subtitles.srt")
     (out / "timeline.json").write_text(json.dumps(dict(T=total, scenes=scenes), indent=1))

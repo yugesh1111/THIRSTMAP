@@ -1,6 +1,6 @@
 # The ThirstMap films
 
-`docs/video/thirstmap_film.mp4` (4 min) walks through every judging criterion and every Track 2 deliverable;
+`docs/video/thirstmap_film.mp4` (4½ min, opening on a cold open) walks through every judging criterion and every Track 2 deliverable;
 `docs/video/thirstmap_film_short.mp4` is the 70-second cut. Both are watchable at
 https://yugesh1111.github.io/THIRSTMAP/film.html, with subtitles burned in and as caption tracks (`*.vtt`).
 

@@ -3,44 +3,44 @@ WEBVTT
 00:00:00.550 --> 00:00:03.200
 AI is drinking India's water.
 
-00:00:03.320 --> 00:00:07.370
-ThirstMap tests whether AI can see where that water goes.
+00:00:03.320 --> 00:00:06.070
+But can it even see where that water goes?
 
-00:00:08.470 --> 00:00:14.370
-Code builds a landscape and simulates its water, so it knows every answer before it asks.
+00:00:07.170 --> 00:00:12.545
+Code builds a landscape and makes it rain, so it knows every answer before it asks.
 
-00:00:14.490 --> 00:00:19.015
-Each scene becomes a satellite image, a map and a thermal image.
+00:00:12.665 --> 00:00:17.040
+Then it paints each scene three ways: satellite, map and thermal.
 
-00:00:20.115 --> 00:00:24.590
-Every scene gets a twin: one small change that flips the answer.
+00:00:18.140 --> 00:00:22.740
+Every scene has a twin. One tiny change, and the answer flips.
 
-00:00:25.690 --> 00:00:30.965
-An independent library re-checks every answer, and we published our own audit.
+00:00:23.840 --> 00:00:28.840
+A separate library re-checks every answer. And we published our own audit.
 
-00:00:32.065 --> 00:00:34.190
-Open models guess.
+00:00:29.940 --> 00:00:32.340
+Open models? Guessing.
 
-00:00:34.310 --> 00:00:39.460
-Gemini Flash-Lite reads the map, and falls back to guessing without the image.
+00:00:32.460 --> 00:00:36.910
+Gemini Flash-Lite reads the map. Hide it, and it's guessing again.
 
-00:00:39.580 --> 00:00:43.680
-Gemini 3.5 Flash gets seventy-seven percent.
+00:00:37.030 --> 00:00:41.155
+Gemini 3.5 Flash? Seventy-seven percent.
 
-00:00:44.780 --> 00:00:46.730
-But the twins catch it.
+00:00:42.255 --> 00:00:44.255
+Then the twins catch it.
 
-00:00:46.850 --> 00:00:51.400
-Cool the water, and it gives the same answer: two false heat alarms.
+00:00:44.375 --> 00:00:49.500
+Cool the water, and it gives the exact same answer. Two false heat alarms.
 
-00:00:51.520 --> 00:00:54.895
-Both halves right in only six of nineteen pairs.
+00:00:49.620 --> 00:00:52.795
+Both halves right in just six of nineteen pairs.
 
-00:00:55.995 --> 00:01:00.445
-Score your own model on the public leaderboard, right in the browser.
+00:00:53.895 --> 00:00:58.470
+Got a model? Score it on the public leaderboard, right in your browser.
 
-00:01:01.545 --> 00:01:06.670
-Over five thousand seven hundred tasks, a live demo, and everything open.
+00:00:59.570 --> 00:01:04.670
+Over five thousand seven hundred tasks. A live demo. Everything open.
 
-00:01:06.790 --> 00:01:11.165
-Before we trust AI with India's water, it should pass this test.
+00:01:04.790 --> 00:01:09.565
+Before we trust AI with India's water, it should have to pass this test.

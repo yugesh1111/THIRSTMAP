@@ -29,7 +29,11 @@ const path = require('path');
   const t0 = Date.now();
   for (let i = 0; i < n; i++) {
     await p.evaluate(t => renderAt(t), i / fps);
-    const buf = await p.screenshot({ type: 'jpeg', quality: 93 });
+    let buf;
+    for (let k = 0; ; k++) {                      // a frame can stall once in a long run: retry it, then give up
+      try { buf = await p.screenshot({ type: 'jpeg', quality: 93, timeout: 60000 }); break; }
+      catch (e) { if (k >= 2) throw e; console.log(`frame ${i}: retrying (${e.name})`); await p.evaluate(t => renderAt(t), i / fps); }
+    }
     if (!ff.stdin.write(buf)) await once(ff.stdin, 'drain');
     if (i % 600 === 0) console.log(`${i}/${n} frames, ${((Date.now() - t0) / 1000).toFixed(0)} s`);
   }
