@@ -93,38 +93,50 @@ Gemini gives the exact same answer. Two false heat alarms.
 00:03:05.740 --> 00:03:12.015
 Across nineteen pairs, it got both halves right only six times. Every other model, two at most.
 
-00:03:13.115 --> 00:03:18.965
+00:03:13.115 --> 00:03:18.840
+But a right answer isn't the whole story. So we asked the models to draw the water's path.
+
+00:03:18.960 --> 00:03:27.460
+Eight times, a model followed the water, then named the wrong villages. Seven times, it named the right villages along the wrong route.
+
+00:03:27.580 --> 00:03:32.830
+Then we hid part of the river under a cloud, where the answer truly cannot be known.
+
+00:03:32.950 --> 00:03:40.475
+Thirty-four times out of forty-two, the models made up an answer anyway. Only two models always said: I can't tell.
+
+00:03:41.575 --> 00:03:47.425
 Every real reply is scored live. Right or wrong. And we tell you which trap it fell into.
 
-00:03:19.085 --> 00:03:23.135
+00:03:47.545 --> 00:03:51.595
 Flip on the answer key, and watch where the water really goes.
 
-00:03:23.255 --> 00:03:26.505
+00:03:51.715 --> 00:03:54.965
 Or skip the models, and take the test yourself.
 
-00:03:27.605 --> 00:03:32.005
+00:03:56.065 --> 00:04:00.465
 And this isn't a one-off study. It's a benchmark anyone can use.
 
-00:03:32.125 --> 00:03:38.250
+00:04:00.585 --> 00:04:06.710
 Every model gets a report card: skills, pairs, traps, and what happens without the image.
 
-00:03:38.370 --> 00:03:46.320
+00:04:06.830 --> 00:04:14.780
 Got your own model? Download the pack, run it, drop the replies on the page. Same report card. Scored right in your browser.
 
-00:03:47.420 --> 00:03:58.695
+00:04:15.880 --> 00:04:27.155
 And here's the hopeful part. Train a small model on these scenes, and on scenes it has never seen, it climbs from ten to nineteen percent. Only with the image. It learns to look.
 
-00:03:58.815 --> 00:04:02.440
+00:04:27.275 --> 00:04:30.900
 And people? They can take the very same test, online.
 
-00:04:03.540 --> 00:04:09.590
+00:04:32.000 --> 00:04:38.050
 There's a Colab notebook, a pip-installable command, and automatic checks on every change.
 
-00:04:09.710 --> 00:04:16.660
+00:04:38.170 --> 00:04:45.120
 And the frontier test runs on a free tier: one request per image, about three hundred tokens an answer.
 
-00:04:17.760 --> 00:04:24.910
+00:04:46.220 --> 00:04:53.370
 ThirstMap. A factory of visual tasks with verified answers, and a test AI can't bluff its way through.
 
-00:04:25.030 --> 00:04:29.805
+00:04:53.490 --> 00:04:58.265
 Because before we trust AI with India's water, it should have to pass it.

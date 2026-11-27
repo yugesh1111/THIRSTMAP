@@ -75,6 +75,16 @@ def numbers():
     best = next(m for m in F["vs_chance"] if m.split(":", 1)[1].split("@")[0] == "gemini-3.5-flash")
     N["best_pairs"] = pairs(best)
     N["other_pairs"] = sorted({pairs(m)[0] for m in F["vs_chance"] if m != best})
+    T = json.loads((ROOT / "results/trace/summary.json").read_text())["models"]
+    C = json.loads((ROOT / "results/cloud/summary.json").read_text())
+    q = lambda k: sum(v["quadrants"][k] for v in T.values())                       # noqa: E731
+    hid = [v["variants"]["hidden"] for v in C.values()]
+    dec = [v["variants"]["decoy"] for v in C.values()]
+    N["beyond"] = dict(models=len(T), right_route_wrong_villages=q("right route, wrong villages"),
+                       wrong_route_right_villages=q("wrong route, right villages"),
+                       hidden=sum(h["n"] for h in hid), made_up=sum(h["n"] - h["abstained"] for h in hid),
+                       honest_models=sum(h["abstained"] == h["n"] for h in hid),
+                       decoy=sum(d["n"] for d in dec), decoy_abstained=sum(d["abstained"] for d in dec))
     return N
 
 
@@ -167,6 +177,15 @@ def full_script(N):
             "Gemini gives the exact same answer. Two false heat alarms.",
             f"Across {words(n)} pairs, it got both halves right only {words(k)} times. {others}"],
          {"twinside": 1, "same": 2, "score": 3}),
+        ("beyond", "BEYOND RIGHT ANSWERS", [
+            "But a right answer isn't the whole story. So we asked the models to draw the water's path.",
+            f"{cap(words(N['beyond']['right_route_wrong_villages']))} times, a model followed the water, then named the "
+            f"wrong villages. {cap(words(N['beyond']['wrong_route_right_villages']))} times, it named the right villages "
+            "along the wrong route.",
+            "Then we hid part of the river under a cloud, where the answer truly cannot be known.",
+            f"{cap(words(N['beyond']['made_up']))} times out of {words(N['beyond']['hidden'])}, the models made up an "
+            f"answer anyway. Only {words(N['beyond']['honest_models'])} models always said: I can't tell."],
+         {"quad": 1, "cloud": 2, "made": 3}),
         ("demo", "DEMO · SCORING", [
             "Every real reply is scored live. Right or wrong. And we tell you which trap it fell into.",
             "Flip on the answer key, and watch where the water really goes.",
@@ -237,6 +256,78 @@ class Voice:
         audio = np.concatenate([np.asarray(a) for _, _, a in self.pipe(text, voice=self.voice, speed=self.speed)])
         np.save(f, audio.astype(np.float32))
         return audio
+
+
+class Recording:
+    """Your own narration instead of the synthetic voice: one take (any audio format ffmpeg reads) with every line of
+    the recording script read in order. Each scripted line is found in the take with faster-whisper word timings, cut
+    out with a little room either side, and used in place of the synthetic clip; the visuals follow its timing."""
+
+    def __init__(self, take, spec, pad=(0.15, 0.35)):
+        import subprocess
+        pcm = subprocess.run(["ffmpeg", "-v", "error", "-i", str(take), "-ac", "1", "-ar", str(SR), "-af",
+                              "highpass=f=70,afftdn=nf=-25", "-f", "f32le", "-"], capture_output=True, check=True).stdout
+        self.audio = np.frombuffer(pcm, np.float32).copy()
+        a16 = subprocess.run(["ffmpeg", "-v", "error", "-i", str(take), "-ac", "1", "-ar", "16000", "-f", "f32le", "-"],
+                             capture_output=True, check=True).stdout
+        from faster_whisper import WhisperModel
+        segs, _ = WhisperModel("base.en", device="cpu", compute_type="int8").transcribe(
+            np.frombuffer(a16, np.float32), word_timestamps=True, language="en")
+        heard = [(w.start, w.end, t) for s in segs for w in s.words for t in self.norm(w.word)]
+        pairs = [(ln, say(ln)) if isinstance(ln, str) else ln for _, _, ls, _ in spec for ln in ls]
+        lines = [sp for _, sp in pairs]                  # clips are looked up by the spoken text
+        script = [(i, t) for i, (shown, _) in enumerate(pairs) for t in self.norm(shown)]   # you read the shown text
+        import difflib
+        sm = difflib.SequenceMatcher(None, [t for _, t in script], [t for _, _, t in heard], autojunk=False)
+        hit = {}
+        for blk in sm.get_matching_blocks():
+            for k in range(blk.size):
+                hit[blk.a + k] = blk.b + k
+        self.clips, missing = {}, []
+        for i, ln in enumerate(lines):
+            idx = [hit[j] for j, (li, _) in enumerate(script) if li == i and j in hit]
+            n = sum(1 for li, _ in script if li == i)
+            if len(idx) < max(2, 0.5 * n):
+                missing.append(pairs[i][0])
+                continue
+            t0, t1 = heard[min(idx)][0] - pad[0], heard[max(idx)][1] + pad[1]
+            clip = self.audio[max(0, int(t0 * SR)):int(t1 * SR)].copy()
+            f = min(len(clip) // 4, int(0.03 * SR))                                   # 30 ms fades, no clicks
+            clip[:f] *= np.linspace(0, 1, f)
+            clip[len(clip) - f:] *= np.linspace(1, 0, f)
+            self.clips[ln] = clip
+        if missing:
+            raise SystemExit("These lines were not found in the recording (re-record them or check the take):\n  "
+                             + "\n  ".join(missing))
+
+    @staticmethod
+    def norm(s):
+        s = re.sub(r"(\d)\.(\d)", r"\1 point \2", s.lower())
+        out = []
+        for w in re.findall(r"[a-z]+|\d+", s.replace("-", " ")):
+            out += words(int(w)).replace("-", " ").replace(" and ", " ").split() if w.isdigit() else [w]
+        return [w for w in out if w != "and"]
+
+    def __call__(self, text):
+        return self.clips[text]
+
+
+def recording_script(spec, title):
+    """The lines to read, in order, with the scene each belongs to."""
+    out, n = [f"# {title}: recording script", "",
+              "Read every line in order, in one take, in a quiet room (a phone voice memo is fine). Leave about one "
+              "second of silence between lines. If you trip, carry on and note the line number: it can be re-recorded "
+              "on its own. Numbers are written the way to say them; read the words, not the line numbers. Then: "
+              "python video/make_film.py --recording <your file> (any audio format) and render as usual.", ""], 0
+    for sid, crit, lines, _ in spec:
+        if not lines:
+            continue
+        out.append(f"## {crit.title()}")
+        for ln in lines:
+            n += 1
+            out.append(f"{n:2d}. {ln if isinstance(ln, str) else ln[0]}")
+        out.append("")
+    return "\n".join(out)
 
 
 def timeline(spec, voice):
@@ -423,6 +514,9 @@ def prep_assets(out):
     for v in ["monsoon", "haze", "coarse"]:
         put(dsr / "variants/level1_seed14596" / f"{v}.png", f"look_{v}.jpg", 420)
     put(ROOT / "docs/demo/analysis/pair__level3_seed34416__Q8__thermal__gemini-3.5-flash.jpg", "catch.jpg", 1600)
+    put(ROOT / "docs/demo/beyond/trace/gemini-3.6-flash__level3_seed58561__satellite.jpg", "route_right.jpg", 900)
+    put(ROOT / "docs/demo/beyond/trace/Qwen2.5-VL-3B-Instruct__level3_seed58561__satellite.jpg", "route_wrong.jpg", 900)
+    put(ROOT / "docs/demo/beyond/cloud/level1_seed91943.jpg", "cloud.jpg", 1800)
     for f, cb in [("demo_task.jpg", 0), ("demo_task_key.jpg", 0), ("demo_try.jpg", 0), ("human_test.jpg", 0),
                   ("nb_styles.jpg", 0), ("gen_map.jpg", 0), ("lb_board.jpg", 0), ("lb_card.jpg", 0)]:
         put(cap / f, f, 1900, cb)
@@ -616,6 +710,28 @@ def scene_html(sid, N):
   <div class="sl" data-at="@same">Gemini says <b>M1, M3</b> again: two false heat alarms.</div>
   <div class="score" data-at="@score"><b>{N['best_pairs'][0]} of {N['best_pairs'][1]}</b><span>pairs right on both halves by the best model; {'every other model: 0' if N['other_pairs'] == [0] else f'the others: at most {max(N["other_pairs"])}'}</span></div>
 </div>'''
+    if sid == "beyond":
+        b = N["beyond"]
+        return f'''
+<div class="box" style="left:120px;top:140px;width:1680px">
+  <div class="eyebrow" data-at="0.1">Beyond right answers · two new checks</div>
+  <div class="h" data-at="0.2">Right answers, wrong reasoning, made-up answers</div>
+</div>
+<div class="bya" data-out="@cloud-0.2">
+  <figure data-at="0.5"><img src="assets/route_right.jpg" alt=""><figcaption><span class="ok">✓</span> Gemini 3.6 Flash: right route, <b>wrong village</b></figcaption></figure>
+  <figure data-at="0.9"><img src="assets/route_wrong.jpg" alt=""><figcaption><span class="no">✗</span> Qwen2.5-VL-3B: drawn the wrong way round</figcaption></figure>
+  <div class="byq">
+    <div class="tile" data-at="@quad" data-anim="pop"><div class="big">{b["right_route_wrong_villages"]}</div><div class="what">followed the water, named the wrong villages</div></div>
+    <div class="tile" data-at="@quad+1.2" data-anim="pop"><div class="big">{b["wrong_route_right_villages"]}</div><div class="what">right villages, along the wrong route</div></div>
+  </div>
+</div>
+<div class="byb" data-at="@cloud">
+  <img src="assets/cloud.jpg" alt="">
+  <div class="bylab" style="left:0"><b>Cloud hides the answer</b></div>
+  <div class="bylab" style="left:394px"><b>Under it:</b> two exits fit every visible pixel</div>
+  <div class="bylab" style="left:788px"><b>Decoy</b>: same cloud, answer still visible</div>
+  <div class="score bymade" data-at="@made" data-anim="pop"><b>{b["made_up"]} of {b["hidden"]}</b><span>made up an answer anyway; under the decoy, models abstained {b["decoy_abstained"]} of {b["decoy"]} times</span></div>
+</div>'''
     if sid == "demo":
         return f'''
 <div class="box" style="left:120px;top:140px;width:1680px">
@@ -805,6 +921,13 @@ CSS = r"""
 .input .caret{display:inline-block;width:3px;height:40px;background:var(--water);margin-left:4px}.input em{margin-left:auto;font-style:normal;color:var(--water);font-size:34px}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 #chip:empty{display:none}
+.bya{position:absolute;left:120px;top:300px;width:1680px;display:grid;grid-template-columns:470px 470px 1fr;gap:34px;align-items:start}
+.bya figure{margin:0}.bya img{width:470px;height:525px;object-fit:cover;object-position:top;border-radius:14px;display:block}
+.bya figcaption{font:500 22px/1.35 Inter;margin-top:12px;color:#D7E6EE}.bya .ok,.bya .no{font-weight:800;margin-right:8px}
+.byq{display:flex;flex-direction:column;gap:24px;padding-top:30px}
+.byb{position:absolute;left:120px;top:300px;width:1680px}.byb img{width:1180px;border-radius:14px;display:block}
+.bylab{position:absolute;top:412px;width:380px;font:400 21px/1.35 Inter;color:var(--mute)}.bylab b{color:var(--ink)}
+.bymade{position:absolute;left:1220px;top:0;width:460px;margin:0}.bymade b{font-size:84px}
 #fxflash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:5}
 #fxleak{position:absolute;inset:0;opacity:0;pointer-events:none;z-index:4;mix-blend-mode:screen;
   background:radial-gradient(900px 600px at 15% 20%,rgba(255,150,60,.85),transparent 60%),radial-gradient(800px 700px at 90% 85%,rgba(90,174,248,.7),transparent 60%)}
@@ -916,6 +1039,7 @@ def main():
     ap.add_argument("--voice", default="af_heart")
     ap.add_argument("--speed", type=float, default=1.06)
     ap.add_argument("--test-python", default="python3", help="interpreter with the project installed, to count tests")
+    ap.add_argument("--recording", help="your own narration: one take of the recording script, any audio format")
     a = ap.parse_args()
     N = numbers()
     N["n_tests"] = count_tests(a.test_python)
@@ -923,7 +1047,9 @@ def main():
     out = Path(a.out or ROOT / "video/build" / a.film)
     out.mkdir(parents=True, exist_ok=True)
     spec = full_script(N) if a.film == "full" else short_script(N)
-    voice = Voice(ROOT / "video/build/tts_cache", a.voice, a.speed)
+    (ROOT / f"video/RECORDING_SCRIPT_{a.film}.md").write_text(
+        recording_script(spec, "ThirstMap film" if a.film == "full" else "ThirstMap in a minute") + "\n")
+    voice = Recording(a.recording, spec) if a.recording else Voice(ROOT / "video/build/tts_cache", a.voice, a.speed)
     scenes, clips, total = timeline(spec, voice)
     assign_transitions(scenes)
     prep_assets(out)
