@@ -1,46 +1,46 @@
 WEBVTT
 
-00:00:00.550 --> 00:00:03.200
+00:00:00.550 --> 00:00:02.526
 AI is drinking India's water.
 
-00:00:03.320 --> 00:00:06.070
+00:00:02.781 --> 00:00:04.923
 But can it even see where that water goes?
 
-00:00:07.170 --> 00:00:12.545
+00:00:06.023 --> 00:00:10.828
 Code builds a landscape and makes it rain, so it knows every answer before it asks.
 
-00:00:12.665 --> 00:00:17.040
+00:00:11.028 --> 00:00:14.735
 Then it paints each scene three ways: satellite, map and thermal.
 
-00:00:18.140 --> 00:00:22.740
+00:00:15.835 --> 00:00:19.864
 Every scene has a twin. One tiny change, and the answer flips.
 
-00:00:23.840 --> 00:00:28.840
+00:00:20.964 --> 00:00:25.423
 A separate library re-checks every answer. And we published our own audit.
 
-00:00:29.940 --> 00:00:32.340
+00:00:26.523 --> 00:00:28.794
 Open models? Guessing.
 
-00:00:32.460 --> 00:00:36.910
+00:00:28.951 --> 00:00:32.762
 Gemini Flash-Lite reads the map. Hide it, and it's guessing again.
 
-00:00:37.030 --> 00:00:41.155
+00:00:32.921 --> 00:00:36.774
 Gemini 3.5 Flash? Seventy-seven percent.
 
-00:00:42.255 --> 00:00:44.255
+00:00:37.874 --> 00:00:39.294
 Then the twins catch it.
 
-00:00:44.375 --> 00:00:49.500
+00:00:39.447 --> 00:00:43.908
 Cool the water, and it gives the exact same answer. Two false heat alarms.
 
-00:00:49.620 --> 00:00:52.795
+00:00:44.115 --> 00:00:46.616
 Both halves right in just six of nineteen pairs.
 
-00:00:53.895 --> 00:00:58.470
+00:00:47.716 --> 00:00:51.986
 Got a model? Score it on the public leaderboard, right in your browser.
 
-00:00:59.570 --> 00:01:04.670
+00:00:53.086 --> 00:00:57.910
 Over five thousand seven hundred tasks. A live demo. Everything open.
 
-00:01:04.790 --> 00:01:09.565
+00:00:58.126 --> 00:01:02.268
 Before we trust AI with India's water, it should have to pass this test.

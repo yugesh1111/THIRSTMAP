@@ -243,8 +243,9 @@ class Voice:
         self.cache, self.voice, self.speed, self.pipe = Path(cache), voice, speed, None
         self.cache.mkdir(parents=True, exist_ok=True)
 
-    def __call__(self, text):
-        key = hashlib.sha1(f"{self.voice}|{self.speed}|{text}".encode()).hexdigest()[:16]
+    def __call__(self, text, speed=None):
+        speed = speed or self.speed
+        key = hashlib.sha1(f"{self.voice}|{speed}|{text}".encode()).hexdigest()[:16]
         f = self.cache / f"{key}.npy"
         if f.exists():
             return np.load(f)
@@ -253,9 +254,46 @@ class Voice:
             os.environ.setdefault("HF_HUB_DISABLE_XET", "1")
             from kokoro import KPipeline
             self.pipe = KPipeline(lang_code="a", repo_id="hexgrad/Kokoro-82M")
-        audio = np.concatenate([np.asarray(a) for _, _, a in self.pipe(text, voice=self.voice, speed=self.speed)])
+        audio = np.concatenate([np.asarray(a) for _, _, a in self.pipe(text, voice=self.voice, speed=speed)])
         np.save(f, audio.astype(np.float32))
         return audio
+
+    def line(self, text, rng):
+        """Read a line the way a person would: sentence by sentence, short punches a touch slower, questions given
+        room, and pauses that vary instead of a fixed gap."""
+        parts = [p for p in re.split(r"(?<=[.?!])\s+", text.strip()) if p]
+        out = []
+        for k, p in enumerate(parts):
+            n = len(p.split())
+            sp = self.speed - (0.07 if n <= 4 else 0.035 if n <= 8 else 0) - (0.02 if p.endswith("?") else 0)
+            a = trim(self(p, round(sp + rng.uniform(-0.015, 0.015), 3)))
+            out.append(a)
+            if k < len(parts) - 1:
+                pause = 0.42 if p.endswith("?") else 0.3 if n <= 4 else 0.24
+                out.append(np.zeros(int((pause + rng.uniform(-0.04, 0.06)) * SR), np.float32))
+        return np.concatenate(out)
+
+
+def trim(a, thr=0.008, keep=0.045):
+    """Drop the synthetic voice's leading and trailing silence, keeping a few milliseconds."""
+    idx = np.flatnonzero(np.abs(a) > thr)
+    if not len(idx):
+        return a
+    return a[max(0, idx[0] - int(keep * SR)):idx[-1] + int(keep * 1.6 * SR)]
+
+
+def breath(rng, ref):
+    """A soft intake of breath (filtered noise with a breathy formant), placed before longer lines."""
+    d = rng.uniform(0.26, 0.36)
+    t = np.arange(int(d * SR)) / SR
+    x = rng.standard_normal(len(t))
+    f = np.fft.rfft(x)
+    fr = np.fft.rfftfreq(len(x), 1 / SR)
+    f *= np.exp(-((fr - 1300) / 900) ** 2) + 0.4 * np.exp(-((fr - 2600) / 700) ** 2)
+    x = np.fft.irfft(f, len(x))
+    env = np.sin(np.pi * np.clip(t / d, 0, 1)) ** 1.5 * (0.6 + 0.4 * t / d)
+    x = x * env
+    return (x / (np.max(np.abs(x)) or 1) * 0.05 * ref).astype(np.float32)
 
 
 class Recording:
@@ -331,19 +369,24 @@ def recording_script(spec, title):
 
 
 def timeline(spec, voice):
-    t, scenes, clips = 0.0, [], []
+    t, scenes, clips, breaths = 0.0, [], [], []
+    rng = np.random.default_rng(5)
+    human = hasattr(voice, "line")
     for sid, crit, lines, marks in spec:
-        start, cur, sent = t, t + LEAD, []
+        start, cur, sent, gap = t, t + LEAD, [], GAP
         for ln in lines:
             show, spoken = (ln if isinstance(ln, tuple) else (ln, say(ln)))
-            a = voice(spoken)
+            a = voice.line(spoken, rng) if human else voice(spoken)
+            if human and len(spoken.split()) >= 11 and cur - 0.4 > start:
+                breaths.append(cur - 0.36)
             sent.append(dict(s=round(cur, 3), e=round(cur + len(a) / SR, 3), text=show))
             clips.append((cur, a))
-            cur += len(a) / SR + GAP
-        end = cur - GAP + TAIL if lines else start + marks["dur"]
+            gap = (0.55 if spoken.rstrip().endswith("?") else 0.4) + rng.uniform(-0.05, 0.08) if human else GAP
+            cur += len(a) / SR + gap
+        end = cur - gap + TAIL if lines else start + marks["dur"]
         scenes.append(dict(id=sid, crit=crit, start=round(start, 3), end=round(end, 3), sent=sent, marks=marks))
         t = end
-    return scenes, clips, t
+    return scenes, clips, t, breaths
 
 
 COLD_DUR = 9.0                                  # cold open: the question typed, sent, answered, then a whip-zoom
@@ -465,12 +508,76 @@ def transition_sfx(scenes, ref):
     return out
 
 
-def write_audio(clips, total, path):
-    import soundfile as sf
-    buf = np.zeros(int((total + 0.5) * SR), dtype=np.float32)
+def lay(buf, clips):
     for t0, a in clips:
-        i = int(t0 * SR)
-        buf[i:i + len(a)] += a[: len(buf) - i]
+        i = max(0, int(t0 * SR))
+        buf[i:i + len(a)] += a[: max(0, len(buf) - i)]
+    return buf
+
+
+def master_voice(x):
+    """Warmth, presence, a de-esser, gentle compression and a small room, so the voice sits like a recorded one."""
+    import subprocess
+    chain = ("highpass=f=75,equalizer=f=180:t=q:w=1.1:g=2.5,equalizer=f=3200:t=q:w=1.4:g=1.8,"
+             "equalizer=f=7500:t=q:w=2:g=-1.5,deesser=i=0.35,"
+             "acompressor=threshold=-21dB:ratio=2.6:attack=6:release=140:makeup=2,"
+             "aecho=0.9:0.55:23|41|67:0.10|0.07|0.04")
+    r = subprocess.run(["ffmpeg", "-v", "error", "-f", "f32le", "-ar", str(SR), "-ac", "1", "-i", "-", "-af", chain,
+                        "-f", "f32le", "-"], input=x.astype(np.float32).tobytes(), capture_output=True, check=True)
+    y = np.frombuffer(r.stdout, np.float32)
+    return np.pad(y, (0, max(0, len(x) - len(y))))[:len(x)]
+
+
+def music_bed(total, start, voice, ref):
+    """A slow ambient score (A minor: Am-F-C-G, 4 s a chord) synthesized from detuned sines with a soft pluck on
+    top; it swells in at `start`, ducks under the voice and resolves at the end."""
+    n = len(voice)
+    t = np.arange(n) / SR
+    chords = [(57, 60, 64), (53, 57, 60), (48, 52, 55), (55, 59, 62)]
+    hz = lambda m: 440 * 2 ** ((m - 69) / 12)                                      # noqa: E731
+    bar = 4.0
+    pad = np.zeros(n, np.float32)
+    for k in range(int(total / bar) + 2):
+        notes = chords[k % 4]
+        t0 = k * bar
+        i0, i1 = int(max(0, t0 - 1.0) * SR), min(n, int((t0 + bar + 1.5) * SR))
+        if i0 >= n:
+            break
+        tt = t[i0:i1] - t0
+        env = np.clip((tt + 1.0) / 1.6, 0, 1) * np.clip((bar + 1.5 - tt) / 2.0, 0, 1)
+        sig = np.zeros(len(tt))
+        for m in notes + (notes[0] - 12,):
+            for det in (-0.0035, 0, 0.004):
+                sig += np.sin(2 * np.pi * hz(m) * (1 + det) * tt + m)
+        pad[i0:i1] += (sig * env).astype(np.float32)
+    rng = np.random.default_rng(3)
+    pl = np.zeros(n, np.float32)
+    for k in range(int(total / 0.5)):
+        if rng.random() < 0.55:
+            tc = k * 0.5
+            m = chords[int(tc / bar) % 4][rng.integers(3)] + 12
+            i0 = int(tc * SR)
+            d = np.arange(min(int(1.2 * SR), n - i0)) / SR
+            pl[i0:i0 + len(d)] += (np.sin(2 * np.pi * hz(m) * d) * np.exp(-d / 0.45) * 0.5).astype(np.float32)
+    bed = pad / (np.max(np.abs(pad)) or 1) + 0.35 * pl / (np.max(np.abs(pl)) or 1)
+    w = int(0.25 * SR)                                                               # duck under the voice
+    env = np.convolve(np.abs(voice), np.ones(w) / w, mode="same")
+    duck = 1 - 0.7 * np.clip(env / (0.1 * ref), 0, 1)
+    duck = np.convolve(duck, np.ones(w) / w, mode="same")
+    fade = np.clip((t - start) / 1.2, 0, 1) * np.clip((total + 0.4 - t) / 3.5, 0, 1)
+    return (bed * duck * fade * 0.075 * ref).astype(np.float32)
+
+
+def write_audio(voice_clips, fx_clips, total, path, music_from=None):
+    import soundfile as sf
+    n = int((total + 0.5) * SR)
+    v = lay(np.zeros(n, np.float32), voice_clips)
+    ref = float(np.max(np.abs(v))) or 1.0
+    v = master_voice(v)
+    v *= ref / (float(np.max(np.abs(v))) or 1.0)
+    buf = v + lay(np.zeros(n, np.float32), fx_clips)
+    if music_from is not None:
+        buf += music_bed(total, music_from, v, ref)
     peak = float(np.max(np.abs(buf))) or 1.0
     sf.write(path, buf / peak * 0.89, SR)
 
@@ -565,7 +672,7 @@ def scene_html(sid, N):
 <img class="hero" src="assets/hero.jpg" data-kb="0.07" alt="">
 <div class="heroshade"></div>
 <div class="box" style="left:120px;top:250px;width:980px">
-  <div class="eyebrow" data-at="0.2">Innodata AI Hackathon 2026 · Track 2: Visual Task Factory</div>
+  <div class="eyebrow" data-at="0.2">Innodata AI Hackathon 2026 · Track 2: Visual Problem &amp; Model Evaluation</div>
   <div class="mega" data-at="0.45">ThirstMap</div>
   <div class="lead" data-at="0.8">Can AI trace water through the landscape?</div>
   <div class="punch" data-at="@punch">AI is drinking India’s water.<br>We test whether AI can even see where that water goes.</div>
@@ -983,8 +1090,8 @@ const fmt = (x, el) => (el.dataset.to >= 1000 ? Math.round(x).toLocaleString('en
 function renderAt(t) {
   let fx = 0, leak = 0;
   TL.scenes.forEach((sc, i) => {
-    const D = .4, last = i === TL.scenes.length - 1, nx = TL.scenes[i + 1] || {};
-    const pin = i === 0 ? 1 : clamp((t - sc.start) / D), pout = last ? 1 : clamp((sc.end - t) / D);
+    const D = .56, last = i === TL.scenes.length - 1, nx = TL.scenes[i + 1] || {};   // the two scenes overlap at the cut
+    const pin = i === 0 ? 1 : clamp((t - sc.start + D / 2) / D), pout = last ? 1 : clamp((sc.end + D / 2 - t) / D);
     let tr = '', f = '', o = Math.min(pin, pout);
     if (pin < 1) { let g; [tr, f, g] = FX(sc.tr, 1 - ease(pin), t, true); o = Math.pow(o, g); }
     else if (pout < 1) { let g; [tr, f, g] = FX(nx.tr, 1 - ease(pout), t, false); o = Math.pow(o, g); }
@@ -1050,15 +1157,18 @@ def main():
     (ROOT / f"video/RECORDING_SCRIPT_{a.film}.md").write_text(
         recording_script(spec, "ThirstMap film" if a.film == "full" else "ThirstMap in a minute") + "\n")
     voice = Recording(a.recording, spec) if a.recording else Voice(ROOT / "video/build/tts_cache", a.voice, a.speed)
-    scenes, clips, total = timeline(spec, voice)
+    scenes, clips, total, breaths = timeline(spec, voice)
     assign_transitions(scenes)
     prep_assets(out)
     (out / "film.html").write_text(page(scenes, total, N, "ThirstMap film" if a.film == "full" else "ThirstMap in a minute"))
     ref = max(float(np.max(np.abs(a))) for _, a in clips)
+    rng = np.random.default_rng(9)
+    voice_clips = clips + [(b, breath(rng, ref)) for b in breaths]
+    fx = transition_sfx(scenes, ref)
     if scenes[0]["id"] == "coldopen":
-        clips += coldopen_sfx(scenes[0]["start"], ref)
-    clips += transition_sfx(scenes, ref)
-    write_audio(clips, total, out / "narration.wav")
+        fx += coldopen_sfx(scenes[0]["start"], ref)
+    first = next(sc for sc in scenes if sc["sent"])
+    write_audio(voice_clips, fx, total, out / "narration.wav", music_from=first["start"])
     subtitles(scenes, out / "subtitles.vtt", out / "subtitles.srt")
     (out / "timeline.json").write_text(json.dumps(dict(T=total, scenes=scenes), indent=1))
     print(f"{a.film}: {total:.1f} s, {len(scenes)} scenes, {sum(len(s['sent']) for s in scenes)} lines -> {out}")

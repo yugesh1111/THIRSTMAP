@@ -1,7 +1,7 @@
 # The ThirstMap films
 
-`docs/video/thirstmap_film.mp4` (5 min, opening on a cold open) walks through every judging criterion and every Track 2 deliverable;
-`docs/video/thirstmap_film_short.mp4` is the 70-second cut. Both are watchable at
+`docs/video/thirstmap_film.mp4` (4½ min, opening on a cold open) walks through every judging criterion and every Track 2 deliverable;
+`docs/video/thirstmap_film_short.mp4` is the one-minute cut. Both are watchable at
 https://yugesh1111.github.io/THIRSTMAP/film.html, with subtitles burned in and as caption tracks (`*.vtt`).
 
 How they are made, so they can be remade after any new result:

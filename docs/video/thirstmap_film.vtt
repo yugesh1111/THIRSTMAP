@@ -1,142 +1,142 @@
 WEBVTT
 
-00:00:09.550 --> 00:00:12.200
+00:00:09.550 --> 00:00:11.526
 AI is drinking India's water.
 
-00:00:12.320 --> 00:00:17.720
+00:00:11.781 --> 00:00:16.571
 So here's the question nobody was asking: can AI even see where that water goes?
 
-00:00:18.820 --> 00:00:27.620
+00:00:17.671 --> 00:00:26.246
 India's data centres drink about 150 billion litres of water a year. By 2030? 358 billion.
 
-00:00:27.740 --> 00:00:34.465
+00:00:26.526 --> 00:00:32.545
 And seventy percent of that capacity sits in two cities already short of water: Mumbai and Chennai.
 
-00:00:34.585 --> 00:00:43.985
+00:00:32.725 --> 00:00:41.153
 Now we're building AI agents to watch over it, from maps and satellite images. And it all comes down to one question: where does the wastewater go?
 
-00:00:45.085 --> 00:00:47.135
+00:00:42.253 --> 00:00:43.721
 So we built a factory.
 
-00:00:47.255 --> 00:00:56.755
+00:00:43.935 --> 00:00:52.975
 Code raises a landscape, makes it rain, and follows every drop downhill. Past a data centre. Past villages. Past traps we hid on purpose.
 
-00:00:56.875 --> 00:01:00.925
+00:00:53.238 --> 00:00:56.618
 Which means it knows the answer before it ever asks the question.
 
-00:01:01.045 --> 00:01:05.645
+00:00:56.885 --> 00:01:00.796
 Then it paints the same scene three ways: satellite, map, and thermal.
 
-00:01:06.745 --> 00:01:10.270
+00:01:01.896 --> 00:01:05.037
 Ten reasoning skills. Not one of them is counting.
 
-00:01:10.390 --> 00:01:20.265
+00:01:05.244 --> 00:01:14.160
 Five levels of difficulty. Real terrain from four Indian data-centre cities. Monsoon, haze, a blurry sensor. And the answer never moves.
 
-00:01:20.385 --> 00:01:25.860
+00:01:14.413 --> 00:01:19.104
 Five thousand seven hundred and sixty-one tasks. Every one with a known answer.
 
-00:01:26.960 --> 00:01:30.735
+00:01:20.204 --> 00:01:23.559
 Then we did something sneaky. Every scene gets a twin.
 
-00:01:30.855 --> 00:01:36.455
+00:01:23.831 --> 00:01:28.889
 Change one small thing, move the outfall to another stream, and the right answer flips.
 
-00:01:36.575 --> 00:01:41.525
+00:01:29.149 --> 00:01:34.110
 A model that's really looking gets both. A model running on habit? Caught.
 
-00:01:42.625 --> 00:01:46.400
+00:01:35.210 --> 00:01:38.631
 Now, you shouldn't have to trust us. So we don't ask you to.
 
-00:01:46.520 --> 00:01:55.620
+00:01:38.842 --> 00:01:47.634
 A completely separate hydrology library re-derives every answer. If it disagrees, the question is gone. Dropped. Never edited.
 
-00:01:55.740 --> 00:02:00.415
+00:01:47.809 --> 00:01:51.846
 The answer has to be visible in the actual pixels, or it doesn't ship.
 
-00:02:00.535 --> 00:02:07.860
+00:01:52.100 --> 00:01:58.662
 We even turned the audit on ourselves: four hundred and thirty-one unfair tasks. Found, excluded, published.
 
-00:02:07.980 --> 00:02:12.305
+00:01:58.935 --> 00:02:02.608
 And every audited image rebuilds from its seed, byte for byte.
 
-00:02:13.405 --> 00:02:15.655
+00:02:03.708 --> 00:02:05.343
 And you don't need us to run it.
 
-00:02:15.775 --> 00:02:21.800
+00:02:05.513 --> 00:02:11.219
 One pip install. One command. It builds a scene and its twin, and runs every check.
 
-00:02:21.920 --> 00:02:27.345
+00:02:11.493 --> 00:02:16.202
 Every check you see passing here really passed. If it hadn't, the question would be gone.
 
-00:02:28.445 --> 00:02:33.495
+00:02:17.302 --> 00:02:21.688
 So we put the models to the test. The same eighty-three questions, for everyone.
 
-00:02:33.615 --> 00:02:38.740
+00:02:21.881 --> 00:02:26.764
 The open models? No better than guessing, and guessing gets you fourteen percent.
 
-00:02:38.860 --> 00:02:47.260
+00:02:26.934 --> 00:02:34.407
 Gemini Flash-Lite gets forty to forty-eight percent. Hide the image, and it falls straight back to guessing. It's really reading the map.
 
-00:02:47.380 --> 00:02:52.630
+00:02:34.625 --> 00:02:39.723
 And Gemini 3.5 Flash? Seventy-seven percent. Impressive.
 
-00:02:53.730 --> 00:02:55.605
+00:02:40.823 --> 00:02:42.132
 But then, the twins.
 
-00:02:55.725 --> 00:03:01.025
+00:02:42.290 --> 00:02:47.194
 Same river. We just cooled the water, so no point is above three degrees any more.
 
-00:03:01.145 --> 00:03:05.620
+00:02:47.464 --> 00:02:51.183
 Gemini gives the exact same answer. Two false heat alarms.
 
-00:03:05.740 --> 00:03:12.015
+00:02:51.419 --> 00:02:57.272
 Across nineteen pairs, it got both halves right only six times. Every other model, two at most.
 
-00:03:13.115 --> 00:03:18.840
+00:02:58.372 --> 00:03:03.102
 But a right answer isn't the whole story. So we asked the models to draw the water's path.
 
-00:03:18.960 --> 00:03:27.460
+00:03:03.342 --> 00:03:10.780
 Eight times, a model followed the water, then named the wrong villages. Seven times, it named the right villages along the wrong route.
 
-00:03:27.580 --> 00:03:32.830
+00:03:10.950 --> 00:03:15.493
 Then we hid part of the river under a cloud, where the answer truly cannot be known.
 
-00:03:32.950 --> 00:03:40.475
+00:03:15.670 --> 00:03:22.590
 Thirty-four times out of forty-two, the models made up an answer anyway. Only two models always said: I can't tell.
 
-00:03:41.575 --> 00:03:47.425
+00:03:23.690 --> 00:03:29.098
 Every real reply is scored live. Right or wrong. And we tell you which trap it fell into.
 
-00:03:47.545 --> 00:03:51.595
+00:03:29.370 --> 00:03:32.806
 Flip on the answer key, and watch where the water really goes.
 
-00:03:51.715 --> 00:03:54.965
+00:03:33.048 --> 00:03:35.668
 Or skip the models, and take the test yourself.
 
-00:03:56.065 --> 00:04:00.465
+00:03:36.768 --> 00:03:40.742
 And this isn't a one-off study. It's a benchmark anyone can use.
 
-00:04:00.585 --> 00:04:06.710
+00:03:40.986 --> 00:03:46.479
 Every model gets a report card: skills, pairs, traps, and what happens without the image.
 
-00:04:06.830 --> 00:04:14.780
+00:03:46.670 --> 00:03:54.462
 Got your own model? Download the pack, run it, drop the replies on the page. Same report card. Scored right in your browser.
 
-00:04:15.880 --> 00:04:27.155
+00:03:55.562 --> 00:04:06.218
 And here's the hopeful part. Train a small model on these scenes, and on scenes it has never seen, it climbs from ten to nineteen percent. Only with the image. It learns to look.
 
-00:04:27.275 --> 00:04:30.900
+00:04:06.401 --> 00:04:10.027
 And people? They can take the very same test, online.
 
-00:04:32.000 --> 00:04:38.050
+00:04:11.127 --> 00:04:16.556
 There's a Colab notebook, a pip-installable command, and automatic checks on every change.
 
-00:04:38.170 --> 00:04:45.120
+00:04:16.830 --> 00:04:23.098
 And the frontier test runs on a free tier: one request per image, about three hundred tokens an answer.
 
-00:04:46.220 --> 00:04:53.370
+00:04:24.198 --> 00:04:30.990
 ThirstMap. A factory of visual tasks with verified answers, and a test AI can't bluff its way through.
 
-00:04:53.490 --> 00:04:58.265
+00:04:31.172 --> 00:04:35.212
 Because before we trust AI with India's water, it should have to pass it.

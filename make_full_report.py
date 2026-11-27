@@ -205,7 +205,7 @@ def report(N, out):
 
     # ---- cover
     d.space(40)
-    d.p("Innodata AI Hackathon 2026 · Track 2: Visual Task Factory", "sub")
+    d.p("Innodata AI Hackathon 2026 · Track 2: Visual Problem &amp; Model Evaluation", "sub")
     d.space(6)
     d.p("ThirstMap", "title")
     d.p("Can AI trace water through the landscape? A factory of visual tasks whose answers come from a water simulation, "

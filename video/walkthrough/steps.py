@@ -723,8 +723,88 @@ def step7():
     return f
 
 
+# ---- step 8: beyond right answers ----------------------------------------------------------------------------------
+BEY = ROOT / "docs/demo/beyond"
+
+
+def define_step8():
+    t = json.loads((ROOT / "results/trace/summary.json").read_text())["models"]
+    c = json.loads((ROOT / "results/cloud/summary.json").read_text())
+    rw = sum(v["quadrants"]["right route, wrong villages"] for v in t.values())
+    wr = sum(v["quadrants"]["wrong route, right villages"] for v in t.values())
+    hid = [v["variants"]["hidden"] for v in c.values()]
+    dec = [v["variants"]["decoy"] for v in c.values()]
+    hn, made = sum(h["n"] for h in hid), sum(h["n"] - h["abstained"] for h in hid)
+    dn, da = sum(d["n"] for d in dec), sum(d["abstained"] for d in dec)
+    OV["t8"] = ('<div class="full" style="padding:140px 80px 0"><div class="kicker">ThirstMap · step 8 · new checks</div>'
+                '<div class="big" style="margin-top:18px">Beyond right <span class="grad">answers</span></div>'
+                '<div class="sub" style="margin-top:18px;max-width:700px">Is the reasoning right too? The model draws the '
+                "water's route, scored cell by cell. And does it know when it cannot see?</div>"
+                '<div class="row"><span class=pill>draw the route</span><span class=pill>scored cell by cell</span>'
+                '<span class=pill>clouds that hide the answer</span></div></div>')
+    label("l8a", "✓ Gemini 3.6 Flash: right route, wrong village")
+    label("l8b", "✗ Qwen2.5-VL-3B: drawn the wrong way round")
+    cap("c8a", "ROUTE", "The model draws the water's path; it is scored against the simulation, <b>cell by cell</b>.")
+    cap("c8b", "REASONING", f'<b class=a>{rw}</b> replies followed the water but named the wrong villages; <b class=a>{wr}</b> named the right villages along a wrong route.', "amber")
+    label("l8c", "Cloud hides the answer")
+    label("l8d", "Under it: two exits fit every pixel")
+    label("l8e", "Decoy: same cloud, answer visible")
+    cap("c8c", "CAN'T TELL", f'Under a cloud that provably hides the answer, models made one up <span class="r">{made} of {hn}</span> times.', "red")
+    cap("c8d", "DECOY", f"Same cloud where it does not matter: models abstained <b>{da} of {dn}</b> times. The test is fair.")
+
+
+def step8():
+    f = Film()
+    intro(f, "t8")
+    a, b = img(BEY / "trace/gemini-3.6-flash__level3_seed58561__satellite.jpg"), \
+        img(BEY / "trace/Qwen2.5-VL-3B-Instruct__level3_seed58561__satellite.jpg")
+    h = 380
+    w = h * a.width / a.height
+    ra, rb = (W / 2 - w - 14, 26, w, h), (W / 2 + 14, 26, w, h)
+
+    def routes(t, ck):
+        c = canvas()
+        ea, eb = kit.ease(t / 0.45), kit.ease((t - 0.5) / 0.45)
+        place(c, a, (ra[0], ra[1] + (1 - ea) * 20, w, h), alpha=ea)
+        center_label(c, "l8a", ra[0] + w / 2, ra[1] + h + 8, ea)
+        if eb > 0:
+            place(c, b, (rb[0], rb[1] + (1 - eb) * 20, w, h), alpha=eb)
+            center_label(c, "l8b", rb[0] + w / 2, rb[1] + h + 8, eb)
+        glow(c, ra, GREEN, kit.ease((t - 1.1) / 0.4) * 0.8)
+        glow(c, rb, RED, kit.ease((t - 1.1) / 0.4) * 0.8)
+        overlay(c, ck, (t - 1.0) / 0.4 if ck == "c8a" else 1)
+        return c
+    f.fade_to(routes(0, "c8a"), 0.35)
+    f.hold(lambda t: routes(t, "c8a"), 2.6)
+    f.hold(lambda t: routes(9, "c8b"), 2.6)
+
+    cl = img(BEY / "cloud/level1_seed91943.jpg")
+    cw = 900
+    chh = cw * cl.height / cl.width
+    rc = (W / 2 - cw / 2, 60, cw, chh)
+    third = cl.width / 3
+
+    def cloud(t, ck):
+        c = canvas()
+        for k, key in enumerate(("l8c", "l8d", "l8e")):
+            e = kit.ease((t - 0.55 * k) / 0.45)
+            if e <= 0:
+                continue
+            r = (rc[0] + k * cw / 3 + 3, rc[1] + (1 - e) * 18, cw / 3 - 6, chh)
+            place(c, cl, r, (k * third, 0, third, cl.height), alpha=e, radius=10)
+            center_label(c, key, r[0] + r[2] / 2, rc[1] + chh + 10, e)
+        glow(c, (rc[0] + 3, rc[1], cw / 3 - 6, chh), RED, kit.ease((t - 1.7) / 0.4) * 0.8)
+        overlay(c, ck, (t - 1.6) / 0.4 if ck == "c8c" else 1)
+        return c
+    f.fade_to(cloud(0.2, "c8c"), 0.35)
+    f.hold(lambda t: cloud(t + 0.2, "c8c"), 3.0)
+    f.hold(lambda t: cloud(9, "c8d"), 2.4)
+    outro(f, None)
+    return f
+
+
 NAMES = {0: "0_run_all_quick", 1: "1_how_a_task_is_made", 2: "2_variation", 3: "3_validation", 4: "4_results",
-         5: "5_twins", 6: "6_score_your_model", 7: "7_human_test"}
+         5: "5_twins", 6: "6_score_your_model", 7: "7_human_test", 8: "8_beyond_right_answers"}
 
 
 def main():
@@ -737,7 +817,7 @@ def main():
     META.update(json.loads((CAP / "meta.json").read_text()))
     log = json.loads(Path(a.quick_log).read_text()) if 0 in a.steps else None
     lines = define_step0(log) if log else None
-    for k in range(1, 8):
+    for k in range(1, 9):
         globals()[f"define_step{k}"]()
     if not a.no_overlays:
         spec = CAP / "overlays.json"

@@ -80,11 +80,11 @@ def hero_html(out):
     facts = [(f"{man['n_tasks'] - errata:,}", "verified tasks"), (f"{man['counterfactual_pairs']['pairs']}", "before-and-after twins"),
              (f"{len(man['tasks_by_skill'])}", "reasoning skills"), (f"{len([k for k in man['tasks_by_terrain'] if k != 'synthetic'])}", "real Indian cities")]
     hero = f"""<header class="hero" id="top"><div class="wrap hero-in"><div class="hero-text">
-<span class="eyebrow">Innodata AI Hackathon 2026 · Track 2: Visual Task Factory</span>
+<span class="eyebrow">Innodata AI Hackathon 2026 · Track 2: Visual Problem &amp; Model Evaluation</span>
 <h1>Can AI trace water through the landscape?</h1>
 <p class="lede big">AI is drinking India's water. ThirstMap generates landscapes, simulates where their water flows, and asks
 AI where a data centre's wastewater goes. The code builds the land, so it already knows every answer.</p>
-<div class="ctas"><a class="btn primary" href="https://yugesh1111.github.io/THIRSTMAP/film.html">▶ Watch the 5-minute film</a>
+<div class="ctas"><a class="btn primary" href="https://yugesh1111.github.io/THIRSTMAP/film.html">▶ Watch the 4½-minute film</a>
 <a class="btn" href="#try">Try it yourself</a><a class="btn" href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Score your model</a></div>
 <ul class="facts">{''.join(f'<li><b>{a}</b> {b}</li>' for a, b in facts)}</ul></div>{figure}</div></header>
 <section id="found"><div class="wrap"><h2>What we found</h2>
@@ -93,7 +93,7 @@ AI where a data centre's wastewater goes. The code builds the land, so it alread
 <a href="https://github.com/yugesh1111/THIRSTMAP/blob/main/docs/FAQ.md">tough questions, answered</a> ·
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">take the human test</a> ·
 <a href="https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb">run it in Colab</a> ·
-<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">70-second film</a></p></div></section>"""
+<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">one-minute film</a></p></div></section>"""
     return hero
 
 
@@ -689,13 +689,13 @@ BODY = r"""<nav class="top" aria-label="Sections"><div class="wrap nav-in"><a cl
 <a class="gh" href="https://github.com/yugesh1111/THIRSTMAP">GitHub</a></div></div></nav>
 __HERO__
 <header class="oldhead" hidden><div class="wrap">
-<span class="eyebrow">Innodata AI Hackathon · Track 2: Visual Task Factory</span>
+<span class="eyebrow">Innodata AI Hackathon · Track 2: Visual Problem &amp; Model Evaluation</span>
 <h1>ThirstMap: can AI trace water through the landscape?</h1>
 <p class="lede">India's data centres use billions of litres of water. ThirstMap generates terrain images, simulates where
 the water flows, and asks AI models where a data centre's wastewater goes. Because the code builds the landscape, it
 already knows every answer.</p>
-<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (5 min, narrated)</a>
-<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">70-second film</a>
+<p class="links"><a href="https://yugesh1111.github.io/THIRSTMAP/film.html">Watch the film (4½ min, narrated)</a>
+<a href="https://yugesh1111.github.io/THIRSTMAP/film.html">one-minute film</a>
 <a href="https://github.com/yugesh1111/THIRSTMAP">Code, dataset and full results</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/leaderboard/">Leaderboard: score your own model</a>
 <a href="https://yugesh1111.github.io/THIRSTMAP/human/">Take the human test (32 questions, about 15 minutes)</a>

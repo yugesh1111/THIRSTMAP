@@ -193,7 +193,7 @@ def build(N, out, figure):
     c.drawString(M + c.stringWidth("ThirstMap", "Sans-Bold", 25) + 9, H - 37, "can AI trace water through the landscape?")
     c.setFillColor(colors.HexColor("#9FC3E8"))
     c.setFont("Sans", 8.6)
-    c.drawString(M, H - 56, "Innodata AI Hackathon 2026  ·  Track 2: Visual Task Factory  ·  Amritha S")
+    c.drawString(M, H - 56, "Innodata AI Hackathon 2026  ·  Track 2: Visual Problem & Model Evaluation  ·  Amritha S")
     c.setFillColor(colors.HexColor("#F2C2A8"))
     c.setFont("Sans-Bold", 9)
     c.drawString(M, H - 73, "AI is drinking India's water. We test whether AI can even see where that water goes.")

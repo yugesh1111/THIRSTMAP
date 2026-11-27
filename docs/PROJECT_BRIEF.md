@@ -1,5 +1,5 @@
 # ThirstMap — Project Brief
-*Innodata AI Hackathon · Track 2: Visual Task Factory · updated 23 Nov 2026*
+*Innodata AI Hackathon · Track 2: Visual Problem & Model Evaluation · updated 23 Nov 2026*
 
 ---
 
@@ -76,7 +76,7 @@ Note: the evaluation-criteria text on the page shows Track 1 wording (repository
 
 ## 3. What exactly we are building
 
-An **automated pipeline** (the hackathon's "Visual Task Factory") that produces, with no human in the loop:
+An **automated pipeline** (Track 2 of the hackathon, "Visual Problem & Model Evaluation") that produces, with no human in the loop:
 
 ```
 seed + difficulty level

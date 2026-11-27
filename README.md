@@ -1,8 +1,8 @@
 # ThirstMap — can AI trace water through the landscape?
 
-*Innodata AI Hackathon 2026 · Track 2: Visual Task Factory*
+*Innodata AI Hackathon 2026 · Track 2: Visual Problem & Model Evaluation*
 
-[![CI](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml/badge.svg)](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml) [![Live demo](https://img.shields.io/badge/live%20demo-open-2a78d6)](https://yugesh1111.github.io/THIRSTMAP/) [![Leaderboard](https://img.shields.io/badge/leaderboard-score%20your%20model-d95926)](https://yugesh1111.github.io/THIRSTMAP/leaderboard/) [![Film](https://img.shields.io/badge/film-5%20min-0f2230)](https://yugesh1111.github.io/THIRSTMAP/film.html) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) [![Code: MIT](https://img.shields.io/badge/code-MIT-informational)](LICENSE) [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-informational)](LICENSE-DATA.md)
+[![CI](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml/badge.svg)](https://github.com/yugesh1111/THIRSTMAP/actions/workflows/ci.yml) [![Live demo](https://img.shields.io/badge/live%20demo-open-2a78d6)](https://yugesh1111.github.io/THIRSTMAP/) [![Leaderboard](https://img.shields.io/badge/leaderboard-score%20your%20model-d95926)](https://yugesh1111.github.io/THIRSTMAP/leaderboard/) [![Film](https://img.shields.io/badge/film-4%C2%BD%20min-0f2230)](https://yugesh1111.github.io/THIRSTMAP/film.html) [![Open in Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/yugesh1111/THIRSTMAP/blob/main/ThirstMap_quickstart.ipynb) [![Code: MIT](https://img.shields.io/badge/code-MIT-informational)](LICENSE) [![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-informational)](LICENSE-DATA.md)
 
 > **AI is drinking India's water. We test whether AI can even see where that water goes.**
 
@@ -17,7 +17,7 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 | Look at | Where | What it shows |
 |---|---|---|
 | **Live demo** (no login) | https://yugesh1111.github.io/THIRSTMAP/ | results, how a task is made, where the models sent the water, every reply scored ✓/✗ |
-| **The film** (5 min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [70-second cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
+| **The film** (4½ min, narrated, subtitled) | https://yugesh1111.github.io/THIRSTMAP/film.html · [`docs/video/thirstmap_film.mp4`](docs/video/thirstmap_film.mp4) · [one-minute cut](docs/video/thirstmap_film_short.mp4) | every judging criterion and every Track 2 deliverable, in order; made by [`video/make_film.py`](video/make_film.py) from the result files |
 | **Leaderboard: score your own model** | https://yugesh1111.github.io/THIRSTMAP/leaderboard/ | every model's report card (skills, pairs, traps, no-image check); download the question pack, run any model, drop its replies on the page and get the same card. Scored in the browser by a port of the Python scorer that agrees with it on every published reply |
 | **Full report (PDF)** | [`docs/ThirstMap_full_report.pdf`](docs/ThirstMap_full_report.pdf) | everything built, the dataset, how answers are checked, every result, the product, a tour of the repository and the commands to clone, pull, install, test and run it |
 | **Beyond right answers** (new) | https://yugesh1111.github.io/THIRSTMAP/beyond.html · [`docs/BEYOND_ANSWERS.md`](docs/BEYOND_ANSWERS.md) | every model's drawn route over the true route (right answer, wrong route); clouds that make the answer unknowable, each with a proof, and which models make one up anyway |
@@ -70,6 +70,10 @@ Each GIF below is made from the real thing: a timed run of the real pipeline, sc
 **Step 7: take the test yourself.** The human test asks the same 32 questions the models answered, including every before-and-after pair.
 
 ![human test: tick an answer, next question](docs/gifs/walkthrough/7_human_test.gif)
+
+**Step 8: look past the right answer.** Two newer checks. The model draws the water's route, scored cell by cell against the simulation: 8 replies followed the water but named the wrong villages, and 7 named the right villages along a wrong route. Then a cloud hides the one stretch that decides the answer, so the honest reply is "cannot tell": models made up an answer 34 times out of 42, while under a decoy cloud they abstained 0 of 41 times. Details: [`docs/BEYOND_ANSWERS.md`](docs/BEYOND_ANSWERS.md).
+
+![route drawing and the cloud honesty check](docs/gifs/walkthrough/8_beyond_right_answers.gif)
 
 *The GIFs show screen captures of the live site, the dataset's images and a real terminal run. Nothing in them is mocked up.*
 
