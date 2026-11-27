@@ -1,0 +1,205 @@
+{
+"rc": 0,
+"lines": [
+[
+0.39,
+"== 1/7 tests"
+],
+[
+10.76,
+".........s..ssss..................................                       [100%]"
+],
+[
+10.76,
+"45 passed, 5 skipped in 9.98s"
+],
+[
+10.92,
+"== 2/7 build dataset"
+],
+[
+37.8,
+"== 3/7 offline baselines"
+],
+[
+39.59,
+"277 tasks x 3 models x 2 modes -> 1662 calls to make"
+],
+[
+39.59,
+"  50/1662 done, 0 errors"
+],
+[
+39.59,
+"  100/1662 done, 0 errors"
+],
+[
+39.59,
+"  150/1662 done, 0 errors"
+],
+[
+39.59,
+"  200/1662 done, 0 errors"
+],
+[
+39.59,
+"  250/1662 done, 0 errors"
+],
+[
+39.59,
+"  300/1662 done, 0 errors"
+],
+[
+39.59,
+"  350/1662 done, 0 errors"
+],
+[
+39.59,
+"  400/1662 done, 0 errors"
+],
+[
+39.59,
+"  450/1662 done, 0 errors"
+],
+[
+39.59,
+"  500/1662 done, 0 errors"
+],
+[
+39.59,
+"  550/1662 done, 0 errors"
+],
+[
+39.59,
+"  600/1662 done, 0 errors"
+],
+[
+39.59,
+"  650/1662 done, 0 errors"
+],
+[
+39.59,
+"  700/1662 done, 0 errors"
+],
+[
+39.59,
+"  750/1662 done, 0 errors"
+],
+[
+39.59,
+"  800/1662 done, 0 errors"
+],
+[
+39.59,
+"  850/1662 done, 0 errors"
+],
+[
+39.59,
+"  900/1662 done, 0 errors"
+],
+[
+39.59,
+"  950/1662 done, 0 errors"
+],
+[
+39.59,
+"  1000/1662 done, 0 errors"
+],
+[
+39.59,
+"  1050/1662 done, 0 errors"
+],
+[
+39.59,
+"  1100/1662 done, 0 errors"
+],
+[
+39.59,
+"  1150/1662 done, 0 errors"
+],
+[
+39.59,
+"  1200/1662 done, 0 errors"
+],
+[
+39.59,
+"  1250/1662 done, 0 errors"
+],
+[
+39.59,
+"  1300/1662 done, 0 errors"
+],
+[
+39.59,
+"  1350/1662 done, 0 errors"
+],
+[
+39.59,
+"  1400/1662 done, 0 errors"
+],
+[
+39.59,
+"  1450/1662 done, 0 errors"
+],
+[
+39.59,
+"  1500/1662 done, 0 errors"
+],
+[
+39.59,
+"  1550/1662 done, 0 errors"
+],
+[
+39.59,
+"  1600/1662 done, 0 errors"
+],
+[
+39.59,
+"  1650/1662 done, 0 errors"
+],
+[
+39.59,
+"  1662/1662 done, 0 errors"
+],
+[
+39.59,
+"report written to results/offline_baselines"
+],
+[
+39.65,
+"== 4/7 adaptive eye exam"
+],
+[
+40.19,
+"== 5/7 validation report"
+],
+[
+50.66,
+"wrote docs/VALIDATION_REPORT.md \u00b7 tests: 47 passed, 3 skipped in 9.22s"
+],
+[
+50.7,
+"== 6/7 independent verification"
+],
+[
+79.78,
+"== 7/7 demo + human test pages"
+],
+[
+80.97,
+"demo with 58 tasks -> demo/index.html"
+],
+[
+81.74,
+"30 tasks -> human_eval/index.html"
+],
+[
+81.77,
+"Done. See docs/VALIDATION_REPORT.md, docs/VERIFICATION.md, results/offline_baselines/REPORT.md, demo/index.html"
+],
+[
+81.77,
+null
+]
+]
+}

@@ -36,9 +36,9 @@ See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) for the pipeline diagram and 
 
 ## How it works, step by step
 
-Each GIF below is a recording of the real thing: a real terminal run, then the [live demo](https://yugesh1111.github.io/THIRSTMAP/), the [leaderboard](https://yugesh1111.github.io/THIRSTMAP/leaderboard/), the [human test](https://yugesh1111.github.io/THIRSTMAP/human/) and this repository. The clicks are real and so is what they bring up.
+Each GIF below is made from the real thing: a timed run of the real pipeline, screen captures of the [live demo](https://yugesh1111.github.io/THIRSTMAP/), the [leaderboard](https://yugesh1111.github.io/THIRSTMAP/leaderboard/) and the [human test](https://yugesh1111.github.io/THIRSTMAP/human/), and the dataset's own images. Only the titles, captions and camera moves are added; [`video/walkthrough/`](video/walkthrough/) remakes them all.
 
-**Step 0: run the whole pipeline with one command.** `./run_all.sh --quick` runs the tests, builds a small dataset, scores the offline baselines, runs the eye exam, writes the validation report, rebuilds scenes from their seeds and makes the demo pages. It takes about 2 minutes on a laptop with no API key. The GIF is sped up, and the clock in its corner shows real time.
+**Step 0: run the whole pipeline with one command.** `./run_all.sh --quick` runs the tests, builds a small dataset, scores the offline baselines, runs the eye exam, writes the validation report, rebuilds scenes from their seeds and makes the demo pages. It took 82 seconds on a laptop, with no API key. The GIF is sped up, and the clock in its corner shows real time.
 
 ![run_all.sh --quick in a terminal](docs/gifs/walkthrough/0_run_all_quick.gif)
 
@@ -70,7 +70,7 @@ Each GIF below is a recording of the real thing: a real terminal run, then the [
 
 ![human test: tick an answer, next question](docs/gifs/walkthrough/7_human_test.gif)
 
-*The GIFs show screen captures of the live site and a real terminal run. Nothing in them is mocked up.*
+*The GIFs show screen captures of the live site, the dataset's images and a real terminal run. Nothing in them is mocked up.*
 
 ---
 
