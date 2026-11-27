@@ -361,11 +361,11 @@ def build(N, out, figure):
     crit = [("Implementation 25%", f"One command from terrain to report; {N['tests']} tests and CI; <b>pip install</b> "
                                    "gives a <b>thirstmap</b> command; Colab notebook; live demo rebuilt on every change"),
             ("Validity 25%", "Answers simulated, then re-derived independently; pixel checks; byte-for-byte rebuilds; "
-                             "a self-audit with published errata"),
+                             "a self-audit with published errata; clouds proved to hide the answer"),
             ("Variation 20%", f"{N['skills']} skills, {N['styles']} styles, 5 levels, {N['real_cities']} real cities; "
                               "twins; monsoon, haze and coarse-sensor looks whose answer must not change"),
-            ("Originality 15%", "Twins whose answer must flip; every model error drawn on the image it saw, "
-                                "with what it would mean on the ground"),
+            ("Originality 15%", "Twins whose answer must flip; each model's drawn route scored cell by cell; every "
+                                "model error drawn on the image it saw, with what it would mean on the ground"),
             ("Impact 15%", "India's data-centre water; a policy note proposing a pass bar before AI screens water "
                            "permits; a human test anyone can take")]
     crit_w = 372
@@ -384,7 +384,8 @@ def build(N, out, figure):
     lx = M + crit_w + 16
     links = [("Live demo, no login", DEMO, DEMO), ("The film, 4 min", DEMO + "film.html", "…/THIRSTMAP/film.html"),
              ("Take the test yourself", DEMO + "human/", "…/THIRSTMAP/human/"), ("Code, data, findings", REPO, REPO),
-             ("Leaderboard: score your model", DEMO + "leaderboard/", "…/THIRSTMAP/leaderboard/")]
+             ("Leaderboard: score your model", DEMO + "leaderboard/", "…/THIRSTMAP/leaderboard/"),
+             ("Beyond right answers: routes, clouds", DEMO + "beyond.html", "…/THIRSTMAP/beyond.html")]
     c.setFillColor(WATER)
     c.setFont("Sans-Bold", 7.6)
     c.drawString(lx, y, "SEE IT  ·  RUN IT")

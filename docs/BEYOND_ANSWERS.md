@@ -2,12 +2,12 @@
 
 Two newer checks look past the final answer. **Draw the water's path**: the model traces the route as points on the image and lists the villages, and the route is scored against the simulated path cell by cell. **Can't tell**: a cloud covers the stretch where the route could leave by more than one channel; for every item the code proves that two hidden landscapes fit every visible pixel and give different answers, so the only right answer is "cannot be determined", while the same cloud elsewhere (a decoy) must not stop the model answering. Page: [`/beyond.html`](https://yugesh1111.github.io/THIRSTMAP/beyond.html) · method and results: [`docs/BEYOND_ANSWERS.md`](docs/BEYOND_ANSWERS.md).
 
-- **Route check.** The best model, Gemini 3.6 Flash, drew the right route on 4 of 7 images; Gemini 3.5 Flash 3 of 8; Gemini 3 Flash Preview 1 of 10; Gemini 3.5 Flash-Lite 1 of 10; Gemini 3.1 Flash-Lite 0 of 10. No reference line that ignores the streams passes: a straight line south passes 0 of 22.
+- **Route check.** The best model, Gemini 3.6 Flash, drew the right route on 4 of 7 images; Gemini 3.5 Flash 3 of 8; Gemini 3 Flash Preview 1 of 10; Gemini 3.5 Flash-Lite 1 of 10; Gemini 3.1 Flash-Lite 0 of 10; Qwen2-VL-2B 0 of 10; Qwen2.5-VL-3B 0 of 10. No reference line that ignores the streams passes: a straight line south passes 0 of 22.
 - **Answer and reasoning come apart.** 8 replies drew the right route but named the wrong villages; 7 named the right villages along a wrong route. Scoring only the final answer would have called 7 of these right and missed that 8 of them followed the water correctly.
-- **When only the outfall moves, does the route move?** Both routes of a before-and-after pair right: Gemini 3.6 Flash 1 of 3; Gemini 3.5 Flash 0 of 4; Gemini 3 Flash Preview 0 of 5; Gemini 3.5 Flash-Lite 0 of 5; Gemini 3.1 Flash-Lite 0 of 5.
-- **Honesty check.** Under a cloud that provably hides the answer, models gave a confident list of villages 21 times out of 29. Per model, said it cannot tell under the hidden cloud: Gemini 3.5 Flash 3 of 3; Gemini 3.6 Flash 4 of 4; Gemini 3 Flash Preview 1 of 5; Qwen2.5-VL-3B 0 of 7; Gemini 3.1 Flash-Lite 0 of 5; Gemini 3.5 Flash-Lite 0 of 5.
-- **The decoy keeps it fair.** The same cloud over streams that do not matter: models abstained there 0 times out of 28, so the abstentions under the hidden cloud are about what is hidden, not about clouds.
-- **Right by luck still counts as wrong.** 7 of the made-up lists happened to match the hidden truth: a guess the image cannot support, scored as one.
+- **When only the outfall moves, does the route move?** Both routes of a before-and-after pair right: Gemini 3.6 Flash 1 of 3; Gemini 3.5 Flash 0 of 4; Gemini 3 Flash Preview 0 of 5; Gemini 3.5 Flash-Lite 0 of 5; Gemini 3.1 Flash-Lite 0 of 5; Qwen2-VL-2B 0 of 5; Qwen2.5-VL-3B 0 of 5.
+- **Honesty check.** Under a cloud that provably hides the answer, models gave a confident list of villages 34 times out of 42. Per model, said it cannot tell under the hidden cloud: Gemini 3.5 Flash 3 of 3; Gemini 3.6 Flash 4 of 4; Gemini 3 Flash Preview 1 of 5; Qwen2-VL-2B 0 of 10; Qwen2.5-VL-3B 0 of 10; Gemini 3.1 Flash-Lite 0 of 5; Gemini 3.5 Flash-Lite 0 of 5.
+- **The decoy keeps it fair.** The same cloud over streams that do not matter: models abstained there 0 times out of 41, so the abstentions under the hidden cloud are about what is hidden, not about clouds.
+- **Right by luck still counts as wrong.** 8 of the made-up lists happened to match the hidden truth: a guess the image cannot support, scored as one.
 
 | Model | Images | Route right | On the path | Route covered | Villages right | Right route, wrong villages | Wrong route, right villages |
 |---|---|---|---|---|---|---|---|
@@ -16,6 +16,8 @@ Two newer checks look past the final answer. **Draw the water's path**: the mode
 | Gemini 3 Flash Preview | 10 | **1** | 53% | 51% | 3 | 0 | 2 |
 | Gemini 3.5 Flash-Lite | 10 | **1** | 36% | 44% | 0 | 1 | 0 |
 | Gemini 3.1 Flash-Lite | 10 | **0** | 27% | 23% | 3 | 0 | 3 |
+| Qwen2-VL-2B | 10 | **0** | 6% | 5% | 0 | 0 | 0 |
+| Qwen2.5-VL-3B | 10 | **0** | 3% | 2% | 0 | 0 | 0 |
 
 Reference lines (no model, all images): oracle (the true path): passes 22 of 22; straight line south: passes 0 of 22; straight line to the true exit: passes 1 of 22.
 
@@ -24,7 +26,8 @@ Reference lines (no model, all images): oracle (the true path): passes 22 of 22;
 | Gemini 3.5 Flash | **3 of 3** | 0 | 0 of 3 | 1 of 3 | **3 of 3** |
 | Gemini 3.6 Flash | **4 of 4** | 0 | 0 of 3 | 1 of 3 | **3 of 3** |
 | Gemini 3 Flash Preview | **1 of 5** | 4 | 0 of 5 | 3 of 5 | **1 of 5** |
-| Qwen2.5-VL-3B | **0 of 7** | 7 | 0 of 7 | 0 of 7 | **0 of 7** |
+| Qwen2-VL-2B | **0 of 10** | 10 | 0 of 10 | 0 of 10 | **0 of 10** |
+| Qwen2.5-VL-3B | **0 of 10** | 10 | 0 of 10 | 1 of 10 | **0 of 10** |
 | Gemini 3.1 Flash-Lite | **0 of 5** | 5 | 0 of 5 | 2 of 5 | **0 of 5** |
 | Gemini 3.5 Flash-Lite | **0 of 5** | 5 | 0 of 5 | 2 of 5 | **0 of 5** |
 

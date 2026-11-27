@@ -22,6 +22,8 @@ flowchart LR
     FR["frontier.py<br/>API models under a request budget:<br/>batched prompts, 768 px images"]
     ST["staircase.py<br/>adaptive eye exam"]
     H["human_eval.py<br/>human baseline"]
+    TT["trace_task.py + thirstmap/paths.py<br/>draw the water's path:<br/>route scored cell by cell"]
+    CT["cloud_task.py + thirstmap/clouds.py<br/>can't-tell clouds: proof that<br/>two hidden landscapes fit every pixel"]
   end
   subgraph OUT["4 · Evidence"]
     REP["report.py: skills vs exact chance (binomial test),<br/>breaking levels, map vs satellite, pairs,<br/>appearance invariance, probes, traps, cost"]
@@ -32,6 +34,7 @@ flowchart LR
     D["build_demo.py: ✓/✗ demo page"]
     OV["overlays.py: model answers drawn on the image,<br/>consequence of every error"]
     RC["realism_check.py: simulated streams<br/>vs ESA WorldCover water"]
+    BA["beyond_answers.py: beyond.html page,<br/>README block, hero figure"]
   end
   Q --> VAL
   R --> VAL
@@ -50,6 +53,8 @@ flowchart LR
   B --> AU
   E --> VER
   B --> VR
+  B --> TT --> BA
+  B --> CT --> BA
 ```
 
 ## Data flow in one sentence

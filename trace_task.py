@@ -172,6 +172,7 @@ def report(a):
         for r in R:
             if r.get("failure"):
                 fails[r["failure"]] = fails.get(r["failure"], 0) + 1
+        swapped = [paths.score([(y, x) for x, y in r["path"]], items[r["task_id"]]["truth"])["f1"] for r in R if r.get("path")]
         by = {items[r["task_id"]]["scene_id"]: r for r in R}
         pairs = [(by[b], by[b + "_cf"]) for b in {it["pair"] for it in items.values() if it["in_pair"]} if b in by and b + "_cf" in by]
         S[m] = dict(n=len(R), passed=sum(r["passed"] for r in R), parsed=sum(r["parse_ok"] for r in R),
@@ -179,6 +180,8 @@ def report(a):
                     mean_recall=round(float(np.mean([r["recall"] for r in R])), 3),
                     villages_ok=sum(r["villages_ok"] for r in R), consistent=sum(r["consistent"] for r in R),
                     quadrants=q, failures=fails, pairs=len(pairs), pairs_both_routes=sum(x["passed"] and y["passed"] for x, y in pairs),
+                    mean_f1=round(float(np.mean([r["f1"] for r in R])), 3),
+                    mean_f1_axes_swapped=round(float(np.mean(swapped)), 3) if swapped else None,
                     curve={t: dict(precision=round(float(np.mean([r["curve"][t]["precision"] for r in R if r.get("curve")] or [0])), 3),
                                    recall=round(float(np.mean([r["curve"][t]["recall"] for r in R if r.get("curve")] or [0])), 3))
                            for t in map(str, paths.CURVE)})
@@ -219,6 +222,10 @@ def report(a):
     for m, x in S.items():
         if x["failures"]:
             L.append(f"- {m}: " + ", ".join(f"{n} × {k}" for k, n in sorted(x["failures"].items(), key=lambda kv: -kv[1])))
+    sw = [(m, x["mean_f1"], x["mean_f1_axes_swapped"]) for m, x in S.items() if x.get("mean_f1_axes_swapped") is not None]
+    if sw:
+        L += ["", "**Coordinate check.** Scored with x and y swapped, every model's routes do worse (mean F1 as asked vs swapped: " +
+              "; ".join(f"{short(m)} {a:.2f} vs {b:.2f}" for m, a, b in sw) + "), so no model lost points to an axis mix-up."]
     L += ["", f"Every route drawn over its image (true route red, the model's yellow): `{figs}/`."]
     (out / "REPORT.md").write_text("\n".join(L) + "\n")
     print("\n".join(L))

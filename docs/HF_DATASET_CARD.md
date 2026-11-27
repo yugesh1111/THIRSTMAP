@@ -50,6 +50,16 @@ tasks = [t for t in tasks if t["task_id"] not in bad]
 Score replies with the repository's scorer (`thirstmap/scoring.py`): set-F1 or exact for label answers, a
 tolerance for numbers, compass sectors for directions; wrong answers are tagged with the trap they fell for.
 
+## Two newer task sets (in the repository's `eval_set/`)
+
+- `eval_set/trace/`: 22 images with the simulated route of the wastewater as a list of grid cells, the renderer's
+  cell-to-pixel mapping, the stream network and the cells upstream of the outfall. Models draw the route as points;
+  `thirstmap/paths.py` scores the line cell by cell (5 before-and-after pairs where only the outfall moved).
+- `eval_set/cloud/`: 20 scenes, each as a clear image (the published one), a version with a cloud over the stretch
+  that decides the answer (correct answer: "cannot be determined") and the same cloud elsewhere (a decoy). `items.json`
+  holds, per item, the proof that a second hidden landscape fits every visible pixel and gives other villages, and the
+  pixel checks. Answer keys are included so every item rebuilds from its seed.
+
 ## Results so far
 
 See `docs/FINDINGS.md` and `LEADERBOARD.md` in the repository. In short: open models up to 3B parameters score

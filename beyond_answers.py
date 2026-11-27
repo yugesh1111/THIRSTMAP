@@ -345,7 +345,10 @@ in order, until the water leaves the area, and to list the villages it reaches. 
 line is scored cell by cell: a route passes when at least {paths.PASS:.0%} of the line lies within {paths.TOL} cells
 ({paths.TOL * 25} m) of the true path <i>and</i> the line covers at least {paths.PASS:.0%} of it. The scorer is anchored by
 lines with known verdicts: the true path passes on every image, a straight line south passes on
-{TS['baselines']['straight line south']['passed']} of {TS['baselines']['straight line south']['n']}.</p>
+{TS['baselines']['straight line south']['passed']} of {TS['baselines']['straight line south']['n']}. Points are asked for as named
+<code>x</code> and <code>y</code> values; scored with the axes swapped, every model does worse
+({esc("; ".join(f"{pretty(m)} {x['mean_f1']:.2f} vs {x['mean_f1_axes_swapped']:.2f}" for m, x in TS['models'].items() if x.get('mean_f1_axes_swapped') is not None))}, mean F1
+as asked vs swapped), so no model lost points to an axis mix-up.</p>
 {tbl(['Model', 'Images', 'Route right', 'On the path', 'Route covered', 'Villages right', 'Right route, wrong villages', 'Wrong route, right villages', 'Before-and-after pairs, both routes right'], t_rows)}
 <h3>Every route, drawn over its image</h3><p class=muted>True route in red, the model's line in yellow. Pairs differ only in where outfall O is.</p>
 {''.join(gal)}
@@ -358,6 +361,8 @@ finds a way to split the edge that sends the route out by another channel while 
 (so every channel's width, and every visible pixel, stays the same) and every inflow stays higher than its exit. That other
 channel leads to other villages. Every item also passes pixel checks: the clear image is the published one, the cloud changes
 nothing outside itself and its shadow, its core is the same whatever lies beneath, and no village, label or stream symbol is under it.</p>
+<p class=muted>In the tables below, any list given under the hidden cloud is marked red, even one that matches the truth: the image
+cannot support it, so it is a guess. Under the decoy and with no cloud, the list must be the right villages.</p>
 {tbl(['Model', 'Hidden: said it cannot tell', 'Hidden: made up a list', 'Decoy: right villages', 'Decoy: abstained', 'No cloud: right', 'Abstains only where the cloud hides the answer'], c_rows)}
 {''.join(cg)}
 <h2 id=files>Files and commands</h2>

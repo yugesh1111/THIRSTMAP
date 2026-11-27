@@ -25,5 +25,12 @@ like this one on imagery of the kind it will see:
 1. **Pair test:** both halves right on at least 90% of before-and-after pairs (no current model passes).
 2. **Above-chance accuracy** on every skill used for a decision, reported with the chance level and sample size.
 3. **Published inputs:** the exact images and questions used, so the result can be repeated.
+4. **It says when it cannot see.** Monsoon cloud and haze hide stretches of rivers in satellite imagery for months
+   of the year. A screening tool must answer "cannot be determined" when the deciding stretch is hidden, and still
+   answer when it is not. ThirstMap's cloud test checks exactly this, with a proof per item that the hidden version has
+   more than one answer; most models tested made up a confident answer instead
+   (https://yugesh1111.github.io/THIRSTMAP/beyond.html).
+5. **Its reasoning is checked, not only its answer.** Ask it to draw the route the water takes: in our runs, models
+   named the right villages along a wrong route, and followed the right route but named the wrong villages.
 
 ThirstMap is open (MIT code, CC BY 4.0 data) and runs any model with one command: https://github.com/yugesh1111/THIRSTMAP

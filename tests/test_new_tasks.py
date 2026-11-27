@@ -168,3 +168,24 @@ def test_cloud_scoring():
     d = dict(t, variant="decoy")
     assert score(d, '{"answer": ["V3", "V1"]}')["correct"]
     assert not score(d, '{"answer": "cannot be determined"}')["correct"]
+
+
+# ---------------------------------------------------------------------------------------------------------------------
+# the page and README numbers agree with the raw replies
+# ---------------------------------------------------------------------------------------------------------------------
+@pytest.mark.skipif(not (Path("results/trace/summary.json").exists() and Path("results/cloud/summary.json").exists()),
+                    reason="no runs yet")
+def test_beyond_numbers_match_raw_replies():
+    import beyond_answers as BA
+    import cloud_task
+    titems, trows, ctasks, crows, citems, TS, CS = BA.load()
+    T, C = BA.trace_table(TS), BA.cloud_table(CS)
+    for r in C:                                                       # per model: hidden replies = abstained + made up
+        assert r["hidden_abstained"] + r["hidden_made_up"] == r["hidden_n"]
+    for m, x in CS.items():                                           # summary counts equal a fresh re-score
+        rows = [r for r in crows if r["model"] == m and ctasks[r["task_id"]]["variant"] == "hidden"]
+        assert x["variants"].get("hidden", {}).get("abstained", 0) == sum(cloud_task.score(ctasks[r["task_id"]], r["raw"])["abstained"] for r in rows)
+    for m, x in TS["models"].items():
+        rows = [r for r in trows if r["model"] == m]
+        assert x["passed"] == sum(r["passed"] for r in rows)
+        assert sum(x["quadrants"].values()) == x["n"] == len(rows)
